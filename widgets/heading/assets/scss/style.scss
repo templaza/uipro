@@ -1,0 +1,39 @@
+@import "variables";
+@import "highlighted";
+.sc_heading{
+  //position: relative;
+  //margin: 0;
+  //margin-bottom: 30px;
+  //padding-top: 42px;
+  //padding-bottom: 19px;
+  .line {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 1px;
+    background-color: $line-color;
+    width: 35px;
+  }
+  &.clone_title{
+    .title{
+      position: relative;
+    }
+    .clone {
+       font-size: 200%;
+       //line-height: 1;
+       //font-weight: 700;
+       width: 100%;
+       opacity: 0.05;
+       position: absolute;
+       bottom: 22px;
+       color: $clone-color;
+       //text-transform: capitalize;
+       left: 10px;
+    }
+  }
+}
+//.templaza-widget-heading{
+//  .templaza-color{
+//    //color:
+//  }
+//}

@@ -1,0 +1,41 @@
+.ui-posts {
+  .uk-article-meta {
+    line-height: 1.6;
+    > span{
+      &:not(:first-child) {
+        &:before {
+          content: "-";
+          margin: 0 10px;
+        }
+      }
+    }
+  }
+  .ui-post-thumbnail {
+    img {
+      width: 100%;
+    }
+  }
+  .ui-post-tags {
+    > a:not(:last-child) {
+      margin-right: 8px;
+    }
+  }
+  .ui-post-pagination {
+    display: flex;
+    justify-content: center;
+    line-height: 1;
+    > .page-numbers {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 100px;
+      width: 45px;
+      height: 45px;
+      margin: 0 2px;
+      &.current, &:hover {
+        background-color: #333333;
+        color: #ffffff;
+      }
+    }
+  }
+}

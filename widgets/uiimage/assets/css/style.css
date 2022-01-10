@@ -1,0 +1,23 @@
+.ui-image .ui-image-detail {
+  transition: all 0.3s linear; }
+.ui-image .ui-image-flash-effect:before {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  display: block;
+  content: '';
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 100%);
+  transform: skewX(-25deg);
+  z-index: 2; }
+.ui-image .ui-image-flash-effect:hover:before {
+  -webkit-animation: slide 1.3s;
+  animation: slide 1.3s; }
+@keyframes slide {
+  0% {
+    left: -100%; }
+  100% {
+    left: 125%; } }
+
+/*# sourceMappingURL=style.css.map */
