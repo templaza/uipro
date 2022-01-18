@@ -15,6 +15,7 @@ use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Image_Size;
 use Elementor\Group_Control_Text_Shadow;
 use \Elementor\Widget_Base;
+use UIPro\UIPro_Functions;
 
 /**
  * Prevent loading this file directly
@@ -44,6 +45,10 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
          * @var null
          */
         protected $class = null;
+        /**
+         * @var null
+         */
+        protected $text_domain = null;
 
         /**
          * Thim_Builder_El_Widget constructor.
@@ -58,13 +63,15 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
             if ( ! $this->config_class ) {
                 return;
             }
+
+            $this -> text_domain    = UIPro_Functions::get_my_text_domain();
+
             /**
              * @var $config_class UIPro_Abstract_Config
              */
             $config_class = new $this->config_class();
             $config_class::register_scripts();
-//            add_action( 'elementor/preview/enqueue_styles', array( $this, 'preview_scripts' ) );
-//            add_action( 'elementor/preview/enqueue_scripts', array( $this, 'preview_scripts' ) );
+
             parent::__construct( $data, $args );
         }
 
@@ -86,7 +93,7 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
          */
         public function get_name() {
             if ( ! empty( $this->config_base ) ) {
-                return 'templaza-' . $this->config_base;
+                return 'uipro-' . $this->config_base;
             } else {
                 if ( ! $this->config_class ) {
                     return '';
@@ -94,7 +101,7 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
                 // config class
                 $config_class = new $this->config_class();
 
-                return 'templaza-' . $config_class::$base;
+                return 'uipro-' . $config_class::$base;
             }
         }
 
@@ -174,14 +181,14 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
          * @return array
          */
         public function get_categories() {
-            return array( 'templaza-elements' );
+            return array( UIPRO );
         }
 
         /**
          * @return array
          */
         public function get_keywords() {
-            $keywords = array_merge( $this->keywords, array( $this->get_name(), 'templazaelemnts' ) );
+            $keywords = array_merge( $this->keywords, array( $this->get_name(), $this -> text_domain ) );
 
             return $keywords;
         }

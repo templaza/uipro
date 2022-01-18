@@ -17,6 +17,7 @@ use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
 use Elementor\Core\Schemes\Typography;
 
+require_once __DIR__.'/helper.php';
 if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 	/**
 	 * Class UIPro_Config_UIPosts
