@@ -70,7 +70,7 @@ if ( !class_exists( 'UIPro_El' ) ) {
 			foreach ( $widgets as $group => $_widgets ) {
 				foreach ( $_widgets as $widget ) {
 					if ( $group != 'widgets' ) {
-						$file = apply_filters( 'templaza-elements/el-widget-file', UIPRO_WIDGETS_PATH . "/$widget/class-el-$widget.php", $widget );
+						$file = apply_filters( 'uipro/el-widget-file', UIPRO_WIDGETS_PATH . "/$widget/class-el-$widget.php", $widget );
 
 						if ( file_exists( $file ) ) {
 							include_once $file;

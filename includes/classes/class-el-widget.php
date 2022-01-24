@@ -294,7 +294,7 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
             }
 
             // allow hook before template
-            do_action( 'templaza-elements/before-element-template', $this->get_name() );
+            do_action( 'uipro/before-element-template', $this->get_name() );
 
             // get settings
             $settings = $this->get_settings_for_display();
