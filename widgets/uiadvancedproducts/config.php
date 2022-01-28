@@ -1474,11 +1474,6 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                         'label'         => esc_html__( 'Select Category', 'uipro' ),
                         'options'       => UIPro_Helper::get_cat_taxonomy( $key.'-category'),
                         'multiple'      => true,
-                        'conditions' => [
-                            'terms' => [
-                                ['name' => 'resource', 'operator' => '===', 'value' => $key],
-                            ],
-                        ],
                     )
                 );
                 array_splice($options, 2, 0, $post_type_category);

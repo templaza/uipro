@@ -76,7 +76,8 @@ class UIPro_UIAdvancedProducts_Helper extends UIPro_Helper {
             return array();
         }
         $meta_arr       =   array();
-        $resource       = ( isset( $instance['resource'] ) && $instance['resource'] ) ? $instance['resource'] : 'post';
+//        $resource       = ( isset( $instance['resource'] ) && $instance['resource'] ) ? $instance['resource'] : 'post';
+        $resource       = 'ap_product';
         if (in_array('date', $meta_type)) {
             $meta_arr[] = '<span class="ui-post-meta-date">' . get_the_date('', $item) . '</span>';
         }

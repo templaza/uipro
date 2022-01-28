@@ -1,6 +1,6 @@
 <?php
 defined( 'ABSPATH' ) || exit;
-$resource       = ( isset( $instance['resource'] ) && $instance['resource'] ) ? $instance['resource'] : 'post';
+$resource       = 'ap_product';
 $layout         = (isset($instance['layout'] ) && $instance['layout'] ) ? $instance['layout'] : '';
 $tag_style 		= (isset($instance['tag_style']) && $instance['tag_style']) ? $instance['tag_style'] : '';
 
@@ -50,7 +50,7 @@ $tags = wp_get_post_terms( $item->ID , $resource. '_tag' );
 $i = 1;
 $tag_content    =   '';
 $tag_slugs      =   array();
-if($tags){
+if($tags && !is_wp_error($tags)){
 	foreach ( $tags as $term ) {
 		$tag_link = get_term_link( $term, array( $resource. '_tag' ) );
 		if( is_wp_error( $tag_link ) )
@@ -83,7 +83,7 @@ $categories = $resource == 'post' ? wp_get_post_terms( $item->ID , 'category' ) 
 $cats  =   array();
 $cat_content    =   '';
 $cat_slugs      =   array();
-if ($categories && count($categories)) {
+if ( !is_wp_error($categories) && $categories && count($categories)) {
 	foreach ( $categories as $term ) {
 		$term_link = $resource == 'post' ? get_term_link( $term, 'category' ) : get_term_link( $term, $resource.'-category' );
 		if( is_wp_error( $term_link ) )

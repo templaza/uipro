@@ -60,7 +60,7 @@ if ( ! class_exists( 'UIPro_El_UIAdvancedProducts' ) ) {
             $posts      =   get_posts($query_args);
             $layout         = (isset($instance['layout'] ) && $instance['layout'] ) ? $instance['layout'] : '';
             $color_mode     = (isset($instance['color_mode'] ) && $instance['color_mode'] ) ? ' uk-'. $instance['color_mode'] : '';
-            $resource       = ( isset( $instance['resource'] ) && $instance['resource'] ) ? $instance['resource'] : 'post';
+            $resource       = 'ap_product';
 
             //Card size
             $card_style 	= (isset($instance['card_style']) && $instance['card_style']) ? ' uk-card-'. $instance['card_style'] : '';

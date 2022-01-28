@@ -38,7 +38,11 @@ if(!empty($fields)){
                     $f_val_html = '<a href="'.esc_attr($file_url).'" download>'
                         .esc_html__('Download', 'uipro').'</a>';
                 }else{
-                    $f_val_html = '<span>'.$f_value.'</span>';
+                    if(is_array($f_value)){
+                        $f_val_html = '<span>'.implode(',', $f_value).'</span>';
+                    }else{
+                        $f_val_html = '<span>'.$f_value.'</span>';
+                    }
                 }
             }
             if(!empty($f_val_html)){
