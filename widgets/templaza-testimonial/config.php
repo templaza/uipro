@@ -35,6 +35,22 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
 			parent::__construct();
 		}
 
+        public function get_styles() {
+            return array(
+                'templaza-testimonial-style' => array(
+                    'src'   =>  'style.css'
+                )
+            );
+        }
+        public function get_scripts() {
+            return array(
+                'templaza-testimonial-script' => array(
+                    'src'   =>  'slick.min.js',
+                    'deps'  =>  array('jquery')
+                )
+            );
+        }
+
 		/**
 		 * @return array
 		 */
@@ -83,6 +99,16 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
 			);
 			// options
 			$options = array(
+                array(
+                    'id'        => 'layout',
+                    'label'     => esc_html__( 'Layout', 'uipro' ),
+                    'type'      => Controls_Manager::SELECT,
+                    'options'   => array(
+                        'base'      => esc_html__('Default', 'uipro'),
+                        'style1'    => esc_html__('Custom style 1', 'uipro'),
+                    ),
+                    'default'   => 'base',
+                ),
 				array(
 					'type'      => Controls_Manager::REPEATER,
                     'name'      => 'templaza-testimonial',
@@ -176,7 +202,43 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
 					'start_section' => 'style',
 					'section_tab'   => Controls_Manager::TAB_STYLE,
 					'section_name'  => esc_html__( self::$name, 'uipro' ),
+                    'condition'     => array(
+                        'layout!'    => 'style1'
+                    ),
 				),
+                array(
+					'name'          => 'testimonial_quote_style1_size',
+					'label' => __( 'Quote Size', 'uipro' ),
+					'description'   => esc_html__('Size of quote icon', 'uipro'),
+					'type' => Controls_Manager::SLIDER,
+					'range' => [
+						'px' => [
+							'min' => 5,
+							'max' => 300,
+							'step' => 1,
+						],
+					],
+					'default' => [
+						'size' => 50,
+					],
+					'start_section' => 'style',
+					'section_tab'   => Controls_Manager::TAB_STYLE,
+					'section_name'  => esc_html__( self::$name, 'uipro' ),
+                    'selectors' => [
+                        '{{WRAPPER}} .quote-icon i' => 'font-size: {{SIZE}}{{UNIT}};',
+                    ],
+                    'condition'     => array(
+                        'layout'    => 'style1'
+                    ),
+				),
+                array(
+                    'label' => esc_html__( 'Quote icon Color', 'uipro' ),
+                    'name'  => 'quote_icon_color',
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .quote-icon i' => 'color: {{VALUE}}',
+                    ],
+                ),
 				array(
 					'id'            => 'avatar_size',
 					'label'         => __( 'Avatar Size', 'uipro' ),
@@ -190,7 +252,7 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
 						],
 					],
 					'selectors' => [
-						'{{WRAPPER}} .ui-testimonial-avatar img' => 'width: {{SIZE}}{{UNIT}};',
+						'{{WRAPPER}} .ui-testimonial-avatar .uk-inline-clip' => 'width: {{SIZE}}{{UNIT}};height: {{SIZE}}{{UNIT}};',
 					],
 				),
 				array(
@@ -207,15 +269,51 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
 					'default'       => '',
 				),
                 array(
+                    'label' => esc_html__( 'Avatar Border Custom', 'uipro' ),
+                    'name'          => 'avatar_border_custom',
+                    'type' => \Elementor\Group_Control_Border::get_type(),
+                    'selector' => '{{WRAPPER}} .ui-testimonial-avatar .uk-inline-clip',
+                ),
+                array(
+                    'id'            => 'wrap_avatar_size',
+                    'label'         => __( 'Wrap Avatar max width', 'uipro' ),
+                    'type'          => Controls_Manager::SLIDER,
+                    'size_units'    => [ 'px','%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                            'step' => 1,
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .testimonial-thumbs' => 'max-width: {{SIZE}}{{UNIT}};',
+                    ],
+                    'condition'     => array(
+                        'layout'    => 'style1'
+                    ),
+                ),
+                array(
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'quote_content_typography',
                     'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Content Font', 'uipro'),
                     'selector'      => '{{WRAPPER}} .templaza_quote_content',
-                    'start_section' => 'style',
-                    'section_tab'   => Controls_Manager::TAB_STYLE,
-                    'section_name'  => esc_html__( self::$name, 'uipro' ),
+                    'separator'     => 'before',
 
+                ),
+                array(
+                    'label' => esc_html__( 'Content Color', 'uipro' ),
+                    'name'  => 'quote_content_color',
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .templaza_quote_content' => 'color: {{VALUE}}',
+                    ],
                 ),
                 array(
                     'type'          => Group_Control_Typography::get_type(),
@@ -223,8 +321,15 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Author Font', 'uipro'),
                     'selector'      => '{{WRAPPER}} .templaza_quote_author',
-                    'section_name'  => esc_html__( self::$name, 'uipro' ),
 
+                ),
+                array(
+                    'label' => esc_html__( 'Author Color', 'uipro' ),
+                    'name'  => 'quote_author_color',
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .templaza_quote_author' => 'color: {{VALUE}}',
+                    ],
                 ),
 				array(
 					'type'          => Group_Control_Typography::get_type(),
@@ -232,15 +337,19 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
 					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'         => esc_html__('Designation Font', 'uipro'),
 					'selector'      => '{{WRAPPER}} .templaza_quote_author_position',
-					'section_name'  => esc_html__( self::$name, 'uipro' ),
 
 				),
+                array(
+                    'label' => esc_html__( 'Designation Color', 'uipro' ),
+                    'name'  => 'quote_designation_color',
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .templaza_quote_author_position' => 'color: {{VALUE}}',
+                    ],
+                ),
 			);
 			return array_merge($options, $this->get_general_options());
 		}
 
-        public function get_template_name() {
-            return 'base';
-        }
 	}
 }

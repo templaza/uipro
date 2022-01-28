@@ -323,7 +323,7 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 				array(
 					'type'          => Controls_Manager::URL,
 					'name'          => 'link',
-					'label'         => __( 'Title/Image/Icon/Button Url', 'uipro' ),
+					'label'         => esc_html__( 'Title/Image/Icon/Button Url', 'uipro' ),
 					'dynamic'       => [
 						'active'    => true,
 					],
@@ -335,13 +335,13 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 				array(
 					'type'          => Controls_Manager::SELECT,
 					'name'          => 'url_appear',
-					'label' => __( 'Url Appear', 'uipro' ),
+					'label' => esc_html__( 'Url Appear', 'uipro' ),
 					'default' => 'button',
 					'options' => [
-						'button'        => __( 'Button', 'uipro' ),
-						'button_title'   => __( 'Button & Title', 'uipro' ),
-						'button_media'   => __( 'Button & Icon/Image', 'uipro' ),
-						'all'   => __( 'All', 'uipro' ),
+						'button'        => esc_html__( 'Button', 'uipro' ),
+						'button_title'   => esc_html__( 'Button & Title', 'uipro' ),
+						'button_media'   => esc_html__( 'Button & Icon/Image', 'uipro' ),
+						'all'   => esc_html__( 'All', 'uipro' ),
 					],
 					'conditions' => [
 						'terms' => [
@@ -354,15 +354,15 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 				array(
 					'type'          => Controls_Manager::SELECT,
 					'name'          => 'card_style',
-					'label' => __( 'Card Style', 'uipro' ),
+					'label' => esc_html__( 'Card Style', 'uipro' ),
 					'default' => '',
 					'options' => [
-						'' => __('None', 'uipro'),
-						'default' => __('Card Default', 'uipro'),
-						'primary' => __('Card Primary', 'uipro'),
-						'secondary' => __('Card Secondary', 'uipro'),
-						'hover' => __('Card Hover', 'uipro'),
-						'custom' => __('Custom', 'uipro'),
+						'' => esc_html__('None', 'uipro'),
+						'default' => esc_html__('Card Default', 'uipro'),
+						'primary' => esc_html__('Card Primary', 'uipro'),
+						'secondary' => esc_html__('Card Secondary', 'uipro'),
+						'hover' => esc_html__('Card Hover', 'uipro'),
+						'custom' => esc_html__('Custom', 'uipro'),
 					],
 					'start_section' => 'card',
 					'section_name'      => esc_html__('Card Settings', 'uipro')
@@ -476,20 +476,20 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 				array(
 					'type'          => Controls_Manager::SELECT,
 					'name'          => 'card_size',
-					'label' => __( 'Card Size', 'uipro' ),
+					'label' => esc_html__( 'Card Size', 'uipro' ),
 					'default' => '',
 					'separator'     => 'before',
 					'options' => [
-						'' => __('Default', 'uipro'),
-						'small' => __('Small', 'uipro'),
-						'large' => __('Large', 'uipro'),
-						'custom' => __('Custom', 'uipro'),
+						'' => esc_html__('Default', 'uipro'),
+						'small' => esc_html__('Small', 'uipro'),
+						'large' => esc_html__('Large', 'uipro'),
+						'custom' => esc_html__('Custom', 'uipro'),
 					],
 				),
 				array(
 					'type'          => Controls_Manager::DIMENSIONS,
 					'name'          =>  'card_padding',
-					'label'         => __( 'Card Padding', 'uipro' ),
+					'label'         => esc_html__( 'Card Padding', 'uipro' ),
 					'responsive'    =>  true,
 					'size_units'    => [ 'px', 'em', '%' ],
 					'selectors'     => [
@@ -515,50 +515,182 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 					'section_name'      => esc_html__('Button Settings', 'uipro')
 				),
 				array(
+                    'label'         => esc_html__( 'Icon Type', 'uipro' ),
+                    'name'          => 'button_icon',
+                    'type'          => Controls_Manager::SELECT,
+                    'default'       => '',
+                    'options'       => [
+                        ''          => esc_html__( 'FontAwesome', 'uipro' ),
+                        'uikit'     => esc_html__( 'UIKit', 'uipro' ),
+                    ],
+				),
+				array(
+                    'label'         => esc_html__( 'Select Icon:', 'uipro' ),
+                    'name'          => 'fontawesome_icon',
+                    'type'          => Controls_Manager::ICONS,
+                    'conditions'    => [
+                        'terms'     => [
+                            ['name' => 'button_icon', 'operator' => '===', 'value' => ''],
+                        ],
+                    ],
+				),
+				array(
+                    'label'         => esc_html__( 'Select Icon:', 'uipro' ),
+                    'name'          => 'btn_uikit_icon',
+                    'type'          => Controls_Manager::SELECT2,
+                    'default'       => '',
+                    'conditions'    => [
+                        'terms'     => [
+                            ['name' => 'button_icon', 'operator' => '===', 'value' => 'uikit'],
+                        ],
+                    ],
+                    'options' => $this->get_font_uikit(),
+				),
+				array(
+                    'label'         => esc_html__( 'Icon Position', 'uipro' ),
+                    'name'          => 'icon_position',
+                    'type'          => Controls_Manager::SELECT,
+                    'default'       => '',
+                    'options'       => [
+                        ''          => esc_html__( 'Left', 'uipro' ),
+                        'right'     => esc_html__( 'Right', 'uipro' ),
+                    ],
+                    'condition'     => array(
+                        'button_text!'    => ''
+                    ),
+				),
+
+				array(
 					'type'          => Group_Control_Typography::get_type(),
 					'name'          => 'button_typography',
 					'scheme'        => Typography::TYPOGRAPHY_1,
-					'label'         => esc_html__('Content Font', 'uipro'),
-					'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
+					'label'         => esc_html__('Button Font', 'uipro'),
+					'description'   => esc_html__('Select a font family, font size for button.', 'uipro'),
 					'selector'      => '{{WRAPPER}} .ui-button .uk-button',
-					'condition'     => array(
-						'button_text!'    => ''
-					),
+
 				),
 				array(
 					'name'          => 'button_style',
-					'label' => __( 'Button Style', 'uipro' ),
+					'label' => esc_html__( 'Button Style', 'uipro' ),
 					'type' => \Elementor\Controls_Manager::SELECT,
 					'default' => '',
 					'options' => [
-						'' => __('Default', 'uipro' ),
-						'primary' => __('Primary', 'uipro') ,
-						'secondary' => __('Secondary', 'uipro' ),
-						'danger' => __('Danger', 'uipro' ),
-						'text' => __('Text', 'uipro' ),
-						'link' => __('Link', 'uipro' ),
-						'link-muted' => __('Link Muted', 'uipro' ),
-						'link-text' => __('Link Text', 'uipro' ),
-						'custom' => __('Custom', 'uipro' ),
+						'' => esc_html__('Default', 'uipro' ),
+						'primary' => esc_html__('Primary', 'uipro') ,
+						'secondary' => esc_html__('Secondary', 'uipro' ),
+						'danger' => esc_html__('Danger', 'uipro' ),
+						'text' => esc_html__('Text', 'uipro' ),
+						'link' => esc_html__('Link', 'uipro' ),
+						'link-muted' => esc_html__('Link Muted', 'uipro' ),
+						'link-text' => esc_html__('Link Text', 'uipro' ),
+						'custom' => esc_html__('Custom', 'uipro' ),
 					],
-					'condition'     => array(
-						'button_text!'    => ''
-					),
+				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'button_padding',
+                    'label'         => esc_html__( 'Button Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'button_style', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+                ),
+				array(
+                    'label' => esc_html__( 'Background Color', 'uipro' ),
+                    'name'          => 'button_background',
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'separator'     => 'before',
+                    'selectors' => [
+                        '{{WRAPPER}} .uk-button' => 'background-color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'button_style', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+				),
+				array(
+                    'label' => esc_html__( 'Color', 'uipro' ),
+                    'name'          => 'button_color',
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .uk-button' => 'color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'button_style', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+				),
+				array(
+                    'label' => esc_html__( 'Button Border', 'uipro' ),
+                    'name'          => 'button_border',
+                    'type' => \Elementor\Group_Control_Border::get_type(),
+                    'selector' => '{{WRAPPER}} .uk-button',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'button_style', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+				),
+				array(
+                    'label' => esc_html__( 'Hover Background Color', 'uipro' ),
+                    'name'          => 'hover_button_background',
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'separator'     => 'before',
+                    'selectors' => [
+                        '{{WRAPPER}} .uk-button:hover' => 'background-color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'button_style', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+				),
+				array(
+                    'label' => esc_html__( 'Hover Color', 'uipro' ),
+                    'name'          => 'hover_button_color',
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .uk-button:hover' => 'color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'button_style', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+				),
+				array(
+                    'label' => esc_html__( 'Hover Button Border', 'uipro' ),
+                    'name'          => 'hover_button_border',
+                    'type' => \Elementor\Group_Control_Border::get_type(),
+                    'selector' => '{{WRAPPER}} .uk-button:hover',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'button_style', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
 				),
 				array(
 					'name'          => 'button_shape',
-					'label' => __( 'Button Shape', 'uipro' ),
+					'label' => esc_html__( 'Button Shape', 'uipro' ),
 					'type' => \Elementor\Controls_Manager::SELECT,
 					'default' => 'rounded',
 					'options' => [
-						'rounded' => __('Rounded', 'uipro' ),
-						'square' => __('Square', 'uipro' ),
-						'round' => __('Round', 'uipro' ),
+						'rounded' => esc_html__('Rounded', 'uipro' ),
+						'square' => esc_html__('Square', 'uipro' ),
+						'circle' => esc_html__('Circle', 'uipro' ),
+						'pill' => esc_html__('Pill', 'uipro' ),
 					],
 					'conditions' => [
 						'relation' => 'and',
 						'terms' => [
-							['name' => 'button_text', 'operator' => '!==', 'value' => ''],
 							['name' => 'button_style', 'operator' => '!==', 'value' => 'link'],
 							['name' => 'button_style', 'operator' => '!==', 'value' => 'link-muted'],
 							['name' => 'button_style', 'operator' => '!==', 'value' => 'link-text'],
@@ -572,9 +704,9 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 					'label'         => esc_html__('Button Size', 'uipro'),
 					'description'   => esc_html__('Set the size for multiple buttons.', 'uipro'),
 					'options'       => array(
-						'' => __('Default', 'uipro'),
-						'small' => __('Small', 'uipro'),
-						'large' => __('Large', 'uipro'),
+						'' => esc_html__('Default', 'uipro'),
+						'small' => esc_html__('Small', 'uipro'),
+						'large' => esc_html__('Large', 'uipro'),
 					),
 					'default'           => '',
 				),
@@ -593,9 +725,6 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 						'remove'    => esc_html__('None', 'uipro'),
 					),
 					'default'       => '',
-					'condition'     => array(
-						'button_text!'    => ''
-					),
 				),
 			);
 			return array_merge($options, $this->get_general_options());

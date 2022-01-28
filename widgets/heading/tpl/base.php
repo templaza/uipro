@@ -71,18 +71,14 @@ if ( $css ) {
 }
 
 if ( $instance['sub_heading'] && $instance['sub_heading'] <> '' ) {
-	if ( $instance['sub_heading_color'] ) {
-		$sub_heading_css = 'color:' . $instance['sub_heading_color'] . ';';
-	}
-
-	$sub_heading = '<p class="sub-heading" style="' . $sub_heading_css . '">' . $instance['sub_heading'] . '</p>';
+	$sub_heading = '<span class="sub-heading uk-flex uk-flex-inline">' . $instance['sub_heading'] . '</span>';
 }
 
 if ( $instance['line'] && $instance['line'] <> '' ) {
 	if ( $instance['bg_line'] ) {
 		$line_css = ' style="background-color:' . $instance['bg_line'] . '"';
 	}
-	$line = '<span' . (!$_is_elementor?$line_css:'') . ' class="line"></span>';
+	$line = '<span' . (!$_is_elementor?$line_css:'') . ' class="line uk-flex uk-flex-inline"></span>';
 }
 
 $clone_title = ! empty( $instance['clone_title'] ) ? 'clone_title' : '';
@@ -138,7 +134,10 @@ switch ($heading_style){
 }
 
 if(!empty($instance['title'])) {
-    $html .= '<div class="sc_heading' . $clone_title . $general_styles['container_cls'] . $general_styles['content_cls'] . '"' . $general_styles['animation'] . '>';
+    $html .= '<div class="sc_heading uk-flex uk-flex-column uk-position-relative' . $clone_title . $general_styles['container_cls'] . $general_styles['content_cls'] . '"' . $general_styles['animation'] . '>';
+    if($instance['sub_heading_position']=='before_title'){
+        $html .= $sub_heading;
+    }
     $html .= '<' . $instance['header_size'] . (!$_is_elementor ? $css : '') . ' class="title' . $general . $title_style . '">';
     $html .= '<span class="heading-highlighted-wrapper">';
 
@@ -167,7 +166,9 @@ if(!empty($instance['title'])) {
 
     $html .= '</span>';
     $html .= '</' . $instance['header_size'] . '>';
-    $html .= $sub_heading;
+    if($instance['sub_heading_position']=='after_title'){
+        $html .= $sub_heading;
+    }
     $html .= $line;
     $html .= '</div>';
 

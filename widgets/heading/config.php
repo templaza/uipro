@@ -135,10 +135,24 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                         'large'     => esc_html__('Large', 'uipro'),
                         'xlarge'    => esc_html__('X-Large', 'uipro'),
                         'remove'    => esc_html__('None', 'uipro'),
+                        'custom'    => esc_html__('Custom', 'uipro'),
                     ),
                     'default'       => '',
                     'condition'     => array(
                         'title!'    => ''
+                    ),
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'title_heading_margin_custom',
+                    'label'         => esc_html__( 'Title custom margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'condition'     => array(
+                        'title_heading_margin'      => 'custom'
                     ),
                 ),
 
@@ -216,6 +230,49 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
 					'description'   => esc_html__( 'Enter sub heading.', 'uipro' ),
                     'separator'     => 'before',
 				),
+                array(
+                    'type'          => Controls_Manager::SELECT,
+                    'name'          => 'sub_heading_position',
+                    'default'       => 'before_title',
+                    'label'         => esc_html__( 'Sub heading position', 'uipro' ),
+                    'description'   => esc_html__( 'Position to display Sub heading.', 'uipro' ),
+                    'options'       => array(
+                        'before_title'       => esc_html__('Before Title', 'uipro'),
+                        'after_title'        => esc_html__('After Title', 'uipro'),
+                    ),
+                    'condition'     => array(
+                        'sub_heading!'    => ''
+                    ),
+                    /* vc */
+                    'admin_label'    => true,
+                    'separator'     => 'before',
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'sub_heading_margin',
+                    'label'         => esc_html__( 'Sub Heading margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .sub-heading' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'condition'     => array(
+                        'sub_heading!'    => ''
+                    ),
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'sub_heading_padding',
+                    'label'         => esc_html__( 'Sub Heading padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .sub-heading' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'condition'     => array(
+                        'sub_heading!'    => ''
+                    ),
+                ),
 
 				// Config
 				array(
@@ -261,6 +318,63 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                     /*vc*/
                     'admin_label'   => false,
 				),
+                array(
+                    'type'          => Controls_Manager::SLIDER,
+                    'name'          =>  'line_width',
+                    'label'         => esc_html__( 'Separator width', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 50,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .line' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+                    'condition'     => array(
+                        'line'    => 'yes'
+                    ),
+                ),
+                array(
+                    'type'          => Controls_Manager::SLIDER,
+                    'name'          =>  'line_height',
+                    'label'         => esc_html__( 'Separator height', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 2,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .line' => 'height: {{SIZE}}{{UNIT}};',
+                    ],
+                    'condition'     => array(
+                        'line'    => 'yes'
+                    ),
+                ),
+
 
 				//Alignment
 				array(
@@ -270,19 +384,19 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                     'responsive'    => true, /* this will be add in responsive layout */
                     'options'       => [
                         'left'      => [
-                            'title' => __( 'Left', 'uipro' ),
+                            'title' => esc_html__( 'Left', 'uipro' ),
                             'icon'  => 'eicon-text-align-left',
                         ],
                         'center'    => [
-                            'title' => __( 'Center', 'uipro' ),
+                            'title' => esc_html__( 'Center', 'uipro' ),
                             'icon'  => 'eicon-text-align-center',
                         ],
                         'right'     => [
-                            'title' => __( 'Right', 'uipro' ),
+                            'title' => esc_html__( 'Right', 'uipro' ),
                             'icon'  => 'eicon-text-align-right',
                         ],
                         'justify'   => [
-                            'title' => __( 'Justified', 'uipro' ),
+                            'title' => esc_html__( 'Justified', 'uipro' ),
                             'icon'  => 'eicon-text-align-justify',
                         ],
                     ],
@@ -355,7 +469,7 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                     'section_tab'   => Controls_Manager::TAB_STYLE,
                     'section_name'  => esc_html__( self::$name, 'uipro' ),
                 ),
-                //Description color
+                //Sub heading color
                 array(
                     'type'          => Controls_Manager::COLOR,
                     'label'         => esc_html__( 'Sub heading color ', 'uipro' ),
@@ -365,6 +479,21 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                     'selectors'     => [
                         '{{WRAPPER}} .sub-heading' => 'color: {{VALUE}};',
                     ],
+                    'condition'     => array(
+                        'sub_heading!'    => ''
+                    ),
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'sub_heading_bg',
+                    'label'         => esc_html__('Sub heading background', 'uipro'),
+                    'description'   => esc_html__('Choose sub heading background.', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .sub-heading' => 'background-color: {{VALUE}}',
+                    ],
+                    'condition'     => array(
+                        'sub_heading!'    => ''
+                    ),
                 ),
                 //Separator color
                 array(

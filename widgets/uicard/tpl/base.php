@@ -13,7 +13,7 @@ $url_appear     = isset($instance['url_appear']) && $instance['url_appear'] ? $i
 $attribs        = \UIPro_Elementor_Helper::get_link_attribs($link);
 $button_text    = isset($instance['button_text']) && $instance['button_text'] ? $instance['button_text'] : '';
 $button_style   = isset($instance['button_style']) && $instance['button_style'] ? ' uk-button-'. $instance['button_style'] : ' uk-button-default';
-$button_shape   = isset($instance['button_shape']) && $instance['button_shape'] ? ' uk-button-'. $instance['button_shape'] : ' uk-button-rounded';
+$button_shape   = isset($instance['button_shape']) && $instance['button_shape'] ? ' uk-border-'. $instance['button_shape'] : ' uk-border-rounded';
 $button_size    = isset($instance['button_size']) && $instance['button_size'] ? ' uk-button-'. $instance['button_size'] : '';
 $button_margin  = isset($instance['button_margin']) && $instance['button_margin'] ? ($instance['button_margin'] == 'default' ? ' uk-margin' : ' uk-margin-'. $instance['button_margin']) : '';
 
@@ -49,6 +49,41 @@ $card_size      = isset($instance['card_size']) && $instance['card_size'] ? ' uk
 $general_styles = \UIPro_Elementor_Helper::get_general_styles($instance);
 $output         = '';
 
+$button_icon          = ( isset( $instance['button_icon'] ) && $instance['button_icon'] ) ? $instance['button_icon'] : '';
+$btn_uikit_icon         = ( isset( $instance['btn_uikit_icon'] ) && $instance['btn_uikit_icon'] ) ? $instance['btn_uikit_icon'] : '';
+$fontawesome_icon   = ( isset( $instance['fontawesome_icon'] ) && $instance['fontawesome_icon'] ) ? $instance['fontawesome_icon'] : array();
+
+$btn_icon               = '';
+$btn_icon_left          = '';
+$btn_icon_right         = '';
+if($button_text){
+    $icon_position      = ( isset( $instance['icon_position'] ) && $instance['icon_position'] ) ? $instance['icon_position'] : '';
+    if($icon_position =='right'){
+        $ic_pos = 'uk-margin-small-left';
+    }else{
+        $ic_pos = 'uk-margin-small-right';
+    }
+}else{
+    $icon_position = '';
+    $ic_pos = '';
+}
+if ($button_icon == 'uikit' && $btn_uikit_icon) {
+    $btn_icon   .=  '<span class="uk-icon '. $ic_pos .'" data-uk-icon="icon: ' . $btn_uikit_icon . '"></span>';
+} elseif ($fontawesome_icon && isset($fontawesome_icon['value'])) {
+    if (is_array($fontawesome_icon['value']) && isset($fontawesome_icon['value']['url']) && $fontawesome_icon['value']['url']) {
+        $btn_icon   .=  '<img src="'.$fontawesome_icon['value']['url'].'" class="'.$ic_pos .'" data-uk-svg />';
+    } elseif (is_string($fontawesome_icon['value']) && $fontawesome_icon['value']) {
+        $btn_icon   .=  '<i class="' . $fontawesome_icon['value'] . ' '. $ic_pos .'" aria-hidden="true"></i>';
+    }
+}
+if ($btn_icon) {
+    if ($icon_position == 'right') {
+        $btn_icon_right     =   $btn_icon;
+    } else {
+        $btn_icon_left      =   $btn_icon;
+    }
+}
+
 if ($title) {
 	if ($url && ($url_appear=='button_title' || $url_appear == 'all')) {
 		$title     =  '<'.$title_tag.' class="uk-card-title'.$title_style.'"><a href="'.$url.'"'.$attribs.'>'.$title.'</a></'.$title_tag.'>';
@@ -74,7 +109,7 @@ if ($title) {
 		$output         .=  $title;
 	}
 	$output     .=  '<div class="ui-card-text">'.$text.'</div>';
-	$output     .=  $button_text ? '<div class="ui-button'.$button_margin.'"><a class="uk-button'.$button_style.$button_shape.$button_size.'" href="'.$url.'"'.$attribs.'>'.$button_text.'</a></div>' : '';
+	$output     .=  $button_text || $btn_icon ? '<div class="ui-button'.$button_margin.'"><a class="uk-button'.$button_style.$button_shape.$button_size.'" href="'.$url.'"'.$attribs.'>'.$btn_icon_left . $button_text . $btn_icon_right.'</a></div>' : '';
 	$output     .=  '</div>';
 	if ($media && $layout_type == 'image' && $image_appear == 'bottom') {
 		$output .=  '<div class="uk-card-media-top ui-media'.$media_margin.'">'.$media.'</div>';
