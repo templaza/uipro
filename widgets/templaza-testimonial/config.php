@@ -213,7 +213,7 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
 					'type' => Controls_Manager::SLIDER,
 					'range' => [
 						'px' => [
-							'min' => 5,
+							'min' => 0,
 							'max' => 300,
 							'step' => 1,
 						],

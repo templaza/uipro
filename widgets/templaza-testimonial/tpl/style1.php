@@ -91,6 +91,7 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
                     autoplay:false,
                     autoplaySpeed:3000,
                     arrows:true,
+                    fade: true,
                     dots:false,
                     nextArrow:'<span class="btn_next slick-arrow"><?php echo $btn_next;?> <i class="fas fa-arrow-right uk-margin-small-left"></i></span>',
                     prevArrow:'<span class="btn_prev slick-arrow"><i class="fas fa-arrow-left uk-margin-small-right"></i> <?php echo $btn_prev;?></span>',
