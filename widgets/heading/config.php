@@ -401,7 +401,7 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                         ],
                     ],
                     'selectors'     => [
-                        '{{WRAPPER}} .sc_heading' => 'text-align: {{VALUE}};',
+                        '{{WRAPPER}} .sc_heading'   => 'text-align: {{VALUE}}; align-items: {{VALUE}};',
                     ],
                     /*vc*/
                     'admin_label'   => false,
