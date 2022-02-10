@@ -13,13 +13,25 @@ $enable_keyword = filter_var($enable_keyword, FILTER_VALIDATE_BOOLEAN);
 $general_styles = \UIPro_Elementor_Helper::get_general_styles($instance);
 $title          =   isset($instance['title']) ? $instance['title'] : '';
 $title_tag      =   isset($instance['title_tag']) ? $instance['title_tag'] : 'h3';
-$title_display      =   isset($instance['title_display']) ? $instance['title_display'] : 'uk-display-block';
+$title_display  =   isset($instance['title_display']) ? $instance['title_display'] : 'uk-display-block';
+$submit_text    =   isset($instance['uiap_submit_text']) ? $instance['uiap_submit_text'] : esc_html__('Search', 'uipro');
+$submit_icon    =   isset($instance['uiap_submit_icon']) ? $instance['uiap_submit_icon'] : '';
 
 $shortcode  = '[advanced-product-form';
 if(!empty($fields_include) && count($fields_include)) {
     $shortcode .= ' include="'.implode(',', $fields_include).'"';
 }else{
     $shortcode .= ' include=""';
+}
+if(!empty($submit_text)){
+    $shortcode  .= ' submit_text="'.$submit_text.'"';
+}
+if(!empty($submit_icon)){
+    if ($submit_icon['library'] == 'svg'){
+        $shortcode  .= ' submit_icon="'.$submit_icon['value']['url'].'"';
+    }else{
+        $shortcode  .= ' submit_icon="'.$submit_icon['value'].'"';
+    }
 }
 $shortcode .= ' enable_keyword="'.($enable_keyword?1:0).'"]';
 ?>

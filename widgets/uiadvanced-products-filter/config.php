@@ -130,6 +130,17 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
                     'default'       => 'yes'
                 ),
                 array(
+                    'type'          => Controls_Manager::TEXT,
+                    'id'            => 'uiap_submit_text',
+                    'label'         => esc_html__( 'Submit Text', 'uipro' ),
+                    'default'       => esc_html__('Search', 'uipro')
+                ),
+                array(
+                    'type'          => Controls_Manager::ICONS,
+                    'id'            => 'uiap_submit_icon',
+                    'label'         => esc_html__( 'Submit Icon', 'uipro' ),
+                ),
+                array(
                     'type'          => Controls_Manager::DIMENSIONS,
                     'name'          =>  'form_padding',
                     'label'         => esc_html__( 'Form Padding', 'uipro' ),

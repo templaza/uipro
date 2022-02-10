@@ -32,6 +32,7 @@ if ( ! class_exists( 'UIPro_El_UIAdvancedProducts' ) ) {
 
         function __construct( array $data = [], array $args = null ) {
             parent::__construct($data, $args);
+//            add_filter('advanced-product/archive/uk-options', array($this, 'advanced_product_uk_options'));
             add_action('wp_ajax_templaza_ui_advanced_products_loadmore', array($this,'templaza_ui_post_loadmore_ajax_handler') ); // wp_ajax_{action}
             add_action('wp_ajax_nopriv_templaza_ui_post_loadmore', array($this,'templaza_ui_post_loadmore_ajax_handler')); // wp_ajax_nopriv_{action}
         }
@@ -63,6 +64,12 @@ if ( ! class_exists( 'UIPro_El_UIAdvancedProducts' ) ) {
             }
 
 		    return $settings;
+        }
+
+        public function advanced_product_uk_options($settings){
+//            $_settings  = $this -> get_settings_for_display();
+            return array_merge($settings, $this -> get_settings_for_display());
+//            return $settings;
         }
 
         public function templaza_ui_post_loadmore_ajax_handler(){
@@ -152,6 +159,8 @@ if ( ! class_exists( 'UIPro_El_UIAdvancedProducts' ) ) {
 
                 // Get settings
                 $settings = $this->get_settings_for_display();
+
+                add_filter('advanced-product/archive/uk-options', array($this, 'advanced_product_uk_options'));
 
                 // Get posts
                 $ap_posts   = $this -> get_posts($settings);
