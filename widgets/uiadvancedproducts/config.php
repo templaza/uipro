@@ -50,7 +50,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 			return array(
 				'ui-advanced-product-loadmore' => array(
 					'src'   =>  'script.min.js',
-					'deps'  =>  array('jquery')
+					'deps'  =>  array('jquery','elementor-frontend')
 				)
 			);
 		}
@@ -73,6 +73,17 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 		    $post_types =   UIPro_Helper::get_post_type( 'category' );
 
 		    $options    = array(
+                array(
+                    'type'          => Controls_Manager::SELECT,
+                    'name'          => 'main_layout',
+                    'show_label'    => true,
+                    'label'         => esc_html__( 'Main Layout', 'uipro' ),
+                    'options'       => array(
+                        'base'      => esc_html__( 'Default', 'uipro' ),
+                        'archive'   => esc_html__( 'Inherit Archive', 'uipro' ),
+                    ),
+                    'default'       => 'archive',
+                ),
                 array(
                     'type'          => Controls_Manager::SELECT2,
                     'id'            => 'ap_product_branch',
@@ -1482,7 +1493,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 		}
 
 		public function get_template_name() {
-			return 'base';
+			return 'archive';
 		}
 	}
 }
