@@ -137,8 +137,6 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 //            $custom_fields  = UIPro_UIAdvancedProducts_Helper::get_custom_fields();
             $custom_fields  = UIPro_UIAdvancedProducts_Helper::get_custom_field_options();
 ////            $custom_fields    = UIPro_Helper::get_cat_taxonomy( 'ap_custom_field' );
-//            var_dump(UIPro_Helper::get_cat_taxonomy( 'ap_category' ));
-//            die(__FILE__);
 
             $options[]      = array(
                 'type'          => Controls_Manager::SELECT2,
@@ -334,6 +332,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					),
 					'default'       => 'dark',
 					'separator'     => 'before',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
 				),
 				array(
 					'type'          => Controls_Manager::SWITCHER,
@@ -361,7 +364,12 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 						'custom' => esc_html__('Custom', 'uipro'),
 					],
 					'start_section' => 'card_settings',
-					'section_name'      => esc_html__('Card Settings', 'uipro')
+					'section_name'      => esc_html__('Card Settings', 'uipro'),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
 				),
 				array(
 					'type'          =>  Controls_Manager::COLOR,
@@ -373,6 +381,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					],
 					'conditions' => [
 						'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
 							['name' => 'card_style', 'operator' => '===', 'value' => 'custom'],
 						],
 					],
@@ -387,6 +396,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					],
 					'conditions' => [
 						'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
 							['name' => 'card_style', 'operator' => '===', 'value' => 'custom'],
 						],
 					],
@@ -402,6 +412,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 						'large' => esc_html__('Large', 'uipro'),
 						'custom' => esc_html__('Custom', 'uipro'),
 					],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
 				),
 				array(
 					'type'          => Controls_Manager::DIMENSIONS,
@@ -415,6 +430,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					],
 					'conditions' => [
 						'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
 							['name' => 'card_size', 'operator' => '===', 'value' => 'custom'],
 						],
 					],
@@ -474,6 +490,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					],
 					'conditions' => [
 						'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
 							['name' => 'filter_position', 'operator' => '!==', 'value' => 'top'],
 						],
 					],
@@ -488,6 +505,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 						'tag' => esc_html__('Tags', 'uipro'),
 						'category' => esc_html__('Categories', 'uipro'),
 					],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
 				),
 				array(
 					'type'          => Controls_Manager::SELECT,
@@ -504,6 +526,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'           => '',
 					'conditions' => [
 						'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
 							['name' => 'filter_position', 'operator' => '!==', 'value' => 'top'],
 						],
 					],
@@ -517,6 +540,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'label_off'     => esc_html__( 'No', 'uipro' ),
 					'return_value'  => '1',
 					'default'       => '0',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
 				),
 				array(
 					'type'          => Controls_Manager::SWITCHER,
@@ -527,6 +555,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'label_off'     => esc_html__( 'No', 'uipro' ),
 					'return_value'  => '1',
 					'default'       => '1',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
 				),
 				array(
 					'type'          => Controls_Manager::SELECT,
@@ -545,6 +578,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'           => '',
 					'conditions' => [
 						'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
 							['name' => 'filter_position', 'operator' => '===', 'value' => 'top'],
 						],
 					],
@@ -562,6 +596,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'           => '',
 					'conditions' => [
 						'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
 							['name' => 'filter_container', 'operator' => '!==', 'value' => ''],
 							['name' => 'filter_position', 'operator' => '===', 'value' => 'top'],
 						],
@@ -582,6 +617,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'           => '',
 					'conditions' => [
 						'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
 							['name' => 'filter_position', 'operator' => '===', 'value' => 'top'],
 							['name' => 'filter_container', 'operator' => '!==', 'value' => ''],
 						],
@@ -601,6 +637,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'conditions' => [
 						'relation' => 'and',
 						'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
 							['name' => 'filter_position', 'operator' => '===', 'value' => 'top'],
 							['name' => 'filter_container', 'operator' => '!==', 'value' => ''],
 							['name' => 'filter_block_align_breakpoint', 'operator' => '!==', 'value' => ''],
@@ -619,6 +656,12 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 						'right' => esc_html__('Right', 'uipro'),
 					),
 					'default'           => '',
+                    'conditions' => [
+                        'relation' => 'and',
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
 				),
 				array(
 					'type'          => Controls_Manager::SELECT,
@@ -635,6 +678,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'           => '',
 					'conditions' => [
 						'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
 							['name' => 'filter_text_alignment', 'operator' => '!==', 'value' => ''],
 						],
 					],
@@ -655,6 +699,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'conditions' => [
 						'relation' => 'and',
 						'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
 							['name' => 'filter_text_alignment', 'operator' => '!==', 'value' => ''],
 							['name' => 'filter_text_alignment_breakpoint', 'operator' => '!==', 'value' => ''],
 						],
@@ -671,6 +716,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 						'delayed-fade'    => esc_html__('Delayed Fade', 'uipro'),
 					),
 					'default'       => 'slide',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
 				),
 				array(
 					'type'          => Controls_Manager::SELECT,
@@ -688,6 +738,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'           => '',
 					'conditions' => [
 						'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
 							['name' => 'filter_position', 'operator' => '===', 'value' => 'top'],
 						],
 					],
@@ -705,6 +756,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 						'@xl' => esc_html__('X-Large (Large Screens)', 'uipro'),
 					),
 					'default'           => '',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
 				),
 
 				//Slider Settings
@@ -718,7 +774,12 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'return_value'  => '1',
 					'default'       => '0',
 					'start_section' => 'slider_settings',
-					'section_name'  => esc_html__('Slider Settings', 'uipro')
+					'section_name'  => esc_html__('Slider Settings', 'uipro'),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
 				),
 				array(
 					'type'          => Controls_Manager::SWITCHER,
@@ -731,6 +792,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'       => '1',
 					'conditions' => [
 						'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
 							['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
 						],
 					],
@@ -746,6 +808,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					],
 					'conditions' => [
 						'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
 							['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
 							['name' => 'enable_navigation', 'operator' => '===', 'value' => '1'],
 						],
@@ -762,6 +825,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'       => '1',
 					'conditions' => [
 						'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
 							['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
 						],
 					],
@@ -777,6 +841,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'       => '0',
 					'conditions' => [
 						'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
 							['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
 						],
 					],
@@ -801,7 +866,12 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'       => 'h3',
 					'description'   => esc_html__( 'Choose heading element.', 'uipro' ),
 					'start_section' => 'title_settings',
-					'section_name'      => esc_html__('Title Settings', 'uipro')
+					'section_name'      => esc_html__('Title Settings', 'uipro'),
+					'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
 				),
 				array(
 					'name'            => 'title_font_family',
@@ -810,6 +880,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'label'         => esc_html__('Title Font', 'uipro'),
 					'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
 					'selector'      => '{{WRAPPER}} .ui-title',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
 				),
 				array(
 					'type'          => Controls_Manager::SELECT,
@@ -831,6 +906,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 						'h5'                => esc_html__('H5', 'uipro'),
 						'h6'                => esc_html__('H6', 'uipro'),
 					),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
 				),
 				array(
 					'id'            => 'custom_title_color',
@@ -839,6 +919,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'selectors' => [
 						'{{WRAPPER}} .ui-title > a' => 'color: {{VALUE}}',
 					],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
 				),
 				array(
 					'type'          => Controls_Manager::SELECT,
@@ -854,6 +939,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 						'remove' => esc_html__('None', 'uipro'),
 					),
 					'default'           => '',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
 				),
 
 				// Image Settings
@@ -867,7 +957,12 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'return_value'  => '1',
 					'default'       => '0',
 					'start_section' => 'image_settings',
-					'section_name'  => esc_html__('Image Settings', 'uipro')
+					'section_name'  => esc_html__('Image Settings', 'uipro'),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
 				),
 				array(
 					'type'          => Controls_Manager::SELECT,
@@ -880,6 +975,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					],
 					'conditions' => [
 						'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
 							['name' => 'hide_thumbnail', 'operator' => '!==', 'value' => '1'],
 						],
 					],
@@ -895,6 +991,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'       => '0',
 					'conditions' => [
 						'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
 							['name' => 'layout', 'operator' => '===', 'value' => 'thumbnail'],
 						],
 					],
@@ -923,6 +1020,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					],
 					'conditions' => [
 						'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
 							['name' => 'thumbnail_hover', 'operator' => '===', 'value' => '1'],
 						],
 					],
@@ -942,6 +1040,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'       => 'top',
 					'conditions' => [
 						'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
 							['name' => 'layout', 'operator' => '===', 'value' => ''],
 						],
 					],
@@ -963,11 +1062,17 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     ),
                     'default'   => '1-2',
                     'conditions' => [
-                        'relation' => 'or',
+                        'relation' => 'and',
                         'terms' => [
-                            ['name' => 'image_position', 'operator' => '===', 'value' => 'left'],
-                            ['name' => 'image_position', 'operator' => '===', 'value' => 'right'],
-                        ],
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            [
+                                'relation' => 'or',
+                                'terms' => [
+                                    ['name' => 'image_position', 'operator' => '===', 'value' => 'left'],
+                                    ['name' => 'image_position', 'operator' => '===', 'value' => 'right'],
+                                ],
+                            ]
+                        ]
                     ],
                 ),
                 array(
@@ -986,6 +1091,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'default'           => '',
                     'conditions' => [
                         'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
                             ['name' => 'image_position', 'operator' => '===', 'value' => 'inside'],
                         ],
                     ],
@@ -999,6 +1105,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'label_off'     => esc_html__( 'No', 'uipro' ),
 					'return_value'  => '1',
 					'default'       => '0',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
 				),
 				array(
 					'name'            => 'thumbnail_height',
@@ -1029,6 +1140,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					],
 					'conditions' => [
 						'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
 							['name' => 'cover_image', 'operator' => '===', 'value' => '1'],
 						],
 					],
@@ -1045,13 +1157,23 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 						'uk-border-pill' => esc_html__('Pill', 'uipro'),
 					),
 					'default'       => '',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
 				),
 				array(
 					'type'          => \Elementor\Group_Control_Image_Size::get_type(),
 					'name' => 'thumbnail', // // Usage: `{name}_size` and `{name}_custom_dimension`, in this case `thumbnail_size` and `thumbnail_custom_dimension`.
 					'exclude' => [ 'custom' ],
 					'include' => [],
-					'default' => 'large'
+					'default' => 'large',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
 				),
 
 				//Content style
@@ -1065,7 +1187,12 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'return_value' => '1',
 					'default' => '1',
 					'start_section' => 'content_settings',
-					'section_name'  => esc_html__('Content Settings', 'uipro')
+					'section_name'  => esc_html__('Content Settings', 'uipro'),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
 				),
 				array(
 					'name'          => 'content_font_family',
@@ -1074,6 +1201,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'label'         => esc_html__('Content Font', 'uipro'),
 					'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
 					'selector'      => '{{WRAPPER}} .ui-post-introtext',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
 				),
 				array(
 					'id'            => 'content_color',
@@ -1082,6 +1214,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'selectors' => [
 						'{{WRAPPER}} .ui-post-introtext' => 'color: {{VALUE}}',
 					],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
 				),
 				array(
 					'type'          => Controls_Manager::SWITCHER,
@@ -1092,6 +1229,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'label_off'     => esc_html__( 'No', 'uipro' ),
 					'return_value'  => '1',
 					'default'       => '0',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
 				),
 
 				//Meta settings
@@ -1102,7 +1244,12 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'options'       => UIPro_UIPosts_Helper::get_post_meta_type( 'category' ),
                     'multiple'      => true,
                     'start_section' => 'meta_settings',
-                    'section_name'  => esc_html__('Meta Settings', 'uipro')
+                    'section_name'  => esc_html__('Meta Settings', 'uipro'),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
                 ),
                 array(
                     'type'          => Controls_Manager::SELECT2,
@@ -1111,6 +1258,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'options'       => UIPro_UIPosts_Helper::get_post_meta_type( 'category' ),
                     'multiple'      => true,
                     'default' => [ 'date', 'author', 'category' ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
                 ),
                 array(
                     'type'          => Controls_Manager::SELECT2,
@@ -1119,6 +1271,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'options'       => UIPro_UIPosts_Helper::get_post_meta_type( 'category' ),
                     'multiple'      => true,
                     'default' => [ 'tags' ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
                 ),
                 array(
                     'type'          => Controls_Manager::SELECT2,
@@ -1126,6 +1283,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'label'         => esc_html__( 'In the footer', 'uipro' ),
                     'options'       => UIPro_UIPosts_Helper::get_post_meta_type( 'category' ),
                     'multiple'      => true,
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
                 ),
                 array(
                     'id'    => 'tag_style',
@@ -1138,6 +1300,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     ),
                     'default' => '',
                     'separator'     => 'before',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
                 ),
                 array(
                     'name'          => 'meta_top_font_family',
@@ -1147,6 +1314,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
                     'selector'      => '{{WRAPPER}} .ui-post-meta-top',
                     'separator'     => 'before',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
                 ),
                 array(
                     'id'            => 'meta_top_color',
@@ -1155,6 +1327,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'selectors' => [
                         '{{WRAPPER}} .ui-post-meta-top' => 'color: {{VALUE}}',
                     ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
                 ),
                 array(
                     'id'            => 'meta_top_link_color',
@@ -1162,6 +1339,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'label'         => esc_html__('Before Title Link Color', 'uipro'),
                     'selectors' => [
                         '{{WRAPPER}} .ui-post-meta-top a' => 'color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
                     ],
                 ),
                 array(
@@ -1178,6 +1360,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                         'remove-vertical' => esc_html__('None', 'uipro'),
                     ),
                     'default'           => '',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
                 ),
                 array(
                     'name'          => 'meta_middle_font_family',
@@ -1187,6 +1374,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
                     'selector'      => '{{WRAPPER}} .ui-post-meta-middle',
                     'separator'     => 'before',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
                 ),
                 array(
                     'id'            => 'meta_middle_color',
@@ -1195,6 +1387,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'selectors' => [
                         '{{WRAPPER}} .ui-post-meta-middle' => 'color: {{VALUE}}',
                     ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
                 ),
                 array(
                     'id'            => 'meta_middle_link_color',
@@ -1202,6 +1399,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'label'         => esc_html__('After Title Link Color', 'uipro'),
                     'selectors' => [
                         '{{WRAPPER}} .ui-post-meta-middle a' => 'color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
                     ],
                 ),
                 array(
@@ -1218,6 +1420,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                         'remove-vertical' => esc_html__('None', 'uipro'),
                     ),
                     'default'           => '',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
                 ),
                 array(
                     'name'          => 'meta_bottom_font_family',
@@ -1227,6 +1434,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
                     'selector'      => '{{WRAPPER}} .ui-post-meta-bottom',
                     'separator'     => 'before',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
                 ),
                 array(
                     'id'            => 'meta_bottom_color',
@@ -1235,6 +1447,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'selectors' => [
                         '{{WRAPPER}} .ui-post-meta-bottom' => 'color: {{VALUE}}',
                     ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
                 ),
                 array(
                     'id'            => 'meta_bottom_link_color',
@@ -1242,6 +1459,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'label'         => esc_html__('After Description Link Color', 'uipro'),
                     'selectors' => [
                         '{{WRAPPER}} .ui-post-meta-bottom a' => 'color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
                     ],
                 ),
                 array(
@@ -1258,6 +1480,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                         'remove-vertical' => esc_html__('None', 'uipro'),
                     ),
                     'default'           => '',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
                 ),
                 array(
                     'name'          => 'meta_footer_font_family',
@@ -1267,6 +1494,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
                     'selector'      => '{{WRAPPER}} .ui-post-meta-footer',
                     'separator'     => 'before',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
                 ),
                 array(
                     'id'            => 'meta_footer_color',
@@ -1275,6 +1507,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'selectors' => [
                         '{{WRAPPER}} .ui-post-meta-footer' => 'color: {{VALUE}}',
                     ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
                 ),
                 array(
                     'id'            => 'meta_footer_link_color',
@@ -1282,6 +1519,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'label'         => esc_html__('Footer Link Color', 'uipro'),
                     'selectors' => [
                         '{{WRAPPER}} .ui-post-meta-footer a' => 'color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
                     ],
                 ),
                 array(
@@ -1298,6 +1540,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                         'remove-vertical' => esc_html__('None', 'uipro'),
                     ),
                     'default'           => '',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
                 ),
 
 				//Button settings
@@ -1311,7 +1558,12 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'return_value'  => '1',
 					'default'       => '0',
 					'start_section' => 'button_settings',
-					'section_name'      => esc_html__('Button Settings', 'uipro')
+					'section_name'      => esc_html__('Button Settings', 'uipro'),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
 				),
 				array(
 					'id'    => 'all_button_title',
@@ -1319,6 +1571,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'type' => Controls_Manager::TEXT,
 					'default' => esc_html__( 'Read more' , 'uipro' ),
 					'label_block' => true,
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
 				),
 				array(
 					'id'    => 'target',
@@ -1328,6 +1585,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 						'' => esc_html__('Same Window', 'uipro'),
 						'_blank' => esc_html__('New Window', 'uipro'),
 					),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
 				),
 				array(
 					'id'    => 'button_style',
@@ -1346,6 +1608,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 						'custom' => esc_html__('Custom', 'uipro'),
 					),
 					'default' => '',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
 				),
 				array(
 					'name'          => 'button_font_family',
@@ -1355,6 +1622,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
 					'selector'      => '{{WRAPPER}} .ui-post-button',
 					'condition' => array(
+						'main_layout'     => 'base',
 						'button_style'    => 'custom'
 					),
 				),
@@ -1368,6 +1636,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'separator'     => 'before',
 					'default' => '#1e87f0',
 					'condition' => array(
+                        'main_layout'     => 'base',
 						'button_style'    => 'custom'
 					),
 				),
@@ -1379,6 +1648,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 						'{{WRAPPER}} .ui-post-button' => 'color: {{VALUE}}',
 					],
 					'condition' => array(
+                        'main_layout'     => 'base',
 						'button_style'    => 'custom'
 					),
 				),
@@ -1389,6 +1659,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'selector' => '{{WRAPPER}} .ui-post-button',
 					'conditions' => [
 						'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
 							['name' => 'button_style', 'operator' => '===', 'value' => 'custom'],
 						],
 					],
@@ -1403,6 +1674,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default' => '#0f7ae5',
 					'separator'     => 'before',
 					'condition' => array(
+                        'main_layout'     => 'base',
 						'button_style'    => 'custom'
 					),
 				),
@@ -1414,6 +1686,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 						'{{WRAPPER}} .ui-post-button:hover' => 'color: {{VALUE}}',
 					],
 					'condition' => array(
+                        'main_layout'     => 'base',
 						'button_style'    => 'custom'
 					),
 				),
@@ -1424,6 +1697,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'selector' => '{{WRAPPER}} .ui-post-button:hover',
 					'conditions' => [
 						'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
 							['name' => 'button_style', 'operator' => '===', 'value' => 'custom'],
 						],
 					],
@@ -1438,6 +1712,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 						'uk-button-large' => esc_html__('Large', 'uipro'),
 					),
 					'separator'     => 'before',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
 				),
 				array(
 					'id'    => 'button_shape',
@@ -1453,6 +1732,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'conditions' => [
 						'relation' => 'and',
 						'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
 							['name' => 'button_style', 'operator' => '!==', 'value' => 'link'],
 							['name' => 'button_style', 'operator' => '!==', 'value' => 'link-muted'],
 							['name' => 'button_style', 'operator' => '!==', 'value' => 'link-text'],
@@ -1474,21 +1754,26 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 						'remove' => esc_html__('None', 'uipro'),
 					),
 					'default' => '',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
 				),
 			) );
-			unset($post_types['post']);
-            foreach ($post_types as $key => $value) {
-                $post_type_category = array(
-                    array(
-                        'type'          => Controls_Manager::SELECT2,
-                        'id'            => $key.'_category',
-                        'label'         => esc_html__( 'Select Category', 'uipro' ),
-                        'options'       => UIPro_Helper::get_cat_taxonomy( $key.'-category'),
-                        'multiple'      => true,
-                    )
-                );
-                array_splice($options, 2, 0, $post_type_category);
-            }
+//			unset($post_types['post']);
+//            foreach ($post_types as $key => $value) {
+//                $post_type_category = array(
+//                    array(
+//                        'type'          => Controls_Manager::SELECT2,
+//                        'id'            => $key.'_category',
+//                        'label'         => esc_html__( 'Select Category', 'uipro' ),
+//                        'options'       => UIPro_Helper::get_cat_taxonomy( $key.'-category'),
+//                        'multiple'      => true,
+//                    )
+//                );
+//                array_splice($options, 2, 0, $post_type_category);
+//            }
 			return array_merge($options, $this->get_general_options());
 		}
 

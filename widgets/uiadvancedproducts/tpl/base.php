@@ -225,13 +225,13 @@ if (count($posts)) {
 		$cat_arg    =   array();
 		if ($pagination_type == 'ajax') {
 			$tags   =   get_terms( array ('taxonomy' => $resource. '_tag') );
-			if ($tags) {
+			if ($tags && !is_wp_error($tags)) {
 				foreach ( $tags as $term ) {
 					$tag_arg[$term->slug]	=   $term->name;
 				}
 			}
 			$cat_portfolio = $resource == 'post' ? get_terms( array ('taxonomy' => 'category') ) : get_terms( array ('taxonomy' => $resource.'-category') );
-			if ($cat_portfolio && count($cat_portfolio)) {
+			if ($cat_portfolio && !is_wp_error($cat_portfolio) && count($cat_portfolio)) {
 				foreach ( $cat_portfolio as $term ) {
 					$cat_arg[$term->slug]   =   $term->name;
 				}

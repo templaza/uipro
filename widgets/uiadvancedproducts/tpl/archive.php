@@ -11,18 +11,40 @@ use Advanced_Product\AP_Templates;
 //// Set $wp_query to new object
 //$wp_query           = isset($instance['posts'])?$instance['posts']:$wp_query_tmp;
 
-if(have_posts()) {
+$ap_posts   = isset($instance['ap_posts'])?$instance['ap_posts']:false;
 
-    $query_args     = (isset($instance['query_args']) && !empty($instance['query_args']))?$instance['query_args']:array();
-    $pagination_type = (isset($instance['pagination_type']) && $instance['pagination_type']) ? $instance['pagination_type'] : 'none';
+if($ap_posts && $ap_posts -> have_posts()) {
+
+//responsive width
+    $large_desktop_columns    = ( isset( $instance['large_desktop_columns'] ) && $instance['large_desktop_columns'] ) ? $instance['large_desktop_columns'] : '4';
+    $desktop_columns    = ( isset( $instance['desktop_columns'] ) && $instance['desktop_columns'] ) ? $instance['desktop_columns'] : '4';
+    $laptop_columns     = ( isset( $instance['laptop_columns'] ) && $instance['laptop_columns'] ) ? $instance['laptop_columns'] : '3';
+    $tablet_columns     = ( isset( $instance['tablet_columns'] ) && $instance['tablet_columns'] ) ? $instance['tablet_columns'] : '2';
+    $mobile_columns     = ( isset( $instance['mobile_columns'] ) && $instance['mobile_columns'] ) ? $instance['mobile_columns'] : '1';
+    $column_grid_gap    = ( isset( $instance['column_grid_gap'] ) && $instance['column_grid_gap'] ) ? ' uk-grid-'. $instance['column_grid_gap'] : '';
+
+    $query_args         = (isset($instance['query_args']) && !empty($instance['query_args']))?$instance['query_args']:array();
+    $pagination_type    = (isset($instance['pagination_type']) && $instance['pagination_type']) ? $instance['pagination_type'] : 'none';
+    $masonry            = (isset($instance['masonry']) && $instance['masonry']) ? intval($instance['masonry']) : 0;
 
     $general_styles = \UIPro_Elementor_Helper::get_general_styles($instance);
     ?>
     <div class="ui-advanced-products<?php esc_attr($general_styles['container_cls']); ?>"<?php
     echo $general_styles['animation']; ?>>
+        <div class="ui-post-items uk-child-width-1-<?php echo $large_desktop_columns;?>@xl uk-child-width-1-<?php
+        echo $desktop_columns;?>@l uk-child-width-1-<?php echo $laptop_columns;?>@m uk-child-width-1-<?php
+        echo $tablet_columns;?>@s uk-child-width-1-<?php echo $mobile_columns . $column_grid_gap
+            . ($use_slider ? ' uk-slider-items': '') .'" data-uk-grid="'.($masonry ? 'masonry:true;' : '');?>">
         <?php
         //$output = apply_filters('uipro/widgets/uiadvancedproducts/products', '');
-        AP_Templates::load_my_layout('archive.content');
+        while ($ap_posts -> have_posts()) {
+            $ap_posts -> the_post();
+            AP_Templates::load_my_layout('archive.content-item');
+        }
+        ?>
+        </div>
+        <?php
+        wp_reset_postdata();
 
         $output = '';
         // Pagination section

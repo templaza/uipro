@@ -26,24 +26,15 @@ if ( ! class_exists( 'UIPro_El_UIPosts_Ajax' ) ) {
             $query_args['post_status'] = 'publish';
             $instance   =   json_decode(base64_decode($_POST['settings']), true) ;
             $output         =   '';
-//            global $wp_query;
 
             $tmp_name   = isset($instance['main_layout'])?$instance['main_layout']:'archive';
             if($tmp_name == 'archive'){
-//                // Store current $wp_query to $wp_query_tmp
-//                $wp_query_tmp       = $wp_query;
-//                // Set $wp_query to new object
-//                $wp_query           = !empty($ap_posts)?$ap_posts:$wp_query_tmp;
-
                 $ap_posts       =   new WP_Query($query_args);
                 if($ap_posts -> have_posts()){
                     while ($ap_posts -> have_posts()) { $ap_posts -> the_post();
                         AP_Templates::load_my_layout('archive.content-item');
                     }
                 }
-
-//                // Assign $wp_query again
-//                $wp_query = $wp_query_tmp;
             }else {
                 $posts      =   get_posts($query_args);
                 foreach ($posts as $item) {
@@ -51,10 +42,6 @@ if ( ! class_exists( 'UIPro_El_UIPosts_Ajax' ) ) {
                 }
                 echo $output;
             }
-//            foreach ($posts as $item) {
-//                include plugin_dir_path(__FILE__).'tpl/post_item.php';
-//            }
-//            echo $output;
             wp_reset_postdata();
             die; // here we exit the script and even no wp_reset_query() required!
         }

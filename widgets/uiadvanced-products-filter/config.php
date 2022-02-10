@@ -141,6 +141,16 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
                     'label'         => esc_html__( 'Submit Icon', 'uipro' ),
                 ),
                 array(
+                    'type'          => Controls_Manager::SELECT,
+                    'id'            => 'uiap_submit_icon_position',
+                    'label'         => esc_html__( 'Submit Icon Position', 'uipro' ),
+                    'options'       => array(
+                        'before'    => esc_html__('Before', 'uipro'),
+                        'after'     => esc_html__('After', 'uipro')
+                    ),
+                    'default'       => 'before'
+                ),
+                array(
                     'type'          => Controls_Manager::DIMENSIONS,
                     'name'          =>  'form_padding',
                     'label'         => esc_html__( 'Form Padding', 'uipro' ),

@@ -16,6 +16,7 @@ $title_tag      =   isset($instance['title_tag']) ? $instance['title_tag'] : 'h3
 $title_display  =   isset($instance['title_display']) ? $instance['title_display'] : 'uk-display-block';
 $submit_text    =   isset($instance['uiap_submit_text']) ? $instance['uiap_submit_text'] : esc_html__('Search', 'uipro');
 $submit_icon    =   isset($instance['uiap_submit_icon']) ? $instance['uiap_submit_icon'] : '';
+$submit_icon_pos=   isset($instance['uiap_submit_icon_position']) ? $instance['uiap_submit_icon_position'] : 'before';
 
 $shortcode  = '[advanced-product-form';
 if(!empty($fields_include) && count($fields_include)) {
@@ -32,6 +33,9 @@ if(!empty($submit_icon)){
     }else{
         $shortcode  .= ' submit_icon="'.$submit_icon['value'].'"';
     }
+}
+if(!empty($submit_icon_pos)){
+    $shortcode  .= ' submit_icon_position="'.$submit_icon_pos.'"';
 }
 $shortcode .= ' enable_keyword="'.($enable_keyword?1:0).'"]';
 ?>
