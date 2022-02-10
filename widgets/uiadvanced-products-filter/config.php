@@ -38,34 +38,6 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
 			parent::__construct();
 		}
 
-//		public function get_styles() {
-//            return array(
-//                'ui-advanced-product-loadmore' => array(
-//                    'src'   =>  'style.css'
-//                )
-//            );
-//        }
-//
-//		public function get_scripts() {
-//			return array(
-//				'ui-advanced-product-loadmore' => array(
-//					'src'   =>  'script.min.js',
-//					'deps'  =>  array('jquery')
-//				)
-//			);
-//		}
-//
-//		public function get_localize() {
-//			global $wp_query;
-//			// get settings
-//			return array(
-//				'ui_advanced_product_loadmore_params'   =>  array(
-//					'ajaxurl' => site_url() . '/wp-admin/admin-ajax.php', // WordPress AJAX
-//					'current_page' => get_query_var( 'paged' ) ? get_query_var('paged') : 1,
-//				)
-//			);
-//		}
-
 		/**
 		 * @return array
 		 */

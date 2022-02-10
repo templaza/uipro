@@ -2,6 +2,8 @@
 
 defined('UIPRO') or exit();
 
+use Advanced_Product\Helper\AP_Custom_Field_Helper;
+
 class UIPro_UIAdvancedProducts_Helper extends UIPro_Helper {
     public static function get_post_meta_type() {
         return apply_filters( 'uipro/uiadvancedproducts-meta-type',
@@ -67,7 +69,12 @@ class UIPro_UIAdvancedProducts_Helper extends UIPro_Helper {
             return $data;
         }
         foreach ( $fields as $field ) {
-            $data[$field->ID] = $field->post_title;
+            $f_attr             = AP_Custom_Field_Helper::get_custom_field_option_by_id($field -> ID);
+            $key    = $field -> ID;
+            if(!empty($f_attr)) {
+                $key = isset($f_attr['_name']) ? $f_attr['_name'] : (isset($f_attr['name'])?$f_attr['name']:$key);
+            }
+            $data[$key] = $field->post_title;
         }
         return $data;
     }

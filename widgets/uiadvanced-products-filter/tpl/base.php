@@ -10,13 +10,13 @@ $fields_include  = isset($instance['uiap_custom_fields'])?$instance['uiap_custom
 
 $enable_keyword = filter_var($enable_keyword, FILTER_VALIDATE_BOOLEAN);
 
+$shortcode  = '[advanced-product-form';
 if(!empty($fields_include) && count($fields_include)) {
-
-//    $fields = AP_Custom_Field_Helper::get_custom_fields(array(), $fields_include);
-
-    $shortcode  = '[advanced-product-form include="';
-    $shortcode .= implode(',', $fields_include);
-    $shortcode .= '" enable_keyword="'.($enable_keyword?1:0).'"]';
-    do_shortcode($shortcode);
+    $shortcode .= ' include="'.implode(',', $fields_include).'"';
+}else{
+    $shortcode .= ' include=""';
 }
+$shortcode .= ' enable_keyword="'.($enable_keyword?1:0).'"]';
+
+do_shortcode($shortcode);
 
