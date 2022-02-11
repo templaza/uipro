@@ -30,7 +30,8 @@ class UIPro_UIAdvancedProducts_Helper extends UIPro_Helper {
             'order'       => 'ASC',
             'orderby'     => 'ID',
             'post_status' => 'publish',
-            'post_type'   => 'ap_custom_field'
+            'post_type'   => 'ap_custom_field',
+            'numberposts' => -1
         );
 
         if(!empty($ids) && count($ids)){
