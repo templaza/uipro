@@ -97,6 +97,14 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
 					'default' => 'full',
 				]
 			);
+            $repeater->add_control(
+                'author_rating',
+                [
+                    'type'          =>  Controls_Manager::SWITCHER,
+                    'label'         => esc_html__('Enable Rating:', 'uipro'),
+                ]
+            );
+
 			// options
 			$options = array(
                 array(
@@ -106,6 +114,7 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     'options'   => array(
                         'base'      => esc_html__('Default', 'uipro'),
                         'style1'    => esc_html__('Custom style 1', 'uipro'),
+                        'style2'    => esc_html__('Custom style 2', 'uipro'),
                     ),
                     'default'   => 'base',
                 ),
@@ -121,12 +130,127 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     ],
                     'title_field' => __( 'Quote item', 'plugin-domain' ),
 				),
+
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'testimonial_box_padding',
+                    'label'         => esc_html__( 'Item Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-slider-items > li' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'start_section' => 'item-options',
+                    'section_name'  => esc_html__( 'Item options', 'uipro' ),
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'testimonial_box_margin',
+                    'label'         => esc_html__( 'Item Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-slider-items > li' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'label' => esc_html__( 'Item background color', 'uipro' ),
+                    'name'  => 'testimonial_box_bg',
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .uk-slider-items > li' => 'background-color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'item_border_radius',
+                    'label'         => esc_html__( 'Item border radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-slider-items > li' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
+                    ],
+                ),
+                array(
+                    'type'      => Controls_Manager::SELECT,
+                    'name'      => 'item_width',
+                    'label'     => esc_html__( 'Item width', 'uipro' ),
+                    'options'       => array(
+                        '' => esc_html__('auto', 'uipro'),
+                        'custom' => esc_html__('Custom', 'uipro'),
+                    ),
+                    'default'       => '',
+                ),
+                array(
+                    'name'            => 'item_width_custom',
+                    'label'         => esc_html__( 'Item width custom', 'uipro' ),
+                    'type'          => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px', '%' ],
+                    'responsive'    => true,
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => '%',
+                        'size' => 50,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .uk-slider-items > li' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+                    'condition'     => array(
+                        'item_width'    => 'custom'
+                    ),
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'content_margin',
+                    'label'         => esc_html__( 'Content Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .templaza_quote_content' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'avata_margin',
+                    'label'         => esc_html__( 'Avatar Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-testimonial-avatar' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'type'      => Controls_Manager::SELECT,
+                    'name'      => 'testimonial_slider_wrap',
+                    'label'     => esc_html__( 'Slider visible', 'uipro' ),
+                    'options'       => array(
+                        '' => esc_html__('Default', 'uipro'),
+                        'uk-visible' => esc_html__('Visible', 'uipro'),
+                        'uk-visible-right' => esc_html__('Visible right', 'uipro'),
+                        'uk-visible-left' => esc_html__('Visible left', 'uipro'),
+                    ),
+                    'default'       => '',
+                    'start_section' => 'slider-options',
+                    'section_name'  => esc_html__( 'Slider options', 'uipro' ),
+                    'condition'     => array(
+                        'layout!'    => 'style1'
+                    ),
+                ),
+
                 array(
                     'type'      => Controls_Manager::SWITCHER,
                     'name'      => 'testimonial_slider_autoplay',
                     'label'     => esc_html__( 'Autoplay', 'uipro' ),
-                    'start_section' => 'slider-options',
-                    'section_name'  => esc_html__( 'Slider options', 'uipro' ),
                 ),
                 array(
                     'type'      => Controls_Manager::SWITCHER,
@@ -237,6 +361,33 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     'type' => \Elementor\Controls_Manager::COLOR,
                     'selectors' => [
                         '{{WRAPPER}} .quote-icon i' => 'color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'name'          => 'rating_icon_size',
+                    'label' => __( 'Rating icon Size', 'uipro' ),
+                    'description'   => esc_html__('Size of rating icon', 'uipro'),
+                    'type' => Controls_Manager::SLIDER,
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 500,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'size' => 18,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .templaza_quote_author_rating i' => 'font-size: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'label' => esc_html__( 'Rating icon Color', 'uipro' ),
+                    'name'  => 'rating_icon_color',
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .templaza_quote_author_rating i' => 'color: {{VALUE}}',
                     ],
                 ),
 				array(

@@ -217,6 +217,25 @@ if ( ! class_exists( 'UIPro_Config_Woo_Grid' ) ) {
                         'product_source'    => array('top_rated', 'sale', 'featured')
                     )
 				),
+                array(
+                    'name'            => 'item_border',
+                    'type'          =>  \Elementor\Group_Control_Border::get_type(),
+                    'label' => esc_html__( 'Item Border', 'uipro' ),
+                    'selector' => '{{WRAPPER}} .product .product-inner',
+                    'start_section' => 'item_settings',
+                    'section_name'      => esc_html__('Item Settings', 'uipro')
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'item_border_radius',
+                    'label'         => esc_html__( 'Item border radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .product .product-inner' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
+                    ],
+                ),
+
 				array(
 					'type'          => Controls_Manager::SELECT,
 					'name'          => 'image_size',
@@ -290,13 +309,22 @@ if ( ! class_exists( 'UIPro_Config_Woo_Grid' ) ) {
                 ),
                 array(
                     'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'info_bg_color',
+                    'label'         => esc_html__('Info box background Color', 'uipro'),
+                    'description'   => esc_html__('Set the color of title.', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .product-info' => 'background-color: {{VALUE}}',
+                    ],
+                    'separator'     => 'before',
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
                     'name'          => 'title_color',
                     'label'         => esc_html__('Title Color', 'uipro'),
                     'description'   => esc_html__('Set the color of title.', 'uipro'),
                     'selectors' => [
                         '{{WRAPPER}} .woocommerce-loop-product__title' => 'color: {{VALUE}}',
                     ],
-                    'separator'     => 'before',
                 ),
                 array(
                     'type'          =>  Controls_Manager::COLOR,
