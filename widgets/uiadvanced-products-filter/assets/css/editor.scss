@@ -1,0 +1,9 @@
+.elementor-control-uiap_custom_fields{
+  .select2-selection__rendered{
+    &.ui-sortable{
+      .select2-selection__choice{
+        cursor: move;
+      }
+    }
+  }
+}

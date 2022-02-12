@@ -36,6 +36,9 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
 			self::$icon = 'eicon-posts-grid';
 			self::$assets_path  =   plugin_dir_url(__FILE__). 'assets/';
 			parent::__construct();
+
+            add_action( 'elementor/editor/before_enqueue_styles', array($this, 'editor_enqueue_styles') );
+            add_action( 'elementor/preview/enqueue_scripts', array($this, 'editor_enqueue_scripts') );
 		}
 
 		/**
@@ -122,6 +125,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
                     'label'         => esc_html__( 'Select Custom Field', 'uipro' ),
                     'options'       => $custom_fields,
                     'multiple'      => true,
+                    'label_block'   => true,
                 ),
                 array(
                     'type'          => Controls_Manager::SWITCHER,
@@ -220,5 +224,26 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
 		public function get_template_name() {
 			return 'base';
 		}
+
+//        public function get_scripts() {
+//            return array(
+//                'ui-advanced-product-filter' => array(
+//                    'src'   =>  'script.min.js',
+//                    'deps'  =>  array('jquery','elementor-frontend')
+//                )
+//            );
+//        }
+
+        public function editor_enqueue_scripts(){
+            wp_register_script( 'ui-advanced-products-filter-editor',
+                plugins_url( 'assets/js/editor.min.js', __FILE__ ), array('jquery'));
+            wp_enqueue_script('ui-advanced-products-filter-editor');
+        }
+
+        public function editor_enqueue_styles(){
+            wp_register_style( 'ui-advanced-products-filter-editor',
+                plugins_url( 'assets/css/editor.css', __FILE__ ) );
+            wp_enqueue_style('ui-advanced-products-filter-editor');
+        }
 	}
 }

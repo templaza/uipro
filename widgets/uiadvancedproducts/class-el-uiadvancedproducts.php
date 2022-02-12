@@ -32,6 +32,7 @@ if ( ! class_exists( 'UIPro_El_UIAdvancedProducts' ) ) {
 
         function __construct( array $data = [], array $args = null ) {
             parent::__construct($data, $args);
+
 //            add_filter('advanced-product/archive/uk-options', array($this, 'advanced_product_uk_options'));
             add_action('wp_ajax_templaza_ui_advanced_products_loadmore', array($this,'templaza_ui_post_loadmore_ajax_handler') ); // wp_ajax_{action}
             add_action('wp_ajax_nopriv_templaza_ui_post_loadmore', array($this,'templaza_ui_post_loadmore_ajax_handler')); // wp_ajax_nopriv_{action}

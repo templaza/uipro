@@ -1,5 +1,6 @@
-"use strict";
-jQuery(function($){
+(function($){
+    "use strict";
+
     if (($('.ui-advanced-products .ui-post-items').length || $('.ui-advanced-products .ap-list').length)
         && $('.ui-advanced-products > .ui-post-paging').length
         && $('.ui-advanced-products > .ui-post-settings').length) {
@@ -47,6 +48,7 @@ jQuery(function($){
                 callUIAdProductsAjaxload();
             }
         });
+
 
 
         // var callUIAdProductsAjaxload = function ($selector) {
@@ -103,4 +105,6 @@ jQuery(function($){
         //     });
         // });
     }
-});
+
+
+})(jQuery);

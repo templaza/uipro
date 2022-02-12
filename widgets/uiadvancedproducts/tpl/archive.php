@@ -27,6 +27,8 @@ if($ap_posts && $ap_posts -> have_posts()) {
     $pagination_type    = (isset($instance['pagination_type']) && $instance['pagination_type']) ? $instance['pagination_type'] : 'none';
     $masonry            = (isset($instance['masonry']) && $instance['masonry']) ? intval($instance['masonry']) : 0;
 
+    $use_slider 	    = (isset($instance['use_slider']) && $instance['use_slider']) ? intval($instance['use_slider']) : 0;
+
     $general_styles = \UIPro_Elementor_Helper::get_general_styles($instance);
     ?>
     <div class="ui-advanced-products<?php esc_attr($general_styles['container_cls']); ?>"<?php
