@@ -56,7 +56,7 @@ if ( ! $results ) {
                 }
                 echo '</div>';
                 ?>
-                <div class="product-info uk-position-bottom uk-padding-small">
+                <div class="product-info uk-padding-small">
                     <div class="tz-product-title uk-flex uk-flex-between">
                         <h2 class="product-title woocommerce-loop-product__title">
                             <?php the_title(); ?>

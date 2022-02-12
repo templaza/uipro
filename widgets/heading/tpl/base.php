@@ -88,7 +88,6 @@ if ( $instance['text_align'] && $instance['text_align'] <> '' ) {
 	$text_align = $instance['text_align'];
 }
 
-
 if ( $css ) {
     $id = '';
     if(isset($args['element_id']) && $args['element_id']){

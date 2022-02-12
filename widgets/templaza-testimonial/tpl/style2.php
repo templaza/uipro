@@ -9,7 +9,7 @@ $testimonial_slider_dot    = !empty( $instance['testimonial_slider_dot'] ) ? $in
 $testimonial_slider_number    = !empty( $instance['testimonial_slider_number'] ) ? $instance['testimonial_slider_number'] : 1;
 $testimonial_quote_size    = isset( $instance['testimonial_quote_size'] ) && $instance['testimonial_quote_size']['size'] ? $instance['testimonial_quote_size']['size'] : 32;
 $avatar_border    = isset( $instance['avatar_border'] ) && $instance['avatar_border'] ? ' '. $instance['avatar_border'] : '';
-
+$testimonials_visible      = !empty( $instance['testimonial_slider_wrap'] ) ? $instance['testimonial_slider_wrap'] : '';
 $slider_options = '';
 if($testimonial_slider_autoplay=='yes'){
     $slider_options .= 'autoplay: true; ';
@@ -24,14 +24,15 @@ if($testimonial_slider_navigation_outside=='yes'){
     $next = 'uk-position-center-right';
     $preview = 'uk-position-center-left';
 }
-
 if ( !empty( $instance['templaza-testimonial'] ) ) {
 	$general_styles     =   \UIPro_Elementor_Helper::get_general_styles($instance);
 ?>
 <div class="<?php echo $general_styles['container_cls']; ?>" <?php echo $general_styles['animation']; ?>>
-    <div data-uk-slider="<?php echo esc_attr($slider_options);?>" class="templaza-testimonial<?php echo $general_styles['content_cls']; ?>">
+    <div data-uk-slider="<?php echo esc_attr($slider_options);?>" class="templaza-testimonial<?php echo $general_styles['content_cls']. ' '.$testimonials_visible; ?>">
         <div class="uk-position-relative  uk-visible-toggle " tabindex="-1">
+            <?php if($testimonials_visible ==''){ ?>
             <div class="uk-slider-container">
+                <?php } ?>
                 <ul class="uk-slider-items uk-child-width-1-1 uk-child-width-1-1@s uk-child-width-1-<?php echo esc_attr($testimonial_slider_number);?>@m">
 					<?php
 					foreach ($templaza_testimonials as $item){
@@ -39,25 +40,11 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
 						?>
                         <li>
                             <div class="uk-flex-middle" data-uk-grid>
-                                <?php if (isset( $image['url'] ) && $image['url'] ) : ?>
-                                <div class="ui-testimonial-avatar uk-width-auto@m">
-                                    <div class="uk-inline-clip<?php echo $avatar_border; ?>">
-	                                    <?php echo \UIPro_Elementor_Helper::get_attachment_image_html( $item, 'author_image' ); ?>
-                                    </div>
-                                </div>
-                                <?php endif; ?>
                                 <div class="ui-testimonial-content uk-width-expand@m">
                                     <span class="quote-icon uk-margin-small-bottom" data-uk-icon="icon: quote-right; width: <?php echo $testimonial_quote_size; ?>"></span>
 	                                <?php
-	                                if($item['quote_content']){
-		                                ?>
-                                        <div class="templaza_quote_content uk-margin-bottom">
-			                                <?php echo esc_html($item['quote_content']); ?>
-                                        </div>
-		                                <?php
-	                                }
-	                                if($item['author_rating']){
-		                                ?>
+                                    if($item['author_rating']){
+                                        ?>
                                         <div class="templaza_quote_author_rating">
                                             <i class="fas fa-star"></i>
                                             <i class="fas fa-star"></i>
@@ -65,23 +52,44 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
                                             <i class="fas fa-star"></i>
                                             <i class="fas fa-star"></i>
                                         </div>
-		                                <?php
-	                                }
-	                                if($item['quote_author']){
+                                        <?php
+                                    }
+	                                if($item['quote_content']){
 		                                ?>
-                                        <div class="templaza_quote_author">
-			                                <?php echo esc_html($item['quote_author']); ?>
+                                        <div class="templaza_quote_content">
+			                                <?php echo esc_html($item['quote_content']); ?>
                                         </div>
 		                                <?php
 	                                }
-	                                if($item['author_position']){
-		                                ?>
-                                        <span class="templaza_quote_author_position">
-                                    <?php echo esc_html($item['author_position']); ?>
-                                </span>
-		                                <?php
-	                                }
 	                                ?>
+                                    <div class="uk-flex uk-flex-middle">
+                                        <?php if (isset( $image['url'] ) && $image['url'] ) : ?>
+                                            <div class="ui-testimonial-avatar uk-width-auto@m">
+                                                <div class="uk-inline-clip<?php echo $avatar_border; ?>">
+                                                    <?php echo \UIPro_Elementor_Helper::get_attachment_image_html( $item, 'author_image' ); ?>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
+                                        <div class="">
+                                            <?php
+                                            if($item['quote_author']){
+                                                ?>
+                                                <div class="templaza_quote_author">
+                                                    <?php echo esc_html($item['quote_author']); ?>
+                                                </div>
+                                                <?php
+                                            }
+                                            if($item['author_position']){
+                                                ?>
+                                                <span class="templaza_quote_author_position">
+                                            <?php echo esc_html($item['author_position']); ?>
+                                        </span>
+                                                <?php
+                                            }
+                                            ?>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </li>
@@ -89,12 +97,14 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
 					}
 					?>
                 </ul>
-            </div>
+                <?php if($testimonials_visible ==''){ ?>
+                </div>
+                <?php } ?>
 			<?php if($testimonial_slider_navigation=='yes'){?>
-                    <div class="uk-slidenav-container<?php echo $testimonial_slider_navigation_position; ?>">
-                        <a class="<?php echo $testimonial_slider_navigation_position ? '' : esc_attr($preview) . ' uk-position-small';?>" href="#" data-uk-slidenav-previous data-uk-slider-item="previous"></a>
-                        <a class="<?php echo $testimonial_slider_navigation_position ? '' : esc_attr($next) . ' uk-position-small';?>" href="#" data-uk-slidenav-next data-uk-slider-item="next"></a>
-                    </div>
+                <div class="uk-slidenav-container<?php echo $testimonial_slider_navigation_position; ?>">
+                    <a class="<?php echo $testimonial_slider_navigation_position ? '' : esc_attr($preview) . ' uk-position-small';?>" href="#" data-uk-slidenav-previous data-uk-slider-item="previous"></a>
+                    <a class="<?php echo $testimonial_slider_navigation_position ? '' : esc_attr($next) . ' uk-position-small';?>" href="#" data-uk-slidenav-next data-uk-slider-item="next"></a>
+                </div>
 				<?php
 			}
 			?>
