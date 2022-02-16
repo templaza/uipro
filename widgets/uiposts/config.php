@@ -942,9 +942,23 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 						'uk-border-circle' => esc_html__('Circle', 'uipro'),
 						'uk-border-rounded' => esc_html__('Rounded', 'uipro'),
 						'uk-border-pill' => esc_html__('Pill', 'uipro'),
+						'custom' => esc_html__('Custom', 'uipro'),
 					),
 					'default'       => '',
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'image_border_radius',
+                    'label'         => esc_html__( 'Image border radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-post-thumbnail > img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
+                    ],
+                    'condition'     => array(
+                        'image_border'    => 'custom'
+                    ),
+                ),
 				array(
 					'type'          => \Elementor\Group_Control_Image_Size::get_type(),
 					'name' => 'thumbnail', // // Usage: `{name}_size` and `{name}_custom_dimension`, in this case `thumbnail_size` and `thumbnail_custom_dimension`.
@@ -1335,6 +1349,7 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 						'' => esc_html__('Default', 'uipro'),
 						'uk-button-small' => esc_html__('Small', 'uipro'),
 						'uk-button-large' => esc_html__('Large', 'uipro'),
+						'uk-padding-remove' => esc_html__('None', 'uipro'),
 					),
 					'separator'     => 'before',
 				),

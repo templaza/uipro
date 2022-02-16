@@ -879,12 +879,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'         => esc_html__('Title Font', 'uipro'),
 					'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
-					'selector'      => '{{WRAPPER}} .ui-title',
-                    'conditions' => [
-                        'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
-                        ],
-                    ],
+					'selector'      => '{{WRAPPER}} .ui-title, {{WRAPPER}} .ap-title',
 				),
 				array(
 					'type'          => Controls_Manager::SELECT,

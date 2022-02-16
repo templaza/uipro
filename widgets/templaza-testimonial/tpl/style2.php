@@ -10,6 +10,7 @@ $testimonial_slider_number    = !empty( $instance['testimonial_slider_number'] )
 $testimonial_quote_size    = isset( $instance['testimonial_quote_size'] ) && $instance['testimonial_quote_size']['size'] ? $instance['testimonial_quote_size']['size'] : 32;
 $avatar_border    = isset( $instance['avatar_border'] ) && $instance['avatar_border'] ? ' '. $instance['avatar_border'] : '';
 $testimonials_visible      = !empty( $instance['testimonial_slider_wrap'] ) ? $instance['testimonial_slider_wrap'] : '';
+$quote_icon = ( isset( $instance['quote_icon'] ) && $instance['quote_icon'] ) ? $instance['quote_icon'] : array();
 $slider_options = '';
 if($testimonial_slider_autoplay=='yes'){
     $slider_options .= 'autoplay: true; ';
@@ -41,8 +42,24 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
                         <li>
                             <div class="uk-flex-middle" data-uk-grid>
                                 <div class="ui-testimonial-content uk-width-expand@m">
-                                    <span class="quote-icon uk-margin-small-bottom" data-uk-icon="icon: quote-right; width: <?php echo $testimonial_quote_size; ?>"></span>
 	                                <?php
+                                    if ($quote_icon && isset($quote_icon['value'])) {
+                                        ?>
+                                        <span class="quote-icon">
+                                        <?php
+                                        if (is_array($quote_icon['value']) && isset($quote_icon['value']['url']) && $quote_icon['value']['url']) {
+                                            ?>
+                                            <img src="<?php echo esc_attr($quote_icon['value']['url']);?>" data-uk-svg />
+                                            <?php
+                                        } elseif (is_string($quote_icon['value']) && $quote_icon['value']) {
+                                            ?>
+                                            <i class="<?php echo esc_attr($quote_icon['value']);?>" aria-hidden="true"></i>
+                                            <?Php
+                                        }
+                                        ?>
+                                        </span>
+                                        <?php
+                                    }
                                     if($item['author_rating']){
                                         ?>
                                         <div class="templaza_quote_author_rating">
