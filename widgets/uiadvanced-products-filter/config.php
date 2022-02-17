@@ -155,6 +155,50 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
                     'default'       => 'before'
                 ),
                 array(
+                    'name'          => 'uiap_submit_icon_spacing',
+                    'label' => esc_html__( 'Icon Spacing', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px'],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 200,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'size' => 5,
+                    ],
+                    'condition'     => array(
+                        'uiap_submit_icon_position'    => 'after'
+                    ),
+                    'selectors' => [
+                        '{{WRAPPER}} .advanced-product-search-form button span' => 'margin-left: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'name'          => 'uiap_submit_icon_spacing_right',
+                    'label' => esc_html__( 'Icon Spacing', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px'],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 200,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'size' => 5,
+                    ],
+                    'condition'     => array(
+                        'uiap_submit_icon_position'    => 'before'
+                    ),
+                    'selectors' => [
+                        '{{WRAPPER}} .advanced-product-search-form button span' => 'margin-right: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
                     'type'          => Controls_Manager::DIMENSIONS,
                     'name'          =>  'form_padding',
                     'label'         => esc_html__( 'Form Padding', 'uipro' ),

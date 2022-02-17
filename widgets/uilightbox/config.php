@@ -94,7 +94,6 @@ if ( ! class_exists( 'UIPro_Config_UILightbox' ) ) {
                     'name'          => 'width',
                     'label'         => esc_html__( 'Button Width', 'uipro' ),
                     'type'          => Controls_Manager::SLIDER,
-                    'devices'       => [ 'desktop', 'tablet', 'mobile' ],
                     'responsive'    => true,
                     'range' => [
                         'px' => [
@@ -123,7 +122,6 @@ if ( ! class_exists( 'UIPro_Config_UILightbox' ) ) {
                     'name'          => 'height',
                     'label'         => esc_html__( 'Button Height', 'uipro' ),
                     'type'          => Controls_Manager::SLIDER,
-                    'devices'       => [ 'desktop', 'tablet', 'mobile' ],
                     'responsive'    => true,
                     'range' => [
                         'px' => [
@@ -152,7 +150,6 @@ if ( ! class_exists( 'UIPro_Config_UILightbox' ) ) {
                     'name'          => 'size',
                     'label'         => esc_html__( 'Button Size', 'uipro' ),
                     'type'          => Controls_Manager::SLIDER,
-                    'devices'       => [ 'desktop', 'tablet', 'mobile' ],
                     'responsive'    => true,
                     'range' => [
                         'px' => [
