@@ -28,3 +28,42 @@
     }
   }
 }
+.templaza-widget-uitimeline{
+  &.template-style1{
+    .ui-timeline-inner{
+      position:relative;
+      &:before{
+        content:"";
+        width:1px;
+        position:absolute;
+        left:50%;
+        top:0;
+        bottom:0;
+        background:#ccc;
+      }
+    }
+    .line{
+      &:before{
+        position:absolute;
+        width:10px;
+        height:10px;
+        border-radius:50%;
+        padding:4px;
+        border:1px solid #ccc;
+        content:"";
+      }
+    }
+    .frame-even{
+      .line {
+        &:before {
+
+        }
+      }
+    }
+    .uitimeline-img{
+      img{
+        width:100%;
+      }
+    }
+  }
+}

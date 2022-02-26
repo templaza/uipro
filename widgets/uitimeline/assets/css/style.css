@@ -1,21 +1,49 @@
 .ui-timeline .ui-dateline:before {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   bottom: 10px;
   background-color: #ddd;
   width: 100%;
-  height: 2px; }
+  height: 2px;
+}
 .ui-timeline .ui-timeline-date > a:after {
-  content: '';
+  content: "";
   display: block;
   width: 20px;
   height: 20px;
   background-color: #fff;
   border: 3px solid #333;
   border-radius: 50%;
-  margin-top: 20px; }
+  margin-top: 20px;
+}
 .ui-timeline .ui-timeline-date > a.active:after {
-  background-color: #fed23d; }
+  background-color: #fed23d;
+}
+
+.templaza-widget-uitimeline.template-style1 .ui-timeline-inner {
+  position: relative;
+}
+.templaza-widget-uitimeline.template-style1 .ui-timeline-inner:before {
+  content: "";
+  width: 1px;
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  background: #ccc;
+}
+.templaza-widget-uitimeline.template-style1 .line:before {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  padding: 4px;
+  border: 1px solid #ccc;
+  content: "";
+}
+.templaza-widget-uitimeline.template-style1 .uitimeline-img img {
+  width: 100%;
+}
 
 /*# sourceMappingURL=style.css.map */

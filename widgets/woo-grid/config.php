@@ -60,6 +60,7 @@ if ( ! class_exists( 'UIPro_Config_Woo_Grid' ) ) {
                     'options'       => array(
                         'base'    => esc_html__('Inherit Theme Style', 'uipro'),
                         'style1'    => esc_html__('Custom style 1', 'uipro'),
+                        'style2'    => esc_html__('Custom style 2', 'uipro'),
                     ),
                     'default'   => 'base',
                 ),
@@ -235,6 +236,39 @@ if ( ! class_exists( 'UIPro_Config_Woo_Grid' ) ) {
                         '{{WRAPPER}} .product .product-inner' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
                     ],
                 ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'item_margin',
+                    'label'         => esc_html__( 'Item Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .woo-grid-style2' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'condition'     => array(
+                        'layout'    => 'style2',
+                    ),
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'title_margin',
+                    'label'         => esc_html__( 'Title Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .woocommerce-loop-product__title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'price_margin',
+                    'label'         => esc_html__( 'Price Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .tz-product-price' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
 
 				array(
 					'type'          => Controls_Manager::SELECT,
@@ -249,7 +283,7 @@ if ( ! class_exists( 'UIPro_Config_Woo_Grid' ) ) {
                         'layout'    => 'base'
                     ),
                     'start_section' => 'image_settings',
-                    'section_name'      => esc_html__('Images Settings', 'uipro')
+                    'section_name'      => esc_html__('Image Settings', 'uipro')
 				),
 				array(
 					'type'          => Controls_Manager::SELECT,
@@ -275,6 +309,47 @@ if ( ! class_exists( 'UIPro_Config_Woo_Grid' ) ) {
                     'default' => 'woocommerce_thumbnail',
                     'condition'     => array(
                         'image_size_custom'    => 'custom',
+                    ),
+                ),
+                array(
+                    'name'            => 'image_box_width_custom',
+                    'label'         => esc_html__( 'Image box custom width', 'uipro' ),
+                    'type'          => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px', '%' ],
+                    'responsive'    => true,
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => '%',
+                        'size' => 50,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .image-box-style2' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+                    'condition'     => array(
+                        'layout'    => 'style2'
+                    ),
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'image_box_margin',
+                    'label'         => esc_html__( 'Image box Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .image-box-style2' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'condition'     => array(
+                        'layout'    => 'style2'
                     ),
                 ),
 
@@ -306,6 +381,25 @@ if ( ! class_exists( 'UIPro_Config_Woo_Grid' ) ) {
                     'scheme'        => Typography::TYPOGRAPHY_1,
                     'section_name'  => esc_html__( self::$name, 'uipro' ),
                     'selector'      => '{{WRAPPER}} .price ins, {{WRAPPER}} .price bdi',
+                ),
+                array(
+                    'name'            => 'rating_size',
+                    'label'         => esc_html__( 'Rating size', 'uipro' ),
+                    'type'          => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px'],
+                    'responsive'    => true,
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .product-rating i' => 'font-size: {{SIZE}}{{UNIT}};',
+                    ],
+
                 ),
                 array(
                     'type'          =>  Controls_Manager::COLOR,

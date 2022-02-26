@@ -166,6 +166,20 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 					'placeholder' => __( 'Type your description here', 'uipro' ),
 					'separator'     => 'before',
 				),
+                array(
+                    'type'          =>  Controls_Manager::SELECT,
+                    'name'          => 'content_position',
+                    'label'         => esc_html__('Content Position', 'uipro'),
+                    'description'   => esc_html__('Set the Content position.', 'uipro'),
+                    'options'       => array(
+                        'before'     => esc_html__('Before Title', 'uipro'),
+                        'after'    => esc_html__('After Title', 'uipro'),
+                    ),
+                    'default'       => 'after',
+                    'condition'     => array(
+                        'title!'    => ''
+                    ),
+                ),
 				array(
 					'type'          => Group_Control_Typography::get_type(),
 					'name'          => 'text_typography',
@@ -177,6 +191,18 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 						'text!'    => ''
 					),
 				),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'content_color',
+                    'label'         => esc_html__('Content Color', 'uipro'),
+                    'description'   => esc_html__('Set the color of content.', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-card-text' => 'color: {{VALUE}}',
+                    ],
+                    'condition'     => array(
+                        'text!'    => ''
+                    ),
+                ),
 
 				array(
 					'type'          =>  Controls_Manager::SELECT,

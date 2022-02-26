@@ -1,6 +1,6 @@
 <?php
 /**
- * UIPro Heading config class
+ * UIPro Timeline config class
  *
  * @version     1.0.0
  * @author      TemPlaza
@@ -115,6 +115,16 @@ if ( ! class_exists( 'UIPro_Config_UITimeline' ) ) {
                     'include'       => [],
                     'default'       => 'large'
                 ),
+                array(
+                    'id'            => 'layout',
+                    'label'         => esc_html__( 'Layout', 'uipro' ),
+                    'type'          => Controls_Manager::SELECT,
+                    'options'       => array(
+                        'base'      => esc_html__('Default', 'uipro'),
+                        'style1'    => esc_html__('Custom style 1', 'uipro'),
+                    ),
+                    'default'   => 'base',
+                ),
 
                 array(
                     'id'          => 'large_desktop_columns',
@@ -130,7 +140,10 @@ if ( ! class_exists( 'UIPro_Config_UITimeline' ) ) {
                     ),
                     'default'   => '5',
                     'start_section' => 'timeframe_settings',
-                    'section_name'      => esc_html__('Time Frame Settings', 'uipro')
+                    'section_name'      => esc_html__('Time Frame Settings', 'uipro'),
+                    'condition'     => array(
+                        'layout'    => 'base'
+                    ),
                 ),
                 array(
                     'id'          => 'desktop_columns',
@@ -145,6 +158,9 @@ if ( ! class_exists( 'UIPro_Config_UITimeline' ) ) {
                         '6'    => esc_html__('6 Columns', 'uipro'),
                     ),
                     'default'   => '5',
+                    'condition'     => array(
+                        'layout'    => 'base'
+                    ),
                 ),
                 array(
                     'id'          => 'laptop_columns',
@@ -158,7 +174,10 @@ if ( ! class_exists( 'UIPro_Config_UITimeline' ) ) {
                         '5'    => esc_html__('5 Columns', 'uipro'),
                         '6'    => esc_html__('6 Columns', 'uipro'),
                     ),
-                    'default'   => '3'
+                    'default'   => '3',
+                    'condition'     => array(
+                'layout'    => 'base'
+            ),
                 ),
                 array(
                     'id'          => 'tablet_columns',
@@ -172,7 +191,10 @@ if ( ! class_exists( 'UIPro_Config_UITimeline' ) ) {
                         '5'    => esc_html__('5 Columns', 'uipro'),
                         '6'    => esc_html__('6 Columns', 'uipro'),
                     ),
-                    'default'   => '2'
+                    'default'   => '2',
+                    'condition'     => array(
+                        'layout'    => 'base'
+                    ),
                 ),
                 array(
                     'id'          => 'mobile_columns',
@@ -186,7 +208,10 @@ if ( ! class_exists( 'UIPro_Config_UITimeline' ) ) {
                         '5'    => esc_html__('5 Columns', 'uipro'),
                         '6'    => esc_html__('6 Columns', 'uipro'),
                     ),
-                    'default'   => '1'
+                    'default'   => '1',
+                    'condition'     => array(
+                        'layout'    => 'base'
+                    ),
                 ),
                 array(
                     'type'          => Controls_Manager::SELECT,
@@ -203,6 +228,273 @@ if ( ! class_exists( 'UIPro_Config_UITimeline' ) ) {
                     ),
                     'default'           => '',
                     'separator'     => 'before',
+                    'condition'     => array(
+                        'layout'    => 'base'
+                    ),
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'timeframe_margin_custom',
+                    'label'         => esc_html__( 'Time Frame custom margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-timeline-date' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                        '{{WRAPPER}} .frame-even .ui-timeline-date' => 'margin: {{TOP}}{{UNIT}} {{LEFT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{RIGHT}}{{UNIT}};',
+                    ],
+                    'condition'     => array(
+                        'layout'    => 'style1'
+                    ),
+                ),
+                array(
+                    'id'            => 'timeframe_background',
+                    'type'          =>  Controls_Manager::COLOR,
+                    'label'         => esc_html__('Time Frame Background Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-timeline-date' => 'background-color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'id'            => 'timeframe_color',
+                    'type'          =>  Controls_Manager::COLOR,
+                    'label'         => esc_html__('Time Frame Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-timeline-date' => 'color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'timeframe_padding',
+                    'label'         => esc_html__( 'Time Frame padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-timeline-date' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'timeframe_border_radius',
+                    'label'         => esc_html__( 'Time Frame border radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-timeline-date' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'image_margin',
+                    'label'         => esc_html__( 'Image box margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .image-box' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'start_section' => 'image_settings',
+                    'section_name'      => esc_html__('Image Box Settings', 'uipro'),
+                    'condition'     => array(
+                        'layout'    => 'style1'
+                    ),
+                ),
+                array(
+                    'name'          => 'image_box_line',
+                    'label' => esc_html__( 'Line box width', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'responsive'    =>  true,
+                    'size_units' => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'size' => 100,
+                    ],
+                    'condition'     => array(
+                        'layout'    => 'style1'
+                    ),
+                    'selectors' => [
+                        '{{WRAPPER}} .line-box, {{WRAPPER}} .line ' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'name'          => 'line_thin',
+                    'label' => esc_html__( 'Line Thin', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'responsive'    =>  true,
+                    'size_units' => [ 'px'],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 50,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'size' => 1,
+                    ],
+                    'condition'     => array(
+                        'layout'    => 'style1'
+                    ),
+                    'selectors' => [
+                        '{{WRAPPER}} .line ' => 'height: {{SIZE}}{{UNIT}};',
+                        '{{WRAPPER}} .ui-timeline-inner::before ' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'id'            => 'line_color',
+                    'type'          =>  Controls_Manager::COLOR,
+                    'label'         => esc_html__('Line Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .line, {{WRAPPER}} .ui-timeline-inner::before' => 'background-color: {{VALUE}}',
+                    ],
+                    'condition'     => array(
+                        'layout'    => 'style1'
+                    ),
+                ),
+                array(
+                    'name'          => 'circle_size',
+                    'label' => esc_html__( 'Circle size', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'responsive'    =>  true,
+                    'size_units' => [ 'px' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 100,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'size' => 10,
+                    ],
+                    'condition'     => array(
+                        'layout'    => 'style1'
+                    ),
+                    'selectors' => [
+                        '{{WRAPPER}} .line::before ' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'circle_padding',
+                    'label'         => esc_html__( 'Circle padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px'],
+                    'selectors'     => [
+                        '{{WRAPPER}} .line::before' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
+                    ],
+                    'condition'     => array(
+                        'layout'    => 'style1'
+                    ),
+                ),
+                array(
+                    'label' => esc_html__( 'Cicle border', 'uipro' ),
+                    'name'          => 'circle_border',
+                    'type' => \Elementor\Group_Control_Border::get_type(),
+                    'selector' => '{{WRAPPER}} .line::before',
+                    'condition'     => array(
+                        'layout'    => 'style1'
+                    ),
+                ),
+                array(
+                    'type'          => Controls_Manager::BOX_SHADOW,
+                    'name'          =>  'circle_box_shadow',
+                    'label'         => esc_html__( 'Circle Shadow', 'uipro' ),
+                    'selectors' => [
+                        '{{WRAPPER}} .line::before' => 'box-shadow: {{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{SPREAD}}px {{COLOR}};',
+                    ],
+                    'condition'     => array(
+                        'layout'    => 'style1'
+                    ),
+                ),
+                array(
+                    'name'          => 'circle_vertical',
+                    'label' => esc_html__( 'Circle Vertical position', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'responsive'    =>  true,
+                    'size_units' => [ 'px' ],
+                    'range' => [
+                        'px' => [
+                            'min' => -100,
+                            'max' => 100,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'size' => -10,
+                    ],
+                    'condition'     => array(
+                        'layout'    => 'style1'
+                    ),
+                    'selectors' => [
+                        '{{WRAPPER}} .line::before ' => 'top: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'name'          => 'circle_horizontal',
+                    'label' => esc_html__( 'Circle Left position', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'responsive'    =>  true,
+                    'size_units' => [ 'px' ],
+                    'range' => [
+                        'px' => [
+                            'min' => -100,
+                            'max' => 100,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'size' => -10,
+                    ],
+                    'condition'     => array(
+                        'layout'    => 'style1'
+                    ),
+                    'selectors' => [
+                        '{{WRAPPER}} .frame-old .line::before ' => 'left: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'name'          => 'circle_horizontal_right',
+                    'label' => esc_html__( 'Circle Right position', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'responsive'    =>  true,
+                    'size_units' => [ 'px' ],
+                    'range' => [
+                        'px' => [
+                            'min' => -100,
+                            'max' => 100,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'size' => -10,
+                    ],
+                    'condition'     => array(
+                        'layout'    => 'style1'
+                    ),
+                    'selectors' => [
+                        '{{WRAPPER}} .frame-even .line::before ' => 'right: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'id'            => 'circle_bg',
+                    'type'          =>  Controls_Manager::COLOR,
+                    'label'         => esc_html__('Circle Background Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .line::before' => 'background-color: {{VALUE}}',
+                    ],
+                    'condition'     => array(
+                        'layout'    => 'style1'
+                    ),
                 ),
 
                 //Title configure
@@ -275,8 +567,22 @@ if ( ! class_exists( 'UIPro_Config_UITimeline' ) ) {
                         'large' => esc_html__('Large', 'uipro'),
                         'xlarge' => esc_html__('X-Large', 'uipro'),
                         'remove' => esc_html__('None', 'uipro'),
+                        'custom' => esc_html__('Custom', 'uipro'),
                     ),
                     'default'           => '',
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'title_margin_custom',
+                    'label'         => esc_html__( 'Title custom margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-timeline-title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'condition'     => array(
+                        'title_margin'    => 'custom'
+                    ),
                 ),
 
                 //Meta configure
@@ -397,8 +703,5 @@ if ( ! class_exists( 'UIPro_Config_UITimeline' ) ) {
 			return array_merge($options, $this->get_general_options());
 		}
 
-		public function get_template_name() {
-			return 'base';
-		}
 	}
 }

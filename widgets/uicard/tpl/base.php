@@ -16,7 +16,7 @@ $button_style   = isset($instance['button_style']) && $instance['button_style'] 
 $button_shape   = isset($instance['button_shape']) && $instance['button_shape'] ? ' uk-border-'. $instance['button_shape'] : ' uk-border-rounded';
 $button_size    = isset($instance['button_size']) && $instance['button_size'] ? ' uk-button-'. $instance['button_size'] : '';
 $button_margin  = isset($instance['button_margin']) && $instance['button_margin'] ? ($instance['button_margin'] == 'default' ? ' uk-margin' : ' uk-margin-'. $instance['button_margin']) : '';
-
+$content_position = isset($instance['content_position']) && $instance['content_position'] ? $instance['content_position'] : 'after';
 //Layout Type
 $layout_type    = isset($instance['layout_type']) ? $instance['layout_type'] : 'icon';
 $media          = '';
@@ -96,7 +96,13 @@ if ($title) {
 	}
 	$output     .=  '<div class="uk-card-body'. $general_styles['content_cls'] . '">';
 	if ($title_position == 'before') {
-		$output         .=  $title;
+        if($content_position == 'before'){
+            $output     .=  '<div class="ui-card-text">'.$text.'</div>';
+        }
+        $output         .=  $title;
+        if($content_position == 'after'){
+            $output     .=  '<div class="ui-card-text">'.$text.'</div>';
+        }
 	}
 	if ($layout_type == 'icon' || ($layout_type == 'image' && $image_appear == 'inside')) {
 		if ($url && ($url_appear=='button_media' || $url_appear == 'all')) {
@@ -106,9 +112,15 @@ if ($title) {
 		}
 	}
 	if ($title_position == 'after') {
+        if($content_position == 'before'){
+            $output     .=  '<div class="ui-card-text">'.$text.'</div>';
+        }
 		$output         .=  $title;
+		if($content_position == 'after'){
+            $output     .=  '<div class="ui-card-text">'.$text.'</div>';
+        }
 	}
-	$output     .=  '<div class="ui-card-text">'.$text.'</div>';
+
 	$output     .=  $button_text || $btn_icon ? '<div class="ui-button'.$button_margin.'"><a class="uk-button'.$button_style.$button_shape.$button_size.'" href="'.$url.'"'.$attribs.'>'.$btn_icon_left . $button_text . $btn_icon_right.'</a></div>' : '';
 	$output     .=  '</div>';
 	if ($media && $layout_type == 'image' && $image_appear == 'bottom') {

@@ -1,9 +1,9 @@
 <?php
 /**
- * UIPro Elementor Heading widget
+ * UIPro Woocommerce Category widget
  *
  * @version     1.0.0
- * @author      ThimPress
+ * @author      TemPlaza
  * @package     UIPro/Classes
  * @category    Classes
  */
@@ -15,16 +15,16 @@ use Elementor\Utils;
  */
 defined( 'ABSPATH' ) || exit;
 
-if ( ! class_exists( 'UIPro_El_UITimeline' ) ) {
+if ( ! class_exists( 'UIPro_El_Woo_Category' ) ) {
 	/**
-	 * Class UIPro_El_Heading
+	 * Class Templaza_Elements_El_Woo_Category
 	 */
-	class UIPro_El_UITimeline extends UIPro_El_Widget {
+	class UIPro_El_Woo_Category extends UIPro_El_Widget {
 
 		/**
 		 * @var string
 		 */
-		protected $config_class = 'UIPro_Config_UITimeline';
+		protected $config_class = 'UIPro_Config_Woo_Category';
 
         public function convert_setting($settings){
 
