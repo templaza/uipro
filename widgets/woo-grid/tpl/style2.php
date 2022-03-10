@@ -75,7 +75,7 @@ if ( ! $results ) {
                         <div class="woo-info-style2">
                             <div class="tz-product-title">
                                 <h2 class="product-title woocommerce-loop-product__title">
-                                    <?php the_title(); ?>
+                                    <a href="<?php echo esc_url(get_permalink( $product_id ));?>"><?php the_title(); ?></a>
                                 </h2>
                             </div>
                             <div class="product-rating">

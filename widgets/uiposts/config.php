@@ -1389,6 +1389,21 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 					),
 					'default' => '',
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'pagination_margin',
+                    'label'         => esc_html__( 'Pagination Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-post-pagination' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                    ],
+                    'condition' => array(
+                        'pagination_type!'    => 'none'
+                    ),
+                    'start_section' => 'pagination_settings',
+                    'section_name'  => esc_html__('Pagination Settings', 'uipro')
+                ),
 			);
 			unset($post_types['post']);
             foreach ($post_types as $key => $value) {

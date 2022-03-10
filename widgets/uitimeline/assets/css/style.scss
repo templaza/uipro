@@ -67,3 +67,27 @@
     }
   }
 }
+@media screen and (max-width: 639.9px) {
+  .templaza-widget-uitimeline{
+    &.template-style1{
+      .ui-timeline-inner{
+        &:before{
+          left:25%;
+        }
+        .tz-timeline-img-box{
+          order:99;
+        }
+        .line{
+          width:0 !important;
+        }
+        .frame-even,.frame-old{
+          .ui-timeline-date{
+            margin-left: 0 !important;
+            margin-right:35px !important;
+          }
+        }
+
+      }
+    }
+  }
+}

@@ -81,7 +81,7 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
 	                                ?>
                                     <div class="uk-flex uk-flex-middle">
                                         <?php if (isset( $image['url'] ) && $image['url'] ) : ?>
-                                            <div class="ui-testimonial-avatar uk-width-auto@m">
+                                            <div class="ui-testimonial-avatar uk-width-auto">
                                                 <div class="uk-inline-clip<?php echo $avatar_border; ?>">
                                                     <?php echo \UIPro_Elementor_Helper::get_attachment_image_html( $item, 'author_image' ); ?>
                                                 </div>

@@ -29,17 +29,17 @@ if (count($timeline)) {
 	$d=1;
     foreach ($timeline as $key => $item) {
         if($d % 2==0){
-            $content .=  '<div class="uk-card frame-even uk-grid-collapse uk-child-width-1-2@s" data-uk-grid>';
-            $content .=  '<div class="uk-card-media-left uk-grid-collapse" data-uk-grid>';
+            $content .=  '<div class="uk-card frame-even uk-grid-collapse uk-child-width-1-2" data-uk-grid>';
+            $content .=  '<div class="uk-card-media-left tz-timeline-img-box uk-width-expand uk-width-1-2@s uk-grid-collapse" data-uk-grid>';
             $line_cl = 'uk-flex-last@s';
-            $time_cl = 'uk-flex-left@s uk-flex-center';
+            $time_cl = 'uk-flex-left@s uk-flex-right uk-flex-center';
         }else{
-            $content .=  '<div class="uk-card frame-old uk-grid-collapse uk-child-width-1-2@s" data-uk-grid>';
-            $content .=  '<div class="uk-flex-last@s frame-old uk-grid-collapse uk-card-media-right" data-uk-grid>';
+            $content .=  '<div class="uk-card frame-old uk-grid-collapse uk-child-width-1-2" data-uk-grid>';
+            $content .=  '<div class="uk-flex-last@s frame-old uk-width-expand tz-timeline-img-box uk-grid-collapse uk-card-media-right" data-uk-grid>';
             $line_cl = '';
-            $time_cl = 'uk-flex-right@s uk-flex-center';
+            $time_cl = 'uk-flex-right uk-flex-center';
         }
-        $content .=  '<div class="line-box '.$line_cl.' uk-flex uk-flex-middle uk-position-relative uk-visible@s"><div class="line  uk-position-relative"></div></div>';
+        $content .=  '<div class="line-box '.$line_cl.' uk-flex uk-flex-middle uk-position-relative "><div class="line  uk-position-relative"></div></div>';
         $content .=  '<div class="image-box uk-width-expand"> <div class="uitimeline-img">';
         $content .=  wp_get_attachment_image( $item['image']['id'], $image_size, false, array('class' => trim( $image_class )) ). '';
         $content .=  '</div>';
@@ -49,7 +49,7 @@ if (count($timeline)) {
         $content .=  ($meta_position == 'after-title') ? $meta_content : '';
         $content .=  isset($item['content']) && $item['content'] ? '<div class="ui-timeline-description'.esc_attr($dropcap).'">'. wp_kses($item['content'], wp_kses_allowed_html('post')) .'</div>' : '';
         $content .=  '</div></div>';
-        $content .=  '<div class="uk-flex uk-flex-middle '.$time_cl.' ">';
+        $content .=  '<div class="uk-flex tz-timeline-date-box uk-width-1-4 uk-width-1-2@s  uk-flex-middle '.$time_cl.' ">';
         $content .=  '<div class="ui-timeline-date">'.esc_attr($item['date']).'</div>';
         $content .=  '</div>';
         $content .=  '</div>';

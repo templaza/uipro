@@ -157,6 +157,65 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 						'title!'    => ''
 					),
 				),
+                array(
+                    'type'          => Controls_Manager::TEXTAREA,
+                    'name'          => 'meta_title',
+                    'label'         => esc_html__( 'Meta Title', 'uipro' ),
+                    'description'   => esc_html__( 'Write the meta title.', 'uipro' ),
+                    'dynamic'       => [
+                        'active'    => true,
+                    ],
+                ),
+                array(
+                    'type'          =>  Controls_Manager::SELECT,
+                    'name'          => 'meta_position',
+                    'label'         => esc_html__('Meta Position', 'uipro'),
+                    'description'   => esc_html__('Set the Meta position.', 'uipro'),
+                    'options'       => array(
+                        'before'     => esc_html__('Before Title', 'uipro'),
+                        'after'    => esc_html__('After Title', 'uipro'),
+                    ),
+                    'default'       => 'after',
+                    'condition'     => array(
+                        'meta_title!'    => ''
+                    ),
+                ),
+                array(
+                    'type'          => Group_Control_Typography::get_type(),
+                    'name'          => 'meta_typography',
+                    'scheme'        => Typography::TYPOGRAPHY_1,
+                    'label'         => esc_html__('Meta Font', 'uipro'),
+                    'description'   => esc_html__('Select a font family.', 'uipro'),
+                    'selector'      => '{{WRAPPER}} .uk-card-meta',
+                    'condition'     => array(
+                        'meta_title!'    => ''
+                    ),
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'meta_color',
+                    'label'         => esc_html__('Meta Color', 'uipro'),
+                    'description'   => esc_html__('Set the color of meta.', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .uk-card-meta' => 'color: {{VALUE}}',
+                    ],
+                    'condition'     => array(
+                        'meta_title!'    => ''
+                    ),
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'meta_margin',
+                    'label'         => esc_html__( 'Meta margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px'],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-card-meta' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'condition'     => array(
+                        'meta_title!'    => ''
+                    ),
+                ),
 				//Content Settings
 				array(
 					'name'          => 'text',
@@ -166,20 +225,6 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 					'placeholder' => __( 'Type your description here', 'uipro' ),
 					'separator'     => 'before',
 				),
-                array(
-                    'type'          =>  Controls_Manager::SELECT,
-                    'name'          => 'content_position',
-                    'label'         => esc_html__('Content Position', 'uipro'),
-                    'description'   => esc_html__('Set the Content position.', 'uipro'),
-                    'options'       => array(
-                        'before'     => esc_html__('Before Title', 'uipro'),
-                        'after'    => esc_html__('After Title', 'uipro'),
-                    ),
-                    'default'       => 'after',
-                    'condition'     => array(
-                        'title!'    => ''
-                    ),
-                ),
 				array(
 					'type'          => Group_Control_Typography::get_type(),
 					'name'          => 'text_typography',

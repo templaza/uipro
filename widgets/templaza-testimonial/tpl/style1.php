@@ -102,7 +102,6 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
                         {
                             breakpoint: 1199,
                             settings: {
-                                arrows: false,
                                 centerMode: true,
                                 centerPadding: '0px',
                                 slidesToShow: 1
@@ -111,7 +110,6 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
                         {
                             breakpoint: 992,
                             settings: {
-                                arrows: false,
                                 centerMode: true,
                                 centerPadding: '0px',
                                 slidesToShow: 1
@@ -120,7 +118,6 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
                         {
                             breakpoint: 768,
                             settings: {
-                                arrows: false,
                                 centerMode: true,
                                 centerPadding: '0px',
                                 slidesToShow: 1
@@ -129,7 +126,6 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
                         {
                             breakpoint: 480,
                             settings: {
-                                arrows: false,
                                 centerMode: true,
                                 centerPadding: '0px',
                                 slidesToShow: 1
