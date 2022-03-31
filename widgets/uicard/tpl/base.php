@@ -32,7 +32,7 @@ if ($layout_type == 'icon') {
 		$media   .=  '<span class="uk-icon" data-uk-icon="icon: ' . $uikit_icon . '; width: '.$icon_size.'"></span>';
 	} elseif ($icon && isset($icon['value'])) {
 		if (is_array($icon['value']) && isset($icon['value']['url']) && $icon['value']['url']) {
-			$media   .=  '<img src="'.$icon['value']['url'].'" data-uk-svg />';
+			$media   .=  '<img src="'.$icon['value']['url'].'" alt="'.$title.'" data-uk-svg />';
 		} elseif (is_string($icon['value']) && $icon['value']) {
 			$media   .=  '<i class="' . $icon['value'] .'" aria-hidden="true"></i>';
 		}
@@ -72,7 +72,7 @@ if ($button_icon == 'uikit' && $btn_uikit_icon) {
     $btn_icon   .=  '<span class="uk-icon '. $ic_pos .'" data-uk-icon="icon: ' . $btn_uikit_icon . '"></span>';
 } elseif ($fontawesome_icon && isset($fontawesome_icon['value'])) {
     if (is_array($fontawesome_icon['value']) && isset($fontawesome_icon['value']['url']) && $fontawesome_icon['value']['url']) {
-        $btn_icon   .=  '<img src="'.$fontawesome_icon['value']['url'].'" class="'.$ic_pos .'" data-uk-svg />';
+        $btn_icon   .=  '<img src="'.$fontawesome_icon['value']['url'].'" class="'.$ic_pos .'" alt="'.$title.'" data-uk-svg />';
     } elseif (is_string($fontawesome_icon['value']) && $fontawesome_icon['value']) {
         $btn_icon   .=  '<i class="' . $fontawesome_icon['value'] . ' '. $ic_pos .'" aria-hidden="true"></i>';
     }

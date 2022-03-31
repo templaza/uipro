@@ -49,7 +49,7 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
                                         <?php
                                         if (is_array($quote_icon['value']) && isset($quote_icon['value']['url']) && $quote_icon['value']['url']) {
                                             ?>
-                                            <img src="<?php echo esc_attr($quote_icon['value']['url']);?>" data-uk-svg />
+                                            <img src="<?php echo esc_attr($quote_icon['value']['url']);?>" alt="" data-uk-svg />
                                             <?php
                                         } elseif (is_string($quote_icon['value']) && $quote_icon['value']) {
                                             ?>
