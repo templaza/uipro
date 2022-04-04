@@ -88,5 +88,8 @@
   color: #333;
   left: 10px;
 }
+.sc_heading.right {
+  align-items: flex-end;
+}
 
 /*# sourceMappingURL=style.css.map */
