@@ -3,9 +3,9 @@ defined( 'ABSPATH' ) || exit;
 
 use Advanced_Product\AP_Templates;
 
-if ( ! class_exists( 'UIPro_El_UIPosts_Ajax' ) ) {
+if ( ! class_exists( 'UIPro_El_UIAdvancedProducts_Ajax' ) ) {
     require_once __DIR__.'/helper.php';
-    class UIPro_El_UIPosts_Ajax{
+    class UIPro_El_UIAdvancedProducts_Ajax{
         protected static $instance;
 
         public function __construct()
@@ -57,4 +57,4 @@ if ( ! class_exists( 'UIPro_El_UIPosts_Ajax' ) ) {
     }
 }
 
-UIPro_El_UIPosts_Ajax::instance();
+UIPro_El_UIAdvancedProducts_Ajax::instance();
