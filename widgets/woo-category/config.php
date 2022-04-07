@@ -1,4 +1,4 @@
-    <?php
+<?php
 /**
  * UIPro Woocommerce Category config class
  *
