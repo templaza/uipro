@@ -70,6 +70,15 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 		 */
 		public function get_options() {
 		    $post_types =   UIPro_Helper::get_post_type( 'category' );
+
+            $store_id   = __METHOD__;
+            $store_id  .= '::'.serialize($post_types);
+            $store_id   = md5($store_id);
+
+            if(isset(static::$cache[$store_id])){
+                return static::$cache[$store_id];
+            }
+
 			// options
 			$options = array(
 				array(
@@ -1423,7 +1432,11 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                 );
                 array_splice($options, 2, 0, $post_type_category);
             }
-			return array_merge($options, $this->get_general_options());
+			$options    = array_merge($options, $this->get_general_options());
+
+            static::$cache[$store_id]   = $options;
+
+            return $options;
 		}
 
 		public function get_template_name() {

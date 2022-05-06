@@ -32,10 +32,7 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
 			self::$name = esc_html__( 'TemPlaza: Heading', 'uipro' );
 			self::$desc = esc_html__( 'Add heading text.', 'uipro' );
 			self::$icon = 'eicon-heading';
-//			self::$icon = 'fas fa-heading';
 			parent::__construct();
-
-//			wp_register_style('templaza-el-heading', '');
 		}
 
         public function get_styles() {
@@ -48,6 +45,11 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
 		 * @return array
 		 */
 		public function get_options() {
+            $store_id   = md5(__METHOD__);
+
+            if(isset(static::$cache[$store_id])){
+                return static::$cache[$store_id];
+            }
 
 			// options
 			$options    =    array(
@@ -519,7 +521,11 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                 ),
 
 			);
-			return array_merge($options, $this->get_general_options());
+			$options    = array_merge($options, $this->get_general_options());
+
+			static::$cache[$store_id]   = $options;
+
+			return $options;
 		}
 
 		public function get_template_name() {

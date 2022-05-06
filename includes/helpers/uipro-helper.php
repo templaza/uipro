@@ -5,10 +5,23 @@ defined('UIPRO') or exit();
 use UIPro\UIPro;
 
 class UIPro_Helper{
+    protected static $cache = array();
+
     public static function get_cat_taxonomy( $term = 'category', $cats = false, $vc = false ) {
         if ( ! $cats ) {
             $cats = array();
         }
+
+        $store_id   = __METHOD__;
+        $store_id  .= '::'.$term;
+        $store_id  .= '::'.serialize($cats);
+        $store_id  .= '::'.$vc;
+        $store_id   = md5($store_id);
+
+        if(isset(static::$cache[$store_id])){
+            return static::$cache[$store_id];
+        }
+
         if ( is_admin() ) {
             $args  = array(
                 'pad_counts'   => 1,
@@ -37,6 +50,11 @@ class UIPro_Helper{
                 }
             }
         }
+
+        if(!empty($cats)){
+            static::$cache[$store_id]   = $cats;
+        }
+
         return $cats;
     }
 
@@ -56,6 +74,14 @@ class UIPro_Helper{
         $TB       = UIPro::instance();
         $elements = $TB->get_elements();
 
+        $store_id   = __METHOD__;
+        $store_id  .= '::'.serialize($elements);
+        $store_id   = md5($store_id);
+
+        if(isset(static::$cache[$store_id])){
+            return static::$cache[$store_id];
+        }
+
         // allow unset elements
         $unset = apply_filters( 'uipro/elements-unset', array() );
 
@@ -69,6 +95,10 @@ class UIPro_Helper{
             }
         }
 
+        if(!empty($elements)){
+            static::$cache[$store_id]   = $elements;
+        }
+
         return $elements;
     }
 
@@ -77,13 +107,27 @@ class UIPro_Helper{
         $TB       = UIPro::instance();
         $elements = $TB->get_elements();
 
+        $store_id   = __METHOD__;
+        $store_id  .= '::'.serialize($elements);
+        $store_id  .= '::'.$name;
+        $store_id   = md5($store_id);
+
+        if(isset(static::$cache[$store_id])){
+            return static::$cache[$store_id];
+        }
+
         foreach ( $elements as $group => $_elements ) {
             if ( in_array( $name, $_elements ) ) {
+                static::$cache[$store_id]   = $group;
                 return $group;
             }
         }
 
-        return apply_filters( 'uipro/default-group', 'general', $name );
+        $new_name   = apply_filters( 'uipro/default-group', 'general', $name );
+
+        static::$cache[$store_id]   = $new_name;
+
+        return $new_name;
     }
     
     public static function get_list_image_size($vc = false) {

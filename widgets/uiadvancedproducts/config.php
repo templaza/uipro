@@ -70,7 +70,19 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 		 * @return array
 		 */
 		public function get_options() {
-		    $post_types =   UIPro_Helper::get_post_type( 'category' );
+
+            $categories = UIPro_UIAdvancedProducts_Helper::get_custom_categories();
+            // Custom fields option
+            $custom_fields  = UIPro_UIAdvancedProducts_Helper::get_custom_field_options();
+
+            $store_id   = __METHOD__;
+            $store_id  .= '::'.serialize($categories);
+            $store_id  .= '::'.serialize($custom_fields);
+            $store_id   = md5($store_id);
+
+            if(isset(static::$cache[$store_id])){
+                return static::$cache[$store_id];
+            }
 
 		    $options    = array(
                 array(
@@ -90,11 +102,6 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'label'         => esc_html__( 'Select Branch', 'uipro' ),
                     'options'       => UIPro_Helper::get_cat_taxonomy( 'ap_branch' ),
                     'multiple'      => true,
-//					'conditions' => [
-//						'terms' => [
-//							['name' => 'resource', 'operator' => '===', 'value' => 'ap_product'],
-//						],
-//					],
                 ),
                 array(
                     'type'          => Controls_Manager::SELECT2,
@@ -102,15 +109,9 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'label'         => esc_html__( 'Select Category', 'uipro' ),
                     'options'       => UIPro_Helper::get_cat_taxonomy( 'ap_category' ),
                     'multiple'      => true,
-//					'conditions' => [
-//						'terms' => [
-//							['name' => 'resource', 'operator' => '===', 'value' => 'ap_product'],
-//						],
-//					],
                 ),
             );
 
-            $categories = UIPro_UIAdvancedProducts_Helper::get_custom_categories();
             if(!empty($categories) && count($categories)){
                 foreach ($categories as $cat){
                     $slug           = get_post_meta($cat -> ID, 'slug', true);
@@ -133,64 +134,18 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                 }
             }
 
-//            // Custom fields option
-//            $custom_fields  = UIPro_UIAdvancedProducts_Helper::get_custom_fields();
-            $custom_fields  = UIPro_UIAdvancedProducts_Helper::get_custom_field_options();
-////            $custom_fields    = UIPro_Helper::get_cat_taxonomy( 'ap_custom_field' );
+            // Custom fields option
 
             $options[]      = array(
                 'type'          => Controls_Manager::SELECT2,
                 'id'            => 'uiap_custom_fields',
-//                'label'         => sprintf(esc_html__( 'Select %s', 'uipro' ), $cat -> post_title),
                 'label'         => esc_html__( 'Select Custom Field', 'uipro' ),
                 'options'       => $custom_fields,
                 'multiple'      => true,
             );
-//            if(!empty($custom_fields) && count($custom_fields)){
-//                foreach ($custom_fields as $cfield){
-//                    $slug           = get_post_meta($cfield -> ID, 'slug', true);
-//
-//                    if(!taxonomy_exists($slug)){
-//                        continue;
-//                    }
-//
-//                    $cat_options    = UIPro_Helper::get_cat_taxonomy( $slug );
-//                    if(!empty($cat_options) || !count($cat_options)){
-//                        continue;
-//                    }
-//                    $options[]      = array(
-//                        'type'          => Controls_Manager::SELECT2,
-//                        'id'            => 'ap_product_'.$slug,
-//                        'label'         => sprintf(esc_html__( 'Select %s', 'uipro' ), $cat -> post_title),
-//                        'options'       => $cat_options,
-//                        'multiple'      => true,
-//                    );
-//                }
-//            }
 
 			// options
 			$options = array_merge($options, array(
-//				array(
-//					'type'          => Controls_Manager::SELECT,
-//					'id'            => 'resource',
-//					'label'         => esc_html__( 'Choose Resource', 'uipro' ),
-//					'options'       => $post_types,
-//					'default'       => 'post',
-//					'description'   => esc_html__( 'Select a content resource from the list. if you choose Portfolio then you must have to installed Portfolio post type.', 'uipro' ),
-//				),
-//				array(
-//					'type'          => Controls_Manager::SELECT2,
-//					'id'            => 'post_category',
-//					'label'         => esc_html__( 'Select Category', 'uipro' ),
-//					'options'       => UIPro_Helper::get_cat_taxonomy( 'category' ),
-//					'multiple'      => true,
-//					'conditions' => [
-//						'terms' => [
-//							['name' => 'resource', 'operator' => '===', 'value' => 'post'],
-//						],
-//					],
-//				),
-
 				array(
 					'type'          => Controls_Manager::SWITCHER,
 					'id'            => 'include_subcagories',
@@ -1756,20 +1711,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     ],
 				),
 			) );
-//			unset($post_types['post']);
-//            foreach ($post_types as $key => $value) {
-//                $post_type_category = array(
-//                    array(
-//                        'type'          => Controls_Manager::SELECT2,
-//                        'id'            => $key.'_category',
-//                        'label'         => esc_html__( 'Select Category', 'uipro' ),
-//                        'options'       => UIPro_Helper::get_cat_taxonomy( $key.'-category'),
-//                        'multiple'      => true,
-//                    )
-//                );
-//                array_splice($options, 2, 0, $post_type_category);
-//            }
-			return array_merge($options, $this->get_general_options());
+			$options    = array_merge($options, $this->get_general_options());
+
+			static::$cache[$store_id]   = $options;
+
+			return $options;
 		}
 
 		public function get_template_name() {

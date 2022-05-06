@@ -49,6 +49,14 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
             // Custom fields option
             $custom_fields  = UIPro_UIAdvancedProducts_Helper::get_custom_field_options();
 
+            $store_id   = __METHOD__;
+            $store_id  .= '::'.serialize($custom_fields);
+            $store_id   = md5($store_id);
+
+            if(isset(static::$cache[$store_id])){
+                return static::$cache[$store_id];
+            }
+
 			// options
 			$options = array(
                 array(
@@ -262,7 +270,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
                     ],
                 ),
 			) ;
-			return array_merge($options, $this->get_general_options());
+			$options    = array_merge($options, $this->get_general_options());
+
+			static::$cache[$store_id]   = $options;
+
+			return $options;
 		}
 
 		public function get_template_name() {

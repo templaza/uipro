@@ -5,8 +5,10 @@ $categories = isset($instance['product_categories']) ? $instance['product_catego
 if(empty($categories)){
     $categories = array();
     $categories_all = get_terms('product_cat');
-    foreach ($categories_all as $item){
-        $categories[]= $item->slug;
+    if(!empty($categories_all) && !is_wp_error($categories_all)) {
+        foreach ($categories_all as $item) {
+            $categories[] = $item->slug;
+        }
     }
 }
 
@@ -22,9 +24,10 @@ $general_styles = \UIPro_Elementor_Helper::get_general_styles($instance);
     uk-grid-<?php echo esc_attr($instance['column_gap']);?>"
          data-uk-grid>
         <?php
-            if($categories){
-                foreach ($categories as $cat){
-                    $term = get_term_by( 'slug', $cat, 'product_cat' );
+        if($categories){
+            foreach ($categories as $cat){
+                $term = get_term_by( 'slug', $cat, 'product_cat' );
+                if(!empty($term) && !is_wp_error($term)){
                     $term_url = get_term_link($cat, 'product_cat');
                     $thumbnail_id = get_term_meta( $term->term_id, 'thumbnail_id', true );
                     // get the image URL
@@ -33,9 +36,9 @@ $general_styles = \UIPro_Elementor_Helper::get_general_styles($instance);
                     <div class="woo-cat-item-wrap">
                         <div class="woo-cat-item">
                             <?php if($thumbnail_id) { ?>
-                            <a href="<?php echo esc_url($term_url);?>">
-                                <img src="<?php echo esc_url($image);?>" alt="<?php echo esc_attr($term->name);?>"/>
-                            </a>
+                                <a href="<?php echo esc_url($term_url);?>">
+                                    <img src="<?php echo esc_url($image);?>" alt="<?php echo esc_attr($term->name);?>"/>
+                                </a>
                             <?php } ?>
                             <h3 class="woo-cat-title">
                                 <a href="<?php echo esc_url($term_url);?>">
@@ -47,6 +50,7 @@ $general_styles = \UIPro_Elementor_Helper::get_general_styles($instance);
                     <?php
                 }
             }
+        }
         ?>
 
     </div>

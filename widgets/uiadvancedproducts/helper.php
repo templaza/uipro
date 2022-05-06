@@ -16,6 +16,12 @@ class UIPro_UIAdvancedProducts_Helper extends UIPro_Helper {
             ));
     }
     public static function get_custom_categories(){
+        $store_id   = md5(__METHOD__);
+
+        if(isset(static::$cache[$store_id])){
+            return static::$cache[$store_id];
+        }
+
         $args = array(
             'order'       => 'ASC',
             'orderby'     => 'ID',
@@ -24,9 +30,23 @@ class UIPro_UIAdvancedProducts_Helper extends UIPro_Helper {
         );
 
         $categories = get_posts( $args );
+
+        if(!empty($categories) && !is_wp_error($categories)){
+            static::$cache[$store_id]   = $categories;
+        }
+
         return $categories;
     }
     public static function get_custom_fields($ids = array()){
+
+        $store_id   = __METHOD__;
+        $store_id  .= '::'.serialize($ids);
+        $store_id   = md5($store_id);
+
+        if(isset(static::$cache[$store_id])){
+            return static::$cache[$store_id];
+        }
+
         $args = array(
             'order'       => 'ASC',
             'orderby'     => 'ID',
@@ -44,24 +64,13 @@ class UIPro_UIAdvancedProducts_Helper extends UIPro_Helper {
 
         wp_reset_postdata();
 
+        if(!empty($fields) && !is_wp_error($fields)){
+            static::$cache[$store_id]   = $fields;
+        }
+
         return $fields;
     }
-//    public static function get_custom_field_by_ids($ids = array()){
-//        if(empty($ids) || !count($ids)){
-//            return false;
-//        }
-//
-//        $args = array(
-////            'order'       => 'ASC',
-////            'orderby'     => 'ID',
-//            'post_status' => 'publish',
-//            'post_type'   => 'ap_custom_field',
-//            'include'     => $ids
-//        );
-//
-//        $fields = get_posts( $args );
-//        return $fields;
-//    }
+
     public static function get_custom_field_options(){
 
         $data   = array();
@@ -70,6 +79,15 @@ class UIPro_UIAdvancedProducts_Helper extends UIPro_Helper {
         if(empty($fields) || !count($fields)){
             return $data;
         }
+
+        $store_id   = __METHOD__;
+        $store_id  .= '::'.serialize($fields);
+        $store_id   = md5($store_id);
+
+        if(isset(static::$cache[$store_id])){
+            return static::$cache[$store_id];
+        }
+
         foreach ( $fields as $field ) {
             $f_attr             = FieldHelper::get_custom_field_option_by_id($field -> ID);
             $key    = $field -> ID;
@@ -78,6 +96,11 @@ class UIPro_UIAdvancedProducts_Helper extends UIPro_Helper {
             }
             $data[$key] = $field->post_title;
         }
+
+        if(!empty($data)){
+            static::$cache[$store_id]   = $data;
+        }
+
         return $data;
     }
     public static function get_post_meta_content( $meta_type, $item, $instance, $args = array() ) {
@@ -85,7 +108,6 @@ class UIPro_UIAdvancedProducts_Helper extends UIPro_Helper {
             return array();
         }
         $meta_arr       =   array();
-//        $resource       = ( isset( $instance['resource'] ) && $instance['resource'] ) ? $instance['resource'] : 'post';
         $resource       = 'ap_product';
         if (in_array('date', $meta_type)) {
             $meta_arr[] = '<span class="ui-post-meta-date">' . get_the_date('', $item) . '</span>';

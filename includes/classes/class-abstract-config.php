@@ -74,35 +74,34 @@ if ( ! class_exists( 'UIPro_Abstract_Config' ) ) {
          */
         public static $localize = array();
 
+        protected static $cache = array();
+
         /**
          * UIPro_Abstract_Config constructor.
          */
         public function __construct() {
 
             // set group
-
-//			self::$group = UIPro_Helper::get_group( self::$base );
             self::$group = '';
-
-//			self::$assets_url  = TP_THEME_ELEMENTS_THIM_URI . self::$group . '/' . self::$base . '/assets/';
-//			self::$assets_path = TP_THEME_ELEMENTS_THIM_DIR . self::$group . '/' . self::$base . '/assets/';
 
             self::$assets_url  = plugin_dir_url(UIPRO_WIDGETS_PATH).'widgets' . self::$group . '/' . self::$base . '/assets/';
             self::$assets_path = UIPRO_WIDGETS_PATH . self::$group . '/' . self::$base . '/assets/';
 
             // set options
-            self::$options = is_array( $this->get_options() ) ? $this->get_options() : array();
-            // set options
-            self::$template_name =  $this->get_template_name() ? $this->get_template_name() : '';
+            $options    = $this->get_options();
+            self::$options = is_array( $options ) ? $options : array();
+            // set template name
+            $_template_name = $this->get_template_name();
+            self::$template_name =  !empty($_template_name) ? $_template_name : '';
             // handle std, add default options
-            self::$options = apply_filters( "uipro/" . self::$base . '/config-options', $this->_handle_options( self::$options ) );
+            self::$options = apply_filters( "templaza-elements/" . self::$base . '/config-options', $this->_handle_options( self::$options ) );
 
             // set styles
-            self::$styles = apply_filters( 'uipro/' . self::$base . '/styles', $this->get_styles() );
+            self::$styles = apply_filters( 'templaza-elements/' . self::$base . '/styles', $this->get_styles() );
             // set scripts
-            self::$scripts = apply_filters( 'uipro/' . self::$base . '/scripts', $this->get_scripts() );
+            self::$scripts = apply_filters( 'templaza-elements/' . self::$base . '/scripts', $this->get_scripts() );
             // set localize
-            self::$localize = apply_filters( 'uipro/' . self::$base . '/localize', $this->get_localize() );
+            self::$localize = apply_filters( 'templaza-elements/' . self::$base . '/localize', $this->get_localize() );
         }
 
         /**
@@ -175,14 +174,22 @@ if ( ! class_exists( 'UIPro_Abstract_Config' ) ) {
          * @return array
          */
         public static function _get_assets() {
+            $store_id   = __METHOD__;
+            $store_id  .= '::'.get_called_class();
+            $store_id   = md5($store_id);
+
+            if(isset(static::$cache[$store_id])){
+                return static::$cache[$store_id];
+            }
+
             $queue_assets = array();
 
-            $prefix = apply_filters( 'uipro/prefix-assets', 'templaza-' );
+            $prefix = apply_filters( 'templaza-elements/prefix-assets', 'templaza-' );
 
             if ( self::$styles ) {
                 // allow hook default folder
-                $default_folder_css = apply_filters( 'uipro/default-assets-folder', self::$assets_path . 'css/', self::$base );
-                $default_url_css    = apply_filters( 'uipro/default-assets-folder', self::$assets_url . 'css/', self::$base );
+                $default_folder_css = apply_filters( 'templaza-elements/default-assets-folder', self::$assets_path . 'css/', self::$base );
+                $default_url_css    = apply_filters( 'templaza-elements/default-assets-folder', self::$assets_url . 'css/', self::$base );
 
                 foreach ( self::$styles as $handle => $args ) {
                     $src      = $args['src'];
@@ -198,7 +205,7 @@ if ( ! class_exists( 'UIPro_Abstract_Config' ) ) {
 
                                     wp_enqueue_style( $depend );
                                 } else {
-                                    do_action( 'uipro/enqueue-depends-styles', self::$base, $depend );
+                                    do_action( 'templaza-elements/enqueue-depends-styles', self::$base, $depend );
                                 }
                             }
                         }
@@ -216,8 +223,8 @@ if ( ! class_exists( 'UIPro_Abstract_Config' ) ) {
 
             if ( !empty(self::$scripts) ) {
                 // allow hook default folder
-                $default_folder_js = apply_filters( 'uipro/default-assets-folder', self::$assets_path . 'js/', self::$base );
-                $default_url_js    = apply_filters( 'uipro/default-assets-folder', self::$assets_url . 'js/', self::$base );
+                $default_folder_js = apply_filters( 'templaza-elements/default-assets-folder', self::$assets_path . 'js/', self::$base );
+                $default_url_js    = apply_filters( 'templaza-elements/default-assets-folder', self::$assets_url . 'js/', self::$base );
                 $localized         = false;
 
                 foreach ( self::$scripts as $handle => $args ) {
@@ -233,7 +240,7 @@ if ( ! class_exists( 'UIPro_Abstract_Config' ) ) {
                                 if ( wp_script_is( $depend ) && $depend != 'jquery' ) {
                                     wp_enqueue_script( $depend );
                                 } else {
-                                    do_action( 'uipro/enqueue-depends-scripts', self::$base, $depend );
+                                    do_action( 'templaza-elements/enqueue-depends-scripts', self::$base, $depend );
                                 }
                             }
                         }
@@ -259,6 +266,11 @@ if ( ! class_exists( 'UIPro_Abstract_Config' ) ) {
                     }
                 }
             }
+
+            if(!empty($queue_assets)){
+                static::$cache[$store_id]   = $queue_assets;
+            }
+
             return $queue_assets;
         }
 
@@ -266,6 +278,15 @@ if ( ! class_exists( 'UIPro_Abstract_Config' ) ) {
          * Register scripts
          */
         public static function register_scripts() {
+
+            $store_id   = __METHOD__;
+            $store_id  .= '::'.get_called_class();
+            $store_id   = md5($store_id);
+
+            if(isset(static::$cache[$store_id])){
+                return static::$cache[$store_id];
+            }
+
             $queue = self::_get_assets();
             $localized = false;
             if ( $queue ) {
@@ -303,6 +324,8 @@ if ( ! class_exists( 'UIPro_Abstract_Config' ) ) {
                         }
                     }
                 }
+
+                static::$cache[$store_id]   = true;
             }
         }
 
@@ -310,6 +333,15 @@ if ( ! class_exists( 'UIPro_Abstract_Config' ) ) {
          * Enqueue scripts.
          */
         public static function enqueue_scripts() {
+
+            $store_id   = __METHOD__;
+            $store_id  .= '::'.get_called_class();
+            $store_id   = md5($store_id);
+
+            if(isset(static::$cache[$store_id])){
+                return static::$cache[$store_id];
+            }
+
             $queue = self::_get_assets();
 
             if ( $queue ) {
@@ -338,6 +370,7 @@ if ( ! class_exists( 'UIPro_Abstract_Config' ) ) {
                         }
                     }
                 }
+                static::$cache[$store_id]   = true;
             }
         }
 
@@ -351,7 +384,7 @@ if ( ! class_exists( 'UIPro_Abstract_Config' ) ) {
          */
         protected function _number_items_options( $default = array(), $depends = array() ) {
 
-            $options = apply_filters( 'uipro/element-default-number-items-slider', array(
+            $options = apply_filters( 'templaza-elements/element-default-number-items-slider', array(
                 array(
                     'type'             => 'number',
                     'heading'          => esc_html__( 'Visible Items', 'templaza-elements' ),
@@ -449,7 +482,7 @@ if ( ! class_exists( 'UIPro_Abstract_Config' ) ) {
                 esc_html__( '900', 'templaza-elements' )    => '900'
             );
 
-            return apply_filters( 'uipro/settings-font-weight', $font_weight );
+            return apply_filters( 'templaza-elements/settings-font-weight', $font_weight );
         }
 
         /**
@@ -467,7 +500,7 @@ if ( ! class_exists( 'UIPro_Abstract_Config' ) ) {
                 esc_html__( 'h6', 'templaza-elements' )         => 'h6'
             );
 
-            return apply_filters( 'uipro/settings-tags', $tags );
+            return apply_filters( 'templaza-elements/settings-tags', $tags );
         }
 
         /**
@@ -482,10 +515,15 @@ if ( ! class_exists( 'UIPro_Abstract_Config' ) ) {
                 esc_html__( 'Lowercase', 'templaza-elements' )  => 'lowercase',
             );
 
-            return apply_filters( 'uipro/settings-text-transform', $text_transform );
+            return apply_filters( 'templaza-elements/settings-text-transform', $text_transform );
         }
 
         public function get_font_uikit() {
+            $store_id   = md5(__METHOD__);
+            if(isset(static::$cache[$store_id])){
+                return static::$cache[$store_id];
+            }
+
             $font_uikit = [
                 ''  => __( 'Choose an icon...', 'templaza-elements' ),
                 'home' => __( 'Home', 'templaza-elements' ),
@@ -629,10 +667,16 @@ if ( ! class_exists( 'UIPro_Abstract_Config' ) ) {
                 'chevron-double-left' => __( 'Chevron Double Left', 'templaza-elements' ),
                 'chevron-double-right' => __( 'Chevron Double Right', 'templaza-elements' ),
             ];
-            return apply_filters( 'uipro/settings-font-uikit', $font_uikit );
+            static::$cache[$store_id] = $font_uikit  = apply_filters( 'templaza-elements/settings-font-uikit', $font_uikit );
+            return $font_uikit;
         }
 
         public function get_general_options() {
+            $store_id   = md5(__METHOD__);
+            if(isset(static::$cache[$store_id])){
+                return static::$cache[$store_id];
+            }
+
             $options = array(
                 array(
                     'type'          => Controls_Manager::SELECT,
@@ -1198,7 +1242,8 @@ if ( ! class_exists( 'UIPro_Abstract_Config' ) ) {
 
                 ),
             );
-            return apply_filters( 'uipro/settings-general-options', $options );
+            static::$cache[$store_id] = $options = apply_filters( 'templaza-elements/settings-general-options', $options );
+            return $options;
         }
     }
 }

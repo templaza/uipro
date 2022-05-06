@@ -40,6 +40,13 @@ if ( ! class_exists( 'UIPro_Config_UIPerson' ) ) {
 		 * @return array
 		 */
 		public function get_options() {
+
+            $store_id   = md5(__METHOD__);
+
+            if(isset(static::$cache[$store_id])){
+                return static::$cache[$store_id];
+            }
+
 			$repeater = new \Elementor\Repeater();
 			$repeater->add_control(
 				'social_icon',
@@ -523,7 +530,11 @@ if ( ! class_exists( 'UIPro_Config_UIPerson' ) ) {
 					'default'       => '0',
 				),
 			);
-			return array_merge($options, $this->get_general_options());
+			$options    = array_merge($options, $this->get_general_options());
+
+			static::$cache[$store_id]   = $options;
+
+			return $options;
 		}
 
 		public function get_template_name() {

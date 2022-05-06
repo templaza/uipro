@@ -40,6 +40,12 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 		 * @return array
 		 */
 		public function get_options() {
+		    $store_id   = md5(__METHOD__);
+
+		    if(isset(static::$cache[$store_id])){
+		        return static::$cache[$store_id];
+            }
+
 			// options
 			$options = array(
 				array(
@@ -798,7 +804,9 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 					'default'       => '',
 				),
 			);
-			return array_merge($options, $this->get_general_options());
+            $options    = array_merge($options, $this->get_general_options());
+
+            static::$cache[$store_id]   = $options;
 		}
 
 		public function get_template_name() {

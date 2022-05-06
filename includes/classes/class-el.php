@@ -40,7 +40,7 @@ if ( !class_exists( 'UIPro_El' ) ) {
 			add_action( 'elementor/init', array( $this, 'register_categories' ), 99 );
 
 			// load widget
-			add_action( 'elementor/widgets/widgets_registered', array( $this, 'load_widgets' ) );
+            add_action( 'elementor/widgets/register', array( $this, 'load_widgets' ) );
 		}
 
 		/**
@@ -70,14 +70,14 @@ if ( !class_exists( 'UIPro_El' ) ) {
 			foreach ( $widgets as $group => $_widgets ) {
 				foreach ( $_widgets as $widget ) {
 					if ( $group != 'widgets' ) {
-						$file = apply_filters( 'uipro/el-widget-file', UIPRO_WIDGETS_PATH . "/$widget/class-el-$widget.php", $widget );
+						$file = apply_filters( 'templaza-elements/el-widget-file', UIPRO_WIDGETS_PATH . "/$widget/class-el-$widget.php", $widget );
 
 						if ( file_exists( $file ) ) {
 							include_once $file;
 							$class = '\UIPro_El_' . str_replace( '-', '_', ucfirst( $widget ) );
 
 							if ( class_exists( $class ) ) {
-								$widgets_manager->register_widget_type( new $class() );
+								$widgets_manager->register( new $class() );
 							}
 						}
 					}

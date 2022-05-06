@@ -50,6 +50,10 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
          */
         protected $text_domain = null;
 
+        protected $config_loaded    = array();
+
+        protected $cache    = array();
+
         /**
          * Thim_Builder_El_Widget constructor.
          *
@@ -65,12 +69,14 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
             }
 
             $this -> text_domain    = UIPro_Functions::get_my_text_domain();
-
             /**
-             * @var $config_class UIPro_Abstract_Config
+             * @var $config_class Templaza_Elements_Abstract_Config
              */
+//            if(!isset($this -> config_loaded[$this -> config_class]) || !$this -> config_loaded[$this -> config_class]) {
             $config_class = new $this->config_class();
             $config_class::register_scripts();
+//                $this -> config_loaded[$this -> config_class]  = $config_class;
+//            }
 
             parent::__construct( $data, $args );
         }
@@ -79,7 +85,13 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
             /**
              * @var $config_class UIPro_Abstract_Config
              */
+//            // config class
+//            if(!isset($this -> config_loaded[$this -> config_class]) || !$this -> config_loaded[$this -> config_class]) {
+            // config class
             $config_class = new $this->config_class();
+//            }else{
+//                $config_class   = $this -> config_loaded[$this -> config_class];
+//            }
 
             $config_class::register_scripts();
         }
@@ -99,7 +111,12 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
                     return '';
                 }
                 // config class
+//                if(!isset($this -> config_loaded[$this -> config_class]) || !$this -> config_loaded[$this -> config_class]) {
+                // config class
                 $config_class = new $this->config_class();
+//                }else{
+//                    $config_class   = $this -> config_loaded[$this -> config_class];
+//                }
 
                 return 'uipro-' . $config_class::$base;
             }
@@ -114,6 +131,12 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
             }
             // config class
             $config_class = new $this->config_class();
+//            if(!isset($this -> config_loaded[$this -> config_class]) || !$this -> config_loaded[$this -> config_class]) {
+//                // config class
+//                $config_class = new $this->config_class();
+//            }else{
+//                $config_class   = $this -> config_loaded[$this -> config_class];
+//            }
 
             return $config_class::$icon;
         }
@@ -126,8 +149,13 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
                 return '';
             }
 
+//            // config class
+//            if(!isset($this -> config_loaded[$this -> config_class]) || !$this -> config_loaded[$this -> config_class]) {
             // config class
             $config_class = new $this->config_class();
+//            }else{
+//                $config_class   = $this -> config_loaded[$this -> config_class];
+//            }
 
             return $config_class::$base;
         }
@@ -143,6 +171,12 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
 
             // config class
             $config_class = new $this->config_class();
+//            if(!isset($this -> config_loaded[$this -> config_class]) || !$this -> config_loaded[$this -> config_class]) {
+//                // config class
+//                $config_class = new $this->config_class();
+//            }else{
+//                $config_class   = $this -> config_loaded[$this -> config_class];
+//            }
 
             return $config_class::$name;
         }
@@ -158,6 +192,12 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
 
             // config class
             $config_class = new $this->config_class();
+//            if(!isset($this -> config_loaded[$this -> config_class]) || !$this -> config_loaded[$this -> config_class]) {
+//                // config class
+//                $config_class = new $this->config_class();
+//            }else{
+//                $config_class   = $this -> config_loaded[$this -> config_class];
+//            }
 
             return $config_class::$group;
         }
@@ -173,6 +213,12 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
 
             // config class
             $config_class = new $this->config_class();
+//            if(!isset($this -> config_loaded[$this -> config_class]) || !$this -> config_loaded[$this -> config_class]) {
+//                // config class
+//                $config_class = new $this->config_class();
+//            }else{
+//                $config_class   = $this -> config_loaded[$this -> config_class];
+//            }
 
             return $config_class::$template_name;
         }
@@ -221,7 +267,7 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
 
                     $current_section = $control['start_section'];
                 }
-				
+
                 if(isset($control['id'])){
                     unset($control['id']);
                 }
@@ -247,10 +293,23 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
          * @return array
          */
         public function get_script_depends() {
+            $store_id   = __METHOD__;
+            $store_id  .= '::'.get_called_class();
+            $store_id   = md5($store_id);
+
+            if(isset($this -> cache[$store_id])){
+                return $this -> cache[$store_id];
+            }
+
             /**
-             * @var $config_class UIPro_Abstract_Config
+             * @var $config_class Templaza_Elements_Abstract_Config
              */
-            $config_class = new $this->config_class();
+            if(!isset($this -> config_loaded[$this -> config_class]) || !$this -> config_loaded[$this -> config_class]) {
+                // config class
+                $config_class = new $this->config_class();
+            }else{
+                $config_class   = $this -> config_loaded[$this -> config_class];
+            }
 
             $assets = $config_class::_get_assets();
 
@@ -261,6 +320,10 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
                 }
             }
 
+            if(count($depends)){
+                $this -> cache[$store_id]   = $depends;
+            }
+
             return $depends;
         }
 
@@ -268,10 +331,23 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
          * @return array
          */
         public function get_style_depends() {
-            /**
-             * @var $config_class UIPro_Abstract_Config
-             */
+            $store_id   = __METHOD__;
+            $store_id  .= '::'.get_called_class();
+            $store_id   = md5($store_id);
+
+            if(isset($this -> cache[$store_id])){
+                return $this -> cache[$store_id];
+            }
+
+//            /**
+//             * @var $config_class Templaza_Elements_Abstract_Config
+//             */
+//            if(!isset($this -> config_loaded[$this -> config_class]) || !$this -> config_loaded[$this -> config_class]) {
+            // config class
             $config_class = new $this->config_class();
+//            }else{
+//                $config_class   = $this -> config_loaded[$this -> config_class];
+//            }
 
             $assets = $config_class::_get_assets();
 
@@ -280,6 +356,10 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
                 foreach ( $assets['styles'] as $key => $style ) {
                     $depends[] = $key;
                 }
+            }
+
+            if(count($depends)){
+                $this -> cache[$store_id]   = $depends;
             }
 
             return $depends;
@@ -294,17 +374,14 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
             }
 
             // allow hook before template
-            do_action( 'uipro/before-element-template', $this->get_name() );
+            do_action( 'templaza-elements/before-element-template', $this->get_name() );
 
             // get settings
             $settings = $this->get_settings_for_display();
 
             // handle settings
-            $settings = $this->_handle_settings( $this->convert_setting( $settings ) );
+            $settings = $this->convert_setting( $settings );
 
-            // fix for old themes by tuanta
-//            $params       = thim_builder_folder_group() ? 'params' : 'instance';
-//            $group_folder = thim_builder_folder_group() ? $this->get_group() . '/' : '';
             $params       = 'instance';
             $group_folder = '';
 
@@ -321,27 +398,23 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
                     'template_path' => $group_folder . $this->get_base() . '/tpl/'
                 )
             );
-			$container  =   isset($settings['uk_container']) && $settings['uk_container'] ? $settings['uk_container'] : '';
-			if ($container) {
-				if ($container == 'default') {
-					$container = ' uk-container';
-				} else {
-					$container = ' uk-container uk-container-'.$container;
-				}
-			}
-	        $margin_top = ( isset( $settings['addon_margin_top'] ) && $settings['addon_margin_top'] ) ? $settings['addon_margin_top'] : '';
-	        $margin_top = ( $margin_top ) ? ' uk-margin' . ( ( $margin_top == 'default' ) ? '-top' : '-' . $margin_top .'-top' ) : '';
+            $container  =   isset($settings['uk_container']) && $settings['uk_container'] ? $settings['uk_container'] : '';
+            if ($container) {
+                if ($container == 'default') {
+                    $container = ' uk-container';
+                } else {
+                    $container = ' uk-container uk-container-'.$container;
+                }
+            }
+            $margin_top = ( isset( $settings['addon_margin_top'] ) && $settings['addon_margin_top'] ) ? $settings['addon_margin_top'] : '';
+            $margin_top = ( $margin_top ) ? ' uk-margin' . ( ( $margin_top == 'default' ) ? '-top' : '-' . $margin_top .'-top' ) : '';
 
-	        $margin_bottom = ( isset( $settings['addon_margin_bottom'] ) && $settings['addon_margin_bottom'] ) ? $settings['addon_margin_bottom'] : '';
-	        $margin_bottom = ( $margin_bottom ) ? ' uk-margin' . ( ( $margin_bottom == 'default' ) ? '-bottom' : '-' . $margin_bottom .'-bottom' ) : '';
+            $margin_bottom = ( isset( $settings['addon_margin_bottom'] ) && $settings['addon_margin_bottom'] ) ? $settings['addon_margin_bottom'] : '';
+            $margin_bottom = ( $margin_bottom ) ? ' uk-margin' . ( ( $margin_bottom == 'default' ) ? '-bottom' : '-' . $margin_bottom .'-bottom' ) : '';
 
             $base_file = $this->get_template_name() ? $this->get_template_name() : $this->get_base();
             echo '<div class="templaza-widget-' . $this->get_base() . ' template-' . $base_file . $container . $margin_top . $margin_bottom . '">';
 
-//            var_dump($base_file,
-//                array( $params => $settings, 'args' => $args ), $settings['template_path'] ); die();
-//            \UIPro_Elementor_Helper::get_widget_template( $base_file,
-//                array( $params => $settings ), $settings['template_path'] );
             \UIPro_Elementor_Helper::get_widget_template( $base_file,
                 array( $params => $settings, 'args' => $args ), $settings['template_path'] );
 
@@ -360,41 +433,6 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
                 $controls = $this->options();
             }
 
-//            foreach ( $controls as $key => $control ) {
-//                if (isset($control['param_name']) &&  array_key_exists( $control['param_name'], $settings ) ) {
-//
-//                    $type  = $control['type'];
-//                    $value = $settings[$control['param_name']];
-//                    switch ( $type ) {
-//                        case 'param_group':
-//                            if ( isset( $value ) ) {
-//                                foreach ( $value as $_key => $_value ) {
-//                                    $settings[$control['param_name']][$_key] = $this->_handle_settings( $_value, $control['params'] );
-//                                }
-//                            }
-//                            break;
-//
-//                        case 'vc_link':
-//                            $settings[$control['param_name']] = array(
-//                                'url'    => $value['url'],
-//                                'target' => $value['is_external'] == 'on' ? '_blank' : '',
-//                                'rel'    => $value['nofollow'] == 'on' ? 'nofollow' : '',
-//                                'title'  => ''
-//                            );
-//                            break;
-//                        case 'attach_image':
-//                            $settings[$control['param_name']] = isset( $value ) ? $value['id'] : '';
-//                            break;
-//                        default:
-//                            // fix for param group
-//                            //							if ( isset( $control['group_id'] ) ) {
-//                            //								$settings[$control['group_id']][$control['param_name']] =  $value;
-//                            //							}
-//                            break;
-//                    }
-//                }
-//            }
-
             return $settings;
         }
 
@@ -406,54 +444,14 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
                 return array();
             }
 
+//            if(!isset($this -> config_loaded[$this -> config_class]) || !$this -> config_loaded[$this -> config_class]) {
             // config class
             $config_class = new $this->config_class();
-            $options      = $config_class::$options;
-//            foreach ( $options as $key_lv1 => $value_lv1 ) {
-//                if ( $value_lv1['type'] != 'param_group' ) {
-//                    continue;
-//                }
-//                $params_lv1 = $value_lv1['params'];
-//                foreach ( $params_lv1 as $key_lv2 => $value_lv2 ) {
-//                    if ( $value_lv2['type'] != 'param_group' ) {
-//                        continue;
-//                    }
-//                    if ( isset( $value_lv2['max_el_items'] ) && $value_lv2['max_el_items'] > 0 ) {
-//                        $params_lv2    = $value_lv2['params'];
-//                        $separate_text = $params_lv1[$key_lv2]['heading'];
-//                        unset( $params_lv1[$key_lv2] );
-//                        $params_lv1 = array_values( $params_lv1 );
-//                        $i          = 0;
-//                        while ( $i < $value_lv2['max_el_items'] ) {
-//                            $i ++;
-//                            $default_hidden = array();
-//                            foreach ( $params_lv2 as $key_lv3 => $value_lv3 ) {
-//                                $horizon = array(
-//                                    'type'       => 'bp_heading',
-//                                    'heading'    => $separate_text . ' #' . $i,
-//                                    'param_name' => 'horizon_line' . ' #' . $i
-//                                );
-//                                if ( $i === 1 ) {
-//                                    $default_hidden[] = $value_lv3['param_name'];
-//                                    $hidden           = array(
-//                                        'type'       => 'bp_hidden',
-//                                        'param_name' => $value_lv2['param_name'],
-//                                        'std'        => $value_lv2['max_el_items'] . '|' . implode( ',', $default_hidden )
-//                                    );
-//                                    $params_lv1[]     = $hidden;
-//                                }
-//                                $params_lv1[]            = $horizon;
-//                                $value_lv3['param_name'] = $value_lv3['param_name'] . $i;
-//                                if ( isset( $value_lv3['dependency'] ) && $value_lv3['dependency']['element'] != '' ) {
-//                                    $value_lv3['dependency']['element'] = $value_lv3['dependency']['element'] . $i;
-//                                }
-//                                $params_lv1[] = $value_lv3;
-//                            }
-//                        }
-//                    }
-//                }
-//                $options[$key_lv1]['params'] = $params_lv1;
+//            }else{
+//                $config_class   = $this -> config_loaded[$this -> config_class];
 //            }
+
+            $options      = $config_class::$options;
 
             return $options;
         }
@@ -466,8 +464,12 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
                 return '';
             }
 
+//            if(!isset($this -> config_loaded[$this -> config_class]) || !$this -> config_loaded[$this -> config_class]) {
             // config class
             $config_class = new $this->config_class();
+//            }else{
+//                $config_class   = $this -> config_loaded[$this -> config_class];
+//            }
 
             return $config_class::$assets_url;
         }
