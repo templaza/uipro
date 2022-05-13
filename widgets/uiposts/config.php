@@ -356,7 +356,6 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 					'id'            => 'filter_width',
 					'label'         => esc_html__( 'Filter Width', 'uipro' ),
 					'type'          => Controls_Manager::SLIDER,
-					'devices'       => [ 'desktop', 'tablet', 'mobile' ],
 					'responsive'    => true,
 					'range' => [
 						'px' => [
@@ -759,10 +758,26 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 						'medium' => esc_html__('Medium', 'uipro'),
 						'large' => esc_html__('Large', 'uipro'),
 						'xlarge' => esc_html__('X-Large', 'uipro'),
+						'custom' => esc_html__('Custom', 'uipro'),
 						'remove' => esc_html__('None', 'uipro'),
 					),
 					'default'           => '',
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'title_margin_custom',
+                    'label'         => esc_html__( 'Title Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'title_margin', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+                ),
 
 				// Image Settings
 				array(
@@ -912,7 +927,6 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 					'name'            => 'thumbnail_height',
 					'label'         => esc_html__( 'Thumbnail Height', 'uipro' ),
 					'type'          => Controls_Manager::SLIDER,
-					'devices'       => [ 'desktop', 'tablet', 'mobile' ],
 					'responsive'    => true,
 					'range' => [
 						'px' => [
@@ -1097,9 +1111,25 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                         'medium' => esc_html__('Medium', 'uipro'),
                         'large' => esc_html__('Large', 'uipro'),
                         'xlarge' => esc_html__('X-Large', 'uipro'),
+                        'custom' => esc_html__('Custom', 'uipro'),
                         'remove-vertical' => esc_html__('None', 'uipro'),
                     ),
                     'default'           => '',
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'meta_top_margin_custom',
+                    'label'         => esc_html__( 'Before Title Position Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-post-meta-top' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_top_margin', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
                 ),
                 array(
                     'name'          => 'meta_middle_font_family',
@@ -1137,9 +1167,25 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                         'medium' => esc_html__('Medium', 'uipro'),
                         'large' => esc_html__('Large', 'uipro'),
                         'xlarge' => esc_html__('X-Large', 'uipro'),
+                        'custom' => esc_html__('Custom', 'uipro'),
                         'remove-vertical' => esc_html__('None', 'uipro'),
                     ),
                     'default'           => '',
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'meta_middle_margin_custom',
+                    'label'         => esc_html__( 'After Title Position Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-post-meta-middle' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_middle_margin', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
                 ),
                 array(
                     'name'          => 'meta_bottom_font_family',
