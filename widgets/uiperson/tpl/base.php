@@ -44,21 +44,29 @@ $overlay_alignment      = isset($instance['overlay_alignment']) && $instance['ov
 $vertical_icons         = isset($instance['vertical_icons']) && $instance['vertical_icons'] ? $instance['vertical_icons'] : '';
 $vertical_icons         = ($vertical_icons == '1') ? ' uk-iconnav-vertical' : '';
 $social_content =   '';
+$box = '';
+if($overlay_positions =='uk-position-after-des') {
+    $box = 'tz-social-box';
+}
 if (count($social_items)) {
-	$social_content .=  '<div class="'.$overlay_positions.'">';
-	$social_content .=  '<div class="uk-overlay uk-transition-fade uk-tile-muted uk-margin-remove-first-child">';
-	$social_content .=  '<ul class="tz-social-list uk-iconnav'.$vertical_icons.$overlay_alignment.'">';
+    if($overlay_positions !='uk-position-after-des') {
+        $social_content .= '<div class="' . $overlay_positions . '">';
+        $social_content .= '<div class="uk-overlay tz-social-box uk-transition-fade uk-tile-muted uk-margin-remove-first-child">';
+    }
+	$social_content .=  '<ul class="tz-social-list '.$box.' uk-iconnav'.$vertical_icons.$overlay_alignment.'">';
 	foreach ($social_items as $item) {
 		$social_icon    =   ( isset( $item['social_icon'] ) && $item['social_icon'] ) ? $item['social_icon'] : '';
 		$link           =   ( isset( $item['link'] ) && $item['link'] ) ? $item['link'] : array();
 		$attribs        =   \UIPro_Elementor_Helper::get_link_attribs($link);
 		if ($social_icon) {
-			$social_content     .=  '<li class="uk-margin-remove"><a href="'.$link['url'].'" class="uk-icon-link"'.$attribs.'><span class="uk-icon" data-uk-icon="icon: ' . $item['social_icon'] . '"></span></a></li>';
+			$social_content     .=  '<li class="uk-padding-remove"><a href="'.$link['url'].'" class="uk-icon-link"'.$attribs.'><span class="uk-icon" data-uk-icon="icon: ' . $item['social_icon'] . '"></span></a></li>';
 		}
 	}
 	$social_content .=  '</ul>';
-	$social_content .=  '</div>';
-	$social_content .=  '</div>';
+    if($overlay_positions !='uk-position-after-des') {
+        $social_content .= '</div>';
+        $social_content .= '</div>';
+    }
 }
 
 $general_styles = \UIPro_Elementor_Helper::get_general_styles($instance);
@@ -71,7 +79,11 @@ if ($name) {
 	$output     =   '<div class="ui-card uk-card'. $card_style . $card_size . $general_styles['container_cls'] .'"' . $general_styles['animation'] . '>';
 	if ($media && $image_appear == 'top') {
 		$output .=  '<div class="uk-card-media-top ui-media'.$media_margin.'"><div class="uk-inline-clip uk-transition-toggle" tabindex="0">';
-		$output .=  $media.$social_content;
+		if($overlay_positions !='uk-position-after-des'){
+            $output .=  $media.$social_content;
+        }else{
+            $output .=  $media;
+        }
 		$output .=  '</div></div>';
 	}
 	$output     .=  '<div class="uk-card-body' . $general_styles['content_cls'] . '">';
@@ -85,10 +97,17 @@ if ($name) {
 		$output         .=  $name.$designation.$email;
 	}
 	$output     .=  '<div class="ui-card-text">'.$text.'</div>';
+    if($overlay_positions =='uk-position-after-des'){
+        $output .=  $social_content;
+    }
 	$output     .=  '</div>';
 	if ($media && $image_appear == 'bottom') {
 		$output .=  '<div class="uk-card-media-top ui-media'.$media_margin.'"><div class="uk-inline-clip uk-transition-toggle" tabindex="0">';
-		$output .=  $media.$social_content;
+        if($overlay_positions !='uk-position-after-des'){
+            $output .=  $media.$social_content;
+        }else{
+            $output .=  $media;
+        }
 		$output .=  '</div></div>';
 	}
 	$output     .=  '</div>';

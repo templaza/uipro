@@ -17,11 +17,16 @@ $laptop_columns         = ( isset( $instance['laptop_columns'] ) && $instance['l
 $tablet_columns         = ( isset( $instance['tablet_columns'] ) && $instance['tablet_columns'] ) ? $instance['tablet_columns'] : '2';
 $mobile_columns         = ( isset( $instance['mobile_columns'] ) && $instance['mobile_columns'] ) ? $instance['mobile_columns'] : '1';
 $timeframe_margin       = isset($instance['timeframe_margin']) && $instance['timeframe_margin'] ? ' uk-margin-'.$instance['timeframe_margin'].'-bottom' : ' uk-margin-bottom';
+$cover_image            = (isset($instance['image_cover']) && $instance['image_cover']) ? intval($instance['image_cover']) : 0;
+$image_position         = (isset($instance['image_position']) && $instance['image_position']) ? $instance['image_position'] : 'uk-card-media-left';
 $image_class            = " attachment-$image_size size-$image_size";
 $general_styles         =   \UIPro_Elementor_Helper::get_general_styles($instance);
-
+$cover_image_container  = $cover_image ? ' uk-cover-container' : '';
 $output         =   '';
-
+$image_position_cl = 'uk-card-media-left';
+if ($image_position =='right'){
+    $image_position_cl = 'uk-card-media-right uk-flex-last@m';
+}
 if (count($timeline)) {
 	$output     =   '<div class="ui-timeline'. $general_styles['container_cls'] .'"' . $general_styles['animation'] . '>';
 	$output     .=  '<div class="ui-timeline-inner' . $general_styles['content_cls'] . '">';
@@ -34,11 +39,17 @@ if (count($timeline)) {
         $dateline .=  '</li>';
 
         $content .=  '<li>';
-        $content .=  '<div class="uk-card uk-card-default uk-grid-collapse uk-child-width-1-2@s" data-uk-grid>';
-        $content .=  '<div class="uk-card-media-left uk-cover-container">';
-        $content .=  wp_get_attachment_image( $item['image']['id'], $image_size, false, array('class' => trim( $image_class ), 'data-uk-cover' => '') ). '<canvas width="600" height="400"></canvas>';
+        $content .=  '<div class="uk-card uk-card-default uk-grid-collapse uk-flex uk-flex-middle uk-child-width-1-2@m" data-uk-grid>';
+        $content .=  '<div class="'.$image_position_cl.'">';
+        $content .=  '<div class="image-box '.$cover_image_container.'">';
+        if($cover_image){
+            $content .=  wp_get_attachment_image( $item['image']['id'], $image_size, false, array('class' => trim( $image_class ), 'data-uk-cover' => '') ). '<canvas width="600" height="400"></canvas>';
+        }else{
+            $content .=  wp_get_attachment_image( $item['image']['id'], $image_size, false, array('class' => trim( $image_class )) ). '';
+        }
         $content .=  '</div>';
-        $content .=  '<div class="uk-flex uk-flex-middle"><div class="uk-card-body">';
+        $content .=  '</div>';
+        $content .=  '<div class="uk-flex uk-flex-middle"><div class="uk-card-body ui-timeline-content-wrap">';
         $meta_content   =  isset($item['meta']) && $item['meta'] ? '<'.$meta_tag.' class="ui-timeline-meta uk-margin-remove-top '.esc_attr($meta_heading_style.$meta_margin).'">'.$item['meta'].'</'.$meta_tag.'>' : '';
         $content .=  ($meta_position == 'before-title') ? $meta_content : '';
         $content .=  '<'.$title_tag.' class="ui-timeline-title uk-card-title uk-margin-remove-top '.esc_attr($title_heading_style.$title_margin).'">'. esc_html($item['title']) .'</'.$title_tag.'>';

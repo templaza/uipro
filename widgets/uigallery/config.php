@@ -23,7 +23,7 @@ if ( ! class_exists( 'UIPro_Config_UIGallery' ) ) {
 	 */
 	class UIPro_Config_UIGallery extends UIPro_Abstract_Config {
 
-		/**
+		/*
 		 * UIPro_Config_Heading constructor.
 		 */
 		public function __construct() {
@@ -637,7 +637,7 @@ if ( ! class_exists( 'UIPro_Config_UIGallery' ) ) {
 					'type'          =>  Controls_Manager::COLOR,
 					'label'         => esc_html__('Custom Color', 'uipro'),
 					'selectors' => [
-						'{{WRAPPER}} .ui-title > a' => 'color: {{VALUE}}',
+						'{{WRAPPER}} .ui-title > a, {{WRAPPER}} .ui-title' => 'color: {{VALUE}}',
 					],
 				),
 				array(

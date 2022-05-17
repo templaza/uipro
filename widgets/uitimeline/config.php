@@ -132,7 +132,22 @@ if ( ! class_exists( 'UIPro_Config_UITimeline' ) ) {
                     ),
                     'default'   => 'base',
                 ),
+                array(
+                    'id'            => 'timeline_background',
+                    'type'          =>  Controls_Manager::COLOR,
+                    'label'         => esc_html__('Time Line Background Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-timeline .uk-card' => 'background-color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'type'          =>  \Elementor\Group_Control_Box_Shadow::get_type(),
+                    'name'          => 'timeline_shadow',
+                    'label'         => esc_html__('Time Line Box Shadow', 'uipro'),
+                    'description'   => esc_html__('Set the Box Shadow of Time Line Box.', 'uipro'),
+                    'selector' => '{{WRAPPER}} .ui-timeline .uk-card',
 
+                ),
                 array(
                     'id'          => 'large_desktop_columns',
                     'label' => esc_html__( 'Large Desktop Columns', 'uipro' ),
@@ -266,7 +281,7 @@ if ( ! class_exists( 'UIPro_Config_UITimeline' ) ) {
                     'type'          =>  Controls_Manager::COLOR,
                     'label'         => esc_html__('Time Frame Color', 'uipro'),
                     'selectors' => [
-                        '{{WRAPPER}} .ui-timeline-date' => 'color: {{VALUE}}',
+                        '{{WRAPPER}} .ui-timeline-date, {{WRAPPER}} .ui-timeline-date a' => 'color: {{VALUE}}',
                     ],
                 ),
                 array(
@@ -300,9 +315,30 @@ if ( ! class_exists( 'UIPro_Config_UITimeline' ) ) {
                     ],
                     'start_section' => 'image_settings',
                     'section_name'      => esc_html__('Image Box Settings', 'uipro'),
-                    'condition'     => array(
-                        'layout'    => 'style1'
+                ),
+                array(
+                    'type'          => Controls_Manager::SELECT,
+                    'id'            => 'image_position',
+                    'label'         => esc_html__( 'Image Position', 'uipro' ),
+                    'description'   => esc_html__( 'Select the image position.', 'uipro' ),
+                    'options'       => array(
+                        'left'      => esc_html__('Left', 'uipro'),
+                        'right'     => esc_html__('Right', 'uipro'),
+                        'inside'    => esc_html__('Inside Body', 'uipro'),
                     ),
+                    'default'       => 'left',
+                    'condition'     => array(
+                        'layout'    => 'base'
+                    ),
+                ),
+                array(
+                    'type'          => Controls_Manager::SWITCHER,
+                    'id'            => 'image_cover',
+                    'label'         => esc_html__('Enable Image Cover', 'uipro'),
+                    'label_on'      => esc_html__( 'Yes', 'uipro' ),
+                    'label_off'     => esc_html__( 'No', 'uipro' ),
+                    'return_value'  => '1',
+                    'default'       => '0',
                 ),
                 array(
                     'name'          => 'image_box_line',
@@ -705,6 +741,16 @@ if ( ! class_exists( 'UIPro_Config_UITimeline' ) ) {
                     'label_off'     => esc_html__( 'No', 'uipro' ),
                     'return_value'  => '1',
                     'default'       => '0',
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'content_padding',
+                    'label'         => esc_html__( 'Content Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-timeline-content-wrap' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
+                    ],
                 ),
 			);
 			$options    = array_merge($options, $this->get_general_options());

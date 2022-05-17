@@ -36,7 +36,7 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 
 		}
 
-		/**
+		/*
 		 * @return array
 		 */
 		public function get_options() {

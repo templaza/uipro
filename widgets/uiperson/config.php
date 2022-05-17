@@ -15,6 +15,7 @@ defined( 'ABSPATH' ) || exit;
 
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
+use Elementor\Group_Control_Border;
 use Elementor\Core\Schemes\Typography;
 
 if ( ! class_exists( 'UIPro_Config_UIPerson' ) ) {
@@ -243,8 +244,24 @@ if ( ! class_exists( 'UIPro_Config_UIPerson' ) ) {
 						'' => __('Default', 'uipro'),
 						'small' => __('Small', 'uipro'),
 						'large' => __('Large', 'uipro'),
+                        'custom' => esc_html__('Custom', 'uipro'),
 					],
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'card_padding',
+                    'label'         => esc_html__( 'Card Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-card-body' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'card_size', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+                ),
 
 				//Image Settings
 				array(
@@ -504,6 +521,7 @@ if ( ! class_exists( 'UIPro_Config_UIPerson' ) ) {
 						'center' => __( 'Center', 'uipro' ),
 						'center-left' => __( 'Center Left', 'uipro' ),
 						'center-right' => __( 'Center Right', 'uipro' ),
+						'after-des' => __( 'After Description', 'uipro' ),
 					),
 					'start_section' => 'social_settings',
 					'section_name'      => esc_html__('Social Settings', 'uipro')
@@ -529,6 +547,119 @@ if ( ! class_exists( 'UIPro_Config_UIPerson' ) ) {
 					'return_value'  => '1',
 					'default'       => '0',
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'social_box_margin',
+                    'label'         => esc_html__( 'Social Box Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .tz-social-box' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'social_box_color',
+                    'label'         => esc_html__('Social Box Background Color', 'uipro'),
+                    'description'   => esc_html__('Set the background color of social box.', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .tz-social-box' => 'background-color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'social_item_bg_color',
+                    'label'         => esc_html__('Social Item Background Color', 'uipro'),
+                    'description'   => esc_html__('Set the background color of social item.', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .uk-icon-link .uk-icon' => 'background-color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'social_color',
+                    'label'         => esc_html__('Social Item Color', 'uipro'),
+                    'description'   => esc_html__('Set the color of social item.', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .uk-icon-link' => 'color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'name'            => 'social_width_custom',
+                    'label'         => esc_html__( 'Item width', 'uipro' ),
+                    'type'          => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px'],
+                    'responsive'    => true,
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 200,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 50,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .uk-icon-link svg' => 'width: {{SIZE}}{{UNIT}}; height: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'social_item_padding',
+                    'label'         => esc_html__( 'Item Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-icon-link .uk-icon' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'social_item_margin',
+                    'label'         => esc_html__( 'Item Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .tz-social-box li' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'type'          => \Elementor\Group_Control_Border::get_type(),
+                    'name'          => 'social_item_border',
+                    'label'         => esc_html__( 'Item Border', 'uipro' ),
+                    'selector' => '{{WRAPPER}} .uk-icon-link .uk-icon',
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'social_item_bg_color_hover',
+                    'label'         => esc_html__('Hover Item Background Color', 'uipro'),
+                    'description'   => esc_html__('Set the background color hover of social item.', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .uk-icon-link .uk-icon:hover' => 'background-color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'social_color_hover',
+                    'label'         => esc_html__('Hover Social Item Color', 'uipro'),
+                    'description'   => esc_html__('Set the color hover of social item.', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .uk-icon-link:hover' => 'color: {{VALUE}}',
+                    ],
+                ),
+
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'social_border_color_hover',
+                    'label'         => esc_html__('Hover Border Color', 'uipro'),
+                    'description'   => esc_html__('Set the border color hover of social item.', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .uk-icon-link .uk-icon:hover' => 'border-color: {{VALUE}}',
+                    ],
+                ),
+
 			);
 			$options    = array_merge($options, $this->get_general_options());
 
