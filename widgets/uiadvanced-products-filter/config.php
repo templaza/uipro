@@ -142,6 +142,12 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
                     'default'       => 'yes'
                 ),
                 array(
+                    'type'          => Controls_Manager::SWITCHER,
+                    'id'            => 'uiap_enable_label',
+                    'label'         => esc_html__( 'Show Label', 'uipro' ),
+                    'default'       => 'yes'
+                ),
+                array(
                     'type'          => Controls_Manager::TEXT,
                     'id'            => 'uiap_submit_text',
                     'label'         => esc_html__( 'Submit Text', 'uipro' ),
@@ -223,6 +229,31 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
                     'selector' => '{{WRAPPER}} .advanced-product-search-form',
                 ),
                 array(
+                    'type'      => Controls_Manager::SLIDER,
+                    'name'      => 'form_input_width',
+                    'label'     => esc_html__('Form item Width', 'uipro'),
+                    'size_units'    => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 2000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => '%',
+                        'size' => 100,
+                    ],
+                    'selectors' => array(
+                        '{{WRAPPER}} .advanced-product-search-form' => 'display:flex; flex-wrap:wrap',
+                        '{{WRAPPER}} .advanced-product-search-form .ap-search-item' => 'width: {{SIZE}}{{UNIT}};',
+                    )
+                ),
+                array(
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'title_typography',
                     'scheme'        => Typography::TYPOGRAPHY_1,
@@ -237,6 +268,17 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
                     'section_name'  => esc_html__( self::$name, 'uipro' ),
                 ),
                 array(
+                    'type'          => Group_Control_Typography::get_type(),
+                    'name'          => 'label_typography',
+                    'scheme'        => Typography::TYPOGRAPHY_1,
+                    'label'         => esc_html__('Label Font', 'uipro'),
+                    'description'   => esc_html__('Select a font family for label.', 'uipro'),
+                    'selector'      => '{{WRAPPER}} .advanced-product-search-form .search-label',
+                    'condition'     => array(
+                        'uiap_enable_label'    => 'yes'
+                    ),
+                ),
+                array(
                     'type'          =>  Controls_Manager::COLOR,
                     'name'          => 'title_color',
                     'label'         => esc_html__('Title Color', 'uipro'),
@@ -246,6 +288,18 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
                     ],
                     'condition'     => array(
                         'title!'    => ''
+                    ),
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'label_color',
+                    'label'         => esc_html__('Label Color', 'uipro'),
+                    'description'   => esc_html__('Set the color of label.', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .advanced-product-search-form .search-label' => 'color: {{VALUE}}',
+                    ],
+                    'condition'     => array(
+                        'uiap_enable_label'    => 'yes'
                     ),
                 ),
                 array(
@@ -267,6 +321,25 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
                     'description'   => esc_html__('Set the background color of form.', 'uipro'),
                     'selectors' => [
                         '{{WRAPPER}} .advanced-product-search-form' => 'background-color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'form_bg_input',
+                    'label'         => esc_html__('Input background Color', 'uipro'),
+                    'description'   => esc_html__('Set the background color of input form.', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .advanced-product-search-form .ap-search-item input' => 'background-color: {{VALUE}}',
+                        '{{WRAPPER}} .advanced-product-search-form .ap-search-item select' => 'background-color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'form_color_input',
+                    'label'         => esc_html__('Input Color', 'uipro'),
+                    'description'   => esc_html__('Set the color of input form.', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .advanced-product-search-form .ap-search-item input' => 'color: {{VALUE}}',
                     ],
                 ),
 			) ;
