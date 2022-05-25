@@ -93,6 +93,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'options'       => array(
                         'base'      => esc_html__( 'Default', 'uipro' ),
                         'archive'   => esc_html__( 'Inherit Archive', 'uipro' ),
+                        'style1'   => esc_html__( 'Style 1', 'uipro' ),
                     ),
                     'default'       => 'archive',
                 ),
@@ -289,7 +290,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'separator'     => 'before',
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
 				),
@@ -322,7 +323,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'section_name'      => esc_html__('Card Settings', 'uipro'),
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
 				),
@@ -336,7 +337,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					],
 					'conditions' => [
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'card_style', 'operator' => '===', 'value' => 'custom'],
 						],
 					],
@@ -351,7 +352,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					],
 					'conditions' => [
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'card_style', 'operator' => '===', 'value' => 'custom'],
 						],
 					],
@@ -369,7 +370,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					],
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
 				),
@@ -385,7 +386,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					],
 					'conditions' => [
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'card_size', 'operator' => '===', 'value' => 'custom'],
 						],
 					],
@@ -445,7 +446,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					],
 					'conditions' => [
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'filter_position', 'operator' => '!==', 'value' => 'top'],
 						],
 					],
@@ -462,7 +463,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					],
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
 				),
@@ -481,7 +482,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'           => '',
 					'conditions' => [
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'filter_position', 'operator' => '!==', 'value' => 'top'],
 						],
 					],
@@ -497,7 +498,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'       => '0',
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
 				),
@@ -512,7 +513,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'       => '1',
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
 				),
@@ -533,7 +534,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'           => '',
 					'conditions' => [
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'filter_position', 'operator' => '===', 'value' => 'top'],
 						],
 					],
@@ -551,7 +552,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'           => '',
 					'conditions' => [
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'filter_container', 'operator' => '!==', 'value' => ''],
 							['name' => 'filter_position', 'operator' => '===', 'value' => 'top'],
 						],
@@ -572,7 +573,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'           => '',
 					'conditions' => [
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'filter_position', 'operator' => '===', 'value' => 'top'],
 							['name' => 'filter_container', 'operator' => '!==', 'value' => ''],
 						],
@@ -592,7 +593,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'conditions' => [
 						'relation' => 'and',
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'filter_position', 'operator' => '===', 'value' => 'top'],
 							['name' => 'filter_container', 'operator' => '!==', 'value' => ''],
 							['name' => 'filter_block_align_breakpoint', 'operator' => '!==', 'value' => ''],
@@ -614,7 +615,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'conditions' => [
                         'relation' => 'and',
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
 				),
@@ -633,7 +634,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'           => '',
 					'conditions' => [
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'filter_text_alignment', 'operator' => '!==', 'value' => ''],
 						],
 					],
@@ -654,7 +655,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'conditions' => [
 						'relation' => 'and',
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'filter_text_alignment', 'operator' => '!==', 'value' => ''],
 							['name' => 'filter_text_alignment_breakpoint', 'operator' => '!==', 'value' => ''],
 						],
@@ -673,7 +674,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'       => 'slide',
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
 				),
@@ -693,7 +694,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'           => '',
 					'conditions' => [
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'filter_position', 'operator' => '===', 'value' => 'top'],
 						],
 					],
@@ -713,7 +714,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'           => '',
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
 				),
@@ -732,7 +733,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'section_name'  => esc_html__('Slider Settings', 'uipro'),
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
 				),
@@ -747,7 +748,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'       => '1',
 					'conditions' => [
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
 						],
 					],
@@ -763,7 +764,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					],
 					'conditions' => [
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
 							['name' => 'enable_navigation', 'operator' => '===', 'value' => '1'],
 						],
@@ -780,7 +781,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'       => '1',
 					'conditions' => [
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
 						],
 					],
@@ -796,7 +797,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'       => '0',
 					'conditions' => [
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
 						],
 					],
@@ -824,7 +825,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'section_name'      => esc_html__('Title Settings', 'uipro'),
 					'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
 				),
@@ -858,7 +859,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					),
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
 				),
@@ -871,7 +872,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					],
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
 				),
@@ -891,7 +892,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'           => '',
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
 				),
@@ -910,7 +911,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'section_name'  => esc_html__('Image Settings', 'uipro'),
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
 				),
@@ -925,7 +926,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					],
 					'conditions' => [
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'hide_thumbnail', 'operator' => '!==', 'value' => '1'],
 						],
 					],
@@ -941,7 +942,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'       => '0',
 					'conditions' => [
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'layout', 'operator' => '===', 'value' => 'thumbnail'],
 						],
 					],
@@ -970,7 +971,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					],
 					'conditions' => [
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'thumbnail_hover', 'operator' => '===', 'value' => '1'],
 						],
 					],
@@ -990,7 +991,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'       => 'top',
 					'conditions' => [
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'layout', 'operator' => '===', 'value' => ''],
 						],
 					],
@@ -1014,7 +1015,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'conditions' => [
                         'relation' => 'and',
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                             [
                                 'relation' => 'or',
                                 'terms' => [
@@ -1041,7 +1042,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'default'           => '',
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                             ['name' => 'image_position', 'operator' => '===', 'value' => 'inside'],
                         ],
                     ],
@@ -1057,7 +1058,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'       => '0',
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
 				),
@@ -1090,7 +1091,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					],
 					'conditions' => [
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'cover_image', 'operator' => '===', 'value' => '1'],
 						],
 					],
@@ -1109,7 +1110,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'       => '',
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
 				),
@@ -1121,7 +1122,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default' => 'large',
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
 				),
@@ -1140,7 +1141,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'section_name'  => esc_html__('Content Settings', 'uipro'),
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
 				),
@@ -1153,7 +1154,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'selector'      => '{{WRAPPER}} .ui-post-introtext',
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
 				),
@@ -1166,7 +1167,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					],
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
 				),
@@ -1181,7 +1182,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'       => '0',
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
 				),
@@ -1197,7 +1198,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'section_name'  => esc_html__('Meta Settings', 'uipro'),
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
                 ),
@@ -1210,7 +1211,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'default' => [ 'date', 'author', 'category' ],
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
                 ),
@@ -1223,7 +1224,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'default' => [ 'tags' ],
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
                 ),
@@ -1235,7 +1236,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'multiple'      => true,
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
                 ),
@@ -1252,7 +1253,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'separator'     => 'before',
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
                 ),
@@ -1266,7 +1267,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'separator'     => 'before',
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
                 ),
@@ -1279,7 +1280,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     ],
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
                 ),
@@ -1292,7 +1293,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     ],
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
                 ),
@@ -1312,7 +1313,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'default'           => '',
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
                 ),
@@ -1326,7 +1327,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'separator'     => 'before',
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
                 ),
@@ -1339,7 +1340,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     ],
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
                 ),
@@ -1352,7 +1353,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     ],
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
                 ),
@@ -1372,7 +1373,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'default'           => '',
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
                 ),
@@ -1386,7 +1387,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'separator'     => 'before',
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
                 ),
@@ -1399,7 +1400,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     ],
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
                 ),
@@ -1412,7 +1413,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     ],
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
                 ),
@@ -1432,7 +1433,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'default'           => '',
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
                 ),
@@ -1446,7 +1447,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'separator'     => 'before',
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
                 ),
@@ -1459,7 +1460,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     ],
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
                 ),
@@ -1472,7 +1473,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     ],
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
                 ),
@@ -1492,7 +1493,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'default'           => '',
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
                 ),
@@ -1511,7 +1512,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'section_name'      => esc_html__('Button Settings', 'uipro'),
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
 				),
@@ -1523,7 +1524,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'label_block' => true,
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
 				),
@@ -1537,7 +1538,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					),
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
 				),
@@ -1560,7 +1561,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default' => '',
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
 				),
@@ -1609,7 +1610,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'selector' => '{{WRAPPER}} .ui-post-button',
 					'conditions' => [
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'button_style', 'operator' => '===', 'value' => 'custom'],
 						],
 					],
@@ -1647,7 +1648,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'selector' => '{{WRAPPER}} .ui-post-button:hover',
 					'conditions' => [
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'button_style', 'operator' => '===', 'value' => 'custom'],
 						],
 					],
@@ -1664,7 +1665,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'separator'     => 'before',
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
 				),
@@ -1682,7 +1683,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'conditions' => [
 						'relation' => 'and',
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'button_style', 'operator' => '!==', 'value' => 'link'],
 							['name' => 'button_style', 'operator' => '!==', 'value' => 'link-muted'],
 							['name' => 'button_style', 'operator' => '!==', 'value' => 'link-text'],
@@ -1706,7 +1707,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default' => '',
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
 				),
