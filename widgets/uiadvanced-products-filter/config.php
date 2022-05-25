@@ -233,6 +233,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
                     'name'      => 'form_input_width',
                     'label'     => esc_html__('Form item Width', 'uipro'),
                     'size_units'    => [ 'px', '%' ],
+                    'responsive'    =>  true,
                     'range' => [
                         'px' => [
                             'min' => 0,
@@ -252,6 +253,100 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
                         '{{WRAPPER}} .advanced-product-search-form' => 'display:flex; flex-wrap:wrap',
                         '{{WRAPPER}} .advanced-product-search-form .ap-search-item' => 'width: {{SIZE}}{{UNIT}};',
                     )
+                ),
+                array(
+                    'name'            => 'form_input_border',
+                    'type'          =>  \Elementor\Group_Control_Border::get_type(),
+                    'label' => esc_html__( 'Form Input Border', 'uipro' ),
+                    'selector' => '{{WRAPPER}} .advanced-product-search-form .ap-search-item input, {{WRAPPER}} .advanced-product-search-form .ap-search-item select',
+                ),
+                array(
+                    'type'      => Controls_Manager::SLIDER,
+                    'name'      => 'form_input_height',
+                    'label'     => esc_html__('Form input height', 'uipro'),
+                    'size_units'    => [ 'px' ],
+                    'responsive'    =>  true,
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 100,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 50,
+                    ],
+                    'selectors' => array(
+                        '{{WRAPPER}} .advanced-product-search-form .ap-search-item input, {{WRAPPER}} .advanced-product-search-form .ap-search-item select' => 'height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}};',
+                    )
+                ),
+                array(
+                    'type'      => Controls_Manager::SLIDER,
+                    'name'      => 'form_button_width',
+                    'label'     => esc_html__('Form Button Width', 'uipro'),
+                    'size_units'    => [ 'px', '%' ],
+                    'responsive'    =>  true,
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 2000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => '%',
+                        'size' => 100,
+                    ],
+                    'selectors' => array(
+                        '{{WRAPPER}} .advanced-product-search-form .ap-search-item.ap-search-button' => 'width: {{SIZE}}{{UNIT}};',
+                    )
+                ),
+                array(
+                    'type'      => Controls_Manager::SLIDER,
+                    'name'      => 'form_button_height',
+                    'label'     => esc_html__('Form button height', 'uipro'),
+                    'size_units'    => [ 'px' ],
+                    'responsive'    =>  true,
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 100,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 50,
+                    ],
+                    'selectors' => array(
+                        '{{WRAPPER}} .advanced-product-search-form .ap-search-item button' => 'height: {{SIZE}}{{UNIT}}; line-height: 1em;',
+                    )
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'form_input_margin',
+                    'label'         => esc_html__( 'Form item Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .advanced-product-search-form .ap-search-item' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important; margin:0 !important;',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'form_button_margin',
+                    'label'         => esc_html__( 'Form Button Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .advanced-product-search-form .ap-search-item.ap-search-button' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                        '{{WRAPPER}} .advanced-product-search-form .ap-search-item.ap-search-button button' => 'margin: 0 !important;',
+                    ],
                 ),
                 array(
                     'type'          => Group_Control_Typography::get_type(),
