@@ -21,7 +21,7 @@ $shortcode .= '[newsletter_field name="email" label="" placeholder="'.$newslette
 
 $shortcode .= '[/newsletter_form]';
 ?>
-<div class=" <?php echo esc_attr($general_styles['container_cls'] . $general_styles['content_cls']);?>" <?php echo wp_kses($general_styles['animation'],'post');?>>
+<div class=" <?php echo esc_attr($general_styles['container_cls'] . $general_styles['content_cls'] . $instance['form_style']);?>" <?php echo wp_kses($general_styles['animation'],'post');?>>
     <?php
     if($ui_form == 'custom'){
         echo do_shortcode($ui_form_custom);

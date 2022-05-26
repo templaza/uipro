@@ -705,6 +705,36 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                         ],
                     ],
 				),
+                array(
+                    'id'          => 'border_radius',
+                    'label' => __( 'Button Border Radius', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px','%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 400,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 10,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-button .uk-button' => 'border-radius: {{SIZE}}{{UNIT}} !important;',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'button_style', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+                ),
 				array(
                     'label' => esc_html__( 'Button Border', 'uipro' ),
                     'name'          => 'button_border',

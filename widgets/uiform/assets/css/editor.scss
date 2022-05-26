@@ -1,8 +1,13 @@
-.elementor-control-uiap_custom_fields{
-  .select2-selection__rendered{
-    &.ui-sortable{
-      .select2-selection__choice{
-        cursor: move;
+.templaza-widget-uiform{
+  .inline{
+    form{
+      display:flex;
+      flex-wrap:wrap;
+      .wpforms-field-container{
+        flex:1;
+      }
+      .wpforms-submit-container{
+        width:auto;
       }
     }
   }

@@ -84,6 +84,3 @@ if($ap_posts && $ap_posts -> have_posts()) {
     </div>
     <?php
 }
-
-//// Assign $wp_query again
-//$wp_query   = $wp_query_tmp;

@@ -179,4 +179,4 @@ if (!$hide_thumbnail && has_post_thumbnail( $item->ID ) && $image_position == 'b
 endif;
 
 $output .=  '</div>';
-$output .=  '</article>';
+$output .=  '</div>';
