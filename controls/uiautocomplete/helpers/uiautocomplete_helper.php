@@ -38,7 +38,7 @@ if(!class_exists('UIPro\Elementor\Control\Helper\UIAutoComplete_Helper')) {
             if ( is_array( $posts ) && ! empty( $posts ) ) {
                 foreach ( $posts as $post ) {
                     $data          = array();
-                    $data['value'] = $post->ID;
+                    $data['value'] = $post->post_name;
                     $data['label'] = esc_html__( 'Id', 'uipro' ) . ': ' . $post->ID . ' - ' . esc_html__( 'Title', 'razzi' ) . ': ' . $post->post_title;
                     $result[]      = $data;
                 }
