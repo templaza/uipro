@@ -1,3 +1,12 @@
-.elementor-control-uiap_custom_fields .select2-selection__rendered.ui-sortable .select2-selection__choice{cursor:move}
+.templaza-widget-uiform .inline form {
+  display: flex;
+  flex-wrap: wrap;
+}
+.templaza-widget-uiform .inline form .wpforms-field-container {
+  flex: 1;
+}
+.templaza-widget-uiform .inline form .wpforms-submit-container {
+  width: auto;
+}
 
-/*# sourceMappingURL=data:application/json;charset=utf8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZWRpdG9yLmNzcyIsInNvdXJjZXMiOlsiZWRpdG9yLnNjc3MiXSwic291cmNlc0NvbnRlbnQiOlsiLmVsZW1lbnRvci1jb250cm9sLXVpYXBfY3VzdG9tX2ZpZWxkc3tcclxuICAuc2VsZWN0Mi1zZWxlY3Rpb25fX3JlbmRlcmVke1xyXG4gICAgJi51aS1zb3J0YWJsZXtcclxuICAgICAgLnNlbGVjdDItc2VsZWN0aW9uX19jaG9pY2V7XHJcbiAgICAgICAgY3Vyc29yOiBtb3ZlO1xyXG4gICAgICB9XHJcbiAgICB9XHJcbiAgfVxyXG59Il0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLEFBR00scUNBSCtCLENBQ25DLDRCQUE0QixBQUN6QixZQUFZLENBQ1gsMEJBQTBCLEFBQUEsQ0FDeEIsTUFBTSxDQUFFLElBQUksQ0FDYiJ9 */
+/*# sourceMappingURL=editor.css.map */

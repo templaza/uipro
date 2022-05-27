@@ -81,7 +81,16 @@ if ( ! class_exists( 'UIPro_Config_UIForm' ) ) {
                         'uiform_form'    => 'custom'
                     ),
                 ),
-
+                array(
+                    'name'          => 'form_style',
+                    'label' => esc_html__( 'Form Style', 'uipro' ),
+                    'type' => \Elementor\Controls_Manager::SELECT,
+                    'default' => 'block',
+                    'options' => [
+                        'block' => esc_html__('Block', 'uipro' ),
+                        'inline' => esc_html__('Inline', 'uipro') ,
+                    ],
+                ),
                 array(
                     'type'      => Controls_Manager::SLIDER,
                     'name'      => 'form_input_height',
@@ -104,18 +113,24 @@ if ( ! class_exists( 'UIPro_Config_UIForm' ) ) {
                     )
                 ),
                 array(
+                    'label' => esc_html__( 'Input Border', 'uipro' ),
+                    'name'          => 'input_border',
+                    'type' => \Elementor\Group_Control_Border::get_type(),
+                    'selector' => '{{WRAPPER}} form input, {{WRAPPER}} form select',
+                ),
+                array(
                     'type'          => Controls_Manager::DIMENSIONS,
                     'name'          =>  'form_input_margin',
                     'label'         => esc_html__( 'Form item Margin', 'uipro' ),
                     'responsive'    =>  true,
                     'size_units'    => [ 'px', 'em', '%' ],
                     'selectors'     => [
-                        '{{WRAPPER}} form input, {{WRAPPER}} form select' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important; margin:0 !important;',
+                        '{{WRAPPER}} .wpforms-field-container .wpforms-field' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important; padding:0 !important;',
                     ],
                 ),
                 array(
                     'type'      => Controls_Manager::SLIDER,
-                    'name'      => 'form_button_height',
+                    'name'      => 'form_button_height_custom',
                     'label'     => esc_html__('Button Height', 'uipro'),
                     'size_units'    => [ 'px' ],
                     'responsive'    =>  true,
@@ -130,9 +145,25 @@ if ( ! class_exists( 'UIPro_Config_UIForm' ) ) {
                         'unit' => 'px',
                         'size' => 50,
                     ],
-                    'selectors' => array(
-                        '{{WRAPPER}} form button, {{WRAPPER}} form input[type="button"],' => 'height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}};',
-                    )
+                    'selectors'     => [
+                        '.templaza-section {{WRAPPER}} .wpforms-container form button.wpforms-submit, {{WRAPPER}} form input[type="button"]' => 'height: {{SIZE}}{{UNIT}} !important;',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'button_padding',
+                    'label'         => esc_html__( 'Button Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '.templaza-section {{WRAPPER}} .wpforms-container form button.wpforms-submit' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'label' => esc_html__( 'Button Border', 'uipro' ),
+                    'name'          => 'button_border',
+                    'type' => \Elementor\Group_Control_Border::get_type(),
+                    'selector' => '.templaza-section {{WRAPPER}} .wpforms-container form button.wpforms-submit, {{WRAPPER}} form input[type="button"]',
                 ),
                 array(
                     'type'          => Group_Control_Typography::get_type(),
@@ -168,7 +199,7 @@ if ( ! class_exists( 'UIPro_Config_UIForm' ) ) {
                     'label'         => esc_html__('Button Background Color', 'uipro'),
                     'description'   => esc_html__('Set the background color of button.', 'uipro'),
                     'selectors' => [
-                        '{{WRAPPER}} form button, {{WRAPPER}} form input[type="button"], {{WRAPPER}} form input[type="submit"] ' => 'background-color: {{VALUE}} !important;',
+                        '.templaza-section {{WRAPPER}} .wpforms-container form button.wpforms-submit:not(:hover), {{WRAPPER}} form input[type="button"], {{WRAPPER}} form input[type="submit"] ' => 'background-color: {{VALUE}}!important;',
                     ],
                 ),
                 array(
@@ -177,7 +208,7 @@ if ( ! class_exists( 'UIPro_Config_UIForm' ) ) {
                     'label'         => esc_html__('Button Color', 'uipro'),
                     'description'   => esc_html__('Set the color of button.', 'uipro'),
                     'selectors' => [
-                        '{{WRAPPER}} form button, {{WRAPPER}} form input[type="button"], {{WRAPPER}} form input[type="submit"] ' => 'color: {{VALUE}} !important;',
+                        '{{WRAPPER}} form button.wpforms-submit, {{WRAPPER}} form input[type="button"], {{WRAPPER}} form input[type="submit"] ' => 'color: {{VALUE}} !important;',
                     ],
                 ),
                 array(
@@ -186,7 +217,7 @@ if ( ! class_exists( 'UIPro_Config_UIForm' ) ) {
                     'label'         => esc_html__('Hover Button Background Color', 'uipro'),
                     'description'   => esc_html__('Set the hover background color of button.', 'uipro'),
                     'selectors' => [
-                        '{{WRAPPER}} form button:hover, {{WRAPPER}} form input[type="button"]:hover, {{WRAPPER}} form input[type="submit"]:hover ' => 'background-color: {{VALUE}} !important;',
+                        '.templaza-section {{WRAPPER}} .wpforms-container form button.wpforms-submit:hover, {{WRAPPER}} form input[type="button"]:hover, {{WRAPPER}} form input[type="submit"]:hover ' => 'background-color: {{VALUE}} !important;',
                     ],
                 ),
                 array(
