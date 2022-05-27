@@ -26,6 +26,8 @@ if ( !class_exists( 'UIPro_El' ) ) {
 		 */
 		private static $instance = null;
 
+		private $loaded_controls = array();
+
 		/**
 		 * UIPro_El constructor.
 		 */
@@ -36,10 +38,18 @@ if ( !class_exists( 'UIPro_El' ) ) {
 
 			$this -> load_ajax_widgets();
 
+            $this -> load_controls();
+
 			// add widget categories
 			add_action( 'elementor/init', array( $this, 'register_categories' ), 99 );
 
-			// load widget
+            // load controls
+            add_action( 'elementor/controls/register', array( $this, 'register_controls' ) );
+
+//            // load widgets
+//            add_action( 'elementor/widgets/widgets_registered', array( $this, 'load_widgets' ) );
+
+			// load widgets
             add_action( 'elementor/widgets/register', array( $this, 'load_widgets' ) );
 		}
 
@@ -122,6 +132,80 @@ if ( !class_exists( 'UIPro_El' ) ) {
                 }
             }
 		}
+
+        /**
+         * Load my custom controls for elementor
+         * @param $widgets_manager Elementor\Widgets_Manager
+         *
+         * @throws Exception
+         */
+        public function load_controls( /*$controls_manager*/ ) {
+
+            // Get controls
+            $path   = UIPRO_CONTROLS_PATH;
+            if(!$path || ($path && !is_dir($path))){
+                return false;
+            }
+
+            $files  = glob($path.'/*', GLOB_ONLYDIR);
+
+//            $controls_manager = \Elementor\Plugin::$instance->controls_manager;
+
+            foreach ( $files as $file ) {
+                $control    = basename($file);
+                $control    = str_replace('-', '_', $control);
+
+                if((!isset($this -> loaded_controls[$control]) || !$this -> loaded_controls[$control])
+                    && file_exists($file.'/'.$control.'.php') ){
+                    require_once $file.'/'.$control.'.php';
+                }
+
+                $class = 'UIPro\Elementor\Control\\'.ucfirst($control);
+
+                if(!class_exists($class)){
+                    continue;
+                }
+                $this -> loaded_controls[$control] = $class::instance();
+//
+//                $controls_manager -> register_control($control, $control_obj);
+//                $control_obj    = $class::instance();
+//                $controls_manager -> register($control_obj);
+
+            }
+        }
+
+        /**
+         * Register my loaded custom controls for elementor
+         * @param $widgets_manager Elementor\Widgets_Manager
+         *
+         * @throws Exception
+         */
+        public function register_controls( $controls_manager ) {
+
+            if(empty($this -> loaded_controls)){
+                return false;
+            }
+
+            foreach ( $this -> loaded_controls as $control => $loaded ) {
+
+                if(empty($loaded)){
+
+                    $class = 'UIPro\Elementor\Control\\'.ucfirst($control);
+
+                    if(!class_exists($class)){
+                        continue;
+                    }
+                    $loaded = $class::instance();
+                }
+
+                if(empty($loaded)){
+                    continue;
+                }
+
+                $controls_manager -> register($loaded);
+
+            }
+        }
 	}
 }
 

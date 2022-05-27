@@ -111,7 +111,7 @@ $meta_middle_margin     =   ( isset( $instance['meta_middle_margin'] ) && $insta
 $meta_bottom_margin     =   ( isset( $instance['meta_bottom_margin'] ) && $instance['meta_bottom_margin'] ) ? ' uk-margin-'. $instance['meta_bottom_margin'] .'-top' : ' uk-margin-top';
 $meta_footer_margin     =   ( isset( $instance['meta_footer_margin'] ) && $instance['meta_footer_margin'] ) ? ' uk-margin-'. $instance['meta_footer_margin'] : ' uk-margin';
 
-$output .=  '<div data-tag="'.esc_attr(implode(' ', $tag_slugs)).'" data-cat="'.esc_attr(implode(' ', $cat_slugs)).'" data-date="'.esc_attr(get_the_date('Y-m-d', $item)).'" data-hits="'.esc_attr(get_post_meta($item->ID, 'post_views_count', true)).'">';
+$output .=  '<article data-tag="'.esc_attr(implode(' ', $tag_slugs)).'" data-cat="'.esc_attr(implode(' ', $cat_slugs)).'" data-date="'.esc_attr(get_the_date('Y-m-d', $item)).'" data-hits="'.esc_attr(get_post_meta($item->ID, 'post_views_count', true)).'">';
 $output .= '<div class="uk-article uk-card'.esc_attr($card_style.$card_size_cls.( $thumbnail_hover ? ' uk-transition-toggle uk-overflow-hidden' : '' ).(!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'left' || $image_position == 'right') ? ' uk-grid-collapse' : '')).'"'.(!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'left' || $image_position == 'right') ? ' data-uk-grid' : '').'>';
 if (!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'top' || $image_position == 'left' || $image_position == 'right') ) :
     if ($image_position == 'left' || $image_position == 'right') {
@@ -179,4 +179,4 @@ if (!$hide_thumbnail && has_post_thumbnail( $item->ID ) && $image_position == 'b
 endif;
 
 $output .=  '</div>';
-$output .=  '</article>';
+$output .=  '</div>';

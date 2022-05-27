@@ -26,3 +26,6 @@ if(!defined('UIPRO_LIBRARIES_PATH')){
 if(!defined('UIPRO_WIDGETS_PATH')){
     define('UIPRO_WIDGETS_PATH', UIPRO_PATH.'/widgets');
 }
+if(!defined('UIPRO_CONTROLS_PATH')){
+    define('UIPRO_CONTROLS_PATH', UIPRO_PATH.'/controls');
+}
