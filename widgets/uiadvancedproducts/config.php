@@ -86,6 +86,13 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 
 		    $options    = array(
                 array(
+                    'type'          => 'uiautocomplete',
+                    'name'          => 'test',
+                    'label'         => esc_html__( 'Autocomplete', 'uipro' ),
+                    'source'        => 'ap_product',
+                    'multiple'      => true,
+                ),
+                array(
                     'type'          => Controls_Manager::SELECT,
                     'name'          => 'main_layout',
                     'show_label'    => true,

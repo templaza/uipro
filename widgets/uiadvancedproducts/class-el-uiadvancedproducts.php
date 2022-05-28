@@ -251,7 +251,7 @@ if ( ! class_exists( 'UIPro_El_UIAdvancedProducts' ) ) {
 
                         $custom_cat   = ( isset( $instance[$slug] ) && $instance[$slug] ) ? $instance[$slug] : array();
 
-                        if(!empty($custom_cat) && count($custom_cat)) {
+                        if(!empty($custom_cat) && is_array($custom_cat) && count($custom_cat)) {
                             $tax_query[] = array(
                                 'taxonomy' => $slug,
                                 'field' => 'id',

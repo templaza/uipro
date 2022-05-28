@@ -157,8 +157,9 @@ if(!class_exists('UIPro\Elementor\Control\Helper\UIAutoComplete_Helper')) {
                 'update_post_term_cache' => false,
                 'update_post_meta_cache' => false,
                 'ignore_sticky_posts'    => true,
-                'post__in'               => $values,
-                'orderby'                => 'post__in'
+//                'post__in'               => $values,
+                'post_name__in'          => $values,
+                'orderby'                => 'post_name__in'
             ];
 
             $query = new \WP_Query( $args );
