@@ -12,19 +12,18 @@
  * Prevent loading this file directly
  */
 defined( 'ABSPATH' ) || exit;
-use TemPlaza_Woo_El\TemPlaza_Woo_El_Helper;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
 use Elementor\Core\Schemes\Typography;
-
-if ( ! class_exists( 'UIPro_Config_AdvancedProduct_Slideshow' ) ) {
+require_once ABSPATH.'wp-content/plugins/uipro/widgets/uiadvancedproducts/helper.php';
+if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Slideshow' ) ) {
 	/**
-	 * Class UIPro_Config_AdvancedProduct_Slideshow
+	 * Class UIPro_Config_Uiadvancedproduct_Slideshow
 	 */
-	class UIPro_Config_AdvancedProduct_Slideshow extends UIPro_Abstract_Config {
+	class UIPro_Config_Uiadvancedproduct_Slideshow extends UIPro_Abstract_Config {
 
 		/**
-		 * UIPro_Config_Heading constructor.
+		 * UIPro_Config_Uiadvancedproduct_Slideshow constructor.
 		 */
 		public function __construct() {
 			// info
@@ -32,408 +31,575 @@ if ( ! class_exists( 'UIPro_Config_AdvancedProduct_Slideshow' ) ) {
 			self::$name = esc_html__( 'TemPlaza: Advanced Product Slideshow', 'uipro' );
 			self::$desc = esc_html__( 'Display products Slideshow.', 'uipro' );
 			self::$icon = 'eicon-post-slider';
+            self::$assets_path  =   plugin_dir_url(__FILE__). 'assets/';
 			parent::__construct();
 
 		}
+        public function get_styles() {
+            return array(
+                'templaza-tiny-style' => array(
+                    'src'   =>  'tiny-slider.css'
+                )
+            );
+        }
+        public function get_scripts() {
+            return array(
+                'templaza-tiny-script' => array(
+                    'src'   =>  'tiny-slider.js',
+                    'deps'  =>  array('jquery')
+                )
+            );
+        }
 
 		/**
 		 * @return array
 		 */
-		public function get_options() {
 
-            $store_id   = md5(__METHOD__);
+        public function get_options() {
 
-            if(isset(static::$cache[$store_id])){
-                return static::$cache[$store_id];
+        $categories = UIPro_UIAdvancedProducts_Helper::get_custom_categories();
+        // Custom fields option
+        $custom_fields  = UIPro_UIAdvancedProducts_Helper::get_custom_field_options();
+
+
+        $store_id   = md5(__METHOD__);
+
+        if(isset(static::$cache[$store_id])){
+            return static::$cache[$store_id];
+        }
+            $arr_fields = array();
+            if(is_plugin_active( 'advanced-product/advanced-product.php' )) {
+                $args = array(
+                    'numberposts' => -1,
+                    'post_type'   => 'ap_custom_field'
+                );
+
+                $wpfields = get_posts( $args );
+                if ( $wpfields ) {
+                    foreach ( $wpfields as $post ){
+                        $arr_fields[$post->post_excerpt] = $post->post_title;
+                    }
+                    wp_reset_postdata();
+                }
             }
+        $options    = array(
+            array(
+                'type'          => Controls_Manager::SELECT,
+                'name'          => 'layout',
+                'show_label'    => true,
+                'label'         => esc_html__( 'Slideshow Layout', 'uipro' ),
+                'options'       => array(
+                    'base'      => esc_html__( 'Default', 'uipro' ),
+                    'style1'   => esc_html__( 'Style 1', 'uipro' ),
+                ),
+                'default'       => 'base',
+            ),
+            array(
+                'type'          => Controls_Manager::SELECT,
+                'name'          => 'ap_product_source',
+                'show_label'    => true,
+                'label'         => esc_html__( 'Product Source', 'uipro' ),
+                'options'       => array(
+                    'default'      => esc_html__( 'Default', 'uipro' ),
+                    'custom'   => esc_html__( 'Custom', 'uipro' ),
+                ),
+                'default'       => 'default',
+            ),
+            array(
+                'type'          => Controls_Manager::SELECT2,
+                'id'            => 'ap_product_branch',
+                'label'         => esc_html__( 'Select Branch', 'uipro' ),
+                'options'       => UIPro_Helper::get_cat_taxonomy( 'ap_branch' ),
+                'multiple'      => true,
+                'condition'     => array(
+                    'ap_product_source!'    => 'custom'
+                ),
+            ),
+            array(
+                'type'          => Controls_Manager::SELECT2,
+                'id'            => 'ap_product_category',
+                'label'         => esc_html__( 'Select Category', 'uipro' ),
+                'options'       => UIPro_Helper::get_cat_taxonomy( 'ap_category' ),
+                'multiple'      => true,
+                'condition'     => array(
+                    'ap_product_source!'    => 'custom'
+                ),
+            ),
+        );
 
-			// options
-			$options = array(
-                array(
-                    'id'          => 'layout',
-                    'label' => esc_html__( 'Layout', 'uipro' ),
-                    'type' => Controls_Manager::SELECT,
-                    'options'       => array(
-                        'base'    => esc_html__('Inherit Theme Style', 'uipro'),
-                        'style1'    => esc_html__('Custom style 1', 'uipro'),
-                        'style2'    => esc_html__('Custom style 2', 'uipro'),
+        if(!empty($categories) && count($categories)){
+            foreach ($categories as $cat){
+                $slug           = get_post_meta($cat -> ID, 'slug', true);
+
+                if(!taxonomy_exists($slug)){
+                    continue;
+                }
+
+                $cat_options    = UIPro_Helper::get_cat_taxonomy( $slug );
+                if(empty($cat_options) || !count($cat_options)){
+                    continue;
+                }
+                $options[]      = array(
+                    'type'          => Controls_Manager::SELECT2,
+                    'id'            => 'ap_product_'.$slug,
+                    'label'         => sprintf(esc_html__( 'Select %s', 'uipro' ), $cat -> post_title),
+                    'options'       => $cat_options,
+                    'multiple'      => true,
+                    'condition'     => array(
+                        'ap_product_source!'    => 'custom'
                     ),
-                    'default'   => 'base',
+                );
+            }
+        }
+
+        // Custom fields option
+
+        $options[]      = array(
+            'type'          => Controls_Manager::SELECT2,
+            'id'            => 'uiap_custom_fields',
+            'label'         => esc_html__( 'Select Custom Field', 'uipro' ),
+            'options'       => $custom_fields,
+            'multiple'      => true,
+            'condition'     => array(
+                'ap_product_source!'    => 'custom'
+            ),
+        );
+
+            $repeater = new \Elementor\Repeater();
+            $repeater->add_control(
+                'ap_products', [
+                    'type'          => 'uiautocomplete',
+                    'label_block' => true,
+                    'multiple'    => true,
+                    'source'      => 'ap_product',
+                    'sortable'    => true,
+                    'placeholder' => esc_html( 'Click here and start typing...', 'uipro' ),
+                ]
+            );
+            $repeater->add_control(
+                'image',
+                [
+                    'type'          =>  Controls_Manager::MEDIA,
+                    'label'         => esc_html__('Select Image:', 'uipro'),
+                    'default' => [
+                        'url' => \Elementor\Utils::get_placeholder_image_src(),
+                    ],
+                ]
+            );
+            $repeater->add_control(
+                'ap_description', [
+                    'label' => esc_html__( 'Product Description', 'uipro' ),
+                    'type' => \Elementor\Controls_Manager::WYSIWYG,
+                    'default' => esc_html__( '' , 'uipro' ),
+                    'label_block' => true,
+                ]
+            );
+            $repeater->add_control(
+                'ap_text_meta', [
+                    'label' => esc_html__( 'Meta text', 'uipro' ),
+                    'type' => \Elementor\Controls_Manager::TEXT,
+                    'default' => esc_html__( '' , 'uipro' ),
+                    'label_block' => true,
+                ]
+            );
+            $repeater->add_control(
+                'ap_text_custom', [
+                    'label' => esc_html__( 'Custom text', 'uipro' ),
+                    'type' => \Elementor\Controls_Manager::WYSIWYG,
+                    'default' => esc_html__( '' , 'uipro' ),
+                    'label_block' => true,
+                ]
+            );
+
+            // options
+            $options = array_merge($options,array(
+                array(
+                    'type'          => Controls_Manager::SWITCHER,
+                    'id'            => 'include_subcagories',
+                    'label'         => esc_html__('Include subcagories', 'uipro'),
+                    'description'   => esc_html__( 'Select yes to include sub categories', 'uipro' ),
+                    'label_on' => esc_html__( 'Yes', 'uipro' ),
+                    'label_off' => esc_html__( 'No', 'uipro' ),
+                    'return_value' => '1',
+                    'default' => '0',
+                    'condition'     => array(
+                        'ap_product_source!'    => 'custom'
+                    ),
                 ),
                 array(
-                    'id'          => 'product_source',
-                    'label' => esc_html__( 'Product Source', 'uipro' ),
-                    'type' => Controls_Manager::SELECT,
+                    'type'          => Controls_Manager::SELECT,
+                    'id'            => 'ordering',
+                    'label'         => esc_html__( 'Ordering', 'uipro' ),
                     'options'       => array(
-                        'default'    => esc_html__('Inherit', 'uipro'),
-                        'custom'    => esc_html__('Custom', 'uipro'),
+                        'latest'    => esc_html__('Latest', 'uipro'),
+                        'oldest'    => esc_html__('Oldest', 'uipro'),
+                        'popular'   => esc_html__('Popular', 'uipro'),
+                        'sticky'   => esc_html__('Sticky Only', 'uipro'),
+                        'random'    => esc_html__('Random', 'uipro'),
                     ),
-                    'default'   => 'default',
+                    'default'       => 'latest',
+                    'description'   => esc_html__( 'Select Product ordering from the list.', 'uipro' ),
+                    'condition'     => array(
+                        'ap_product_source!'    => 'custom'
+                    ),
                 ),
                 array(
                     'type'          => Controls_Manager::NUMBER,
-                    'name'          => 'total_products',
-                    'show_label'    => true,
-                    'label'         => esc_html__( 'Total Products', 'uipro' ),
-                    'default'       => '8',
+                    'id'            => 'limit',
+                    'label'         => esc_html__( 'Limit', 'uipro' ),
+                    'description'   => esc_html__( 'Set the number of articles you want to display.', 'uipro' ),
+                    'min' => 1,
+                    'max' => 90,
+                    'step' => 1,
+                    'default' => 3,
                     'condition'     => array(
-                        'product_source!'    => 'custom',
-                    )
-                ),
-
-                array(
-                    'id'          => 'column_gap',
-                    'label' => esc_html__( 'Column Gap', 'uipro' ),
-                    'type' => Controls_Manager::SELECT,
-                    'options'       => array(
-                        'default' => esc_html__('Default','uipro'),
-                        'small' => esc_html__('Small','uipro'),
-                        'medium' => esc_html__('Medium','uipro'),
-                        'large' => esc_html__('Large','uipro'),
-                        'collapse' => esc_html__('Collapse','uipro'),
-                    ),
-                    'default'   => 'default'
-                ),
-				array(
-					'type'          => Controls_Manager::SELECT,
-					'name'          => 'product_source',
-					'label'         => esc_html__( 'Product source', 'uipro' ),
-					'options'       => array(
-                        'recent'       => esc_html__( 'Recent', 'uipro' ),
-                        'featured'     => esc_html__( 'Featured', 'uipro' ),
-                        'best_selling' => esc_html__( 'Best Selling', 'uipro' ),
-                        'top_rated'    => esc_html__( 'Top Rated', 'uipro' ),
-                        'sale'         => esc_html__( 'On Sale', 'uipro' ),
-					),
-					'default'       => 'recent',
-					'admin_label' => false,
-				),
-                array(
-                    'type'          => Controls_Manager::SELECT2,
-                    'name'            => 'product_categories',
-                    'label'         => esc_html__( 'Select Category', 'uipro' ),
-                    'options'       => TemPlaza_Woo_El_Helper::taxonomy_list( 'product_cat'),
-                    'default'       => array(),
-                    'multiple' => true,
-                ),
-                array(
-                    'type'          => Controls_Manager::SELECT2,
-                    'name'            => 'product_brands',
-                    'label'         => esc_html__( 'Select Brand', 'uipro' ),
-                    'options'       => TemPlaza_Woo_El_Helper::taxonomy_list( 'product_brand'),
-                    'default'       => array(),
-                    'multiple' => true,
-                ),
-                array(
-                    'type'          => Controls_Manager::SELECT2,
-                    'name'            => 'product_tags',
-                    'label'         => esc_html__( 'Select Tag', 'uipro' ),
-                    'options'       => TemPlaza_Woo_El_Helper::taxonomy_list( 'product_tag'),
-                    'default'       => array(),
-                    'multiple' => true,
-                ),
-				array(
-					'type'          => Controls_Manager::SELECT,
-					'name'          => 'orderby',
-					'label'         => esc_html__( 'Order By', 'uipro' ),
-					'options'       => array(
-                        ''           => esc_html__( 'Default', 'uipro' ),
-                        'date'       => esc_html__( 'Date', 'uipro' ),
-                        'title'      => esc_html__( 'Title', 'uipro' ),
-                        'menu_order' => esc_html__( 'Menu Order', 'uipro' ),
-                        'rand'       => esc_html__( 'Random', 'uipro' ),
-					),
-					'default'       => '',
-					'admin_label' => false,
-                    'condition'     => array(
-                        'product_source'    => array('top_rated', 'sale', 'featured')
-                    )
-				),
-				array(
-					'type'          => Controls_Manager::SELECT,
-					'name'          => 'order',
-					'label'         => esc_html__( 'Order', 'uipro' ),
-					'options'       => array(
-                        ''     => esc_html__( 'Default', 'uipro' ),
-                        'asc'  => esc_html__( 'Ascending', 'uipro' ),
-                        'desc' => esc_html__( 'Descending', 'uipro' ),
-					),
-					'default'       => '',
-					'admin_label' => false,
-                    'condition'     => array(
-                        'product_source'    => array('top_rated', 'sale', 'featured')
-                    )
-				),
-                array(
-                    'name'            => 'item_border',
-                    'type'          =>  \Elementor\Group_Control_Border::get_type(),
-                    'label' => esc_html__( 'Item Border', 'uipro' ),
-                    'selector' => '{{WRAPPER}} .product .product-inner',
-                    'start_section' => 'item_settings',
-                    'section_name'      => esc_html__('Item Settings', 'uipro')
-                ),
-                array(
-                    'type'          => Controls_Manager::DIMENSIONS,
-                    'name'          =>  'item_border_radius',
-                    'label'         => esc_html__( 'Item border radius', 'uipro' ),
-                    'responsive'    =>  true,
-                    'size_units'    => [ 'px', 'em', '%' ],
-                    'selectors'     => [
-                        '{{WRAPPER}} .product .product-inner' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
-                    ],
-                ),
-                array(
-                    'type'          => Controls_Manager::DIMENSIONS,
-                    'name'          => 'item_margin',
-                    'label'         => esc_html__( 'Item Margin', 'uipro' ),
-                    'responsive'    =>  true,
-                    'size_units'    => [ 'px', 'em', '%' ],
-                    'selectors'     => [
-                        '{{WRAPPER}} .woo-grid-style2' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                    ],
-                    'condition'     => array(
-                        'layout'    => 'style2',
+                        'ap_product_source!'    => 'custom'
                     ),
                 ),
                 array(
-                    'type'          => Controls_Manager::DIMENSIONS,
-                    'name'          => 'title_margin',
-                    'label'         => esc_html__( 'Title Margin', 'uipro' ),
-                    'responsive'    =>  true,
-                    'size_units'    => [ 'px', 'em', '%' ],
-                    'selectors'     => [
-                        '{{WRAPPER}} .woocommerce-loop-product__title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                    ],
-                ),
-                array(
-                    'type'          => Controls_Manager::DIMENSIONS,
-                    'name'          => 'price_margin',
-                    'label'         => esc_html__( 'Price Margin', 'uipro' ),
-                    'responsive'    =>  true,
-                    'size_units'    => [ 'px', 'em', '%' ],
-                    'selectors'     => [
-                        '{{WRAPPER}} .tz-product-price' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                    ],
-                ),
-
-				array(
-					'type'          => Controls_Manager::SELECT,
-					'name'          => 'image_size',
-					'label'         => esc_html__( 'Image Size', 'uipro' ),
-					'options'       => array(
-                        'inherit'  => esc_html__( 'Inherit Theme Settings', 'uipro' ),
-					),
-					'default'       => 'inherit',
-					'admin_label' => false,
-                    'condition'     => array(
-                        'layout'    => 'base'
-                    ),
-                    'start_section' => 'image_settings',
-                    'section_name'      => esc_html__('Image Settings', 'uipro')
-				),
-				array(
-					'type'          => Controls_Manager::SELECT,
-					'name'          => 'image_size_custom',
-					'label'         => esc_html__( 'Image Size', 'uipro' ),
-					'options'       => array(
-                        'inherit'  => esc_html__( 'Inherit Theme Settings', 'uipro' ),
-                        'custom'  => esc_html__( 'Custom Size', 'uipro' ),
-					),
-					'default'       => 'inherit',
-					'admin_label' => false,
-                    'condition'     => array(
-                        'layout!'    => 'base',
-                    ),
-                    'start_section' => 'image_settings',
-                    'section_name'      => esc_html__('Images Settings', 'uipro')
-				),
-                array(
-                    'type'          => \Elementor\Group_Control_Image_Size::get_type(),
-                    'name' => 'thumbnail', // // Usage: `{name}_size` and `{name}_custom_dimension`, in this case `thumbnail_size` and `thumbnail_custom_dimension`.
-                    'exclude' => [ 'custom' ],
-                    'include' => [],
-                    'default' => 'woocommerce_thumbnail',
-                    'condition'     => array(
-                        'image_size_custom'    => 'custom',
-                    ),
-                ),
-                array(
-                    'name'            => 'image_box_width_custom',
-                    'label'         => esc_html__( 'Image box custom width', 'uipro' ),
-                    'type'          => Controls_Manager::SLIDER,
-                    'size_units' => [ 'px', '%' ],
-                    'responsive'    => true,
-                    'range' => [
-                        'px' => [
-                            'min' => 0,
-                            'max' => 1000,
-                            'step' => 1,
-                        ],
-                        '%' => [
-                            'min' => 0,
-                            'max' => 100,
-                        ],
-                    ],
+                    'type'      => Controls_Manager::REPEATER,
+                    'name'      => 'ap_products_custom',
+                    'label'     => esc_html__( 'Product Items', 'uipro' ),
+                    'fields' => $repeater->get_controls(),
                     'default' => [
-                        'unit' => '%',
-                        'size' => 50,
+                        [
+                            'title' => 'Item',
+                        ],
                     ],
-                    'selectors' => [
-                        '{{WRAPPER}} .image-box-style2' => 'width: {{SIZE}}{{UNIT}};',
-                    ],
+                    'title_field' => __( 'Item', 'uipro' ),
                     'condition'     => array(
-                        'layout'    => 'style2'
+                        'ap_product_source'    => 'custom'
                     ),
+                ),
+                array(
+                    'type'          => Controls_Manager::SELECT2,
+                    'id'            => 'custom_fields',
+                    'label'         => esc_html__( 'Custom Fields', 'uipro' ),
+                    'options'       => $arr_fields,
+                    'multiple'      => true,
+                ),
+
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'slideshow_padding',
+                    'label'         => esc_html__( 'Slideshow Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px','%'],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ap_slideshow' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'start_section' => 'ap-slideshow-box',
+                    'section_name'      => esc_html__('Slideshow Box Settings', 'uipro')
                 ),
                 array(
                     'type'          => Controls_Manager::DIMENSIONS,
-                    'name'          => 'image_box_margin',
-                    'label'         => esc_html__( 'Image box Margin', 'uipro' ),
+                    'name'          =>  'slideshow_info_padding',
+                    'label'         => esc_html__( 'Info Box Padding', 'uipro' ),
                     'responsive'    =>  true,
-                    'size_units'    => [ 'px', 'em', '%' ],
+                    'size_units'    => [ 'px','%'],
                     'selectors'     => [
-                        '{{WRAPPER}} .image-box-style2' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                        '{{WRAPPER}} .ap-slideshow-info' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                     ],
-                    'condition'     => array(
-                        'layout'    => 'style2'
-                    ),
                 ),
-
-
-                /* Style tab */
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'slideshow_image_padding',
+                    'label'         => esc_html__( 'Image Box Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px','%'],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ap-slideshow-image' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
 
                 array(
                     'type'          => Group_Control_Typography::get_type(),
-                    'name'          => 'heading_typography',
-                    'label'         => esc_html__('Title Typography'),
+                    'name'          => 'title_typography',
                     'scheme'        => Typography::TYPOGRAPHY_1,
-                    'start_section' => 'style',
-                    'section_tab'   => Controls_Manager::TAB_STYLE,
-                    'section_name'  => esc_html__( self::$name, 'uipro' ),
-                    'selector'      => '{{WRAPPER}} .woocommerce-loop-product__title',
-                ),
-                array(
-                    'type'          => Group_Control_Typography::get_type(),
-                    'name'          => 'category_typography',
-                    'label'         => esc_html__('Category Typography'),
-                    'scheme'        => Typography::TYPOGRAPHY_1,
-                    'section_name'  => esc_html__( self::$name, 'uipro' ),
-                    'selector'      => '{{WRAPPER}} .meta-cat',
-                ),
-                array(
-                    'type'          => Group_Control_Typography::get_type(),
-                    'name'          => 'price_typography',
-                    'label'         => esc_html__('Price Typography'),
-                    'scheme'        => Typography::TYPOGRAPHY_1,
-                    'section_name'  => esc_html__( self::$name, 'uipro' ),
-                    'selector'      => '{{WRAPPER}} .price ins, {{WRAPPER}} .price bdi',
-                ),
-                array(
-                    'name'            => 'rating_size',
-                    'label'         => esc_html__( 'Rating size', 'uipro' ),
-                    'type'          => Controls_Manager::SLIDER,
-                    'size_units' => [ 'px'],
-                    'responsive'    => true,
-                    'range' => [
-                        'px' => [
-                            'min' => 0,
-                            'max' => 1000,
-                            'step' => 1,
-                        ],
-
-                    ],
-                    'selectors' => [
-                        '{{WRAPPER}} .product-rating i' => 'font-size: {{SIZE}}{{UNIT}};',
-                    ],
-
-                ),
-                array(
-                    'type'          =>  Controls_Manager::COLOR,
-                    'name'          => 'info_bg_color',
-                    'label'         => esc_html__('Info box background Color', 'uipro'),
-                    'description'   => esc_html__('Set the color of title.', 'uipro'),
-                    'selectors' => [
-                        '{{WRAPPER}} .product-info' => 'background-color: {{VALUE}}',
-                    ],
-                    'separator'     => 'before',
+                    'label'         => esc_html__('Title Font', 'uipro'),
+                    'description'   => esc_html__('Select a font family, font size for the addon title.', 'uipro'),
+                    'selector'      => '{{WRAPPER}} .ap-slideshow-title',
+                    'start_section' => 'ap-title',
+                    'section_name'      => esc_html__('Title Settings', 'uipro')
                 ),
                 array(
                     'type'          =>  Controls_Manager::COLOR,
                     'name'          => 'title_color',
                     'label'         => esc_html__('Title Color', 'uipro'),
-                    'description'   => esc_html__('Set the color of title.', 'uipro'),
                     'selectors' => [
-                        '{{WRAPPER}} .woocommerce-loop-product__title' => 'color: {{VALUE}}',
+                        '{{WRAPPER}} .ap-slideshow-title' => 'color: {{VALUE}}',
                     ],
                 ),
                 array(
-                    'type'          =>  Controls_Manager::COLOR,
-                    'name'          => 'category_color',
-                    'label'         => esc_html__('Category Color', 'uipro'),
-                    'description'   => esc_html__('Set the color of category.', 'uipro'),
-                    'selectors' => [
-                        '{{WRAPPER}} .meta-cat' => 'color: {{VALUE}}',
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'custom_fields_margin',
+                    'label'         => esc_html__( 'Custom Fields margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px'],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ap-single-top-fields' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'start_section' => 'ap-custom-fields',
+                    'section_name'      => esc_html__('Custom Fields Settings', 'uipro')
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'custom_fields_padding',
+                    'label'         => esc_html__( 'Custom Fields Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px'],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ap-single-top-fields' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                     ],
                 ),
                 array(
-                    'type'          =>  Controls_Manager::COLOR,
-                    'name'          => 'price_color',
-                    'label'         => esc_html__('Price Color', 'uipro'),
-                    'description'   => esc_html__('Set the color of price.', 'uipro'),
-                    'selectors' => [
-                        '{{WRAPPER}} .price bdi' => 'color: {{VALUE}}',
-                    ],
+                    'type'          =>  \Elementor\Group_Control_Border::get_type(),
+                    'name'          => 'custom_fields_border',
+                    'label'         => esc_html__('Custom Fields Border', 'uipro'),
+                    'selector' => '{{WRAPPER}} .ap-single-top-fields',
+                ),
+                array(
+                    'type'          => Group_Control_Typography::get_type(),
+                    'name'          => 'field_label_typography',
+                    'scheme'        => Typography::TYPOGRAPHY_1,
+                    'label'         => esc_html__('Field Label Font', 'uipro'),
+                    'selector'      => '{{WRAPPER}} .ap-field-label',
                 ),
                 array(
                     'type'          =>  Controls_Manager::COLOR,
-                    'name'          => 'price_del_color',
-                    'label'         => esc_html__('Price Del Color', 'uipro'),
-                    'description'   => esc_html__('Set the color of del price.', 'uipro'),
+                    'name'          => 'field_label_color',
+                    'label'         => esc_html__('Label Color', 'uipro'),
                     'selectors' => [
-                        '{{WRAPPER}} .price ins' => 'color: {{VALUE}}',
+                        '{{WRAPPER}} .ap-field-label' => 'color: {{VALUE}}',
                     ],
                 ),
                 array(
+                    'type'          => Group_Control_Typography::get_type(),
+                    'name'          => 'field_value_typography',
+                    'scheme'        => Typography::TYPOGRAPHY_1,
+                    'label'         => esc_html__('Field Value Font', 'uipro'),
+                    'selector'      => '{{WRAPPER}} .ap-field-value',
+                ),
+                array(
                     'type'          =>  Controls_Manager::COLOR,
-                    'name'          => 'btn_loop_bg',
-                    'label'         => esc_html__('Button background', 'uipro'),
+                    'name'          => 'field_value_color',
+                    'label'         => esc_html__('Value Color', 'uipro'),
                     'selectors' => [
-                        '{{WRAPPER}} .tz-product-cart a' => 'background-color: {{VALUE}}',
+                        '{{WRAPPER}} .ap-field-value' => 'color: {{VALUE}}',
                     ],
+                ),
+                array(
+                    'type'          => Group_Control_Typography::get_type(),
+                    'name'          => 'desc_typography',
+                    'scheme'        => Typography::TYPOGRAPHY_1,
+                    'label'         => esc_html__('Description Font', 'uipro'),
+                    'selector'      => '{{WRAPPER}} .ap-single-desc',
+                    'start_section' => 'ap-desc',
+                    'section_name'      => esc_html__('Description Settings', 'uipro')
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'desc_color',
+                    'label'         => esc_html__('Description Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ap-single-desc' => 'color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'type'          => Group_Control_Typography::get_type(),
+                    'name'          => 'custom_meta_desc_typography',
+                    'scheme'        => Typography::TYPOGRAPHY_1,
+                    'label'         => esc_html__('Custom Meta Description Font', 'uipro'),
+                    'selector'      => '{{WRAPPER}} .ap-custom-meta',
+                    'start_section' => 'ap-desc-custom',
+                    'section_name'      => esc_html__('Custom Description Settings', 'uipro')
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'custom_meta_desc_color',
+                    'label'         => esc_html__('Custom Meta Description Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ap-custom-meta' => 'color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'type'          => Group_Control_Typography::get_type(),
+                    'name'          => 'custom_desc_typography',
+                    'scheme'        => Typography::TYPOGRAPHY_1,
+                    'label'         => esc_html__('Custom Description Font', 'uipro'),
+                    'selector'      => '{{WRAPPER}} .ap-custom-desc',
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'custom_desc_color',
+                    'label'         => esc_html__('Custom Description Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ap-custom-desc' => 'color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'custom_desc_margin',
+                    'label'         => esc_html__( 'Custom Description margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px'],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ap-custom-text' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+
+                array(
+                    'name'          => 'button_text',
+                    'label' => esc_html__( 'Button Title', 'uipro' ),
+                    'type' => Controls_Manager::TEXT,
+                    'default' => '',
+                    'label_block' => true,
+                    'start_section' => 'button',
+                    'section_name'      => esc_html__('Button Settings', 'uipro')
+                ),
+
+                array(
+                    'type'          => Group_Control_Typography::get_type(),
+                    'name'          => 'button_typography',
+                    'scheme'        => Typography::TYPOGRAPHY_1,
+                    'label'         => esc_html__('Button Font', 'uipro'),
+                    'selector'      => '{{WRAPPER}} .ui-button',
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'button_margin',
+                    'label'         => esc_html__( 'Button margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px'],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-button' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'button_padding',
+                    'label'         => esc_html__( 'Button Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'label' => esc_html__( 'Background Color', 'uipro' ),
+                    'name'          => 'button_background',
+                    'type' => \Elementor\Controls_Manager::COLOR,
                     'separator'     => 'before',
-                ),
-                array(
-                    'type'          =>  Controls_Manager::COLOR,
-                    'name'          => 'btn_loop_color',
-                    'label'         => esc_html__('Button Color', 'uipro'),
                     'selectors' => [
-                        '{{WRAPPER}} .tz-product-cart a' => 'color: {{VALUE}}',
+                        '{{WRAPPER}} .ui-button' => 'background-color: {{VALUE}}',
                     ],
                 ),
                 array(
-                    'type'          =>  Controls_Manager::COLOR,
-                    'name'          => 'btn_loop_bg_hover',
-                    'label'         => esc_html__('Hover Button background', 'uipro'),
+                    'label' => esc_html__( 'Color', 'uipro' ),
+                    'name'          => 'button_color',
+                    'type' => \Elementor\Controls_Manager::COLOR,
                     'selectors' => [
-                        '{{WRAPPER}} .tz-product-cart a:hover' => 'background-color: {{VALUE}}',
+                        '{{WRAPPER}} .ui-button' => 'color: {{VALUE}}',
                     ],
                 ),
                 array(
-                    'type'          =>  Controls_Manager::COLOR,
-                    'name'          => 'btn_loop_color_hover',
-                    'label'         => esc_html__('Hover Button Color', 'uipro'),
+                    'id'          => 'border_radius',
+                    'label' => __( 'Button Border Radius', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px','%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 400,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 0,
+                    ],
                     'selectors' => [
-                        '{{WRAPPER}} .tz-product-cart a:hover' => 'color: {{VALUE}}',
+                        '{{WRAPPER}} .ui-button' => 'border-radius: {{SIZE}}{{UNIT}} !important;',
+                    ],
+
+                ),
+                array(
+                    'label' => esc_html__( 'Button Border', 'uipro' ),
+                    'name'          => 'button_border',
+                    'type' => \Elementor\Group_Control_Border::get_type(),
+                    'selector' => '{{WRAPPER}} .ui-button',
+
+                ),
+                array(
+                    'label' => esc_html__( 'Hover Background Color', 'uipro' ),
+                    'name'          => 'hover_button_background',
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'separator'     => 'before',
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-button:hover' => 'background-color: {{VALUE}}',
                     ],
                 ),
+                array(
+                    'label' => esc_html__( 'Hover Color', 'uipro' ),
+                    'name'          => 'hover_button_color',
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-button:hover' => 'color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'label' => esc_html__( 'Hover Button Border', 'uipro' ),
+                    'name'          => 'hover_button_border',
+                    'type' => \Elementor\Group_Control_Border::get_type(),
+                    'selector' => '{{WRAPPER}} .ui-button:hover',
+                ),
+                array(
+                    'id' => 'slideshow_transition',
+                    'type' => Controls_Manager::SELECT,
+                    'label'     => esc_html__( 'Transition', 'uipro' ),
+                    'description' => esc_html__( 'Select the transition between two slides', 'uipro' ),
+                    'options'         => array(
+                        '' => esc_html__( 'Slide', 'uipro' ),
+                        'pull' => esc_html__( 'Pull', 'uipro' ),
+                        'push' => esc_html__( 'Push', 'uipro' ),
+                        'fade' => esc_html__( 'Fade', 'uipro' ),
+                        'scale' => esc_html__( 'Scale', 'uipro' ),
+                    ),
+                    'default' => '',
+                    'start_section' => 'slideshow_settings',
+                    'section_name'      => esc_html__('Slideshow Settings', 'uipro')
+                ),
+                array(
+                    'id' => 'show_nav',
+                    'type' => Controls_Manager::SWITCHER,
+                    'label'     => esc_html__( 'Enable Nav', 'uipro' ),
+                    'label_on' => esc_html__( 'Yes', 'uipro' ),
+                    'label_off' => esc_html__( 'No', 'uipro' ),
+                    'return_value' => '1',
+                    'default' => '0',
+                ),
+                array(
+                    'id' => 'show_dots',
+                    'type' => Controls_Manager::SWITCHER,
+                    'label'     => esc_html__( 'Enable Dots', 'uipro' ),
+                    'label_on' => esc_html__( 'Yes', 'uipro' ),
+                    'label_off' => esc_html__( 'No', 'uipro' ),
+                    'return_value' => '1',
+                    'default' => '0',
+                ),
 
-			);
-			$options    = array_merge($options, $this->get_general_options());
+            ));
+            $options    = array_merge($options, $this->get_general_options());
 
-			static::$cache[$store_id]   = $options;
+            static::$cache[$store_id]   = $options;
 
-			return $options;
-		}
+            return $options;
+        }
 
 	}
 }

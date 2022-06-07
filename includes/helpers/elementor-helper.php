@@ -275,7 +275,7 @@ class UIPro_Elementor_Helper{
 			if ( ! empty( $image_src ) ) {
 				$image_class_html = ! empty( $image_class ) ? ' class="' . $image_class . '"' : '';
 
-				$html .= sprintf( '<img data-src="%s"'.$attribs.' title="%s" alt="%s"%s data-uk-img />', esc_attr( $image_src ), Control_Media::get_image_title( $image ), Control_Media::get_image_alt( $image ), $image_class_html );
+				$html .= sprintf( '<img src="%s" data-src="%s"'.$attribs.' title="%s" alt="%s"%s data-uk-img />', esc_attr( $image_src ), esc_attr( $image_src ), Control_Media::get_image_title( $image ), Control_Media::get_image_alt( $image ), $image_class_html );
 			}
 		}
 

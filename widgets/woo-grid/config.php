@@ -68,8 +68,29 @@ if ( ! class_exists( 'UIPro_Config_Woo_Grid' ) ) {
                         'base'    => esc_html__('Inherit Theme Style', 'uipro'),
                         'style1'    => esc_html__('Custom style 1', 'uipro'),
                         'style2'    => esc_html__('Custom style 2', 'uipro'),
+                        'style3'    => esc_html__('Custom style 3', 'uipro'),
                     ),
                     'default'   => 'base',
+                ),
+                array(
+                    'id'          => 'product_loop',
+                    'label' => esc_html__( 'Product Loop Layout', 'uipro' ),
+                    'type' => Controls_Manager::SELECT,
+                    'options'       => array(
+                        'layout-1' => esc_html__( 'Icons over thumbnail on hover', 'agruco' ),
+                        'layout-2' => esc_html__( 'Icons & Quick view button', 'agruco' ),
+                        'layout-3' => esc_html__( 'Icons & Add to cart button', 'agruco' ),
+                        'layout-4' => esc_html__( 'Icons on the bottom', 'agruco' ),
+                        'layout-5' => esc_html__( 'Simple', 'agruco' ),
+                        'layout-6' => esc_html__( 'Standard button', 'agruco' ),
+                        'layout-7' => esc_html__( 'Info on hover', 'agruco' ),
+                        'layout-8' => esc_html__( 'Icons & Add to cart text', 'agruco' ),
+                        'layout-9' => esc_html__( 'Quick Shop button', 'agruco' ),
+                    ),
+                    'default'   => 'layout-1',
+                    'condition'     => array(
+                        'layout'    => 'base',
+                    )
                 ),
                 array(
                     'id'          => 'large_desktop_columns',
@@ -255,6 +276,16 @@ if ( ! class_exists( 'UIPro_Config_Woo_Grid' ) ) {
                     'condition'     => array(
                         'layout'    => 'style2',
                     ),
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'meta_margin',
+                    'label'         => esc_html__( 'Meta Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .meta-cat' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
                 ),
                 array(
                     'type'          => Controls_Manager::DIMENSIONS,

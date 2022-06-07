@@ -86,13 +86,6 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 
 		    $options    = array(
                 array(
-                    'type'          => 'uiautocomplete',
-                    'name'          => 'test',
-                    'label'         => esc_html__( 'Autocomplete', 'uipro' ),
-                    'source'        => 'ap_product',
-                    'multiple'      => true,
-                ),
-                array(
                     'type'          => Controls_Manager::SELECT,
                     'name'          => 'main_layout',
                     'show_label'    => true,
@@ -738,11 +731,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'       => '0',
 					'start_section' => 'slider_settings',
 					'section_name'  => esc_html__('Slider Settings', 'uipro'),
-                    'conditions' => [
-                        'terms' => [
-                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
-                        ],
-                    ],
+
 				),
 				array(
 					'type'          => Controls_Manager::SWITCHER,
@@ -755,7 +744,6 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'       => '1',
 					'conditions' => [
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
 						],
 					],
@@ -771,7 +759,6 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					],
 					'conditions' => [
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
 							['name' => 'enable_navigation', 'operator' => '===', 'value' => '1'],
 						],
@@ -788,7 +775,6 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'       => '1',
 					'conditions' => [
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
 						],
 					],
@@ -804,7 +790,6 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'       => '0',
 					'conditions' => [
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
 						],
 					],

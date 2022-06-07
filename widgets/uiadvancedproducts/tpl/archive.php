@@ -28,27 +28,68 @@ if($ap_posts && $ap_posts -> have_posts()) {
     $masonry            = (isset($instance['masonry']) && $instance['masonry']) ? intval($instance['masonry']) : 0;
 
     $use_slider 	    = (isset($instance['use_slider']) && $instance['use_slider']) ? intval($instance['use_slider']) : 0;
+    $enable_navigation	= (isset($instance['enable_navigation']) && $instance['enable_navigation']) ? intval($instance['enable_navigation']) : 0;
+    $enable_dotnav	    = (isset($instance['enable_dotnav']) && $instance['enable_dotnav']) ? intval($instance['enable_dotnav']) : 0;
+    $center_slider	    = (isset($instance['center_slider']) && $instance['center_slider']) ? intval($instance['center_slider']) : 0;
+    $navigation_position= (isset($instance['navigation_position']) && $instance['navigation_position']) ? $instance['navigation_position'] : '';
 
     $general_styles = \UIPro_Elementor_Helper::get_general_styles($instance);
+    $output = '';
     ?>
-    <div class="ui-advanced-products<?php esc_attr($general_styles['container_cls']); ?>"<?php
-    echo $general_styles['animation']; ?>>
-        <div class="ui-post-items uk-child-width-1-<?php echo $large_desktop_columns;?>@xl uk-child-width-1-<?php
-        echo $desktop_columns;?>@l uk-child-width-1-<?php echo $laptop_columns;?>@m uk-child-width-1-<?php
-        echo $tablet_columns;?>@s uk-child-width-1-<?php echo $mobile_columns . $column_grid_gap
-            . ($use_slider ? ' uk-slider-items': '') .'" data-uk-grid="'.($masonry ? 'masonry:true;' : '');?>">
+    <div class="ui-advanced-products <?php echo esc_attr($general_styles['container_cls']) .' '.$general_styles['animation'];?>">
+    <?php
+    if ($use_slider) {
+        ?>
+        <div data-uk-slider="<?php echo $center_slider ? 'center: true' : ''; ?>">
+        <div class="uk-position-relative">
+        <div class="uk-slider-container">
+    <?php
+    }
+    ?>
+    <div class="ui-post-items uk-child-width-1-<?php echo $large_desktop_columns;?>@xl
+    uk-child-width-1-<?php echo $desktop_columns;?>@l
+    uk-child-width-1-<?php echo $laptop_columns;?>@m
+    uk-child-width-1-<?php echo $tablet_columns;?>@s
+    uk-child-width-1-<?php echo $mobile_columns . $column_grid_gap . ($use_slider ? ' uk-slider-items': '');?>" data-uk-grid="<?php echo $masonry ? 'masonry:true;' : '';?>">
         <?php
-        //$output = apply_filters('uipro/widgets/uiadvancedproducts/products', '');
         while ($ap_posts -> have_posts()) {
             $ap_posts -> the_post();
             AP_Templates::load_my_layout('archive.content-item');
         }
         ?>
+    </div>
+    <?php
+    wp_reset_postdata();
+    if ($use_slider) {
+        // End Slider Container
+        ?>
         </div>
         <?php
-        wp_reset_postdata();
+        if ($enable_navigation) {
+            ?>
+            <div class="<?php echo $navigation_position == 'inside' ? '' : 'uk-hidden@l'; ?>uk-light">
+                <a class="uk-position-center-left uk-position-small" href="#" data-uk-slidenav-previous data-uk-slider-item="previous"></a>
+                <a class="uk-position-center-right uk-position-small" href="#" data-uk-slidenav-next data-uk-slider-item="next"></a>
+            </div>
+            <div class="uk-visible@l">
+                <a class="uk-position-center-left-out uk-position-small" href="#" data-uk-slidenav-previous data-uk-slider-item="previous"></a>
+                <a class="uk-position-center-right-out uk-position-small" href="#" data-uk-slidenav-next data-uk-slider-item="next"></a>
+            </div>
+        <?php
+        }
+        ?>
+        </div>
+        <?php
+        if ($enable_dotnav) {
+            ?>
+            <ul class="uk-slider-nav uk-dotnav uk-flex-center uk-margin"></ul>
+            <?php
+        }
+        ?>
+        </div>
+        <?php
+    }
 
-        $output = '';
         // Pagination section
         switch ($pagination_type) {
             case 'ajax':
@@ -77,10 +118,8 @@ if($ap_posts && $ap_posts -> have_posts()) {
             $output     .=  '<input type="hidden" class="ui-current-page" value="'.(get_query_var( 'paged' ) ? get_query_var('paged') : 1).'" />';
             $output     .=  '<input type="hidden" class="ui-post-settings" value="'.base64_encode(json_encode($instance)).'" />';
         }
-
-        echo $output;
-        ?>
-
-    </div>
-    <?php
+    echo ent2ncr($output);
+    ?>
+</div>
+<?php
 }

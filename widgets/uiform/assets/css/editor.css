@@ -8,5 +8,8 @@
 .templaza-widget-uiform .inline form .wpforms-submit-container {
   width: auto;
 }
+.templaza-widget-uiform .inline div.wpforms-container-full .wpforms-form .wpforms-submit-container {
+  padding: 0;
+}
 
 /*# sourceMappingURL=editor.css.map */

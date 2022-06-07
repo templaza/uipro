@@ -100,7 +100,7 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 					'label'         => esc_html__('Title Color', 'uipro'),
 					'description'   => esc_html__('Set the color of title.', 'uipro'),
 					'selectors' => [
-						'{{WRAPPER}} .ui-card .uk-card-title' => 'color: {{VALUE}}',
+						'{{WRAPPER}} .ui-card .uk-card-title, {{WRAPPER}} .ui-card .uk-card-title a' => 'color: {{VALUE}}',
 					],
 					'condition'     => array(
 						'title!'    => ''

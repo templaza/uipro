@@ -376,6 +376,16 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 			);
 			// options
 			$options = array(
+                array(
+                    'id'          => 'layout',
+                    'label' => esc_html__( 'Layout', 'uipro' ),
+                    'type' => Controls_Manager::SELECT,
+                    'options'       => array(
+                        'base'    => esc_html__('Default', 'uipro'),
+                        'style1'    => esc_html__('Style 1', 'uipro'),
+                    ),
+                    'default'   => 'base',
+                ),
 				array(
 					'type'      => Controls_Manager::REPEATER,
 					'id'        => 'uislideshow_items',
@@ -2541,10 +2551,6 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 			static::$cache[$store_id]   = $options;
 
 			return $options;
-		}
-
-		public function get_template_name() {
-			return 'base';
 		}
 	}
 }

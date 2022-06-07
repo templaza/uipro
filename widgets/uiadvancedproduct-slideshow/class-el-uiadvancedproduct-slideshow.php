@@ -15,16 +15,16 @@ use Elementor\Utils;
  */
 defined( 'ABSPATH' ) || exit;
 
-if ( ! class_exists( 'UIPro_El_AdvancedProduct_Slideshow' ) ) {
+if ( ! class_exists( 'UIPro_El_Advancedproduct_Slideshow' ) ) {
 	/**
 	 * Class Templaza_Elements_El_AdvancedProduct_Slideshow
 	 */
-	class UIPro_El_AdvancedProduct_Slideshow extends UIPro_El_Widget {
+	class UIPro_El_Uiadvancedproduct_Slideshow extends UIPro_El_Widget {
 
 		/**
 		 * @var string
 		 */
-		protected $config_class = 'UIPro_Config_AdvancedProduct_Slideshow';
+		protected $config_class = 'UIPro_Config_Uiadvancedproduct_Slideshow';
 
         public function convert_setting($settings){
 

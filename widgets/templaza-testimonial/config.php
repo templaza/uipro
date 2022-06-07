@@ -32,6 +32,7 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
 			self::$name = esc_html__( 'TemPlaza: Testimonial', 'uipro' );
 			self::$desc = esc_html__( 'Display Testimonial.', 'uipro' );
 			self::$icon = 'eicon-blockquote';
+            self::$assets_path  =   plugin_dir_url(__FILE__). 'assets/';
 			parent::__construct();
 		}
 

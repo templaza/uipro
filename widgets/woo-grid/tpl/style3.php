@@ -24,7 +24,7 @@ if ( ! $results ) {
 }
 ?>
 <div class="tz-woo-grid <?php echo esc_attr($general_styles['container_cls'] . $general_styles['content_cls']);?>" <?php echo wp_kses($general_styles['animation'],'post');?>>
-    <div class="product-content
+    <ul class="product-content products
     uk-child-width-1-<?php echo esc_attr($instance['mobile_columns']);?>
     uk-child-width-1-<?php echo esc_attr($instance['tablet_columns']);?>@s
     uk-child-width-1-<?php echo esc_attr($instance['laptop_columns']);?>@m
@@ -39,7 +39,7 @@ if ( ! $results ) {
         global $product;
         $image_ids = $product->get_gallery_image_ids();
         ?>
-        <div <?php wc_product_class( '', $product ); ?>>
+        <li <?php wc_product_class( '', $product ); ?>>
             <div class="product-inner uk-inline">
                 <?php
                 if ( ! empty( $image_ids ) ) {
@@ -66,52 +66,64 @@ if ( ! $results ) {
                 if ( ! empty( $image_ids ) ) {
                     echo '</div>';
                 }
+                ?>
+                <div class="product-loop__buttons tz-product-cart">
+                    <?php
+                    woocommerce_template_loop_add_to_cart();
+
+                    if ( shortcode_exists( 'yith_wcwl_add_to_wishlist' ) ) {
+                        echo do_shortcode( '[yith_wcwl_add_to_wishlist]' );
+                    }
+                    echo sprintf(
+                        '<a href="%s" class="quick-view-button tz-loop-button" data-target="quick-view-modal" data-toggle="modal" data-id="%d" data-text="%s">
+				%s<span class="quick-view-text loop_button-text">%s</span>
+			</a>',
+                        is_customize_preview() ? '#' : esc_url( get_permalink() ),
+                        esc_attr( $product->get_id() ),
+                        esc_attr__( 'Quick View', 'agruco' ),
+                        '<i class="fas fa-eye"></i>',
+                        esc_html__( 'Quick View', 'agruco' )
+                    );
+                    ?>
+                </div>
+                <?php
                 echo '</div>';
                 ?>
-                <div class="product-info uk-padding-small">
-                    <div class="tz-product-title uk-flex uk-flex-between">
-                        <h2 class="product-title woocommerce-loop-product__title">
+                <div class="product-summary product-info">
+                    <div class="product-rating">
+                    <?php woocommerce_template_loop_rating(); ?>
+                    </div>
+                    <?php
+                    $taxonomy = empty($taxonomy) ? 'product_cat' : $taxonomy;
+                    $terms = get_the_terms( $product->get_id(), $taxonomy );
+
+                    if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+
+                        echo sprintf(
+                            '<a class="meta-cat uk-display-block" href="%s">%s</a>',
+                            esc_url( get_term_link( $terms[0] ), $taxonomy ),
+                            esc_html( $terms[0]->name ) );
+                    }
+                    ?>
+                    <h2 class="woocommerce-loop-product__title">
+                        <a href="<?php the_permalink();?>" class="woocommerce-LoopProduct-link woocommerce-loop-product__link">
                             <?php the_title(); ?>
-                        </h2>
-                        <div class="tz-product-price">
-                            <?php
-                            woocommerce_template_loop_price();
-                            ?>
-                        </div>
+                        </a>
+                    </h2>
+                    <div class="tz-product-price">
+                    <?php
+                    woocommerce_template_loop_price();
+                    ?>
                     </div>
-                    <div class="tz-product-action uk-flex uk-flex-between uk-flex-middle">
-                        <div class="product-rating">
-                            <?php
-                            $taxonomy = empty($taxonomy) ? 'product_cat' : $taxonomy;
-                            $terms = get_the_terms( $product->get_id(), $taxonomy );
 
-                            if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
-
-                            echo sprintf(
-                                '<a class="meta-cat uk-display-block" href="%s">%s</a>',
-                                esc_url( get_term_link( $terms[0] ), $taxonomy ),
-                                esc_html( $terms[0]->name ) );
-                            }
-                            ?>
-                            <?php woocommerce_template_loop_rating(); ?>
-                        </div>
-                        <div class="tz-product-cart uk-flex-1 uk-flex-inline uk-flex-right">
-                            <?php
-                            woocommerce_template_loop_add_to_cart();
-                            if ( shortcode_exists( 'yith_wcwl_add_to_wishlist' ) ) {
-                                echo do_shortcode( '[yith_wcwl_add_to_wishlist]' );
-                            }
-                            ?>
-                        </div>
-                    </div>
                 </div>
             </div>
-        </div>
+        </li>
 
         <?php
     }
     wp_reset_postdata();
     wc_reset_loop();
     ?>
-    </div>
+    </ul>
 </div>
