@@ -176,6 +176,30 @@ if ( ! class_exists( 'UIPro_Config_Woo_Category' ) ) {
                     ],
 
                 ),
+                array(
+                    'type'          =>  \Elementor\Group_Control_Border::get_type(),
+                    'name'          => 'card_border',
+                    'label'         => esc_html__('Item Border', 'uipro'),
+                    'description'   => esc_html__('Set the Border of Box.', 'uipro'),
+                    'selector' => '{{WRAPPER}} .woo-cat-item',
+                ),
+                array(
+                    'type'          =>  \Elementor\Group_Control_Box_Shadow::get_type(),
+                    'name'          => 'card_box_shadow',
+                    'label'         => esc_html__('Item Box Shadow', 'uipro'),
+                    'description'   => esc_html__('Set the Box Shadow of Box.', 'uipro'),
+                    'selector' => '{{WRAPPER}} .woo-cat-item',
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'card_radius',
+                    'label'         => esc_html__( 'Border radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .woo-cat-item' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
+                    ],
+                ),
 
 
 				array(

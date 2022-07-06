@@ -1,0 +1,17 @@
+.templaza-widget-uiform{
+  .inline{
+    form{
+      display:flex;
+      flex-wrap:wrap;
+      .wpforms-field-container{
+        flex:1;
+      }
+      .wpforms-submit-container{
+        width:auto;
+      }
+    }
+    div.wpforms-container-full .wpforms-form .wpforms-submit-container{
+      padding:0;
+    }
+  }
+}

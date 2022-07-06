@@ -10,6 +10,7 @@ $testimonial_slider_number    = !empty( $instance['testimonial_slider_number'] )
 $testimonial_quote_size    = isset( $instance['testimonial_quote_size'] ) && $instance['testimonial_quote_size']['size'] ? $instance['testimonial_quote_size']['size'] : 32;
 $avatar_border    = isset( $instance['avatar_border'] ) && $instance['avatar_border'] ? ' '. $instance['avatar_border'] : '';
 $quote_icon = ( isset( $instance['quote_icon'] ) && $instance['quote_icon'] ) ? $instance['quote_icon'] : array();
+$gap = ( isset( $instance['gap'] ) && $instance['gap'] ) ? $instance['gap'] : 'collapse';
 $slider_options = '';
 if($testimonial_slider_autoplay=='yes'){
     $slider_options .= 'autoplay: true; ';
@@ -32,13 +33,13 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
     <div data-uk-slider="<?php echo esc_attr($slider_options);?>" class="templaza-testimonial<?php echo $general_styles['content_cls']; ?>">
         <div class="uk-position-relative  uk-visible-toggle " tabindex="-1">
             <div class="uk-slider-container">
-                <ul class="uk-slider-items uk-child-width-1-1 uk-child-width-1-1@s uk-child-width-1-<?php echo esc_attr($testimonial_slider_number);?>@m">
+                <ul class="uk-slider-items uk-child-width-1-1 uk-child-width-1-1@s uk-child-width-1-<?php echo esc_attr($testimonial_slider_number);?>@m uk-grid-<?php echo esc_attr($gap);?>" data-uk-grid>
 					<?php
 					foreach ($templaza_testimonials as $item){
 					    $image  =   isset( $item['author_image'] ) && $item['author_image'] ? $item['author_image'] : array();
 						?>
                         <li>
-                            <div class="uk-flex-middle" data-uk-grid>
+                            <div class="uk-flex-middle tz-testimonial-inner" <?php if (isset( $image['url'] ) && $image['url'] ) : ?> data-uk-grid <?php endif; ?> >
                                 <?php if (isset( $image['url'] ) && $image['url'] ) : ?>
                                 <div class="ui-testimonial-avatar uk-width-auto@m">
                                     <div class="uk-inline-clip<?php echo $avatar_border; ?>">
@@ -48,6 +49,13 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
                                 <?php endif; ?>
                                 <div class="ui-testimonial-content uk-width-expand@m">
 	                                <?php
+                                    if($item['quote_title']){
+                                        ?>
+                                        <h3 class="templaza_quote_title">
+                                            <?php echo esc_html($item['quote_title']); ?>
+                                        </h3>
+                                        <?php
+                                    }
                                     if ($quote_icon && isset($quote_icon['value'])) {
                                         ?>
                                         <span class="quote-icon uk-margin-small-bottom">
@@ -67,7 +75,7 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
                                     }
 	                                if($item['quote_content']){
 		                                ?>
-                                        <div class="templaza_quote_content uk-margin-bottom">
+                                        <div class="templaza_quote_content ">
 			                                <?php echo esc_html($item['quote_content']); ?>
                                         </div>
 		                                <?php

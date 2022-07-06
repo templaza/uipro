@@ -64,26 +64,34 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
 
             $repeater = new \Elementor\Repeater();
             $repeater->add_control(
+                'quote_title', [
+                    'label' => __( 'Title', 'uipro' ),
+                    'type' => \Elementor\Controls_Manager::TEXT,
+                    'default' => __( '' , 'uipro' ),
+                    'label_block' => true,
+                ]
+            );
+            $repeater->add_control(
                 'quote_content', [
-                    'label' => __( 'Content quote', 'plugin-domain' ),
+                    'label' => __( 'Content quote', 'uipro' ),
                     'type' => \Elementor\Controls_Manager::TEXTAREA,
-                    'default' => __( '' , 'plugin-domain' ),
+                    'default' => __( '' , 'uipro' ),
                     'label_block' => true,
                 ]
             );
             $repeater->add_control(
                 'quote_author', [
-                    'label' => __( 'Author', 'plugin-domain' ),
+                    'label' => __( 'Author', 'uipro' ),
                     'type' => \Elementor\Controls_Manager::TEXT,
-                    'default' => __( '' , 'plugin-domain' ),
+                    'default' => __( '' , 'uipro' ),
                     'label_block' => true,
                 ]
             );
             $repeater->add_control(
                 'author_position', [
-                    'label' => __( 'Author Position', 'plugin-domain' ),
+                    'label' => __( 'Author Position', 'uipro' ),
                     'type' => \Elementor\Controls_Manager::TEXT,
-                    'default' => __( '' , 'plugin-domain' ),
+                    'default' => __( '' , 'uipro' ),
                     'label_block' => true,
                 ]
             );
@@ -135,9 +143,23 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                             'quote_content' => ''
                         ],
                     ],
-                    'title_field' => __( 'Quote item', 'plugin-domain' ),
+                    'title_field' => __( 'Quote item', 'uipro' ),
 				),
-
+                array(
+                    'id'        => 'gap',
+                    'label'     => esc_html__( 'Item Gap', 'uipro' ),
+                    'type'      => Controls_Manager::SELECT,
+                    'options'   => array(
+                        'default'      => esc_html__('Default', 'uipro'),
+                        'small'    => esc_html__('Small', 'uipro'),
+                        'medium'    => esc_html__('Medium', 'uipro'),
+                        'large'    => esc_html__('Large', 'uipro'),
+                        'collapse'    => esc_html__('Collapse', 'uipro'),
+                    ),
+                    'default'   => 'base',
+                    'start_section' => 'item-options',
+                    'section_name'  => esc_html__( 'Item options', 'uipro' ),
+                ),
                 array(
                     'type'          => Controls_Manager::DIMENSIONS,
                     'name'          => 'testimonial_box_padding',
@@ -145,10 +167,9 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     'responsive'    =>  true,
                     'size_units'    => [ 'px', 'em', '%' ],
                     'selectors'     => [
-                        '{{WRAPPER}} .uk-slider-items > li' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                        '{{WRAPPER}} .uk-slider-items > li .tz-testimonial-inner' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                     ],
-                    'start_section' => 'item-options',
-                    'section_name'  => esc_html__( 'Item options', 'uipro' ),
+
                 ),
                 array(
                     'type'          => Controls_Manager::DIMENSIONS,
@@ -157,7 +178,7 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     'responsive'    =>  true,
                     'size_units'    => [ 'px', 'em', '%' ],
                     'selectors'     => [
-                        '{{WRAPPER}} .uk-slider-items > li' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                        '{{WRAPPER}} .uk-slider-items > li .tz-testimonial-inner' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                     ],
                 ),
                 array(
@@ -165,7 +186,7 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     'name'  => 'testimonial_box_bg',
                     'type' => \Elementor\Controls_Manager::COLOR,
                     'selectors' => [
-                        '{{WRAPPER}} .uk-slider-items > li' => 'background-color: {{VALUE}}',
+                        '{{WRAPPER}} .uk-slider-items > li .tz-testimonial-inner' => 'background-color: {{VALUE}}',
                     ],
                 ),
                 array(
@@ -175,8 +196,14 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     'responsive'    =>  true,
                     'size_units'    => [ 'px', 'em', '%' ],
                     'selectors'     => [
-                        '{{WRAPPER}} .uk-slider-items > li' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
+                        '{{WRAPPER}} .uk-slider-items > li .tz-testimonial-inner' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
                     ],
+                ),
+                array(
+                    'type'          =>  \Elementor\Group_Control_Border::get_type(),
+                    'name'          => 'item_border',
+                    'label'         => esc_html__('Item Border', 'uipro'),
+                    'selector' => '{{WRAPPER}} .uk-slider-items > li .tz-testimonial-inner',
                 ),
                 array(
                     'type'      => Controls_Manager::SWITCHER,
@@ -191,7 +218,7 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                         'item_shadow'    => 'yes'
                     ),
                     'selectors' => [
-                        '{{WRAPPER}} .uk-slider-items > li' => 'box-shadow: {{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{SPREAD}}px {{COLOR}};',
+                        '{{WRAPPER}} .uk-slider-items > li .tz-testimonial-inner' => 'box-shadow: {{HORIZONTAL}}px {{VERTICAL}}px {{BLUR}}px {{SPREAD}}px {{COLOR}};',
                     ],
                 ),
                 array(
@@ -323,12 +350,105 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
 	                    ],
                     ],
                 ),
+                array(
+                    'type'          =>  \Elementor\Group_Control_Border::get_type(),
+                    'name'          => 'nav_border',
+                    'label'         => esc_html__('Nav Border', 'uipro'),
+                    'selector' => '{{WRAPPER}} .uk-slider .uk-slidenav',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'testimonial_slider_navigation', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'nav_radius',
+                    'label'         => esc_html__( 'Nav radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-slider .uk-slidenav' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'testimonial_slider_navigation', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+                ),
+                array(
+                    'label' => esc_html__( 'Nav background color', 'uipro' ),
+                    'name'  => 'nav_bg',
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .uk-slider .uk-slidenav' => 'background-color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'testimonial_slider_navigation', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+                ),
+                array(
+                    'label' => esc_html__( 'Nav color', 'uipro' ),
+                    'name'  => 'nav_color',
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .uk-slider .uk-slidenav' => 'color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'testimonial_slider_navigation', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+                ),
+                array(
+                    'label' => esc_html__( 'Nav Hover background color', 'uipro' ),
+                    'name'  => 'nav_bg_hover',
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .uk-slider .uk-slidenav:hover' => 'background-color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'testimonial_slider_navigation', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+                ),
+                array(
+                    'label' => esc_html__( 'Nav Hover color', 'uipro' ),
+                    'name'  => 'nav_color_hover',
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .uk-slider .uk-slidenav:hover' => 'color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'testimonial_slider_navigation', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+                ),
+
 
                 array(
                     'type'      => Controls_Manager::SWITCHER,
                     'name'      => 'testimonial_slider_dot',
                     'label'     => esc_html__( 'Show dots', 'uipro' ),
                     'section_name'  => esc_html__( 'Slider options', 'uipro' ),
+                ),
+                array(
+                    'label' => esc_html__( 'Dots Slider Color', 'uipro' ),
+                    'name'  => 'quote_dots_color',
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .uk-dotnav>*>*' => 'border-color: {{VALUE}}',
+                        '{{WRAPPER}} .uk-dotnav>.uk-active>*, {{WRAPPER}} .uk-dotnav li:hover>*' => 'background-color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'testimonial_slider_dot', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
                 ),
                 array(
                     'type'      => Controls_Manager::NUMBER,
@@ -684,6 +804,9 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
 					'default' => [
 						'size' => 50,
 					],
+                    'selectors' => [
+                        '{{WRAPPER}} .quote-icon i' => 'font-size: {{SIZE}}px;',
+                    ],
 					'start_section' => 'style',
 					'section_tab'   => Controls_Manager::TAB_STYLE,
 					'section_name'  => esc_html__( self::$name, 'uipro' ),
@@ -812,6 +935,23 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                 ),
                 array(
                     'type'          => Group_Control_Typography::get_type(),
+                    'name'          => 'quote_title_typography',
+                    'scheme'        => Typography::TYPOGRAPHY_1,
+                    'label'         => esc_html__('Title Font', 'uipro'),
+                    'selector'      => '{{WRAPPER}} .templaza_quote_title',
+                    'separator'     => 'before',
+
+                ),
+                array(
+                    'label' => esc_html__( 'Title Color', 'uipro' ),
+                    'name'  => 'quote_title_color',
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .templaza_quote_title' => 'color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'quote_content_typography',
                     'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Content Font', 'uipro'),
@@ -859,6 +999,7 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                         '{{WRAPPER}} .templaza_quote_author_position' => 'color: {{VALUE}}',
                     ],
                 ),
+
 			);
 			$options    = array_merge($options, $this->get_general_options());
 

@@ -391,6 +391,12 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 						],
 					],
 				),
+                array(
+                    'type'          =>  \Elementor\Group_Control_Border::get_type(),
+                    'name'          => 'card_border',
+                    'label'         => esc_html__('Card Border', 'uipro'),
+                    'selector' => '{{WRAPPER}} .ap-item .ap-inner',
+                ),
 
 				//Filter Settings
 				array(

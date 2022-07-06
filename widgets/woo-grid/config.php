@@ -32,9 +32,20 @@ if ( ! class_exists( 'UIPro_Config_Woo_Grid' ) ) {
 			self::$name = esc_html__( 'TemPlaza: Woocommerce Grid', 'uipro' );
 			self::$desc = esc_html__( 'Display products grid style.', 'uipro' );
 			self::$icon = 'eicon-gallery-grid';
+            self::$assets_path  =   plugin_dir_url(__FILE__). 'assets/';
 			parent::__construct();
 
+            add_action( 'elementor/preview/enqueue_scripts', array($this, 'editor_enqueue_scripts') );
+
 		}
+//        public function get_scripts() {
+//            return array(
+//                'woo-grid-script' => array(
+//                    'src'   =>  'script.js',
+//                    'deps'  =>  array('jquery','elementor-frontend')
+//                )
+//            );
+//        }
 
 		/**
 		 * @return array
@@ -77,17 +88,30 @@ if ( ! class_exists( 'UIPro_Config_Woo_Grid' ) ) {
                     'label' => esc_html__( 'Product Loop Layout', 'uipro' ),
                     'type' => Controls_Manager::SELECT,
                     'options'       => array(
-                        'layout-1' => esc_html__( 'Icons over thumbnail on hover', 'agruco' ),
-                        'layout-2' => esc_html__( 'Icons & Quick view button', 'agruco' ),
-                        'layout-3' => esc_html__( 'Icons & Add to cart button', 'agruco' ),
-                        'layout-4' => esc_html__( 'Icons on the bottom', 'agruco' ),
-                        'layout-5' => esc_html__( 'Simple', 'agruco' ),
-                        'layout-6' => esc_html__( 'Standard button', 'agruco' ),
-                        'layout-7' => esc_html__( 'Info on hover', 'agruco' ),
-                        'layout-8' => esc_html__( 'Icons & Add to cart text', 'agruco' ),
-                        'layout-9' => esc_html__( 'Quick Shop button', 'agruco' ),
+                        'layout-1' => esc_html__( 'Icons over thumbnail on hover', 'uipro' ),
+                        'layout-2' => esc_html__( 'Icons & Quick view button', 'uipro' ),
+                        'layout-3' => esc_html__( 'Icons & Add to cart button', 'uipro' ),
+                        'layout-4' => esc_html__( 'Icons on the bottom', 'uipro' ),
+                        'layout-5' => esc_html__( 'Simple', 'uipro' ),
+                        'layout-6' => esc_html__( 'Standard button', 'uipro' ),
+                        'layout-7' => esc_html__( 'Info on hover', 'uipro' ),
                     ),
                     'default'   => 'layout-1',
+                    'condition'     => array(
+                        'layout'    => 'base',
+                    )
+                ),
+                array(
+                    'id'          => 'product_loop_hover',
+                    'label' => esc_html__( 'Product Loop Hover', 'uipro' ),
+                    'type' => Controls_Manager::SELECT,
+                    'options'       => array(
+                        'classic' => esc_html__( 'Default', 'uipro' ),
+                        'slider'  => esc_html__( 'Slider', 'uipro' ),
+                        'fadein'  => esc_html__( 'Fadein', 'uipro' ),
+                        'zoom'    => esc_html__( 'Zoom', 'uipro' ),
+                    ),
+                    'default'   => 'classic',
                     'condition'     => array(
                         'layout'    => 'base',
                     )
@@ -526,6 +550,9 @@ if ( ! class_exists( 'UIPro_Config_Woo_Grid' ) ) {
 
 			return $options;
 		}
+        public function editor_enqueue_scripts(){
+            wp_enqueue_script('zoom');
+        }
 
 	}
 }

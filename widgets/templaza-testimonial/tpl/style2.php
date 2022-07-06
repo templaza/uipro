@@ -43,6 +43,13 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
                             <div class="uk-flex-middle" data-uk-grid>
                                 <div class="ui-testimonial-content uk-width-expand@m">
 	                                <?php
+                                    if($item['quote_title']){
+                                        ?>
+                                        <h3 class="templaza_quote_title">
+                                            <?php echo esc_html($item['quote_title']); ?>
+                                        </h3>
+                                        <?php
+                                    }
                                     if ($quote_icon && isset($quote_icon['value'])) {
                                         ?>
                                         <span class="quote-icon">

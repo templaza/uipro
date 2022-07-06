@@ -40,6 +40,13 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
             ?>
             <div class="ui-testimonial-content templaza-testimonial-item">
                 <?php
+                if($item['quote_title']){
+                    ?>
+                    <h3 class="templaza_quote_title">
+                        <?php echo esc_html($item['quote_title']); ?>
+                    </h3>
+                    <?php
+                }
                 if($item['quote_content']){
                     ?>
                     <div class="templaza_quote_content">

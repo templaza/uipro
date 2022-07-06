@@ -6,7 +6,8 @@
 
 namespace TemPlaza_Woo_El;
 use Elementor\Group_Control_Image_Size;
-
+use TemPlazaFramework\Functions;
+use TemPlaza_Woo\Templaza_Woo_Helper;
 if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly.
 }
@@ -372,9 +373,120 @@ class TemPlaza_Woo_El_Helper {
 		update_object_term_cache( $products_ids, 'product' );
 
 		$original_post = $GLOBALS['post'];
+        if ( !class_exists( 'TemPlazaFramework\TemPlazaFramework' )){
+            $templaza_options = array();
+        }else{
+            $templaza_options = Functions::get_theme_options();
+        }
 
-		woocommerce_product_loop_start();
+        $classes = array(
+            'products'
+        );
+        if (wc_get_loop_prop('product_loop')) {
+            $loop_layout = wc_get_loop_prop('product_loop');
+        }else{
+            $loop_layout = isset($templaza_options['templaza-shop-loop-layout'])?$templaza_options['templaza-shop-loop-layout']:'layout-1';
+        }
+        $class_layout = $loop_layout == 'layout-3' ? 'layout-2' : $loop_layout;
 
+        $classes[] = 'product-loop-' . $class_layout;
+
+        if ( $loop_layout == 'layout-3' ) {
+            $classes[] = 'product-loop-layout-3';
+        }
+
+        $classes[] = $loop_layout == 'layout-3' ? 'has-quick-view' : '';
+
+        $classes[] = in_array( $loop_layout, array( 'layout-2', 'layout-3', 'layout-4', 'layout-5', 'layout-6', 'layout-7' ) ) ? 'product-loop-center' : '';
+
+        if ( in_array( $loop_layout, array( 'layout-2', 'layout-3', 'layout-9' ) ) ) {
+            $loop_wishlist           = isset($templaza_options['templaza-shop-loop-wishlist'])?filter_var($templaza_options['templaza-shop-loop-wishlist'], FILTER_VALIDATE_BOOLEAN):true;
+            if($loop_wishlist){
+                $classes[] = 'show-wishlist';
+            }else{
+                $classes[] = ' ';
+            }
+        }
+
+        if ( in_array( $loop_layout, array( 'layout-8', 'layout-9' ) ) ) {
+            $loop_variation           = isset($templaza_options['templaza-shop-loop-variation'])?filter_var($templaza_options['templaza-shop-loop-variation'], FILTER_VALIDATE_BOOLEAN):true;
+            if($loop_variation){
+                $classes[] = 'has-variations-form';
+            }else{
+                $classes[] = ' ';
+            }
+        }
+        $shop_col_tablet       = isset($templaza_options['templaza-shop-column-tablet'])?$templaza_options['templaza-shop-column-tablet']:2;
+        $shop_col_mobile       = isset($templaza_options['templaza-shop-column-mobile'])?$templaza_options['templaza-shop-column-mobile']:1;
+        $shop_col_gap          = isset($templaza_options['templaza-shop-column-gap'])?$templaza_options['templaza-shop-column-gap']:'';
+        if(is_product()) {
+            $product_columns = $product_columns_large =$product_columns_laptop =4;
+            $product_columns_tablet = 2;
+            $product_columns_mobile = 1;
+            $product_gap = '';
+        }else{
+
+            if (wc_get_loop_prop('columns')) {
+                $product_columns = wc_get_loop_prop('columns');
+            } else {
+                $product_columns = isset($templaza_options['templaza-shop-column']) ? $templaza_options['templaza-shop-column'] : 4;
+            }
+            if (wc_get_loop_prop('large_columns')) {
+                $product_columns_large = wc_get_loop_prop('large_columns');
+            } else {
+                $product_columns_large = isset($templaza_options['templaza-shop-column-large']) ? $templaza_options['templaza-shop-column-large'] : 4;
+            }
+            if (wc_get_loop_prop('laptop_columns')) {
+                $product_columns_laptop = wc_get_loop_prop('laptop_columns');
+            } else {
+                $product_columns_laptop = isset($templaza_options['templaza-shop-column-laptop']) ? $templaza_options['templaza-shop-column-laptop'] : 3;
+            }
+            if (wc_get_loop_prop('tablet_columns')) {
+                $product_columns_tablet = wc_get_loop_prop('tablet_columns');
+            } else {
+                $product_columns_tablet = isset($templaza_options['templaza-shop-column-tablet']) ? $templaza_options['templaza-shop-column-tablet'] : 2;
+            }
+            if (wc_get_loop_prop('mobile_columns')) {
+                $product_columns_mobile = wc_get_loop_prop('mobile_columns');
+            } else {
+                $product_columns_mobile = isset($templaza_options['templaza-shop-column-mobile']) ? $templaza_options['templaza-shop-column-mobile'] : 2;
+            }
+            if (wc_get_loop_prop('column_gap')) {
+                $product_gap = wc_get_loop_prop('column_gap');
+            } else {
+                $product_gap = isset($templaza_options['templaza-shop-column-gap']) ? $templaza_options['templaza-shop-column-gap'] : '';
+            }
+        }
+        $classes[] = 'columns-' . $product_columns;
+        $classes[] = 'uk-child-width-1-' .$product_columns.'@l';
+        $classes[] = 'uk-child-width-1-' .$product_columns_large.'@xl';
+        $classes[] = 'uk-child-width-1-' .$product_columns_laptop.'@m';
+        $classes[] = 'uk-child-width-1-' .$product_columns_tablet.'@s';
+        $classes[] = 'uk-child-width-1-' .$product_columns_mobile.'';
+        $classes[] = 'uk-grid-' . $product_gap.'';
+
+        if ( $mobile_pl_col = intval( get_option( 'mobile_landscape_product_columns' ) ) ) {
+            $classes[] = 'mobile-pl-col-' . $mobile_pl_col;
+        }
+
+        if ( $mobile_pp_col = intval( get_option( 'mobile_portrait_product_columns' ) ) ) {
+            $classes[] = 'mobile-pp-col-' . $mobile_pp_col;
+        }
+
+        if ( intval( get_option( 'mobile_product_loop_atc' ) )
+            || in_array( $loop_layout, array(
+                'layout-3',
+                'layout-6',
+                'layout-8',
+            ) ) ) {
+            $classes[] = 'mobile-show-atc';
+        }
+
+        if ( intval( get_option( 'mobile_product_featured_icons' ) ) ) {
+            $classes[] = 'mobile-show-featured-icons';
+        }
+
+        echo '<ul  class=" uk-grid-'.esc_attr($shop_col_gap).' ' . esc_attr( implode( ' ', $classes ) ) . '" data-uk-grid> ';
 		foreach ( $products_ids as $product_id ) {
 			$GLOBALS['post'] = get_post( $product_id ); // WPCS: override ok.
 			setup_postdata( $GLOBALS['post'] );
@@ -534,6 +646,47 @@ class TemPlaza_Woo_El_Helper {
 			wp_reset_postdata();
 		}
 	}
+    public static function templaza_wishlist_button() {
+        if ( shortcode_exists( 'yith_wcwl_add_to_wishlist' ) ) {
+            echo do_shortcode( '[yith_wcwl_add_to_wishlist]' );
+        }
+
+    }
+    public static function templaza_quick_view_button() {
+        global $product;
+
+        echo sprintf(
+            '<a href="%s" class="quick-view-button tz-loop-button" data-target="quick-view-modal" data-toggle="modal" data-id="%d" data-text="%s">
+				%s<span class="quick-view-text loop_button-text">%s</span>
+			</a>',
+            is_customize_preview() ? '#' : esc_url( get_permalink() ),
+            esc_attr( $product->get_id() ),
+            esc_attr__( 'Quick View', 'uipro' ),
+            '<i class="fas fa-eye"></i>',
+            esc_html__( 'Quick View', 'uipro' )
+        );
+    }
+    public static function templaza_product_loop_title() {
+        echo '<h2 class="woocommerce-loop-product__title">';
+        woocommerce_template_loop_product_link_open();
+        the_title();
+        woocommerce_template_loop_product_link_close();
+        echo '</h2>';
+    }
+    public static function add_to_cart_link() {
+        global $product;
+        echo sprintf(
+            '<a href="%s" data-quantity="%s" class="%s tz-loop-button tz-loop_atc_button" %s data-text="%s" data-title="%s" >%s<span class="add-to-cart-text loop_button-text">%s</span></a>',
+            esc_url( $product->add_to_cart_url() ),
+            esc_attr( isset( $args['quantity'] ) ? $args['quantity'] : 1 ),
+            esc_attr( isset( $args['class'] ) ? $args['class'] : 'button' ),
+            isset( $args['attributes'] ) ? wc_implode_html_attributes( $args['attributes'] ) : '',
+            esc_html( $product->add_to_cart_text() ),
+            esc_html( $product->get_title() ),
+            '<i class="fas fa-shopping-cart"></i>',
+            esc_html( $product->add_to_cart_text() )
+        );
+    }
 
 }
 TemPlaza_Woo_El_Helper::get_instance();

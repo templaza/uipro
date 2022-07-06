@@ -31,7 +31,6 @@ class UIPro_Helper{
                 'menu_order'   => false
             );
             $terms = get_terms( $term, $args );
-
             if ( is_wp_error( $terms ) ) {
             } else {
                 if ( empty( $terms ) ) {
