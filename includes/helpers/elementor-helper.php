@@ -256,8 +256,13 @@ class UIPro_Elementor_Helper{
 			$image_attr = [
 				'class' => trim( $image_class ),
 			];
-
+            if(isset($settings['link_type']) && $settings['link_type'] == 'use_link'){
+                $html .='<a href='.$settings['link']['url'].'>';
+            }
 			$html .= wp_get_attachment_image( $image['id'], $size, false, $image_attr );
+            if(isset($settings['link_type']) && $settings['link_type'] == 'use_link'){
+                $html .='</a>';
+            }
 		} else {
 			$image_src = Group_Control_Image_Size::get_attachment_image_src( $image['id'], $image_size_key, $settings );
 			$size      = $settings[ $image_size_key . '_size' ];
@@ -267,6 +272,7 @@ class UIPro_Elementor_Helper{
 				$attribs    .=  ! empty( $custom_dimension['width']) ? ' data-width="'.$custom_dimension['width'].'"' : '';
 				$attribs    .=  ! empty( $custom_dimension['height']) ? ' data-height="'.$custom_dimension['height'].'"' : '';
 			}
+
 
 			if ( ! $image_src && isset( $image['url'] ) ) {
 				$image_src = $image['url'];

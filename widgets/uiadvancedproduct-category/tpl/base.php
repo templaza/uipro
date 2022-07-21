@@ -55,7 +55,7 @@ if($cat_results){
                                     ?>
                                     <div class="uk-cover-container ap-category-image">
                                         <a href="<?php echo esc_url(get_term_link($cat->term_id));?>">
-                                            <canvas width="400" height="300"></canvas>
+                                            <canvas width="440" height="440"></canvas>
                                             <?php
                                             echo wp_get_attachment_image($att_id,$image_size,'',array( "data-uk-cover" => "" ) );
                                             ?>

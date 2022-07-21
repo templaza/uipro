@@ -14,6 +14,9 @@ $second_label      =   isset($instance['second_label']) ? $instance['second_labe
 $countdown_separator      =   isset($instance['countdown_separator']) ? $instance['countdown_separator'] : 'yes';
 $separator     =   isset($instance['separator']) ? $instance['separator'] : 'string';
 $separator_icon     =   isset($instance['separator_icon']) ? $instance['separator_icon'] : '';
+$text_align     =   isset($instance['text_alignment']) ? $instance['text_alignment'] : 'left';
+$countdown_vertical     =   isset($instance['countdown_vertical']) ? $instance['countdown_vertical'] : 'middle';
+$countdown_gap     =   isset($instance['countdown_gap']) ? $instance['countdown_gap'] : '';
 
 if($separator == 'string'){
     $separtor_value = isset($instance['separator_label']) ? $instance['separator_label'] : ':';
@@ -32,7 +35,14 @@ if($separator == 'string'){
 }
 ?>
 <div class=" <?php echo esc_attr($general_styles['container_cls'] . $general_styles['content_cls'] . ' ');?>" <?php echo wp_kses($general_styles['animation'],'post');?>>
-    <div class="uk-grid-small uk-flex uk-flex-middle uk-flex-right uk-child-width-auto" data-uk-grid data-uk-countdown="date: <?php echo esc_attr($countdown_date);?>+00:00">
+    <div class="uk-grid-<?php echo esc_attr($countdown_gap);?> uk-flex uk-flex-<?php echo esc_attr($countdown_vertical);?> uk-flex-<?php echo esc_attr($text_align);?> uk-child-width-auto" data-uk-grid data-uk-countdown="date: <?php echo esc_attr($countdown_date);?>+00:00">
+        <?php
+        if($instance['title']){
+            ?>
+        <div class="countdowwn-title"><?php echo esc_html($instance['title']);?></div>
+        <?php
+        }
+        ?>
         <div>
             <div class="uk-countdown-number uk-countdown-days"></div>
             <?php if($show_label=='yes'){ ?>

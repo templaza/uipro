@@ -6,7 +6,6 @@ $caption        = isset($instance['caption']) && $instance['caption'] ? $instanc
 $flash_effect   =   isset($instance['flash_effect']) ? intval($instance['flash_effect']) : 0;
 $class          =   isset($instance['image_border']) && $instance['image_border'] ? ' '. $instance['image_border'] : '';
 $class          .=  $flash_effect ? ' ui-image-flash-effect' : '';
-
 $general_styles = \UIPro_Elementor_Helper::get_general_styles($instance);
 $output         = '';
 if ($image && isset($image['url']) && $image['url']) {

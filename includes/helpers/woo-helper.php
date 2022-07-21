@@ -687,6 +687,50 @@ class TemPlaza_Woo_El_Helper {
             esc_html( $product->add_to_cart_text() )
         );
     }
+    public static function templaza_product_taxonomy( $taxonomy = 'product_cat', $show_thumbnail = false ) {
+        global $product;
+
+        $taxonomy = empty($taxonomy) ? 'product_cat' : $taxonomy;
+        $terms = get_the_terms( $product->get_id(), $taxonomy );
+
+        if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
+            if( $show_thumbnail ) {
+                $thumbnail_id   = get_term_meta( $terms[0]->term_id, 'brand_thumbnail_id', true );
+                $image = $thumbnail_id ? wp_get_attachment_image( $thumbnail_id, 'full' ) : '';
+                echo sprintf(
+                    '<a class="meta-cat" href="%s">%s</a>',
+                    esc_url( get_term_link( $terms[0] ), $taxonomy ),
+                    $image);
+            } else {
+                echo sprintf(
+                    '<a class="meta-cat" href="%s">%s</a>',
+                    esc_url( get_term_link( $terms[0] ), $taxonomy ),
+                    esc_html( $terms[0]->name ) );
+            }
+        }
+    }
+    public static function product_loop_desc() {
+        global $post;
+
+        $short_description = $post ? $post->post_excerpt : '';
+
+        if ( ! $short_description ) {
+            return;
+        }
+        if ( !class_exists( 'TemPlazaFramework\TemPlazaFramework' )){
+            $templaza_options = array();
+        }else{
+            $templaza_options = Functions::get_theme_options();
+        }
+        $loop_desc_length       = isset($templaza_options['templaza-shop-loop-description-length'])?$templaza_options['templaza-shop-loop-description-length']:'10';
+
+        $length = intval( $loop_desc_length );
+        if ( $length ) {
+            $short_description = wp_trim_words( $short_description, $length, '...');
+        }
+
+        echo sprintf( '<div class="woocommerce-product-details__short-description"> %s</div>', $short_description );
+    }
 
 }
 TemPlaza_Woo_El_Helper::get_instance();

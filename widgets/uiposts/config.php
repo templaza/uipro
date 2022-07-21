@@ -1374,6 +1374,19 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 						'button_style'    => 'custom'
 					),
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'button_padding',
+                    'label'         => esc_html__( 'Button Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-post-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'condition' => array(
+                        'button_style'    => 'custom'
+                    ),
+                ),
 				array(
 					'name'            => 'button_border',
 					'type'          =>  \Elementor\Group_Control_Border::get_type(),
@@ -1456,8 +1469,8 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 				array(
 					'id'    => 'button_margin_top',
 					'type' => Controls_Manager::SELECT,
-					'label' => esc_html__('Margin Top', 'uipro'),
-					'description' => esc_html__('Set the top margin.', 'uipro'),
+					'label' => esc_html__('Margin', 'uipro'),
+					'description' => esc_html__('Set the margin.', 'uipro'),
 					'options' => array(
 						'' => esc_html__('Default', 'uipro'),
 						'small' => esc_html__('Small', 'uipro'),
@@ -1465,9 +1478,23 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 						'large' => esc_html__('Large', 'uipro'),
 						'xlarge' => esc_html__('X-Large', 'uipro'),
 						'remove' => esc_html__('None', 'uipro'),
+						'custom' => esc_html__('Custom', 'uipro'),
 					),
 					'default' => '',
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'button_margin',
+                    'label'         => esc_html__( 'Button Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-post-button' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'condition' => array(
+                        'button_margin_top'    => 'custom'
+                    ),
+                ),
                 array(
                     'type'          => Controls_Manager::DIMENSIONS,
                     'name'          =>  'pagination_margin',

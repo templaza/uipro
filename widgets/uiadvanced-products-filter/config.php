@@ -223,6 +223,16 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
                     ],
                 ),
                 array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'form_margin',
+                    'label'         => esc_html__( 'Form Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .advanced-product-search-form' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+                array(
                     'name'            => 'form_border',
                     'type'          =>  \Elementor\Group_Control_Border::get_type(),
                     'label' => esc_html__( 'Form Border', 'uipro' ),

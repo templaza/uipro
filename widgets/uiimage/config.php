@@ -279,6 +279,13 @@ if ( ! class_exists( 'UIPro_Config_UIImage' ) ) {
                     'separator'     => 'before',
                 ),
                 array(
+                    'type'          => Controls_Manager::SWITCHER,
+                    'id'            => 'image_cover',
+                    'label'         => esc_html__( 'Image Cover', 'uipro' ),
+                    'default'       => '',
+                    'responsive'    => true,
+                ),
+                array(
                     'type'          => \Elementor\Group_Control_Border::get_type(),
                     'name'          => 'border_hover',
                     'label'         => esc_html__( 'Border Hover', 'uipro' ),

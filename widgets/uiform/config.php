@@ -109,14 +109,24 @@ if ( ! class_exists( 'UIPro_Config_UIForm' ) ) {
                         'size' => 50,
                     ],
                     'selectors' => array(
-                        '{{WRAPPER}} form input, {{WRAPPER}} form select' => 'height: {{SIZE}}{{UNIT}} !important; line-height: {{SIZE}}{{UNIT}} !important;',
+                        '{{WRAPPER}} .wpforms-form input, {{WRAPPER}} .wpforms-form select' => 'height: {{SIZE}}{{UNIT}} !important; line-height: {{SIZE}}{{UNIT}} !important;',
                     )
                 ),
                 array(
                     'label' => esc_html__( 'Input Border', 'uipro' ),
                     'name'          => 'input_border',
                     'type' => \Elementor\Group_Control_Border::get_type(),
-                    'selector' => '{{WRAPPER}} form input, {{WRAPPER}} form select',
+                    'selector' => '{{WRAPPER}} .wpforms-form input, {{WRAPPER}} .wpforms-form select',
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'input_radius',
+                    'label'         => esc_html__( 'Input Border radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .wpforms-form input' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
+                    ],
                 ),
                 array(
                     'type'          => Controls_Manager::DIMENSIONS,
@@ -164,6 +174,16 @@ if ( ! class_exists( 'UIPro_Config_UIForm' ) ) {
                     'name'          => 'button_border',
                     'type' => \Elementor\Group_Control_Border::get_type(),
                     'selector' => '.templaza-section {{WRAPPER}} .wpforms-container form button.wpforms-submit, {{WRAPPER}} form input[type="button"]',
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'button_radius',
+                    'label'         => esc_html__( 'Button Border radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .wpforms-form button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
+                    ],
                 ),
                 array(
                     'type'          => Group_Control_Typography::get_type(),

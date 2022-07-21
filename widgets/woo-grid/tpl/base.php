@@ -53,7 +53,6 @@ $elementid = uniqid('templaza_');
 
         // Icons & Quick view button
         case 'layout-2':
-            add_action('templaza_product_loop_thumbnail_element', 'product_loop_buttons_element_open');
             if (!empty($featured_icons) && $featured_icons['wishlist'] == '1') {
                 add_action('templaza_product_loop_thumbnail_element', array(
                     TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::get_instance(),
@@ -65,8 +64,6 @@ $elementid = uniqid('templaza_');
                     add_action('templaza_product_loop_thumbnail_element', 'woocommerce_template_loop_add_to_cart', 10);
                 }
             }
-
-            add_action('templaza_product_loop_thumbnail_element', 'product_loop_buttons_element_close',100);
 
             if (!empty($featured_icons) && $featured_icons['quickview'] == '1') {
                 add_action('templaza_product_loop_thumbnail_element', array(
@@ -82,7 +79,6 @@ $elementid = uniqid('templaza_');
             break;
         // Icons over thumbnail on hover
         case 'layout-3':
-            add_action('templaza_product_loop_thumbnail_element', 'product_loop_buttons_element_open');
             if (!empty($featured_icons) && $featured_icons['wishlist'] == '1') {
                 add_action('templaza_product_loop_thumbnail_element', array(
                     TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::get_instance(),
@@ -96,8 +92,6 @@ $elementid = uniqid('templaza_');
                 ), 10);
             }
 
-            add_action('templaza_product_loop_thumbnail_element', 'product_loop_buttons_element_close',100);
-
             break;
         // Icons on the bottom
         case 'layout-4':
@@ -108,7 +102,6 @@ $elementid = uniqid('templaza_');
             break;
         // Standard button
         case 'layout-6':
-            add_action('templaza_product_loop_thumbnail_element', 'product_loop_buttons_element_open');
 
             if (!empty($featured_icons) && $featured_icons['quickview'] == '1') {
                 add_action('templaza_product_loop_thumbnail_element', array(
@@ -123,8 +116,6 @@ $elementid = uniqid('templaza_');
                 ), 20);
             }
 
-            add_action('templaza_product_loop_thumbnail_element', 'product_loop_buttons_element_close',100);
-
             break;
 
         // Info on hover
@@ -137,7 +128,6 @@ $elementid = uniqid('templaza_');
 
         // Icons over thumbnail on hover
         default:
-            add_action('templaza_product_loop_thumbnail_element', 'product_loop_buttons_element_open');
 
             if (!empty($featured_icons) && $featured_icons['cart'] == '1') {
                 if (function_exists('woocommerce_template_loop_add_to_cart')) {
@@ -156,13 +146,6 @@ $elementid = uniqid('templaza_');
                     TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::get_instance(),
                     'templaza_wishlist_button'
                 ), 10);
-            }
-
-            add_action('templaza_product_loop_thumbnail_element', 'product_loop_buttons_element_close',100);
-
-            if (!empty($attributes) && $attributes['rating'] == '1') {
-                add_action('woocommerce_shop_loop_item_title', 'woocommerce_template_loop_rating', 5);
-                remove_action('woocommerce_after_shop_loop_item_title', 'woocommerce_template_loop_rating', 20);
             }
 
             if (intval(get_option('mobile_product_loop_atc'))) {
@@ -303,7 +286,9 @@ $elementid = uniqid('templaza_');
                             echo '<span class="templaza-product-loop-swiper-prev templaza-swiper-button"><i class="fas fa-chevron-left"></i></span>';
                             echo '<span class="templaza-product-loop-swiper-next templaza-swiper-button"><i class="fas fa-chevron-right"></i></span>';
                         }
+                        echo '<div class="product-loop__buttons">';
                         do_action( 'templaza_product_loop_thumbnail_element' );
+                        echo '</div>';
                         echo '</div>';
                         break;
                     case 'fadein':
@@ -328,7 +313,9 @@ $elementid = uniqid('templaza_');
                         if ( ! empty( $image_ids ) ) {
                             echo '</div>';
                         }
+                        echo '<div class="product-loop__buttons">';
                         do_action( 'templaza_product_loop_thumbnail_element' );
+                        echo '</div>';
                         echo '</div>';
                         break;
                     case 'zoom';
@@ -343,7 +330,9 @@ $elementid = uniqid('templaza_');
                         }
                         woocommerce_template_loop_product_thumbnail();
                         woocommerce_template_loop_product_link_close();
+                        echo '<div class="product-loop__buttons">';
                         do_action( 'templaza_product_loop_thumbnail_element' );
+                        echo '</div>';
                         echo '</div>';
                         break;
                     default:
@@ -351,7 +340,9 @@ $elementid = uniqid('templaza_');
                         woocommerce_template_loop_product_link_open();
                         woocommerce_template_loop_product_thumbnail();
                         woocommerce_template_loop_product_link_close();
+                        echo '<div class="product-loop__buttons">';
                         do_action( 'templaza_product_loop_thumbnail_element' );
+                        echo '</div>';
                         echo '</div>';
                         break;
                 }
@@ -360,7 +351,7 @@ $elementid = uniqid('templaza_');
                     <?php
                     switch ( $loop_layout ) {
                         case 'layout-2':
-                            templaza_product_taxonomy();
+                            TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::templaza_product_taxonomy();
                             echo '<h2 class="woocommerce-loop-product__title">';
                             woocommerce_template_loop_product_link_open();
                             the_title();
@@ -370,7 +361,7 @@ $elementid = uniqid('templaza_');
                             woocommerce_template_loop_rating();
                             break;
                         case 'layout-3':
-                            templaza_product_taxonomy();
+                            TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::templaza_product_taxonomy();
                             echo '<h2 class="woocommerce-loop-product__title">';
                             woocommerce_template_loop_product_link_open();
                             the_title();
@@ -380,7 +371,7 @@ $elementid = uniqid('templaza_');
                             woocommerce_template_loop_price();
                             break;
                         case 'layout-4';
-                            templaza_product_taxonomy();
+                            TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::templaza_product_taxonomy();
                             echo '<h2 class="woocommerce-loop-product__title">';
                             woocommerce_template_loop_product_link_open();
                             the_title();
@@ -401,7 +392,7 @@ $elementid = uniqid('templaza_');
                             echo '</div>';
                             break;
                         case 'layout-5':
-                            templaza_product_taxonomy();
+                            TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::templaza_product_taxonomy();
                             echo '<h2 class="woocommerce-loop-product__title">';
                             woocommerce_template_loop_product_link_open();
                             the_title();
@@ -411,7 +402,7 @@ $elementid = uniqid('templaza_');
                             woocommerce_template_loop_rating();
                             break;
                         case 'layout-6':
-                            templaza_product_taxonomy();
+                            TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::templaza_product_taxonomy();
                             echo '<h2 class="woocommerce-loop-product__title">';
                             woocommerce_template_loop_product_link_open();
                             the_title();
@@ -421,12 +412,12 @@ $elementid = uniqid('templaza_');
                             woocommerce_template_loop_rating();
                             echo '<div class="woocommerce-product-loop_space"></div>';
                             if ($loop_desc) {
-                                product_loop_desc();
+                                TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::product_loop_desc();
                             }
                             woocommerce_template_loop_add_to_cart();
                             break;
                         case 'layout-7':
-                            templaza_product_taxonomy();
+                            TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::templaza_product_taxonomy();
                             echo '<h2 class="woocommerce-loop-product__title">';
                             woocommerce_template_loop_product_link_open();
                             the_title();
@@ -448,7 +439,7 @@ $elementid = uniqid('templaza_');
                             break;
                         default:
                             woocommerce_template_loop_rating();
-                            templaza_product_taxonomy();
+                            TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::templaza_product_taxonomy();
                             echo '<h2 class="woocommerce-loop-product__title">';
                             woocommerce_template_loop_product_link_open();
                             the_title();
@@ -471,110 +462,7 @@ $elementid = uniqid('templaza_');
     wp_reset_postdata();
     wc_reset_loop();
 
-    function product_loop_buttons_element_open() {
-		echo '<div class="product-loop__buttons">';
-	}
-	function product_loop_buttons_element_close() {
-		echo '</div>';
-	}
-    function add_to_cart_link( $html, $product, $args ) {
-        return sprintf(
-            '<a href="%s" data-quantity="%s" class="%s tz-loop-button tz-loop_atc_button" %s data-text="%s" data-title="%s" >%s<span class="add-to-cart-text loop_button-text">%s</span></a>',
-            esc_url( $product->add_to_cart_url() ),
-            esc_attr( isset( $args['quantity'] ) ? $args['quantity'] : 1 ),
-            esc_attr( isset( $args['class'] ) ? $args['class'] : 'button' ),
-            isset( $args['attributes'] ) ? wc_implode_html_attributes( $args['attributes'] ) : '',
-            esc_html( $product->add_to_cart_text() ),
-            esc_html( $product->get_title() ),
-            '<i class="fas fa-shopping-cart"></i>',
-            esc_html( $product->add_to_cart_text() )
-        );
-    }
-    function product_loop_category() {
-        if ( !class_exists( 'TemPlazaFramework\TemPlazaFramework' )){
-            $templaza_options = array();
-        }else{
-            $templaza_options = Functions::get_theme_options();
-        }
 
-        $taxonomy = isset($templaza_options['templaza-shop-loop-taxonomy'])?$templaza_options['templaza-shop-loop-taxonomy']:'';
-        TemPlaza_Woo\Templaza_Woo_Helper::templaza_product_taxonomy( $taxonomy );
-    }
-    function product_loop_form_ajax() {
-		if ( empty( $_POST['product_id'] ) ) {
-			exit;
-		}
-		$original_post   = $GLOBALS['post'];
-		$product         = wc_get_product( $_POST['product_id'] );
-		$GLOBALS['post'] = get_post( $_POST['product_id'] );
-		setup_postdata( $GLOBALS['post'] );
-		ob_start();
-
-		// Get Available variations?
-		$get_variations = count( $product->get_children() ) <= apply_filters( 'woocommerce_ajax_variation_threshold', 30, $product );
-
-		// Load the template.
-        wc_get_template(
-            'loop/add-to-cart-variable.php',
-            array(
-                'available_variations' => $get_variations ? $product->get_available_variations() : false,
-                'attributes'           => $product->get_variation_attributes(),
-                'selected_attributes'  => $product->get_default_attributes(),
-            )
-        );
-		$output = ob_get_clean();
-
-		$GLOBALS['post'] = $original_post; // WPCS: override ok.
-		wp_reset_postdata();
-
-		wp_send_json_success( $output );
-		exit;
-	}
-
-    function templaza_product_taxonomy( $taxonomy = 'product_cat', $show_thumbnail = false ) {
-        global $product;
-
-        $taxonomy = empty($taxonomy) ? 'product_cat' : $taxonomy;
-        $terms = get_the_terms( $product->get_id(), $taxonomy );
-
-        if ( ! empty( $terms ) && ! is_wp_error( $terms ) ) {
-            if( $show_thumbnail ) {
-                $thumbnail_id   = get_term_meta( $terms[0]->term_id, 'brand_thumbnail_id', true );
-                $image = $thumbnail_id ? wp_get_attachment_image( $thumbnail_id, 'full' ) : '';
-                echo sprintf(
-                    '<a class="meta-cat" href="%s">%s</a>',
-                    esc_url( get_term_link( $terms[0] ), $taxonomy ),
-                    $image);
-            } else {
-                echo sprintf(
-                    '<a class="meta-cat" href="%s">%s</a>',
-                    esc_url( get_term_link( $terms[0] ), $taxonomy ),
-                    esc_html( $terms[0]->name ) );
-            }
-        }
-    }
-    function product_loop_desc() {
-        global $post;
-
-        $short_description = $post ? $post->post_excerpt : '';
-
-        if ( ! $short_description ) {
-            return;
-        }
-        if ( !class_exists( 'TemPlazaFramework\TemPlazaFramework' )){
-            $templaza_options = array();
-        }else{
-            $templaza_options = Functions::get_theme_options();
-        }
-        $loop_desc_length       = isset($templaza_options['templaza-shop-loop-description-length'])?$templaza_options['templaza-shop-loop-description-length']:'10';
-
-        $length = intval( $loop_desc_length );
-        if ( $length ) {
-            $short_description = wp_trim_words( $short_description, $length, '...');
-        }
-
-        echo sprintf( '<div class="woocommerce-product-details__short-description"> %s</div>', $short_description );
-    }
     ?>
     </div>
 </div>

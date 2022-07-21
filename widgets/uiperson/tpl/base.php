@@ -74,8 +74,12 @@ $output         = '';
 
 if ($name) {
 	$name     =  '<'.$name_tag.' class="ui-name uk-card-title'.$name_style.'">'.$name.'</'.$name_tag.'>';
+	if($designation != ''){
 	$designation     =  '<'.$designation_tag.' class="ui-designation '.$designation_style.'">'.$designation.'</'.$designation_tag.'>';
-	$email     =  '<'.$email_tag.' class="ui-email '.$email_style.'">'.$email.'</'.$email_tag.'>';
+    }
+	if($email !=''){
+	    $email     =  '<'.$email_tag.' class="ui-email '.$email_style.'">'.$email.'</'.$email_tag.'>';
+    }
 	$output     =   '<div class="ui-card uk-card'. $card_style . $card_size . $general_styles['container_cls'] .'"' . $general_styles['animation'] . '>';
 	if ($media && $image_appear == 'top') {
 		$output .=  '<div class="uk-card-media-top ui-media'.$media_margin.'"><div class="uk-inline-clip uk-transition-toggle" tabindex="0">';
