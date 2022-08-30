@@ -18,6 +18,7 @@ $button_size    = isset($instance['button_size']) && $instance['button_size'] ? 
 $button_margin  = isset($instance['button_margin']) && $instance['button_margin'] ? ($instance['button_margin'] == 'default' ? ' uk-margin' : ' uk-margin-'. $instance['button_margin']) : '';
 $meta_position = isset($instance['meta_position']) && $instance['meta_position'] ? $instance['meta_position'] : 'after';
 $meta           = isset($instance['meta_title']) && $instance['meta_title'] ? $instance['meta_title'] : '';
+$image_content  = isset($instance['image_content']) && $instance['image_content'] ? $instance['image_content'] : '';
 //Layout Type
 $layout_type    = isset($instance['layout_type']) ? $instance['layout_type'] : 'icon';
 $media          = '';
@@ -92,10 +93,14 @@ if ($title) {
 		$title     =  '<'.$title_tag.' class="uk-card-title'.$title_style.'">'.$title.'</'.$title_tag.'>';
 	}
 	$output     =   '<div class="ui-card uk-card'. $card_style . $card_size . $general_styles['container_cls'] .'"' . $general_styles['animation'] . '>';
-	if ($media && $layout_type == 'image' && $image_appear == 'top') {
-		$output .=  '<div class="uk-card-media-top ui-media'.$media_margin.'">'.$media.'</div>';
+	if ($media && $layout_type == 'image' && ($image_appear == 'top'|| $image_appear == 'thumbnail')) {
+        if ($url && ($url_appear=='button_media' || $url_appear == 'all')) {
+            $output     .=  $media ? '<div class="uk-card-media-top ui-media'.$media_margin.'"><a href="'.$url.'"'.$attribs.'>'.$media.'</a></div>' : '';
+        } else {
+            $output     .=  $media ? '<div class="uk-card-media-top ui-media'.$media_margin.'">'.$media.'</div>' : '';
+        }
 	}
-	$output     .=  '<div class="uk-card-body'. $general_styles['content_cls'] . '">';
+	$output     .=  '<div class="uk-card-body '.$image_content. $general_styles['content_cls'] . '">';
 	if ($title_position == 'before') {
         if($meta_position == 'before'){
             $output     .=  '<div class="uk-card-meta">'.$meta.'</div>';

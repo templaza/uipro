@@ -66,11 +66,12 @@ if($ap_posts && $ap_posts -> have_posts()) {
         </div>
         <?php
         if ($enable_navigation) {
-            ?>
-            <div class="<?php echo $navigation_position == 'inside' ? '' : 'uk-hidden@l'; ?>uk-light">
+            if($navigation_position == 'inside'){ ?>
+            <div class="<?php echo $navigation_position == 'inside' ? '' : 'uk-hidden@l'; ?> uk-light">
                 <a class="uk-position-center-left uk-position-small" href="#" data-uk-slidenav-previous data-uk-slider-item="previous"></a>
                 <a class="uk-position-center-right uk-position-small" href="#" data-uk-slidenav-next data-uk-slider-item="next"></a>
             </div>
+            <?php } ?>
             <div class="uk-visible@l">
                 <a class="uk-position-center-left-out uk-position-small" href="#" data-uk-slidenav-previous data-uk-slider-item="previous"></a>
                 <a class="uk-position-center-right-out uk-position-small" href="#" data-uk-slidenav-next data-uk-slider-item="next"></a>

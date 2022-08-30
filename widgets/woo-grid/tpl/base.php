@@ -48,11 +48,14 @@ $elementid = uniqid('templaza_');
     $loop_variation     = isset($templaza_options['templaza-shop-loop-variation'])?filter_var($templaza_options['templaza-shop-loop-variation'], FILTER_VALIDATE_BOOLEAN):true;
     $loop_variation_ajax     = isset($templaza_options['templaza-shop-loop-variation-ajax'])?filter_var($templaza_options['templaza-shop-loop-variation-ajax'], FILTER_VALIDATE_BOOLEAN):true;
     $loop_layout = isset($instance['product_loop']) ? $instance['product_loop'] : 'layout-1';
-
     switch ($loop_layout) {
 
         // Icons & Quick view button
         case 'layout-2':
+            add_action('templaza_product_loop_thumbnail_element', array(
+                TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::get_instance(),
+                'product_loop_buttons_open'
+            ), 10);
             if (!empty($featured_icons) && $featured_icons['wishlist'] == '1') {
                 add_action('templaza_product_loop_thumbnail_element', array(
                     TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::get_instance(),
@@ -64,6 +67,10 @@ $elementid = uniqid('templaza_');
                     add_action('templaza_product_loop_thumbnail_element', 'woocommerce_template_loop_add_to_cart', 10);
                 }
             }
+            add_action('templaza_product_loop_thumbnail_element', array(
+                TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::get_instance(),
+                'product_loop_buttons_close'
+            ), 10);
 
             if (!empty($featured_icons) && $featured_icons['quickview'] == '1') {
                 add_action('templaza_product_loop_thumbnail_element', array(
@@ -79,6 +86,10 @@ $elementid = uniqid('templaza_');
             break;
         // Icons over thumbnail on hover
         case 'layout-3':
+            add_action('templaza_product_loop_thumbnail_element', array(
+                TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::get_instance(),
+                'product_loop_buttons_open'
+            ), 10);
             if (!empty($featured_icons) && $featured_icons['wishlist'] == '1') {
                 add_action('templaza_product_loop_thumbnail_element', array(
                     TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::get_instance(),
@@ -90,6 +101,15 @@ $elementid = uniqid('templaza_');
                     TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::get_instance(),
                     'templaza_quick_view_button'
                 ), 10);
+            }
+            add_action('templaza_product_loop_thumbnail_element', array(
+                TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::get_instance(),
+                'product_loop_buttons_close'
+            ), 10);
+
+            if (!empty($featured_icons) && $featured_icons['cart']=='1' && function_exists('woocommerce_template_loop_add_to_cart') ) {
+                add_action( 'templaza_product_loop_thumbnail_element', 'woocommerce_template_loop_add_to_cart', 110 );
+                add_action( 'woocommerce_after_shop_loop_item_title', 'woocommerce_template_loop_add_to_cart', 50 );
             }
 
             break;
@@ -102,7 +122,10 @@ $elementid = uniqid('templaza_');
             break;
         // Standard button
         case 'layout-6':
-
+            add_action('templaza_product_loop_thumbnail_element', array(
+                TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::get_instance(),
+                'product_loop_buttons_open'
+            ), 10);
             if (!empty($featured_icons) && $featured_icons['quickview'] == '1') {
                 add_action('templaza_product_loop_thumbnail_element', array(
                     TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::get_instance(),
@@ -114,6 +137,21 @@ $elementid = uniqid('templaza_');
                     TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::get_instance(),
                     'templaza_wishlist_button'
                 ), 20);
+            }
+            add_action('templaza_product_loop_thumbnail_element', array(
+                TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::get_instance(),
+                'product_loop_buttons_close'
+            ), 10);
+            if (!empty($featured_icons) && $featured_icons['cart']=='1' ) {
+                if(function_exists('woocommerce_template_loop_add_to_cart')) {
+                    add_action('woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart', 20);
+                }
+            }
+            if ( $loop_desc ) {
+                add_action( 'woocommerce_after_shop_loop_item_title', array(
+                    TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::get_instance(),
+                    'product_loop_desc'
+                ), 30 );
             }
 
             break;
@@ -286,9 +324,7 @@ $elementid = uniqid('templaza_');
                             echo '<span class="templaza-product-loop-swiper-prev templaza-swiper-button"><i class="fas fa-chevron-left"></i></span>';
                             echo '<span class="templaza-product-loop-swiper-next templaza-swiper-button"><i class="fas fa-chevron-right"></i></span>';
                         }
-                        echo '<div class="product-loop__buttons">';
                         do_action( 'templaza_product_loop_thumbnail_element' );
-                        echo '</div>';
                         echo '</div>';
                         break;
                     case 'fadein':
@@ -313,9 +349,7 @@ $elementid = uniqid('templaza_');
                         if ( ! empty( $image_ids ) ) {
                             echo '</div>';
                         }
-                        echo '<div class="product-loop__buttons">';
                         do_action( 'templaza_product_loop_thumbnail_element' );
-                        echo '</div>';
                         echo '</div>';
                         break;
                     case 'zoom';
@@ -330,9 +364,7 @@ $elementid = uniqid('templaza_');
                         }
                         woocommerce_template_loop_product_thumbnail();
                         woocommerce_template_loop_product_link_close();
-                        echo '<div class="product-loop__buttons">';
                         do_action( 'templaza_product_loop_thumbnail_element' );
-                        echo '</div>';
                         echo '</div>';
                         break;
                     default:
@@ -340,9 +372,7 @@ $elementid = uniqid('templaza_');
                         woocommerce_template_loop_product_link_open();
                         woocommerce_template_loop_product_thumbnail();
                         woocommerce_template_loop_product_link_close();
-                        echo '<div class="product-loop__buttons">';
                         do_action( 'templaza_product_loop_thumbnail_element' );
-                        echo '</div>';
                         echo '</div>';
                         break;
                 }

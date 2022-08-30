@@ -148,6 +148,32 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
                     'default'       => 'yes'
                 ),
                 array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'label_padding',
+                    'label'         => esc_html__( 'Label Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .advanced-product-search-form .search-label' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'condition'     => array(
+                        'uiap_enable_label'    => 'yes'
+                    ),
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'label_margin',
+                    'label'         => esc_html__( 'Label margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .advanced-product-search-form .search-label' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'condition'     => array(
+                        'uiap_enable_label'    => 'yes'
+                    ),
+                ),
+                array(
                     'type'          => Controls_Manager::TEXT,
                     'id'            => 'uiap_submit_text',
                     'label'         => esc_html__( 'Submit Text', 'uipro' ),
@@ -288,7 +314,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
                         'size' => 50,
                     ],
                     'selectors' => array(
-                        '{{WRAPPER}} .advanced-product-search-form .ap-search-item input, {{WRAPPER}} .advanced-product-search-form .ap-search-item select' => 'height: {{SIZE}}{{UNIT}}; line-height: {{SIZE}}{{UNIT}};',
+                        '{{WRAPPER}} .advanced-product-search-form .ap-search-item input, {{WRAPPER}} .advanced-product-search-form .ap-search-item select' => 'height: {{SIZE}}{{UNIT}};',
                     )
                 ),
                 array(
@@ -315,6 +341,16 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
                     'selectors' => array(
                         '{{WRAPPER}} .advanced-product-search-form .ap-search-item.ap-search-button' => 'width: {{SIZE}}{{UNIT}};',
                     )
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'form_button_padding',
+                    'label'         => esc_html__( 'Button Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .advanced-product-search-form .ap-search-item.ap-search-button .templaza-btn' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important; margin:0 !important;',
+                    ],
                 ),
                 array(
                     'type'      => Controls_Manager::SLIDER,
@@ -445,6 +481,42 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
                     'description'   => esc_html__('Set the color of input form.', 'uipro'),
                     'selectors' => [
                         '{{WRAPPER}} .advanced-product-search-form .ap-search-item input' => 'color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'form_bg_button',
+                    'label'         => esc_html__('Button background Color', 'uipro'),
+                    'description'   => esc_html__('Set the background color of Button form.', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .advanced-product-search-form .ap-search-item.ap-search-button .templaza-btn' => 'background-color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'form_color_button',
+                    'label'         => esc_html__('Button Color', 'uipro'),
+                    'description'   => esc_html__('Set the color of Button form.', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .advanced-product-search-form .ap-search-item.ap-search-button .templaza-btn' => 'color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'form_bg_button_hover',
+                    'label'         => esc_html__('Hover Button background Color', 'uipro'),
+                    'description'   => esc_html__('Set the hover background color of Button form.', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .advanced-product-search-form .ap-search-item.ap-search-button .templaza-btn:hover' => 'background-color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'form_color_button_hover',
+                    'label'         => esc_html__('Hover Button Color', 'uipro'),
+                    'description'   => esc_html__('Set the hover color of Button form.', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .advanced-product-search-form .ap-search-item.ap-search-button .templaza-btn:hover' => 'color: {{VALUE}}',
                     ],
                 ),
 			) ;

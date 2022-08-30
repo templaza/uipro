@@ -785,6 +785,24 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 						],
 					],
 				),
+
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'Bot_padding',
+                    'label'         => esc_html__( 'Dot Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-dotnav' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
+                            ['name' => 'enable_dotnav', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+
+                ),
 				array(
 					'type'          => Controls_Manager::SWITCHER,
 					'id'            => 'center_slider',
@@ -800,6 +818,22 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 						],
 					],
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'slider_box_padding',
+                    'label'         => esc_html__( 'Slider Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-slider-items' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+
+                ),
 
 				//Title configure
 				array(

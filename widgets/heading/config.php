@@ -321,6 +321,86 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                     'admin_label'   => false,
 				),
                 array(
+                    'type'          => Controls_Manager::SELECT,
+                    'name'          => 'line_style',
+                    'default'       => '',
+                    'label'         => esc_html__( 'Separator Style', 'uipro' ),
+                    'options'       => array(
+                        ''              => esc_html__('Default', 'uipro'),
+                        'line_style1'   => esc_html__('Style1', 'uipro'),
+
+                    ),
+                    'condition'     => array(
+                        'line'    => 'yes'
+                    ),
+                    /* vc */
+                    'admin_label'    => true,
+                ),
+                array(
+                    'type'          => Controls_Manager::SLIDER,
+                    'name'          =>  'line_before_width',
+                    'label'         => esc_html__( 'Before Separator width', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 30,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .line-before' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'relation' => 'and',
+                        'terms' => [
+                            ['name' => 'line_style', 'operator' => '===', 'value' => 'line_style1'],
+                            ['name' => 'line', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::SLIDER,
+                    'name'          =>  'line_before_height',
+                    'label'         => esc_html__( 'Before Separator height', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 2,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .line-before' => 'height: {{SIZE}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'relation' => 'and',
+                        'terms' => [
+                            ['name' => 'line_style', 'operator' => '===', 'value' => 'line_style1'],
+                            ['name' => 'line', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+                ),
+                array(
                     'type'          => Controls_Manager::SLIDER,
                     'name'          =>  'line_width',
                     'label'         => esc_html__( 'Separator width', 'uipro' ),
@@ -375,6 +455,87 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                     'condition'     => array(
                         'line'    => 'yes'
                     ),
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'line_margin_custom',
+                    'label'         => esc_html__( 'Separator margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .line' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'relation' => 'and',
+                        'terms' => [
+                            ['name' => 'line_style', 'operator' => '===', 'value' => 'line_style1'],
+                            ['name' => 'line', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::SLIDER,
+                    'name'          =>  'line_after_width',
+                    'label'         => esc_html__( 'After Separator width', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 30,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .line-after' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'relation' => 'and',
+                        'terms' => [
+                            ['name' => 'line_style', 'operator' => '===', 'value' => 'line_style1'],
+                            ['name' => 'line', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::SLIDER,
+                    'name'          =>  'line_after_height',
+                    'label'         => esc_html__( 'After Separator height', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 2,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .line-after' => 'height: {{SIZE}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'relation' => 'and',
+                        'terms' => [
+                            ['name' => 'line_style', 'operator' => '===', 'value' => 'line_style1'],
+                            ['name' => 'line', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
                 ),
 
 
@@ -500,6 +661,24 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                 //Separator color
                 array(
                     'type'          => Controls_Manager::COLOR,
+                    'name'          => 'bg_before_line',
+                    'label'         => esc_html__( 'Before Separator color', 'uipro' ),
+                    'default'       => '',
+                    'description'   => esc_html__( 'Choose the before separator color.', 'uipro' ),
+                    'selectors'     => [
+                        '{{WRAPPER}} .line-before' => 'background-color: {{VALUE}};',
+                    ],
+                    /*vc*/
+                    'admin_label'   => false,
+                    'conditions' => [
+                        'relation' => 'and',
+                        'terms' => [
+                            ['name' => 'line_style', 'operator' => '===', 'value' => 'line_style1'],
+                            ['name' => 'line', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+                ),array(
+                    'type'          => Controls_Manager::COLOR,
                     'name'          => 'bg_line',
                     'label'         => esc_html__( 'Separator color', 'uipro' ),
                     'default'       => '',
@@ -509,6 +688,27 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                     ],
                     /*vc*/
                     'admin_label'   => false,
+                    'condition'     => array(
+                        'line'    => 'yes'
+                    ),
+                ),array(
+                    'type'          => Controls_Manager::COLOR,
+                    'name'          => 'bg_after_line',
+                    'label'         => esc_html__( 'After Separator color', 'uipro' ),
+                    'default'       => '',
+                    'description'   => esc_html__( 'Choose the after separator color.', 'uipro' ),
+                    'selectors'     => [
+                        '{{WRAPPER}} .line-after' => 'background-color: {{VALUE}};',
+                    ],
+                    /*vc*/
+                    'admin_label'   => false,
+                    'conditions' => [
+                        'relation' => 'and',
+                        'terms' => [
+                            ['name' => 'line_style', 'operator' => '===', 'value' => 'line_style1'],
+                            ['name' => 'line', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
                 ),
                 array(
                     'type'      => Controls_Manager::COLOR,

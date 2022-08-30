@@ -731,6 +731,12 @@ class TemPlaza_Woo_El_Helper {
 
         echo sprintf( '<div class="woocommerce-product-details__short-description"> %s</div>', $short_description );
     }
+    public function product_loop_buttons_open() {
+        echo '<div class="product-loop__buttons">';
+    }
+    public function product_loop_buttons_close() {
 
+        echo '</div>';
+    }
 }
 TemPlaza_Woo_El_Helper::get_instance();

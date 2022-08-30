@@ -41,13 +41,13 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
                         <li>
                             <div class="uk-flex-middle tz-testimonial-inner" <?php if (isset( $image['url'] ) && $image['url'] ) : ?> data-uk-grid <?php endif; ?> >
                                 <?php if (isset( $image['url'] ) && $image['url'] ) : ?>
-                                <div class="ui-testimonial-avatar uk-width-auto@m">
+                                <div class="ui-testimonial-avatar uk-width-auto@s">
                                     <div class="uk-inline-clip<?php echo $avatar_border; ?>">
 	                                    <?php echo \UIPro_Elementor_Helper::get_attachment_image_html( $item, 'author_image' ); ?>
                                     </div>
                                 </div>
                                 <?php endif; ?>
-                                <div class="ui-testimonial-content uk-width-expand@m">
+                                <div class="ui-testimonial-content uk-width-expand@s">
 	                                <?php
                                     if($item['quote_title']){
                                         ?>
@@ -58,11 +58,11 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
                                     }
                                     if ($quote_icon && isset($quote_icon['value'])) {
                                         ?>
-                                        <span class="quote-icon uk-margin-small-bottom">
+                                        <span class="quote-icon uk-inline uk-margin-small-bottom">
                                         <?php
                                         if (is_array($quote_icon['value']) && isset($quote_icon['value']['url']) && $quote_icon['value']['url']) {
                                             ?>
-                                            <img src="<?php echo esc_attr($quote_icon['value']['url']);?>" alt="" data-uk-svg />
+                                            <img class="uk-preserve" src="<?php echo esc_attr($quote_icon['value']['url']);?>" alt="" data-uk-svg />
                                             <?php
                                         } elseif (is_string($quote_icon['value']) && $quote_icon['value']) {
                                             ?>

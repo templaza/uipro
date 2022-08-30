@@ -11,6 +11,23 @@
     background-color: $line-color;
     width: 35px;
   }
+  .line_style1{
+    .line-before{
+      height: 1px;
+      background-color: $line-color;
+      width: 35px;
+    }
+    .line-after{
+      height: 1px;
+      background-color: $line-color;
+      width: 35px;
+    }
+    .line{
+      height:3px;
+      width:3px;
+      margin:0 5px;
+    }
+  }
   &.clone_title{
     .title{
       position: relative;

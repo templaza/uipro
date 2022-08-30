@@ -116,7 +116,7 @@ if ( ! class_exists( 'UIPro_Config_UIForm' ) ) {
                     'label' => esc_html__( 'Input Border', 'uipro' ),
                     'name'          => 'input_border',
                     'type' => \Elementor\Group_Control_Border::get_type(),
-                    'selector' => '{{WRAPPER}} .wpforms-form input, {{WRAPPER}} .wpforms-form select',
+                    'selector' => '{{WRAPPER}} .wpforms-form input, {{WRAPPER}} .wpforms-form select, {{WRAPPER}} form textarea',
                 ),
                 array(
                     'type'          => Controls_Manager::DIMENSIONS,
@@ -211,6 +211,15 @@ if ( ! class_exists( 'UIPro_Config_UIForm' ) ) {
                     'description'   => esc_html__('Set the color of input.', 'uipro'),
                     'selectors' => [
                         '{{WRAPPER}} form input, {{WRAPPER}} form select, {{WRAPPER}} form textarea ' => 'color: {{VALUE}} !important;',
+                    ],
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'input_bg_color',
+                    'label'         => esc_html__('Input Background Color', 'uipro'),
+                    'description'   => esc_html__('Set the background color of input.', 'uipro'),
+                    'selectors' => [
+                        'body {{WRAPPER}} div.wpforms-container-full form input, {{WRAPPER}} form select, {{WRAPPER}} form textarea ' => 'background-color: {{VALUE}} !important;',
                     ],
                 ),
                 array(

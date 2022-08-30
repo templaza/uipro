@@ -271,6 +271,26 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                 ),
                 array(
                     'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'content_padding',
+                    'label'         => esc_html__( 'Content Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .templaza_quote_content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'content_block_padding',
+                    'label'         => esc_html__( 'Content Block Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-testimonial-content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
                     'name'          => 'avata_margin',
                     'label'         => esc_html__( 'Avatar Margin', 'uipro' ),
                     'responsive'    =>  true,
@@ -319,22 +339,71 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     'label'     => esc_html__( 'Navigation', 'uipro' ),
                     'section_name'  => esc_html__( 'Slider options', 'uipro' ),
                 ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'testimonial_slider_navigation_margin',
+                    'label'         => esc_html__( 'Nav Block Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-slidenav-container' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'testimonial_slider_navigation', 'operator' => '===', 'value' => 'yes'],
+                            ['name' => 'layout', 'operator' => '!=', 'value' => 'style1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'testimonial_slider_navigation_pre_margin',
+                    'label'         => esc_html__( 'Previous Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-slidenav-previous' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'testimonial_slider_navigation', 'operator' => '===', 'value' => 'yes'],
+                            ['name' => 'layout', 'operator' => '!=', 'value' => 'style1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'testimonial_slider_navigation_next_margin',
+                    'label'         => esc_html__( 'Next Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-slidenav-next' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'testimonial_slider_navigation', 'operator' => '===', 'value' => 'yes'],
+                            ['name' => 'layout', 'operator' => '!=', 'value' => 'style1'],
+                        ],
+                    ],
+                ),
 				array(
 					'type'          => Controls_Manager::SELECT,
 					'id'            => 'testimonial_slider_navigation_position',
 					'label'         => esc_html__( 'Navigation Position', 'uipro' ),
-					'description'   => esc_html__( 'Select the image\'s position.', 'uipro' ),
 					'options'       => array(
 						'' => __('Default', 'uipro'),
 						'uk-position-top-left' => __('Top Left', 'uipro'),
 						'uk-position-top-right' => __('Top Right', 'uipro'),
 						'uk-position-bottom-left' => __('Bottom Left', 'uipro'),
 						'uk-position-bottom-right' => __('Bottom Right', 'uipro'),
+						'custom' => __('Custom', 'uipro'),
 					),
 					'default'       => '',
 					'conditions' => [
 						'terms' => [
 							['name' => 'testimonial_slider_navigation', 'operator' => '===', 'value' => 'yes'],
+							['name' => 'layout', 'operator' => '!=', 'value' => 'style1'],
 						],
 					],
 				),
@@ -351,6 +420,169 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     ],
                 ),
                 array(
+                    'type'          => Controls_Manager::CHOOSE,
+                    'id'            => 'testimonial_slider_nav_position_x',
+                    'label'         => esc_html__( 'Nav Horizontal Orientation', 'uipro' ),
+                    'options' => [
+                        'left' => [
+                            'title' => esc_html__( 'Left', 'uipro' ),
+                            'icon' => 'eicon-h-align-left',
+                        ],
+                        'right' => [
+                            'title' => esc_html__( 'Right', 'uipro' ),
+                            'icon' => 'eicon-h-align-right',
+                        ],
+                    ],
+                    'default'       => 'left',
+                    'condition'     => array(
+                        'testimonial_slider_navigation_position'    => 'custom'
+                    ),
+                ),
+                array(
+                    'name'          => 'testimonial_slider_nav_offsetx',
+                    'label' => esc_html__( 'Offset', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px', '%' ],
+                    'responsive'    =>  true,
+                    'range' => [
+                        'px' => [
+                            'min' => -2000,
+                            'max' => 2000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => -200,
+                            'max' => 200,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'size' => 0,
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'testimonial_slider_navigation_position', 'operator' => '===', 'value' => 'custom'],
+                            ['name' => 'testimonial_slider_nav_position_x', 'operator' => '===', 'value' => 'left'],
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .templaza-widget-templaza-testimonial .uk-slidenav-container' => 'left: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'name'          => 'testimonial_slider_nav_offsetx_right',
+                    'label' => esc_html__( 'Offset', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'responsive'    =>  true,
+                    'size_units' => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => -2000,
+                            'max' => 2000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => -200,
+                            'max' => 200,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'size' => 0,
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'testimonial_slider_navigation_position', 'operator' => '===', 'value' => 'custom'],
+                            ['name' => 'testimonial_slider_nav_position_x', 'operator' => '===', 'value' => 'right'],
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .templaza-widget-templaza-testimonial .uk-slidenav-container' => 'right: {{SIZE}}{{UNIT}}; left: auto;',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::CHOOSE,
+                    'id'            => 'testimonial_slider_nav_position_y',
+                    'label'         => esc_html__( 'Nav Vertical Orientation', 'uipro' ),
+                    'options' => [
+                        'top' => [
+                            'title' => esc_html__( 'Top', 'uipro' ),
+                            'icon' => 'eicon-v-align-top',
+                        ],
+                        'bottom' => [
+                            'title' => esc_html__( 'Bottom', 'uipro' ),
+                            'icon' => 'eicon-v-align-bottom',
+                        ],
+                    ],
+                    'default'       => 'bottom',
+                    'condition'     => array(
+                        'testimonial_slider_navigation_position'    => 'custom'
+                    ),
+                ),
+                array(
+                    'name'          => 'testimonial_slider_nav_offsety',
+                    'label' => esc_html__( 'Offset', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'responsive'    =>  true,
+                    'size_units' => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => -2000,
+                            'max' => 2000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => -200,
+                            'max' => 200,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'size' => 0,
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'testimonial_slider_navigation_position', 'operator' => '===', 'value' => 'custom'],
+                            ['name' => 'testimonial_slider_nav_position_y', 'operator' => '===', 'value' => 'top'],
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .templaza-widget-templaza-testimonial .uk-slidenav-container' => 'top: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'name'          => 'testimonial_slider_nav_offsety_bottom',
+                    'label' => esc_html__( 'Offset', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'responsive'    =>  true,
+                    'size_units' => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => -2000,
+                            'max' => 2000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => -200,
+                            'max' => 200,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'size' => 0,
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'testimonial_slider_navigation_position', 'operator' => '===', 'value' => 'custom'],
+                            ['name' => 'testimonial_slider_nav_position_y', 'operator' => '===', 'value' => 'bottom'],
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .templaza-widget-templaza-testimonial .uk-slidenav-container' => 'bottom: {{SIZE}}{{UNIT}}; top:auto;',
+                    ],
+                ),
+
+                array(
                     'type'          =>  \Elementor\Group_Control_Border::get_type(),
                     'name'          => 'nav_border',
                     'label'         => esc_html__('Nav Border', 'uipro'),
@@ -358,6 +590,7 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     'conditions' => [
                         'terms' => [
                             ['name' => 'testimonial_slider_navigation', 'operator' => '===', 'value' => 'yes'],
+                            ['name' => 'layout', 'operator' => '!=', 'value' => 'style1'],
                         ],
                     ],
                 ),
@@ -373,6 +606,7 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     'conditions' => [
                         'terms' => [
                             ['name' => 'testimonial_slider_navigation', 'operator' => '===', 'value' => 'yes'],
+                            ['name' => 'layout', 'operator' => '!=', 'value' => 'style1'],
                         ],
                     ],
                 ),
@@ -386,6 +620,7 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     'conditions' => [
                         'terms' => [
                             ['name' => 'testimonial_slider_navigation', 'operator' => '===', 'value' => 'yes'],
+                            ['name' => 'layout', 'operator' => '!=', 'value' => 'style1'],
                         ],
                     ],
                 ),
@@ -394,7 +629,7 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     'name'  => 'nav_color',
                     'type' => \Elementor\Controls_Manager::COLOR,
                     'selectors' => [
-                        '{{WRAPPER}} .uk-slider .uk-slidenav' => 'color: {{VALUE}}',
+                        '{{WRAPPER}} .uk-slider .uk-slidenav, {{WRAPPER}} .slick-arrow' => 'color: {{VALUE}}',
                     ],
                     'conditions' => [
                         'terms' => [
@@ -412,6 +647,7 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     'conditions' => [
                         'terms' => [
                             ['name' => 'testimonial_slider_navigation', 'operator' => '===', 'value' => 'yes'],
+                            ['name' => 'layout', 'operator' => '!=', 'value' => 'style1'],
                         ],
                     ],
                 ),
@@ -420,7 +656,7 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     'name'  => 'nav_color_hover',
                     'type' => \Elementor\Controls_Manager::COLOR,
                     'selectors' => [
-                        '{{WRAPPER}} .uk-slider .uk-slidenav:hover' => 'color: {{VALUE}}',
+                        '{{WRAPPER}} .uk-slider .uk-slidenav:hover, {{WRAPPER}} .slick-arrow:hover' => 'color: {{VALUE}}',
                     ],
                     'conditions' => [
                         'terms' => [
@@ -660,6 +896,9 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                         ],
                     ],
                     'default'       => 'left',
+                    'condition'     => array(
+                        'testimonial_slider_icon_position'    => 'absolute'
+                    ),
                 ),
                 array(
                     'name'          => 'testimonial_slider_icon_offsetx',
@@ -682,9 +921,12 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     'default' => [
                         'size' => 0,
                     ],
-                    'condition'     => array(
-                        'testimonial_slider_icon_position_x'    => 'left'
-                    ),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'testimonial_slider_icon_position', 'operator' => '===', 'value' => 'absolute'],
+                            ['name' => 'testimonial_slider_icon_position_x', 'operator' => '===', 'value' => 'left'],
+                        ],
+                    ],
                     'selectors' => [
                         '{{WRAPPER}} .templaza-widget-templaza-testimonial .quote-icon' => 'left: {{SIZE}}{{UNIT}};',
                     ],
@@ -710,9 +952,12 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     'default' => [
                         'size' => 0,
                     ],
-                    'condition'     => array(
-                        'testimonial_slider_icon_position_x'    => 'right'
-                    ),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'testimonial_slider_icon_position', 'operator' => '===', 'value' => 'absolute'],
+                            ['name' => 'testimonial_slider_icon_position_x', 'operator' => '===', 'value' => 'right'],
+                        ],
+                    ],
                     'selectors' => [
                         '{{WRAPPER}} .templaza-widget-templaza-testimonial .quote-icon' => 'right: {{SIZE}}{{UNIT}}; left: auto;',
                     ],
@@ -732,6 +977,9 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                         ],
                     ],
                     'default'       => 'bottom',
+                    'condition'     => array(
+                        'testimonial_slider_icon_position'    => 'absolute'
+                    ),
                 ),
                 array(
                     'name'          => 'testimonial_slider_icon_offsety',
@@ -754,9 +1002,12 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     'default' => [
                         'size' => 0,
                     ],
-                    'condition'     => array(
-                        'testimonial_slider_icon_position_y'    => 'top'
-                    ),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'testimonial_slider_icon_position', 'operator' => '===', 'value' => 'absolute'],
+                            ['name' => 'testimonial_slider_icon_position_y', 'operator' => '===', 'value' => 'top'],
+                        ],
+                    ],
                     'selectors' => [
                         '{{WRAPPER}} .templaza-widget-templaza-testimonial .quote-icon' => 'top: {{SIZE}}{{UNIT}};',
                     ],
@@ -782,9 +1033,12 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     'default' => [
                         'size' => 0,
                     ],
-                    'condition'     => array(
-                        'testimonial_slider_icon_position_y'    => 'bottom'
-                    ),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'testimonial_slider_icon_position', 'operator' => '===', 'value' => 'absolute'],
+                            ['name' => 'testimonial_slider_icon_position_y', 'operator' => '===', 'value' => 'bottom'],
+                        ],
+                    ],
                     'selectors' => [
                         '{{WRAPPER}} .templaza-widget-templaza-testimonial .quote-icon' => 'bottom: {{SIZE}}{{UNIT}}; top:auto;',
                     ],
@@ -794,6 +1048,8 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
 					'label' => esc_html__( 'Quote Size', 'uipro' ),
 					'description'   => esc_html__('Size of quote icon', 'uipro'),
 					'type' => Controls_Manager::SLIDER,
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
 					'range' => [
 						'px' => [
 							'min' => 5,
@@ -806,6 +1062,7 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
 					],
                     'selectors' => [
                         '{{WRAPPER}} .quote-icon i' => 'font-size: {{SIZE}}px;',
+                        '{{WRAPPER}} .quote-icon ' => 'width: {{SIZE}}px;',
                     ],
 					'start_section' => 'style',
 					'section_tab'   => Controls_Manager::TAB_STYLE,
@@ -819,6 +1076,8 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
 					'label' => esc_html__( 'Quote Size', 'uipro' ),
 					'description'   => esc_html__('Size of quote icon', 'uipro'),
 					'type' => Controls_Manager::SLIDER,
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
 					'range' => [
 						'px' => [
 							'min' => 0,
@@ -833,7 +1092,8 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
 					'section_tab'   => Controls_Manager::TAB_STYLE,
 					'section_name'  => esc_html__( self::$name, 'uipro' ),
                     'selectors' => [
-                        '{{WRAPPER}} .quote-icon i' => 'font-size: {{SIZE}}{{UNIT}};',
+                        '{{WRAPPER}} .quote-icon i' => 'font-size: {{SIZE}}px;',
+                        '{{WRAPPER}} .quote-icon ' => 'width: {{SIZE}}px;',
                     ],
                     'condition'     => array(
                         'layout'    => 'style1'
@@ -844,7 +1104,7 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     'name'  => 'quote_icon_color',
                     'type' => \Elementor\Controls_Manager::COLOR,
                     'selectors' => [
-                        '{{WRAPPER}} .quote-icon i' => 'color: {{VALUE}}',
+                        '{{WRAPPER}} .quote-icon i, {{WRAPPER}} .quote-icon ' => 'color: {{VALUE}}',
                     ],
                 ),
                 array(
@@ -876,9 +1136,10 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                 ),
 				array(
 					'id'            => 'avatar_size',
-					'label'         => __( 'Avatar Size', 'uipro' ),
+					'label'         => __( 'Avatar Width', 'uipro' ),
 					'type'          => Controls_Manager::SLIDER,
-					'size_units'    => [ 'px' ],
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
 					'range' => [
 						'px' => [
 							'min' => 0,
@@ -887,7 +1148,24 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
 						],
 					],
 					'selectors' => [
-						'{{WRAPPER}} .ui-testimonial-avatar .uk-inline-clip' => 'width: {{SIZE}}{{UNIT}};height: {{SIZE}}{{UNIT}};',
+						'{{WRAPPER}} .ui-testimonial-avatar .uk-inline-clip' => 'width: {{SIZE}}{{UNIT}};',
+					],
+				),
+				array(
+					'id'            => 'avatar_size_height',
+					'label'         => __( 'Avatar Height', 'uipro' ),
+					'type'          => Controls_Manager::SLIDER,
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+					'range' => [
+						'px' => [
+							'min' => 0,
+							'max' => 1000,
+							'step' => 1,
+						],
+					],
+					'selectors' => [
+						'{{WRAPPER}} .ui-testimonial-avatar .uk-inline-clip' => 'height: {{SIZE}}{{UNIT}};',
 					],
 				),
 				array(

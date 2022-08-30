@@ -85,6 +85,7 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                 'label'         => esc_html__( 'Category Layout', 'uipro' ),
                 'options'       => array(
                     'base'      => esc_html__( 'Default', 'uipro' ),
+                    'grid'      => esc_html__( 'Grid', 'uipro' ),
                 ),
                 'default'       => 'base',
             ),
@@ -341,6 +342,15 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                     'section_name'      => esc_html__('Image Settings', 'uipro')
                 ),
                 array(
+                    'id' => 'image_cover',
+                    'type' => Controls_Manager::SWITCHER,
+                    'label'     => esc_html__( 'Image cover', 'uipro' ),
+                    'label_on' => esc_html__( 'Yes', 'uipro' ),
+                    'label_off' => esc_html__( 'No', 'uipro' ),
+                    'return_value' => '1',
+                    'default' => '0',
+                ),
+                array(
                     'type'          => Controls_Manager::DIMENSIONS,
                     'name'          =>  'image_radius',
                     'label'         => esc_html__( 'Image Border radius', 'uipro' ),
@@ -379,7 +389,10 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                     'return_value' => '1',
                     'default' => '0',
                     'start_section' => 'slider_settings',
-                    'section_name'      => esc_html__('Slider Settings', 'uipro')
+                    'section_name'      => esc_html__('Slider Settings', 'uipro'),
+                    'condition'     => array(
+                        'layout'    => 'base'
+                    ),
                 ),
                 array(
                     'type'          =>  \Elementor\Group_Control_Border::get_type(),
@@ -455,6 +468,9 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                     'label_off' => esc_html__( 'No', 'uipro' ),
                     'return_value' => '1',
                     'default' => '0',
+                    'condition'     => array(
+                        'layout'    => 'base'
+                    ),
                 ),
                 array(
                     'label' => esc_html__( 'Dots Slider Color', 'uipro' ),

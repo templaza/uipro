@@ -9,7 +9,7 @@ $testimonial_slider_dot    = !empty( $instance['testimonial_slider_dot'] ) ? $in
 $testimonial_slider_number    = !empty( $instance['testimonial_slider_number'] ) ? $instance['testimonial_slider_number'] : 1;
 $testimonial_quote_size    = isset( $instance['testimonial_quote_size'] ) && $instance['testimonial_quote_size']['size'] ? $instance['testimonial_quote_size']['size'] : 32;
 $avatar_border    = isset( $instance['avatar_border'] ) && $instance['avatar_border'] ? ' '. $instance['avatar_border'] : '';
-
+$quote_icon = ( isset( $instance['quote_icon'] ) && $instance['quote_icon'] ) ? $instance['quote_icon'] : array();
 $slider_options = '';
 if($testimonial_slider_autoplay=='yes'){
     $slider_options .= 'autoplay: true; ';
@@ -31,7 +31,27 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
 	$general_styles     =   \UIPro_Elementor_Helper::get_general_styles($instance);
 ?>
 <div class="<?php echo $general_styles['container_cls']; ?> uk-position-relative" <?php echo $general_styles['animation']; ?>>
-    <span class="quote-icon"><i class="fas fa-quote-left"></i></span>
+    <?php
+    if ($quote_icon && isset($quote_icon['value'])) {
+        ?>
+    <div class="<?php echo $general_styles['content_cls']; ?>">
+        <span class="quote-icon uk-inline uk-margin-small-bottom">
+            <?php
+            if (is_array($quote_icon['value']) && isset($quote_icon['value']['url']) && $quote_icon['value']['url']) {
+                ?>
+                <img class="uk-preserve" src="<?php echo esc_attr($quote_icon['value']['url']);?>" alt="" data-uk-svg />
+                <?php
+            } elseif (is_string($quote_icon['value']) && $quote_icon['value']) {
+                ?>
+                <i class="<?php echo esc_attr($quote_icon['value']);?>" aria-hidden="true"></i>
+                <?Php
+            }
+            ?>
+        </span>
+    </div>
+    <?php
+    }
+    ?>
     <div id="<?php echo esc_attr($module_id);?>" class="templaza-testimonial <?php echo $general_styles['content_cls']. ' '.$instance['layout']; ?>">
 
         <?php

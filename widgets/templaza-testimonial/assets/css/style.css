@@ -1,3 +1,7 @@
+.uk-slidenav-container.custom {
+  position: absolute;
+}
+
 .templaza-testimonial.style1 .slick-arrow {
   position: absolute;
   bottom: 103px;
@@ -13,12 +17,6 @@
   transform: translate(-100%, 0);
   -webkit-transform: translate(-100%, 0);
   -moz-transform: translate(-100%, 0);
-}
-
-.templaza-widget-templaza-testimonial .quote-icon {
-  position: absolute;
-  top: -10px;
-  left: -70px;
 }
 
 /* Slider */

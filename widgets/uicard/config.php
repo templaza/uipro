@@ -156,6 +156,7 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 						'medium'    => esc_html__('Medium', 'uipro'),
 						'large'     => esc_html__('Large', 'uipro'),
 						'xlarge'    => esc_html__('X-Large', 'uipro'),
+						'custom'    => esc_html__('Custom', 'uipro'),
 						'remove'    => esc_html__('None', 'uipro'),
 					),
 					'default'       => '',
@@ -163,6 +164,19 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 						'title!'    => ''
 					),
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'title_custom_margin',
+                    'label'         => esc_html__( 'Title custom margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px'],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-card-title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'condition'     => array(
+                        'title_heading_margin'    => 'custom'
+                    ),
+                ),
                 array(
                     'type'          => Controls_Manager::TEXTAREA,
                     'name'          => 'meta_title',
@@ -371,10 +385,42 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 						'top'        => __( 'Top', 'uipro' ),
 						'inside'   => __( 'Inside', 'uipro' ),
 						'bottom'   => __( 'Bottom', 'uipro' ),
+						'thumbnail'   => __( 'Thumbnail', 'uipro' ),
 					],
 					'conditions' => [
 						'terms' => [
 							['name' => 'layout_type', 'operator' => '===', 'value' => 'image'],
+						],
+					],
+				),
+				array(
+					'type'          => Controls_Manager::SELECT,
+					'name'          => 'image_content',
+					'label' => __( 'Image Content', 'uipro' ),
+					'default' => 'uk-position-bottom',
+					'options' => [
+						'uk-position-top'        => __( 'Top', 'uipro' ),
+						'uk-position-center'   => __( 'Center', 'uipro' ),
+						'uk-position-bottom'   => __( 'Bottom', 'uipro' ),
+					],
+					'conditions' => [
+						'terms' => [
+							['name' => 'layout_type', 'operator' => '===', 'value' => 'image'],
+							['name' => 'image_appear', 'operator' => '===', 'value' => 'thumbnail'],
+						],
+					],
+				),
+				array(
+					'type'          => \Elementor\Group_Control_Background::get_type(),
+					'name'          => 'image_content_bg',
+					'label' => __( 'Image Content Background', 'uipro' ),
+					'default' => '',
+                    'types' => [ 'classic', 'gradient' ],
+                    'selector' => '{{WRAPPER}} .uk-card-body',
+					'conditions' => [
+						'terms' => [
+							['name' => 'layout_type', 'operator' => '===', 'value' => 'image'],
+							['name' => 'image_appear', 'operator' => '===', 'value' => 'thumbnail'],
 						],
 					],
 				),
@@ -518,7 +564,7 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 					'label'         => esc_html__('Card Color Hover', 'uipro'),
 					'description'   => esc_html__('Set the Color of Card on mouse hover.', 'uipro'),
 					'selectors' => [
-						'{{WRAPPER}} .ui-card:hover' => 'color: {{VALUE}}',
+						'{{WRAPPER}} .ui-card:hover, {{WRAPPER}} .ui-card:hover *' => 'color: {{VALUE}}',
 					],
 					'conditions' => [
 						'terms' => [
@@ -550,6 +596,21 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 						],
 					],
 				),
+                array(
+                    'name'          => 'card_duration',
+                    'label' => __( 'Transition duration', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'range' => [
+                        's' => [
+                            'min' => 0,
+                            'max' => 3,
+                            'step' => 0.1,
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-card, {{WRAPPER}} .ui-card:hover' => 'transition: all {{SIZE}}s linear;',
+                    ],
+                ),
 				array(
 					'type'          => Controls_Manager::SELECT,
 					'name'          => 'card_size',
@@ -839,10 +900,24 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 						'medium'    => esc_html__('Medium', 'uipro'),
 						'large'     => esc_html__('Large', 'uipro'),
 						'xlarge'    => esc_html__('X-Large', 'uipro'),
+						'custom'    => esc_html__('Custom', 'uipro'),
 						'remove'    => esc_html__('None', 'uipro'),
 					),
 					'default'       => '',
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'button_custom_margin',
+                    'label'         => esc_html__( 'Button custom margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px'],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-button' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'condition'     => array(
+                        'button_margin'    => 'custom'
+                    ),
+                ),
 			);
             $options    = array_merge($options, $this->get_general_options());
 

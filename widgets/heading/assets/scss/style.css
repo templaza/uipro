@@ -76,6 +76,21 @@
   background-color: #333;
   width: 35px;
 }
+.sc_heading .line_style1 .line-before {
+  height: 1px;
+  background-color: #333;
+  width: 35px;
+}
+.sc_heading .line_style1 .line-after {
+  height: 1px;
+  background-color: #333;
+  width: 35px;
+}
+.sc_heading .line_style1 .line {
+  height: 3px;
+  width: 3px;
+  margin: 0 5px;
+}
 .sc_heading.clone_title .title {
   position: relative;
 }
