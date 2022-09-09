@@ -794,9 +794,17 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 				array(
 					'id'            => 'custom_title_color',
 					'type'          =>  Controls_Manager::COLOR,
-					'label'         => esc_html__('Custom Color', 'uipro'),
+					'label'         => esc_html__('Title Color', 'uipro'),
 					'selectors' => [
 						'{{WRAPPER}} .ui-title > a' => 'color: {{VALUE}}',
+					],
+				),
+				array(
+					'id'            => 'custom_title_hover_color',
+					'type'          =>  Controls_Manager::COLOR,
+					'label'         => esc_html__('Title Hover Color', 'uipro'),
+					'selectors' => [
+						'{{WRAPPER}} .ui-title > a:hover' => 'color: {{VALUE}}',
 					],
 				),
 				array(
@@ -1084,13 +1092,126 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 
 				//Meta settings
                 array(
+                    'type'          => Controls_Manager::SELECT,
+                    'id'            => 'meta_icon_type',
+                    'label'         => esc_html__( 'Icon Type', 'uipro' ),
+                    'default'       => 'none',
+                    'options'       => [
+                                    ''  => esc_html__( 'FontAwesome', 'uipro' ),
+                                    'uikit' => esc_html__( 'UIKit', 'uipro' ),
+                                    'none' => esc_html__( 'None', 'uipro' ),
+                    ],
+                    'start_section' => 'meta_settings',
+                    'section_name'  => esc_html__('Meta Settings', 'uipro')
+                ),
+                array(
+                    'type'          => Controls_Manager::ICONS,
+                    'name'          => 'date_icon',
+                    'label'         => esc_html__('Date Icon:', 'uipro'),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_icon_type', 'operator' => '===', 'value' => ''],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::SELECT2,
+                    'name'          => 'date_uikit_icon',
+                    'label'         => esc_html__('Date Icon:', 'uipro'),
+                    'default' => '',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_icon_type', 'operator' => '===', 'value' => 'uikit'],
+                        ],
+                    ],
+                    'options' => $this->get_font_uikit(),
+                ),
+                array(
+                    'type'          => Controls_Manager::ICONS,
+                    'name'          => 'author_icon',
+                    'label'         => esc_html__('Author Icon:', 'uipro'),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_icon_type', 'operator' => '===', 'value' => ''],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::SELECT2,
+                    'name'          => 'author_uikit_icon',
+                    'label'         => esc_html__('Author Icon:', 'uipro'),
+                    'default' => '',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_icon_type', 'operator' => '===', 'value' => 'uikit'],
+                        ],
+                    ],
+                    'options' => $this->get_font_uikit(),
+                ),
+                array(
+                    'type'          => Controls_Manager::ICONS,
+                    'name'          => 'category_icon',
+                    'label'         => esc_html__('Category Icon:', 'uipro'),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_icon_type', 'operator' => '===', 'value' => ''],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::SELECT2,
+                    'name'          => 'category_uikit_icon',
+                    'label'         => esc_html__('Category Icon:', 'uipro'),
+                    'default' => '',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_icon_type', 'operator' => '===', 'value' => 'uikit'],
+                        ],
+                    ],
+                    'options' => $this->get_font_uikit(),
+                ),
+                array(
+                    'type'          => Controls_Manager::ICONS,
+                    'name'          => 'tag_icon',
+                    'label'         => esc_html__('Tag Icon:', 'uipro'),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_icon_type', 'operator' => '===', 'value' => ''],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::SELECT2,
+                    'name'          => 'tag_uikit_icon',
+                    'label'         => esc_html__('Tag Icon:', 'uipro'),
+                    'default' => '',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_icon_type', 'operator' => '===', 'value' => 'uikit'],
+                        ],
+                    ],
+                    'options' => $this->get_font_uikit(),
+                ),
+                array(
+                    'id'            => 'meta_icon_color',
+                    'type'          =>  Controls_Manager::COLOR,
+                    'label'         => esc_html__('Icon Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .uk-article-meta i' => 'color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_icon_type', 'operator' => '!=', 'value' => 'none'],
+                        ],
+                    ],
+                ),
+
+                array(
                     'type'          => Controls_Manager::SELECT2,
                     'id'            => 'meta_top_position',
                     'label'         => esc_html__( 'Before Title', 'uipro' ),
                     'options'       => UIPro_UIPosts_Helper::get_post_meta_type( 'category' ),
                     'multiple'      => true,
-                    'start_section' => 'meta_settings',
-                    'section_name'  => esc_html__('Meta Settings', 'uipro')
                 ),
                 array(
                     'type'          => Controls_Manager::SELECT2,
@@ -1153,6 +1274,14 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                     ],
                 ),
                 array(
+                    'id'            => 'meta_top_link_hover_color',
+                    'type'          =>  Controls_Manager::COLOR,
+                    'label'         => esc_html__('Before Title Link Hover Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-post-meta-top a:hover' => 'color: {{VALUE}}',
+                    ],
+                ),
+                array(
                     'type'          => Controls_Manager::SELECT,
                     'id'            => 'meta_top_margin',
                     'label'         => esc_html__('Before Title Position Margin', 'uipro'),
@@ -1209,6 +1338,14 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                     ],
                 ),
                 array(
+                    'id'            => 'meta_middle_link_hover_color',
+                    'type'          =>  Controls_Manager::COLOR,
+                    'label'         => esc_html__('After Title Link Hover Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-post-meta-middle a:hover' => 'color: {{VALUE}}',
+                    ],
+                ),
+                array(
                     'type'          => Controls_Manager::SELECT,
                     'id'            => 'meta_middle_margin',
                     'label'         => esc_html__('After Title Position Margin', 'uipro'),
@@ -1262,6 +1399,14 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                     'label'         => esc_html__('After Description Link Color', 'uipro'),
                     'selectors' => [
                         '{{WRAPPER}} .ui-post-meta-bottom a' => 'color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'id'            => 'meta_bottom_link_hover_color',
+                    'type'          =>  Controls_Manager::COLOR,
+                    'label'         => esc_html__('After Description Link Hover Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-post-meta-bottom a:hover' => 'color: {{VALUE}}',
                     ],
                 ),
                 array(

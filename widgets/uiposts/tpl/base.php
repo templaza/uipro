@@ -11,7 +11,6 @@ $limit          = ( isset( $instance['limit'] ) && $instance['limit'] ) ? $insta
 $resource       = ( isset( $instance['resource'] ) && $instance['resource'] ) ? $instance['resource'] : 'post';
 $ordering       = ( isset( $instance['ordering'] ) && $instance['ordering'] ) ? $instance['ordering'] : 'latest';
 $category   = ( isset( $instance[$resource.'_category'] ) && $instance[$resource.'_category'] ) ? $instance[$resource.'_category'] : array('0');
-
 $query_args = array(
     'post_type'         => $resource,
     'posts_per_page'    => $limit,

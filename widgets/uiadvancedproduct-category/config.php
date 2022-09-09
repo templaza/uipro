@@ -76,6 +76,7 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
             $arr_thumbnails[$thumbnail] = $thumbnail;
         }
         $arr_thumbnails['full'] = 'full';
+        $arr_thumbnails['custom'] = 'custom';
 
         $options    = array(
             array(
@@ -341,6 +342,59 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                     'start_section' => 'ap-image',
                     'section_name'      => esc_html__('Image Settings', 'uipro')
                 ),
+                array(
+                    'name'          => 'image_width',
+                    'label' => __( 'Image Width', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px','%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 2000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                            'step' => 1,
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ap-category-image img' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'image_size', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+                ),
+                array(
+                    'name'          => 'image_height',
+                    'label' => __( 'Image Height', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px','%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 2000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                            'step' => 1,
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ap-category-image img' => 'height: {{SIZE}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'image_size', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+                ),
+
                 array(
                     'id' => 'image_cover',
                     'type' => Controls_Manager::SWITCHER,
