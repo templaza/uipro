@@ -48,7 +48,6 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
         /**
          * @var null
          */
-        protected $text_domain = null;
 
         protected $config_loaded    = array();
 
@@ -68,7 +67,6 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
                 return;
             }
 
-            $this -> text_domain    = UIPro_Functions::get_my_text_domain();
             /**
              * @var $config_class Templaza_Elements_Abstract_Config
              */
@@ -234,7 +232,7 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
          * @return array
          */
         public function get_keywords() {
-            $keywords = array_merge( $this->keywords, array( $this->get_name(), $this -> text_domain ) );
+            $keywords = array_merge( $this->keywords, array( $this->get_name(), 'uipro' ) );
 
             return $keywords;
         }

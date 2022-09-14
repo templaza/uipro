@@ -8,14 +8,12 @@ abstract class UIPro_Base{
     protected $core;
     protected $theme;
     protected $post_type;
-    protected $text_domain;
 
     protected $cache    = array();
 
     public function __construct()
     {
         $this -> theme          = \wp_get_theme();
-        $this -> text_domain    = UIPro_Functions::get_my_text_domain();
     }
 
     public function get_name(){

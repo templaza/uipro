@@ -27,8 +27,6 @@ class UIPro{
     {
         require_once dirname(__FILE__).'/includes/autoloader.php';
 
-        $this -> text_domain    = UIPro_Functions::get_my_text_domain();
-
         self::$_core_els  = array(
             'general' => array(
                 'list-post'
