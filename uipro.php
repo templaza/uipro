@@ -56,6 +56,10 @@ class UIPro{
         if(is_admin()) {
             add_action('admin_init', array($this, 'update_checker'));
         }
+        add_action( 'init', array( $this, 'ui_load_plugin_textdomain' ) );
+    }
+    public function ui_load_plugin_textdomain() {
+        load_plugin_textdomain( 'uipro', false, UIPRO_PATH . '/languages' );
     }
 
     /**
