@@ -250,7 +250,7 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
 //            $controls = \UIPro_Builder_El_Mapping::mapping( $this->options() );
             $current_section    = '';
             foreach ( $controls as $index => $control ) {
-                $id    = isset($control['id'])?$control['id']:$control['name'];
+                $id    = isset($control['id'])?$control['id']:(isset($control['name'])?$control['name']:'');
                 if (isset( $control['start_section'] ) && $current_section != $control['start_section']) {
 
                     $sec_args   = ['label' => $control['section_name']];
@@ -278,6 +278,34 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
                     $this->add_responsive_control($id, $control);
                 }elseif(isset($control['type']) && in_array($control['type'], $group_controls)){
                     $this -> add_group_control($control['type'], $control);
+                }
+                elseif(isset($control['type']) && in_array($control['type'], array('control_tabs', 'control_tab'))){
+                    if(isset($control['indent']) && !$control['indent']){
+                        if($control['type'] == 'control_tabs') {
+                            $this->end_controls_tabs();
+                        }elseif($control['type'] == 'control_tab'){
+                            $this -> end_controls_tab();
+                        }
+                    }else {
+                        if($control['type'] == 'control_tabs') {
+                            $this->start_controls_tabs($id);
+                        }elseif($control['type'] == 'control_tab'){
+                            $this -> start_controls_tab($id, $control);
+//                            $this -> start_controls_tab($id, [
+//                                'label' => $control['label']
+//                            ]);
+                        }
+                    }
+                    continue;
+                }
+                elseif(isset($control['type']) && $control['type'] == 'control_popover'){
+                    // Popovers control
+                    if(isset($control['indent']) && !$control['indent']){
+                        $this->end_popover();
+                    }else{
+                        $this->start_popover();
+                    }
+                    continue;
                 }
                 else {
                     $this->add_control( $id, $control );
