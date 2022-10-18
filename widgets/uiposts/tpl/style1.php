@@ -256,7 +256,7 @@ if (count($posts)) {
 	$output     .=  '<div class="'.( $filter_position != 'top' ? 'uk-width-expand'.$filter_visibility : '' ).'">';
 	$output     .=  '<div class="ui-post-items uk-child-width-1-'.$large_desktop_columns.'@xl uk-child-width-1-'.$desktop_columns.'@l uk-child-width-1-'.$laptop_columns.'@m uk-child-width-1-'.$tablet_columns.'@s uk-child-width-1-'. $mobile_columns . $column_grid_gap . ($use_slider ? ' uk-slider-items': '') .'" data-uk-grid="'.($masonry ? 'masonry:true;' : '').'">';
 	foreach ($posts as $item) {
-		include plugin_dir_path(__FILE__).'post_item.php';
+		include plugin_dir_path(__FILE__).'post_item_style1.php';
 	}
 	$output     .=  '</div>';
 	//end grid

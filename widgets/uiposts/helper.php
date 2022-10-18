@@ -10,6 +10,8 @@ class UIPro_UIPosts_Helper extends UIPro_Helper {
                 'author'    => esc_html__('Author', 'uipro'),
                 'category'  => esc_html__('Category', 'uipro'),
                 'tags'      => esc_html__('Tags', 'uipro'),
+                'comment_count'      => esc_html__('Comment count', 'uipro'),
+                'post_view'      => esc_html__('Post view', 'uipro'),
             ));
     }
     public static function get_post_meta_content( $meta_type, $item, $instance, $args = array() ) {
@@ -21,10 +23,15 @@ class UIPro_UIPosts_Helper extends UIPro_Helper {
         $date_uikit_icon =   ( isset( $instance['date_uikit_icon'] ) && $instance['date_uikit_icon'] ) ? $instance['date_uikit_icon'] : '';
         $author_icon       =   ( isset( $instance['author_icon'] ) && $instance['author_icon'] ) ? $instance['author_icon'] : array();
         $author_uikit_icon =   ( isset( $instance['author_uikit_icon'] ) && $instance['author_uikit_icon'] ) ? $instance['author_uikit_icon'] : '';
+        $author_show_avatar  =   ( isset( $instance['meta_author_avatar'] ) && $instance['meta_author_avatar'] ) ? $instance['meta_author_avatar'] : '';
         $category_icon       =   ( isset( $instance['category_icon'] ) && $instance['category_icon'] ) ? $instance['category_icon'] : array();
         $category_uikit_icon =   ( isset( $instance['category_uikit_icon'] ) && $instance['category_uikit_icon'] ) ? $instance['category_uikit_icon'] : '';
         $tag_icon       =   ( isset( $instance['tag_icon'] ) && $instance['tag_icon'] ) ? $instance['tag_icon'] : array();
         $tag_uikit_icon =   ( isset( $instance['tag_uikit_icon'] ) && $instance['tag_uikit_icon'] ) ? $instance['tag_uikit_icon'] : '';
+        $comment_icon       =   ( isset( $instance['comment_icon'] ) && $instance['comment_icon'] ) ? $instance['comment_icon'] : array();
+        $comment_uikit_icon =   ( isset( $instance['comment_uikit_icon'] ) && $instance['comment_uikit_icon'] ) ? $instance['comment_uikit_icon'] : '';
+        $view_icon       =   ( isset( $instance['view_icon'] ) && $instance['view_icon'] ) ? $instance['view_icon'] : array();
+        $view_uikit_icon =   ( isset( $instance['view_uikit_icon'] ) && $instance['view_uikit_icon'] ) ? $instance['view_uikit_icon'] : '';
         $meta_arr       =   array();
         $resource       = ( isset( $instance['resource'] ) && $instance['resource'] ) ? $instance['resource'] : 'post';
 
@@ -52,6 +59,14 @@ class UIPro_UIPosts_Helper extends UIPro_Helper {
                     $media   .=  '<i class="' . $author_icon['value'] .'" aria-hidden="true"></i>';
                 }
             }
+            if($author_show_avatar =='1'){
+                $author_avatar = '<a href="'. esc_url(get_author_posts_url(get_the_author_meta('ID'))).'">
+                <img src="'.esc_url( get_avatar_url( get_the_author_meta('ID'),100) ) .'" alt=""/>
+            </a>';
+            }else{
+                $author_avatar = '';
+            }
+
             $authordata = get_userdata( $item->post_author );
             $link = sprintf(
                 '<a href="%1$s" title="%2$s" rel="author">%3$s</a>',
@@ -60,7 +75,7 @@ class UIPro_UIPosts_Helper extends UIPro_Helper {
                 esc_attr( sprintf( __( 'Posts by %s' ), $authordata->display_name ) ),
                 $authordata->display_name
             );
-            $meta_arr[] = '<span class="ui-post-meta-author">' . $media . esc_html__('by', 'uipro') . ' ' . $link . '</span>';
+            $meta_arr[] = '<span class="ui-post-meta-author">' .$author_avatar . $media . esc_html__('by', 'uipro') . ' ' . $link . '</span>';
         }
         if (in_array('category', $meta_type)) {
             $media ='';
@@ -94,10 +109,55 @@ class UIPro_UIPosts_Helper extends UIPro_Helper {
                 $meta_arr[] = '<span class="ui-post-tags">'. $media.$args['tag_content'] .'</span>';
             }
         }
+        if (in_array('comment_count', $meta_type)) {
+            $media ='';
+            if ($icon_type == 'uikit' && $comment_uikit_icon) {
+                $media   .=  '<span class="uk-icon" data-uk-icon="icon: ' . $comment_uikit_icon . '"></span>';
+            } elseif ($comment_icon && isset($comment_icon['value'])) {
+                if (is_array($comment_icon['value']) && isset($comment_icon['value']['url']) && $comment_icon['value']['url']) {
+                    $media   .=  '<img src="'.$comment_icon['value']['url'].'" alt="" data-uk-svg />';
+                } elseif (is_string($comment_icon['value']) && $comment_icon['value']) {
+                    $media   .=  '<i class="' . $comment_icon['value'] .'" aria-hidden="true"></i>';
+                }
+            }
+            $templaza_comment_count = wp_count_comments($item);
+            if ($templaza_comment_count->approved == 1) {
+                $comment_html= esc_html__('Comment:','uipro').' '.esc_html($templaza_comment_count->approved);
+            }else{
+                $comment_html= esc_html__('Comments:','uipro').' '.esc_html($templaza_comment_count->approved);
+            }
+                $meta_arr[] = '<span class="ui-post-comment-count">'. $media.$comment_html .'</span>';
+        }
+        if (in_array('post_view', $meta_type)) {
+            $media ='';
+            if ($icon_type == 'uikit' && $view_uikit_icon) {
+                $media   .=  '<span class="uk-icon" data-uk-icon="icon: ' . $view_uikit_icon . '"></span>';
+            } elseif ($view_icon && isset($view_icon['value'])) {
+                if (is_array($view_icon['value']) && isset($view_icon['value']['url']) && $view_icon['value']['url']) {
+                    $media   .=  '<img src="'.$view_icon['value']['url'].'" alt="" data-uk-svg />';
+                } elseif (is_string($view_icon['value']) && $view_icon['value']) {
+                    $media   .=  '<i class="' . $view_icon['value'] .'" aria-hidden="true"></i>';
+                }
+            }
+            $count_key = 'post_views_count';
+            $count = get_post_meta($item, $count_key, true);
+            if ($count == '' || empty($count)) { // If such views are not
+                $view_html = esc_html__('View: 0','uipro'); // return value of 0
+            }else{
+                $view_html = esc_html__('Views:','uipro').' '.$count;
+            }
+                $meta_arr[] = '<span class="ui-post-views">'. $media.$view_html .'</span>';
+        }
         return apply_filters( 'templaza-elements-builder/uipost-meta-content', $meta_arr, $item);
     }
-    public static function get_post_except( $item ) {
-        return apply_filters( 'templaza-elements-builder/uipost-post-except', $item->post_excerpt, $item);
+    public static function get_post_except( $item,$instance ) {
+        $intro_number       =   ( isset( $instance['introtext_number'] ) && $instance['introtext_number'] ) ? $instance['introtext_number'] : '';
+        if(isset($intro_number) && $intro_number !=''){
+         $intro_text = wp_trim_words($item->post_excerpt,$intro_number);
+        return apply_filters( 'templaza-elements-builder/uipost-post-except',$intro_text, $item);
+        }else{
+            return apply_filters( 'templaza-elements-builder/uipost-post-except', $item->post_excerpt, $item);
+        }
     }
     public static function get_post_thumbnail( $item, $thumbnail_size, $attrs = '' ) {
         return apply_filters( 'templaza-elements-builder/uipost-post-thumbnail', wp_get_attachment_image(get_post_thumbnail_id( $item->ID ), $thumbnail_size, false, $attrs), $item);

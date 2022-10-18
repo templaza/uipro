@@ -361,6 +361,49 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 						],
 					],
 				),
+				array(
+					'type'          =>  Controls_Manager::COLOR,
+					'name'          => 'icon_bg_color',
+					'label'         => esc_html__('Icon Background Color', 'uipro'),
+					'description'   => esc_html__('Set the background color of Icon.', 'uipro'),
+					'selectors' => [
+						'{{WRAPPER}} .ui-media' => 'background-color: {{VALUE}}',
+					],
+					'conditions' => [
+						'terms' => [
+							['name' => 'layout_type', 'operator' => '===', 'value' => 'icon'],
+						],
+					],
+				),
+                array(
+                    'name'          => 'icon_box_size',
+                    'label' => esc_html__( 'Icon Box Size', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px','%' ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-media' => 'width: {{SIZE}}{{UNIT}};height: {{SIZE}}{{UNIT}};display:flex; align-items:center;justify-content:center;',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout_type', 'operator' => '===', 'value' => 'icon'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'icon_radius',
+                    'label'         => esc_html__( 'Icon Border radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-media' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout_type', 'operator' => '===', 'value' => 'icon'],
+                        ],
+                    ],
+                ),
 
 				//Image Settings
 				array(

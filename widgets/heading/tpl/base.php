@@ -80,6 +80,8 @@ if ( $instance['line'] && $instance['line'] <> '' ) {
 	}
 	if($instance['line_style'] == 'line_style1'){
         $line = '<div class="'.$instance['line_style'].' uk-flex uk-flex-middle"><span class="line-before"></span> <span' . (!$_is_elementor?$line_css:'') . ' class="line"></span><span class="line-after"></span> </div>';
+    }elseif($instance['line_style'] == 'line_style2'){
+        $line = '<div class="'.$instance['line_style'].' uk-flex uk-flex-column "><span class="line-before"></span> <span' . (!$_is_elementor?$line_css:'') . ' class="line"></span><span class="line-after"></span> </div>';
     }else{
         $line = '<span' . (!$_is_elementor?$line_css:'') . ' class="line uk-flex uk-flex-inline"></span>';
     }

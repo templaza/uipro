@@ -328,6 +328,7 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                     'options'       => array(
                         ''              => esc_html__('Default', 'uipro'),
                         'line_style1'   => esc_html__('Style1', 'uipro'),
+                        'line_style2'   => esc_html__('Style2', 'uipro'),
 
                     ),
                     'condition'     => array(
@@ -363,7 +364,7 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                     'conditions' => [
                         'relation' => 'and',
                         'terms' => [
-                            ['name' => 'line_style', 'operator' => '===', 'value' => 'line_style1'],
+                            ['name' => 'line_style', 'operator' => 'in', 'value' => ['line_style1','line_style2']],
                             ['name' => 'line', 'operator' => '===', 'value' => 'yes'],
                         ],
                     ],
@@ -395,7 +396,7 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                     'conditions' => [
                         'relation' => 'and',
                         'terms' => [
-                            ['name' => 'line_style', 'operator' => '===', 'value' => 'line_style1'],
+                            ['name' => 'line_style', 'operator' => 'in', 'value' => ['line_style1','line_style2']],
                             ['name' => 'line', 'operator' => '===', 'value' => 'yes'],
                         ],
                     ],
@@ -468,7 +469,7 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                     'conditions' => [
                         'relation' => 'and',
                         'terms' => [
-                            ['name' => 'line_style', 'operator' => '===', 'value' => 'line_style1'],
+                            ['name' => 'line_style', 'operator' => 'in', 'value' => ['line_style1','line_style2']],
                             ['name' => 'line', 'operator' => '===', 'value' => 'yes'],
                         ],
                     ],
@@ -673,7 +674,7 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                     'conditions' => [
                         'relation' => 'and',
                         'terms' => [
-                            ['name' => 'line_style', 'operator' => '===', 'value' => 'line_style1'],
+                            ['name' => 'line_style', 'operator' => 'in', 'value' => ['line_style1','line_style2']],
                             ['name' => 'line', 'operator' => '===', 'value' => 'yes'],
                         ],
                     ],

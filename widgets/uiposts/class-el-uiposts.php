@@ -50,6 +50,17 @@ if ( ! class_exists( 'UIPro_El_UIPosts' ) ) {
 
 		    return $settings;
         }
+        public function get_template_name() {
+            $template_name  = parent::get_template_name();
+
+            $settings       = $this -> get_settings_for_display();
+            if(!$template_name) {
+                $template_name = (isset($settings['uipost_layout']) && $settings['uipost_layout'] != '') ? $settings['uipost_layout'] : 'base';
+            }
+
+            return $template_name;
+
+        }
 
         public function templaza_ui_post_loadmore_ajax_handler(){
             // prepare our arguments for the query

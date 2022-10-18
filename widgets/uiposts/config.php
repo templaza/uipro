@@ -81,6 +81,16 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 
 			// options
 			$options = array(
+                array(
+                    'id'        => 'uipost_layout',
+                    'label'     => esc_html__( 'Layout', 'uipro' ),
+                    'type'      => Controls_Manager::SELECT,
+                    'options'   => array(
+                        'base'      => esc_html__('Default', 'uipro'),
+                        'style1'    => esc_html__('Style 1', 'uipro'),
+                    ),
+                    'default'   => 'base',
+                ),
 				array(
 					'type'          => Controls_Manager::SELECT,
 					'id'            => 'resource',
@@ -278,6 +288,7 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 					'description'   => esc_html__('Set the Background Color of Card.', 'uipro'),
 					'selectors' => [
 						'{{WRAPPER}} .uk-card' => 'background-color: {{VALUE}}',
+						'{{WRAPPER}} .uk-card-body' => 'background-color: {{VALUE}}',
 					],
 					'conditions' => [
 						'terms' => [
@@ -327,6 +338,7 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 						],
 					],
 				),
+
                 array(
                     'type'          => Controls_Manager::DIMENSIONS,
                     'name'          =>  'card_radius',
@@ -651,6 +663,19 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 					'start_section' => 'slider_settings',
 					'section_name'  => esc_html__('Slider Settings', 'uipro')
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'slider_padding',
+                    'label'         => esc_html__( 'Slider Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-slider-container' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'condition' => array(
+                        'use_slider'    => '1'
+                    ),
+                ),
 				array(
 					'type'          => Controls_Manager::SWITCHER,
 					'id'            => 'enable_navigation',
@@ -697,6 +722,22 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 						],
 					],
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'dotnav_margin',
+                    'label'         => esc_html__( 'Dot Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-dotnav' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
+                            ['name' => 'enable_dotnav', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
                 array(
                     'label' => esc_html__( 'Dot Navigation Color', 'uipro' ),
                     'name'  => 'dotnav_color',
@@ -1063,6 +1104,16 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 					'start_section' => 'content_settings',
 					'section_name'  => esc_html__('Content Settings', 'uipro')
 				),
+                array(
+                    'type'      => Controls_Manager::NUMBER,
+                    'name'      => 'introtext_number',
+                    'label'     => esc_html__( 'Limit Words', 'uipro' ),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'show_introtext', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
 				array(
 					'name'          => 'content_font_family',
 					'type'          => Group_Control_Typography::get_type(),
@@ -1089,6 +1140,28 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 					'return_value'  => '1',
 					'default'       => '0',
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'wrap_content_margin',
+                    'label'         => esc_html__( 'Wrap Content Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-post-info-wrap .uk-card-body' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'uipost_layout', 'operator' => '===', 'value' => 'style1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          =>  \Elementor\Group_Control_Box_Shadow::get_type(),
+                    'name'          => 'wrap_content_box_shadow',
+                    'label'         => esc_html__('Wrap Content Box Shadow', 'uipro'),
+                    'description'   => esc_html__('Set the Box Shadow of Wrap Content.', 'uipro'),
+                    'selector' => '{{WRAPPER}} .ui-post-info-wrap .uk-card-body',
+                ),
 
 				//Meta settings
                 array(
@@ -1193,6 +1266,28 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                     'options' => $this->get_font_uikit(),
                 ),
                 array(
+                    'type'          => Controls_Manager::ICONS,
+                    'name'          => 'comment_icon',
+                    'label'         => esc_html__('Comment Icon:', 'uipro'),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_icon_type', 'operator' => '===', 'value' => ''],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::SELECT2,
+                    'name'          => 'comment_uikit_icon',
+                    'label'         => esc_html__('Comment Icon:', 'uipro'),
+                    'default' => '',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_icon_type', 'operator' => '===', 'value' => 'uikit'],
+                        ],
+                    ],
+                    'options' => $this->get_font_uikit(),
+                ),
+                array(
                     'id'            => 'meta_icon_color',
                     'type'          =>  Controls_Manager::COLOR,
                     'label'         => esc_html__('Icon Color', 'uipro'),
@@ -1202,6 +1297,79 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                     'conditions' => [
                         'terms' => [
                             ['name' => 'meta_icon_type', 'operator' => '!=', 'value' => 'none'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'      => Controls_Manager::SWITCHER,
+                    'name'      => 'meta_author_avatar',
+                    'label'     => esc_html__( 'Show author avatar', 'uipro' ),
+                    'return_value'  => '1',
+                    'default'       => '0',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'uipost_layout', 'operator' => '===', 'value' => 'style1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'id'            => 'meta_author_avatar_size',
+                    'label'         => __( 'Avatar Width', 'uipro' ),
+                    'type'          => Controls_Manager::SLIDER,
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 500,
+                            'step' => 1,
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-post-meta-author img' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'uipost_layout', 'operator' => '===', 'value' => 'style1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'id'            => 'meta_author_avatar_border',
+                    'label'         => esc_html__( 'Avatar Border Radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-post-meta-author img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'uipost_layout', 'operator' => '===', 'value' => 'style1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'label' => esc_html__( 'Avatar Border Custom', 'uipro' ),
+                    'name'          => 'meta_author_avatar_border_custom',
+                    'type' => \Elementor\Group_Control_Border::get_type(),
+                    'selector' => '{{WRAPPER}} .ui-post-meta-author img',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'uipost_layout', 'operator' => '===', 'value' => 'style1'],
+                        ],
+                    ],
+                ),
+
+                array(
+                    'type'          => Controls_Manager::SELECT2,
+                    'id'            => 'meta_thumb_position',
+                    'label'         => esc_html__( 'Meta On Thumbnail', 'uipro' ),
+                    'options'       => UIPro_UIPosts_Helper::get_post_meta_type( 'category' ),
+                    'multiple'      => true,
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'uipost_layout', 'operator' => '===', 'value' => 'style1'],
                         ],
                     ],
                 ),
@@ -1249,6 +1417,62 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                     'separator'     => 'before',
                 ),
                 array(
+                    'id'            => 'meta_thumb_background_color',
+                    'type'          =>  Controls_Manager::COLOR,
+                    'label'         => esc_html__('Meta Thumb Background Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-post-meta-thumb' => 'background-color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'uipost_layout', 'operator' => 'in', 'value' => ['style1']],
+                            ['name' => 'meta_thumb_position', 'operator' => '!=', 'value' => ''],
+                        ],
+                    ],
+                ),
+                array(
+                    'id'            => 'meta_thumb_color',
+                    'type'          =>  Controls_Manager::COLOR,
+                    'label'         => esc_html__('Meta Thumb Title Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-post-meta-thumb' => 'color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'uipost_layout', 'operator' => 'in', 'value' => ['style1']],
+                            ['name' => 'meta_thumb_position', 'operator' => '!=', 'value' => ''],
+                        ],
+                    ],
+                ),
+                array(
+                    'id'            => 'meta_thumb_link_color',
+                    'type'          =>  Controls_Manager::COLOR,
+                    'label'         => esc_html__('Meta Thumb Link Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-post-meta-thumb a' => 'color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'uipost_layout', 'operator' => 'in', 'value' => ['style1']],
+                            ['name' => 'meta_thumb_position', 'operator' => '!=', 'value' => ''],
+                        ],
+                    ],
+                ),
+                array(
+                    'id'            => 'meta_thumb_link_hover_color',
+                    'type'          =>  Controls_Manager::COLOR,
+                    'label'         => esc_html__('Meta Thumb Link Hover Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-post-meta-thumb a:hover' => 'color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'uipost_layout', 'operator' => 'in', 'value' => ['style1']],
+                            ['name' => 'meta_thumb_position', 'operator' => '!=', 'value' => ''],
+                        ],
+                    ],
+                ),
+                array(
                     'name'          => 'meta_top_font_family',
                     'type'          => Group_Control_Typography::get_type(),
                     'scheme'        => Typography::TYPOGRAPHY_1,
@@ -1256,6 +1480,11 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                     'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
                     'selector'      => '{{WRAPPER}} .ui-post-meta-top',
                     'separator'     => 'before',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_top_position', 'operator' => '!=', 'value' => ''],
+                        ],
+                    ],
                 ),
                 array(
                     'id'            => 'meta_top_color',
@@ -1263,6 +1492,11 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                     'label'         => esc_html__('Before Title Color', 'uipro'),
                     'selectors' => [
                         '{{WRAPPER}} .ui-post-meta-top' => 'color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_top_position', 'operator' => '!=', 'value' => ''],
+                        ],
                     ],
                 ),
                 array(
@@ -1272,6 +1506,11 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                     'selectors' => [
                         '{{WRAPPER}} .ui-post-meta-top a' => 'color: {{VALUE}}',
                     ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_top_position', 'operator' => '!=', 'value' => ''],
+                        ],
+                    ],
                 ),
                 array(
                     'id'            => 'meta_top_link_hover_color',
@@ -1279,6 +1518,11 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                     'label'         => esc_html__('Before Title Link Hover Color', 'uipro'),
                     'selectors' => [
                         '{{WRAPPER}} .ui-post-meta-top a:hover' => 'color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_top_position', 'operator' => '!=', 'value' => ''],
+                        ],
                     ],
                 ),
                 array(
@@ -1296,6 +1540,11 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                         'remove-vertical' => esc_html__('None', 'uipro'),
                     ),
                     'default'           => '',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_top_position', 'operator' => '!=', 'value' => ''],
+                        ],
+                    ],
                 ),
                 array(
                     'type'          => Controls_Manager::DIMENSIONS,
@@ -1320,6 +1569,11 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                     'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
                     'selector'      => '{{WRAPPER}} .ui-post-meta-middle',
                     'separator'     => 'before',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_middle_position', 'operator' => '!=', 'value' => ''],
+                        ],
+                    ],
                 ),
                 array(
                     'id'            => 'meta_middle_color',
@@ -1327,6 +1581,11 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                     'label'         => esc_html__('After Title Color', 'uipro'),
                     'selectors' => [
                         '{{WRAPPER}} .ui-post-meta-middle' => 'color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_middle_position', 'operator' => '!=', 'value' => ''],
+                        ],
                     ],
                 ),
                 array(
@@ -1336,6 +1595,11 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                     'selectors' => [
                         '{{WRAPPER}} .ui-post-meta-middle a' => 'color: {{VALUE}}',
                     ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_middle_position', 'operator' => '!=', 'value' => ''],
+                        ],
+                    ],
                 ),
                 array(
                     'id'            => 'meta_middle_link_hover_color',
@@ -1343,6 +1607,11 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                     'label'         => esc_html__('After Title Link Hover Color', 'uipro'),
                     'selectors' => [
                         '{{WRAPPER}} .ui-post-meta-middle a:hover' => 'color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_middle_position', 'operator' => '!=', 'value' => ''],
+                        ],
                     ],
                 ),
                 array(
@@ -1360,6 +1629,11 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                         'remove-vertical' => esc_html__('None', 'uipro'),
                     ),
                     'default'           => '',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_middle_position', 'operator' => '!=', 'value' => ''],
+                        ],
+                    ],
                 ),
                 array(
                     'type'          => Controls_Manager::DIMENSIONS,
@@ -1384,6 +1658,11 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                     'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
                     'selector'      => '{{WRAPPER}} .ui-post-meta-bottom',
                     'separator'     => 'before',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_bottom_position', 'operator' => '!=', 'value' => ''],
+                        ],
+                    ],
                 ),
                 array(
                     'id'            => 'meta_bottom_color',
@@ -1391,6 +1670,11 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                     'label'         => esc_html__('After Description Color', 'uipro'),
                     'selectors' => [
                         '{{WRAPPER}} .ui-post-meta-bottom' => 'color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_bottom_position', 'operator' => '!=', 'value' => ''],
+                        ],
                     ],
                 ),
                 array(
@@ -1400,6 +1684,11 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                     'selectors' => [
                         '{{WRAPPER}} .ui-post-meta-bottom a' => 'color: {{VALUE}}',
                     ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_bottom_position', 'operator' => '!=', 'value' => ''],
+                        ],
+                    ],
                 ),
                 array(
                     'id'            => 'meta_bottom_link_hover_color',
@@ -1407,6 +1696,11 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                     'label'         => esc_html__('After Description Link Hover Color', 'uipro'),
                     'selectors' => [
                         '{{WRAPPER}} .ui-post-meta-bottom a:hover' => 'color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_bottom_position', 'operator' => '!=', 'value' => ''],
+                        ],
                     ],
                 ),
                 array(
@@ -1423,6 +1717,11 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                         'remove-vertical' => esc_html__('None', 'uipro'),
                     ),
                     'default'           => '',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_bottom_position', 'operator' => '!=', 'value' => ''],
+                        ],
+                    ],
                 ),
                 array(
                     'name'          => 'meta_footer_font_family',
@@ -1432,6 +1731,11 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                     'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
                     'selector'      => '{{WRAPPER}} .ui-post-meta-footer',
                     'separator'     => 'before',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_footer_position', 'operator' => '!=', 'value' => ''],
+                        ],
+                    ],
                 ),
                 array(
                     'id'            => 'meta_footer_color',
@@ -1440,6 +1744,11 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                     'selectors' => [
                         '{{WRAPPER}} .ui-post-meta-footer' => 'color: {{VALUE}}',
                     ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_footer_position', 'operator' => '!=', 'value' => ''],
+                        ],
+                    ],
                 ),
                 array(
                     'id'            => 'meta_footer_link_color',
@@ -1447,6 +1756,11 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                     'label'         => esc_html__('Footer Link Color', 'uipro'),
                     'selectors' => [
                         '{{WRAPPER}} .ui-post-meta-footer a' => 'color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_footer_position', 'operator' => '!=', 'value' => ''],
+                        ],
                     ],
                 ),
                 array(
@@ -1463,6 +1777,11 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                         'remove-vertical' => esc_html__('None', 'uipro'),
                     ),
                     'default'           => '',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_footer_position', 'operator' => '!=', 'value' => ''],
+                        ],
+                    ],
                 ),
 
 				//Button settings
@@ -1709,8 +2028,5 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
             return $options;
 		}
 
-		public function get_template_name() {
-			return 'base';
-		}
 	}
 }

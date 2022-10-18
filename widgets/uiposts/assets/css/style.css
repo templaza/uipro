@@ -1,26 +1,58 @@
 .ui-posts .uk-article-meta {
-  line-height: 1.6; }
-  .ui-posts .uk-article-meta > span:not(:first-child):before {
-    content: "-";
-    margin: 0 10px; }
+  line-height: 1.6;
+}
+.ui-posts .uk-article-meta > span:not(:first-child):before {
+  content: "-";
+  margin: 0 10px;
+}
 .ui-posts .ui-post-thumbnail img {
-  width: 100%; }
+  width: 100%;
+}
 .ui-posts .ui-post-tags > a:not(:last-child) {
-  margin-right: 8px; }
+  margin-right: 8px;
+}
 .ui-posts .ui-post-pagination {
   display: flex;
   justify-content: center;
-  line-height: 1; }
-  .ui-posts .ui-post-pagination > .page-numbers {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 100px;
-    width: 45px;
-    height: 45px;
-    margin: 0 2px; }
-    .ui-posts .ui-post-pagination > .page-numbers.current, .ui-posts .ui-post-pagination > .page-numbers:hover {
-      background-color: #333333;
-      color: #ffffff; }
+  line-height: 1;
+}
+.ui-posts .ui-post-pagination > .page-numbers {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100px;
+  width: 45px;
+  height: 45px;
+  margin: 0 2px;
+}
+.ui-posts .ui-post-pagination > .page-numbers.current, .ui-posts .ui-post-pagination > .page-numbers:hover {
+  background-color: #333333;
+  color: #ffffff;
+}
+.ui-posts.style1 .ui-post-meta-thumb {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+}
+.ui-posts.style1 .ui-post-meta-thumb span {
+  padding-right: 10px;
+}
+.ui-posts.style1 .ui-post-meta-thumb span i {
+  background: #fff;
+  padding: 10px;
+  margin-right: 10px;
+}
+.ui-posts.style1 .ui-post-meta-middle {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 80px;
+}
+.ui-posts.style1 .ui-post-meta-middle span {
+  display: block;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
 
 /*# sourceMappingURL=style.css.map */

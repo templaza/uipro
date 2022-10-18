@@ -38,4 +38,32 @@
       }
     }
   }
+  &.style1{
+    .ui-post-meta-thumb{
+      position:absolute;
+      top:0;
+      right:0;
+      display:flex;
+      span{
+        padding-right:10px;
+        i{
+          background:#fff;
+          padding:10px;
+          margin-right:10px;
+        }
+      }
+    }
+    .ui-post-meta-middle{
+      position:absolute;
+      bottom:0;
+      left:0;
+      width:80px;
+      span{
+        display:block;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+      }
+    }
+  }
+
 }

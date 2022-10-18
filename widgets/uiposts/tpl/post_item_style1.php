@@ -8,7 +8,7 @@ $tag_style 		= (isset($instance['tag_style']) && $instance['tag_style']) ? $inst
 $card_style 	= (isset($instance['card_style']) && $instance['card_style']) ? ' uk-card-'. $instance['card_style'] : '';
 $card_size 		= (isset($instance['card_size']) && $instance['card_size']) ? $instance['card_size'] : '';
 $card_size_cls  = $card_size ? ' uk-card-'.$card_size : '';
-$uk_card_body   = $card_size != 'none' ? ' uk-card-body' : '';
+$uk_card_body   = $card_size != 'none' ? ' uk-card-body uk-inline' : '';
 
 //Title
 $heading_selector = (isset($instance['title_tag']) && $instance['title_tag']) ? $instance['title_tag'] : 'h3';
@@ -95,6 +95,9 @@ if ($categories && count($categories)) {
 }
 
 // Meta Positions
+$meta_thumb_position    =   $meta_top_position =   $meta_middle_position = $meta_bottom_position = array();
+$meta_thumb_type        =   ( isset( $instance['meta_thumb_position'] ) ) ? $instance['meta_thumb_position'] : array();
+$meta_thumb_position    =   UIPro_UIPosts_Helper::get_post_meta_content($meta_thumb_type, $item, $instance, array('cat_content' => $cat_content, 'tag_content' => $tag_content));
 $meta_top_position      =   $meta_middle_position = $meta_bottom_position = array();
 $meta_top_type          =   ( isset( $instance['meta_top_position'] ) ) ? $instance['meta_top_position'] : array();
 $meta_top_position      =   UIPro_UIPosts_Helper::get_post_meta_content($meta_top_type, $item, $instance, array('cat_content' => $cat_content, 'tag_content' => $tag_content));
@@ -117,7 +120,15 @@ if (!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == '
     if ($image_position == 'left' || $image_position == 'right') {
         $output .=  '<div class="uk-card-media-'.$image_position.' uk-cover-container'.($image_position == 'right' ? ' uk-flex-last@m' : '').$image_width.'">';
     }
-	$output .=  '<a class="ui-post-thumbnail uk-display-block uk-card-media-top'.esc_attr($cover_image.$image_border).'" href="'. get_permalink( $item->ID ) .'">'. UIPro_UIPosts_Helper::get_post_thumbnail($item, $thumbnail_size, ($image_position == 'left' || $image_position == 'right' ? 'data-uk-cover' : '')) .'</a>';
+    if(count($meta_thumb_position)) {
+        $output .= '<div class="uk-inline">';
+        $output .=  '<a class="ui-post-thumbnail uk-display-block uk-card-media-top'.esc_attr($cover_image.$image_border).'" href="'. get_permalink( $item->ID ) .'">'. UIPro_UIPosts_Helper::get_post_thumbnail($item, $thumbnail_size, ($image_position == 'left' || $image_position == 'right' ? 'data-uk-cover' : '')) .'</a>';
+        $output .= '<div class="ui-post-meta-thumb uk-article-meta uk-flex uk-flex-middle">';
+        $output .= wp_kses(implode('', $meta_thumb_position), wp_kses_allowed_html('post'));
+        $output .= '</div></div>';
+    }else{
+        $output .=  '<a class="ui-post-thumbnail uk-display-block uk-card-media-top'.esc_attr($cover_image.$image_border).'" href="'. get_permalink( $item->ID ) .'">'. UIPro_UIPosts_Helper::get_post_thumbnail($item, $thumbnail_size, ($image_position == 'left' || $image_position == 'right' ? 'data-uk-cover' : '')) .'</a>';
+    }
     if ($image_position == 'left' || $image_position == 'right') {
         $output .=  '<canvas width="600" height="400"></canvas>';
         $output .=  '</div>';

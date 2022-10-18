@@ -142,7 +142,7 @@ class TemPlaza_Woo_El_Helper {
 
 			if ( $settings['cats_count'] == 'yes' ) {
 				$count = '<span class="cat-count">';
-				$count .= sprintf( _n( '(%s)', '(%s)', $term->count, 'templaza-elements' ), number_format_i18n( $term->count ) );
+				$count .= sprintf( _n( '(%s)', '(%s)', $term->count, 'uipro' ), number_format_i18n( $term->count ) );
 				$count .= '</span>';
 			}
 

@@ -60,7 +60,7 @@ if ( !class_exists( 'UIPro_El' ) ) {
 			$result = Plugin::instance()->elements_manager->add_category(
 				'uipro',
 				array(
-					'title' => apply_filters( 'templaza_shortcode_group_name', esc_html__( 'TemPlaza', 'templaza-elements' ) ),
+					'title' => apply_filters( 'templaza_shortcode_group_name', esc_html__( 'TemPlaza', 'uipro' ) ),
 					'icon'  => 'fa fa-plug'
 				)
 			);
