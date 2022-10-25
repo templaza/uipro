@@ -148,6 +148,30 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
                     'default'       => 'yes'
                 ),
                 array(
+                    'type'          => Controls_Manager::SWITCHER,
+                    'id'            => 'uiap_enable_ajax',
+                    'label'         => esc_html__( 'Enable Ajax Search', 'uipro' ),
+                    'default'       => 'no'
+                ),
+                array(
+                    'type'          => Controls_Manager::SWITCHER,
+                    'id'            => 'uiap_ajax_no_button',
+                    'label'         => esc_html__( 'Filtering instantly (no buttons required)', 'uipro' ),
+                    'default'       => 'no',
+                    'condition'     => array(
+                        'uiap_enable_ajax'    => 'yes'
+                    ),
+                ),
+                array(
+                    'type'          => Controls_Manager::SWITCHER,
+                    'id'            => 'uiap_ajax_update_url',
+                    'label'         => esc_html__( 'Update Url', 'uipro' ),
+                    'default'       => 'no',
+                    'condition'     => array(
+                        'uiap_enable_ajax'    => 'yes'
+                    ),
+                ),
+                array(
                     'type'          => Controls_Manager::DIMENSIONS,
                     'name'          =>  'label_padding',
                     'label'         => esc_html__( 'Label Padding', 'uipro' ),

@@ -1156,6 +1156,21 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                     ],
                 ),
                 array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'wrap_content_hover_margin',
+                    'label'         => esc_html__( 'Wrap Content Hover Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-article:hover .uk-card-body' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'uipost_layout', 'operator' => '===', 'value' => 'style1'],
+                        ],
+                    ],
+                ),
+                array(
                     'type'          =>  \Elementor\Group_Control_Box_Shadow::get_type(),
                     'name'          => 'wrap_content_box_shadow',
                     'label'         => esc_html__('Wrap Content Box Shadow', 'uipro'),
@@ -1279,6 +1294,28 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                     'type'          => Controls_Manager::SELECT2,
                     'name'          => 'comment_uikit_icon',
                     'label'         => esc_html__('Comment Icon:', 'uipro'),
+                    'default' => '',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_icon_type', 'operator' => '===', 'value' => 'uikit'],
+                        ],
+                    ],
+                    'options' => $this->get_font_uikit(),
+                ),
+                array(
+                    'type'          => Controls_Manager::ICONS,
+                    'name'          => 'view_icon',
+                    'label'         => esc_html__('Post View Icon:', 'uipro'),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_icon_type', 'operator' => '===', 'value' => ''],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::SELECT2,
+                    'name'          => 'view_uikit_icon',
+                    'label'         => esc_html__('Post View Icon:', 'uipro'),
                     'default' => '',
                     'conditions' => [
                         'terms' => [

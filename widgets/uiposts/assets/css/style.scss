@@ -64,6 +64,42 @@
         padding-right: 0 !important;
       }
     }
+    .ui-author-avatar{
+      position:absolute;
+      top:-30px;
+    }
+    .uk-card-body{
+      position:absolute;
+      -webkit-transition: all 0.3s ease-in-out 0s;
+      -moz-transition: all 0.3s ease-in-out 0s;
+      -ms-transition: all 0.3s ease-in-out 0s;
+      -o-transition: all 0.3s ease-in-out 0s;
+      transition: all 0.3s ease-in-out 0s;
+    }
+    .uk-card-footer{
+      padding:0 !important;
+      width:80px;
+      .ui-post-meta-footer{
+        display:flex;
+        flex-direction: column;
+        justify-content: center;
+        span{
+          border-bottom:1px solid #f3f3f3;
+          padding:20px 0;
+          text-align: center;
+          span{
+            display:none;
+          }
+          i{
+            display: block;
+            padding:3px 0;
+          }
+        }
+      }
+    }
+    .uk-article{
+      overflow: hidden;
+    }
   }
 
 }

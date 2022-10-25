@@ -174,7 +174,7 @@ $output .= '</div>'; // End card body
 
 if(count($meta_footer_position)) {
     $output .= '<div class="uk-card-footer">';
-    $output .= '<div class="ui-post-meta-footer uk-article-meta'.esc_attr($meta_footer_margin).'" data-uk-margin>';
+    $output .= '<div class="ui-post-meta-footer uk-article-meta'.esc_attr($meta_footer_margin).'">';
     $output .= wp_kses(implode('', $meta_footer_position), wp_kses_allowed_html('post'));
     $output .= '</div>';
     $output .=  '</div>'; //End card footer

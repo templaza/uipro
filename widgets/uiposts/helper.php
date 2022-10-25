@@ -60,7 +60,7 @@ class UIPro_UIPosts_Helper extends UIPro_Helper {
                 }
             }
             if($author_show_avatar =='1'){
-                $author_avatar = '<a href="'. esc_url(get_author_posts_url(get_the_author_meta('ID'))).'">
+                $author_avatar = '<a class="ui-author-avatar" href="'. esc_url(get_author_posts_url(get_the_author_meta('ID'))).'">
                 <img src="'.esc_url( get_avatar_url( get_the_author_meta('ID'),100) ) .'" alt=""/>
             </a>';
             }else{
@@ -120,11 +120,11 @@ class UIPro_UIPosts_Helper extends UIPro_Helper {
                     $media   .=  '<i class="' . $comment_icon['value'] .'" aria-hidden="true"></i>';
                 }
             }
-            $templaza_comment_count = wp_count_comments($item);
+            $templaza_comment_count = wp_count_comments($item->ID);
             if ($templaza_comment_count->approved == 1) {
-                $comment_html= esc_html__('Comment:','uipro').' '.esc_html($templaza_comment_count->approved);
+                $comment_html= '<span>'.esc_html__('Comment:','uipro').'</span> '.esc_html($templaza_comment_count->approved);
             }else{
-                $comment_html= esc_html__('Comments:','uipro').' '.esc_html($templaza_comment_count->approved);
+                $comment_html= '<span>'.esc_html__('Comments:','uipro').'</span> '.esc_html($templaza_comment_count->approved);
             }
                 $meta_arr[] = '<span class="ui-post-comment-count">'. $media.$comment_html .'</span>';
         }
@@ -139,12 +139,11 @@ class UIPro_UIPosts_Helper extends UIPro_Helper {
                     $media   .=  '<i class="' . $view_icon['value'] .'" aria-hidden="true"></i>';
                 }
             }
-            $count_key = 'post_views_count';
-            $count = get_post_meta($item, $count_key, true);
+            $count = get_post_meta($item->ID, 'post_views_count', true);
             if ($count == '' || empty($count)) { // If such views are not
-                $view_html = esc_html__('View: 0','uipro'); // return value of 0
+                $view_html = '<span>'.esc_html__('View:','uipro').'</span> '.esc_html__('0','uipro').''; // return value of 0
             }else{
-                $view_html = esc_html__('Views:','uipro').' '.$count;
+                $view_html = '<span>'.esc_html__('Views:','uipro').'</span> '.$count;
             }
                 $meta_arr[] = '<span class="ui-post-views">'. $media.$view_html .'</span>';
         }
