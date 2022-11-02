@@ -22,7 +22,51 @@ if ( ! $results ) {
     return;
 }
 $elementid = uniqid('templaza_');
+add_filter( 'woocommerce_loop_add_to_cart_link', 'add_to_cart_link', 20, 3 );
+add_filter( 'woocommerce_get_star_rating_html', 'star_rating_html', 10, 3 );
+function add_to_cart_link( $html, $product, $args ) {
+		return sprintf(
+			'<a href="%s" data-quantity="%s" class="%s tz-loop-button tz-loop_atc_button" %s data-text="%s" data-title="%s" >%s<span class="add-to-cart-text loop_button-text">%s</span></a>',
+			esc_url( $product->add_to_cart_url() ),
+			esc_attr( isset( $args['quantity'] ) ? $args['quantity'] : 1 ),
+			esc_attr( isset( $args['class'] ) ? $args['class'] : 'button' ),
+			isset( $args['attributes'] ) ? wc_implode_html_attributes( $args['attributes'] ) : '',
+			esc_html( $product->add_to_cart_text() ),
+			esc_html( $product->get_title() ),
+			'<i class="fas fa-shopping-cart"></i>',
+			esc_html( $product->add_to_cart_text() )
+		);
+	}
+function star_rating_html( $html, $rating, $count ) {
+    $html = '<span class="max-rating rating-stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            </span>';
+    $html .= '<span class="user-rating rating-stars" style="width:' . ( ( $rating / 5 ) * 100 ) . '%">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            </span>';
 
+    $html .= '<span class="screen-reader-text">';
+
+    if ( 0 < $count ) {
+        /* translators: 1: rating 2: rating count */
+        $html .= sprintf( _n( 'Rated %1$s out of 5 based on %2$s customer rating', 'Rated %1$s out of 5 based on %2$s customer ratings', $count, 'agruco' ), '<strong class="rating">' . esc_html( $rating ) . '</strong>', '<span class="rating">' . esc_html( $count ) . '</span>' );
+    } else {
+        /* translators: %s: rating */
+        $html .= sprintf( esc_html__( 'Rated %s out of 5', 'agruco' ), '<strong class="rating">' . esc_html( $rating ) . '</strong>' );
+    }
+
+    $html .= '</span>';
+
+    return $html;
+}
 ?>
 <div class=" <?php echo esc_attr($general_styles['container_cls'] . $general_styles['content_cls']);?>" <?php echo wp_kses($general_styles['animation'],'post');?>>
     <div class="product-content">
@@ -142,7 +186,7 @@ $elementid = uniqid('templaza_');
             add_action('templaza_product_loop_thumbnail_element', array(
                 TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::get_instance(),
                 'product_loop_buttons_close'
-            ), 10);
+            ), 25);
             if (!empty($featured_icons) && $featured_icons['cart']=='1' ) {
                 if(function_exists('woocommerce_template_loop_add_to_cart')) {
                     add_action('woocommerce_after_shop_loop_item', 'woocommerce_template_loop_add_to_cart', 20);
