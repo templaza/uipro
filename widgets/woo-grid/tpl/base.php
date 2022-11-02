@@ -55,7 +55,7 @@ $elementid = uniqid('templaza_');
             add_action('templaza_product_loop_thumbnail_element', array(
                 TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::get_instance(),
                 'product_loop_buttons_open'
-            ), 10);
+            ), 5);
             if (!empty($featured_icons) && $featured_icons['wishlist'] == '1') {
                 add_action('templaza_product_loop_thumbnail_element', array(
                     TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::get_instance(),
@@ -67,6 +67,7 @@ $elementid = uniqid('templaza_');
                     add_action('templaza_product_loop_thumbnail_element', 'woocommerce_template_loop_add_to_cart', 10);
                 }
             }
+
             add_action('templaza_product_loop_thumbnail_element', array(
                 TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::get_instance(),
                 'product_loop_buttons_close'
@@ -74,9 +75,9 @@ $elementid = uniqid('templaza_');
 
             if (!empty($featured_icons) && $featured_icons['quickview'] == '1') {
                 add_action('templaza_product_loop_thumbnail_element', array(
-                    TemPlaza_Woo\Templaza_Woo_Helper::instance(),
+                    TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::get_instance(),
                     'templaza_quick_view_button'
-                ), 115);
+                ), 100);
             }
 
             if (intval(get_option('mobile_product_loop_atc')) && function_exists('woocommerce_template_loop_add_to_cart')) {
@@ -166,6 +167,10 @@ $elementid = uniqid('templaza_');
 
         // Icons over thumbnail on hover
         default:
+            add_action('templaza_product_loop_thumbnail_element', array(
+                TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::get_instance(),
+                'product_loop_buttons_open'
+            ), 5);
 
             if (!empty($featured_icons) && $featured_icons['cart'] == '1') {
                 if (function_exists('woocommerce_template_loop_add_to_cart')) {
@@ -185,6 +190,10 @@ $elementid = uniqid('templaza_');
                     'templaza_wishlist_button'
                 ), 10);
             }
+            add_action('templaza_product_loop_thumbnail_element', array(
+                TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::get_instance(),
+                'product_loop_buttons_close'
+            ), 100);
 
             if (intval(get_option('mobile_product_loop_atc'))) {
                 if (function_exists('woocommerce_template_loop_add_to_cart')) {
