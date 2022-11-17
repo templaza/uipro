@@ -62,11 +62,14 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
         if(isset(static::$cache[$store_id])){
             return static::$cache[$store_id];
         }
-        $slug_cat = array('ap_category' => esc_html__( 'Advanced Product Category', 'uipro' ));
+        $slug_cat = array(
+            'ap_category' => esc_html__( 'Advanced Product Category', 'uipro' ),
+            'ap_branch' => esc_html__( 'Branch', 'uipro' )
+        );
         $slug_tax = array();
         if(!empty($categories) && count($categories)){
             foreach ($categories as $cat){
-                $slug_tax   = array('ap_product_'.get_post_meta($cat -> ID, 'slug', true)=> $cat -> post_title);
+                $slug_tax[''.get_post_meta($cat -> ID, 'slug', true)]   = $cat -> post_title;
             }
         }
         $all_tax = array_merge($slug_cat,$slug_tax);
@@ -85,7 +88,7 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                 'show_label'    => true,
                 'label'         => esc_html__( 'Category Layout', 'uipro' ),
                 'options'       => array(
-                    'base'      => esc_html__( 'Default', 'uipro' ),
+                    'base'      => esc_html__( 'Slider', 'uipro' ),
                     'grid'      => esc_html__( 'Grid', 'uipro' ),
                 ),
                 'default'       => 'base',
@@ -106,6 +109,16 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                 'multiple'      => true,
                 'condition'     => array(
                     'source'    => 'ap_category'
+                ),
+            ),
+            array(
+                'type'          => Controls_Manager::SELECT2,
+                'id'            => 'ap_product_branch',
+                'label'         => esc_html__( 'Select Branch', 'uipro' ),
+                'options'       => UIPro_Helper::get_cat_taxonomy( 'ap_branch' ),
+                'multiple'      => true,
+                'condition'     => array(
+                    'source'    => 'ap_branch'
                 ),
             ),
         );
@@ -129,7 +142,7 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                     'options'       => $cat_options,
                     'multiple'      => true,
                     'condition'     => array(
-                        'source'    => 'ap_product_'.$slug.'',
+                        'source'    => ''.$slug.'',
                     ),
                 );
             }
@@ -153,17 +166,22 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
 
                 ),
                 array(
-                    'type'          => Controls_Manager::NUMBER,
-                    'id'            => 'limit',
-                    'label'         => esc_html__( 'Limit', 'uipro' ),
-                    'description'   => esc_html__( 'Set the number of articles you want to display.', 'uipro' ),
-                    'min' => 1,
-                    'max' => 90,
-                    'step' => 1,
-                    'default' => 3,
-                    'condition'     => array(
-                        'ap_product_source!'    => 'custom'
-                    ),
+                    'id' => 'show_product_count',
+                    'type' => Controls_Manager::SWITCHER,
+                    'label'     => esc_html__( 'Show Product Count', 'uipro' ),
+                    'label_on' => esc_html__( 'Yes', 'uipro' ),
+                    'label_off' => esc_html__( 'No', 'uipro' ),
+                    'return_value' => '1',
+                    'default' => '0',
+                ),
+                array(
+                    'id' => 'hide_empty',
+                    'type' => Controls_Manager::SWITCHER,
+                    'label'     => esc_html__( 'Hide Empty', 'uipro' ),
+                    'label_on' => esc_html__( 'Yes', 'uipro' ),
+                    'label_off' => esc_html__( 'No', 'uipro' ),
+                    'return_value' => true,
+                    'default' => false,
                 ),
                 array(
                     'id'          => 'large_desktop_columns',
@@ -324,6 +342,21 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                 ),
                 array(
                     'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'card_margin',
+                    'label'         => esc_html__( 'Card Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-card .uk-card-body' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'card_size', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
                     'name'          =>  'card_radius',
                     'label'         => esc_html__( 'Border radius', 'uipro' ),
                     'responsive'    =>  true,
@@ -335,12 +368,25 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                 // image settings
                 array(
                     'type'          => Controls_Manager::SELECT,
+                    'id'            => 'image_position',
+                    'label' => esc_html__( 'Image Position', 'uipro' ),
+                    'default' => 'uk-card-media-top',
+                    'options' => [
+                        'uk-card-media-top' => esc_html__('Top', 'uipro'),
+                        'uk-card-media-bottom' => esc_html__('Bottom', 'uipro'),
+                        'uk-card-media-left' => esc_html__('Left', 'uipro'),
+                        'uk-card-media-right' => esc_html__('Right', 'uipro'),
+                    ],
+                    'start_section' => 'ap-image',
+                    'section_name'      => esc_html__('Image Settings', 'uipro')
+                ),
+                array(
+                    'type'          => Controls_Manager::SELECT,
                     'id'            => 'image_size',
                     'label'         => esc_html__( 'Select Image Size', 'uipro' ),
                     'options'       => $arr_thumbnails,
                     'multiple'      => true,
-                    'start_section' => 'ap-image',
-                    'section_name'      => esc_html__('Image Settings', 'uipro')
+
                 ),
                 array(
                     'name'          => 'image_width',
@@ -431,6 +477,23 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                     'label'         => esc_html__('Title Color', 'uipro'),
                     'selectors' => [
                         '{{WRAPPER}} .ap-title a' => 'color: {{VALUE}}',
+                    ],
+                ),
+
+                array(
+                    'type'          => Group_Control_Typography::get_type(),
+                    'name'          => 'count_typography',
+                    'scheme'        => Typography::TYPOGRAPHY_1,
+                    'label'         => esc_html__('Product Count Font', 'uipro'),
+                    'description'   => esc_html__('Select a font family.', 'uipro'),
+                    'selector'      => '{{WRAPPER}} .ap-product-count',
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'count_color',
+                    'label'         => esc_html__('Product Count Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ap-product-count' => 'color: {{VALUE}}',
                     ],
                 ),
 

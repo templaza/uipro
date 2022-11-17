@@ -8,7 +8,7 @@ $source   = ( isset( $instance['source'] ) && $instance['source'] ) ? $instance[
 $ordering   = ( isset( $instance['ordering'] ) && $instance['ordering'] ) ? $instance['ordering'] : 'latest';
 $branch     = ( isset( $instance[$resource.'_branch'] ) && $instance[$resource.'_branch'] ) ? $instance[$resource.'_branch'] : array('0');
 $image_size   = ( isset( $instance['image_size'] ) && $instance['image_size'] ) ? $instance['image_size'] : 'full';
-$category   = ( isset( $instance['ap_category'] ) && $instance['ap_category'] ) ? $instance['ap_category'] : '';
+$category   = ( isset( $instance['ap_product_category'] ) && $instance['ap_product_category'] ) ? $instance['ap_product_category'] : '';
 
 $card_style    = ( isset( $instance['card_style'] ) && $instance['card_style'] ) ? $instance['card_style'] : '';
 $card_size    = ( isset( $instance['card_size'] ) && $instance['card_size'] ) ? $instance['card_size'] : '';
@@ -23,8 +23,7 @@ $column_grid_gap    = ( isset( $instance['column_grid_gap'] ) && $instance['colu
 $slider_nav = (isset($instance['show_nav']) && $instance['show_nav']) ? intval($instance['show_nav']) : 0;
 $slider_dots = (isset($instance['show_dots']) && $instance['show_dots']) ? intval($instance['show_dots']) : 0;
 $image_cover = (isset($instance['image_cover']) && $instance['image_cover']) ? intval($instance['image_cover']) : 0;
-
-if($source = 'ap_category'){
+if($source == 'ap_category'){
     if(empty($category) || $category == ''){
         $get_terms_attributes = array (
             'taxonomy' => 'ap_category', //empty string(''), false, 0 don't work, and return empty array
@@ -34,7 +33,29 @@ if($source = 'ap_category'){
         );
         $cat_results = get_terms($get_terms_attributes);
     } else{
-        $cat_results = $category;
+        $cat_results = '';
+    }
+}else{
+    $custom_tax = ( isset( $instance['ap_product_'.$source.''] ) && $instance['ap_product_'.$source.''] ) ? $instance['ap_product_'.$source.''] : '';
+    if(empty($custom_tax) || $custom_tax == ''){
+        $get_terms_attributes = array (
+            'taxonomy' => $source, //empty string(''), false, 0 don't work, and return empty array
+            'orderby' => 'name',
+            'order' => 'ASC',
+            'hide_empty' => true, //can be 1, '1' too
+            'number' => 0, //can be 1, '1' too
+        );
+        $cat_results = get_terms($get_terms_attributes);
+    } else{
+        $get_terms_attributes = array (
+            'taxonomy' => $source, //empty string(''), false, 0 don't work, and return empty array
+            'orderby' => 'name',
+            'order' => 'ASC',
+            'term_ids'       => $custom_tax,
+            'hide_empty' => false, //can be 1, '1' too
+
+        );
+        $cat_results = get_terms($get_terms_attributes);
     }
 }
 if($cat_results){

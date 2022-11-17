@@ -208,6 +208,7 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Slideshow' ) ) {
                     'type' => \Elementor\Controls_Manager::WYSIWYG,
                     'default' => esc_html__( '' , 'uipro' ),
                     'label_block' => true,
+
                 ]
             );
 
@@ -278,6 +279,32 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Slideshow' ) ) {
                     'options'       => $arr_fields,
                     'multiple'      => true,
                 ),
+                array(
+                    'type'          => Controls_Manager::SELECT2,
+                    'id'            => 'custom_fields_bottom',
+                    'label'         => esc_html__( 'Custom Fields in Bottom', 'uipro' ),
+                    'options'       => $arr_fields,
+                    'multiple'      => true,
+                    'condition'     => array(
+                        'layout'    => 'style1'
+                    ),
+                ),
+                array(
+                    'type'          => Controls_Manager::SELECT,
+                    'id'            => 'ap_style1_container',
+                    'label'         => esc_html__( 'Container Content', 'uipro' ),
+                    'options'       => array(
+                        'boxed'    => esc_html__('Boxed', 'uipro'),
+                        'full_width'    => esc_html__('Full Width', 'uipro'),
+                    ),
+                    'default'       => 'boxed',
+                    'description'   => esc_html__( 'Select container content.', 'uipro' ),
+                    'condition'     => array(
+                        'layout'    => 'style1'
+                    ),
+                    'start_section' => 'ap-slideshow-box',
+                    'section_name'      => esc_html__('Slideshow Box Settings', 'uipro')
+                ),
 
                 array(
                     'type'          => Controls_Manager::DIMENSIONS,
@@ -288,8 +315,6 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Slideshow' ) ) {
                     'selectors'     => [
                         '{{WRAPPER}} .ap_slideshow' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                     ],
-                    'start_section' => 'ap-slideshow-box',
-                    'section_name'      => esc_html__('Slideshow Box Settings', 'uipro')
                 ),
                 array(
                     'type'          => Controls_Manager::DIMENSIONS,
@@ -309,6 +334,11 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Slideshow' ) ) {
                     'size_units'    => [ 'px','%'],
                     'selectors'     => [
                         '{{WRAPPER}} .ap-slideshow-image' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout', 'operator' => 'in', 'value' => ['base']],
+                        ],
                     ],
                 ),
 

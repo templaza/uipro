@@ -288,7 +288,6 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 					'description'   => esc_html__('Set the Background Color of Card.', 'uipro'),
 					'selectors' => [
 						'{{WRAPPER}} .uk-card' => 'background-color: {{VALUE}}',
-						'{{WRAPPER}} .uk-card-body' => 'background-color: {{VALUE}}',
 					],
 					'conditions' => [
 						'terms' => [
@@ -1096,7 +1095,7 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 					'type'          => Controls_Manager::SWITCHER,
 					'id'            => 'show_introtext',
 					'label'         => esc_html__('Show Introtext', 'uipro'),
-					'description'   => esc_html__( 'Whether to show instrotext.', 'uipro' ),
+					'description'   => esc_html__( 'Whether to show introtext.', 'uipro' ),
 					'label_on' => esc_html__( 'Yes', 'uipro' ),
 					'label_off' => esc_html__( 'No', 'uipro' ),
 					'return_value' => '1',
@@ -1114,6 +1113,26 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                         ],
                     ],
                 ),
+                array(
+                    'type'          => Controls_Manager::SELECT,
+                    'id'            => 'intro_position',
+                    'label'         => esc_html__( 'Border', 'uipro' ),
+                    'description'   => esc_html__( 'Select the image\'s border style.', 'uipro' ),
+                    'options'       => array(
+                        'absolute' => esc_html__('Absolute', 'uipro'),
+                        'relative' => esc_html__('Relative', 'uipro'),
+                    ),
+                    'default'       => 'absolute',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'show_introtext', 'operator' => '===', 'value' => '1'],
+                            ['name' => 'uipost_layout', 'operator' => '===', 'value' => 'style1'],
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-posts.style1 .uk-card-body' => 'position: {{VALUE}}',
+                    ],
+                ),
 				array(
 					'name'          => 'content_font_family',
 					'type'          => Group_Control_Typography::get_type(),
@@ -1129,6 +1148,20 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 					'selectors' => [
 						'{{WRAPPER}} .ui-post-introtext' => 'color: {{VALUE}}',
 					],
+				),
+				array(
+					'id'            => 'content_bg_color',
+					'type'          =>  Controls_Manager::COLOR,
+					'label'         => esc_html__('Background Color', 'uipro'),
+					'selectors' => [
+						'{{WRAPPER}} .ui-posts.style1 .uk-card-body' => 'background-color: {{VALUE}}',
+					],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'show_introtext', 'operator' => '===', 'value' => '1'],
+                            ['name' => 'uipost_layout', 'operator' => '===', 'value' => 'style1'],
+                        ],
+                    ],
 				),
 				array(
 					'type'          => Controls_Manager::SWITCHER,
@@ -1368,6 +1401,7 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                     'conditions' => [
                         'terms' => [
                             ['name' => 'uipost_layout', 'operator' => '===', 'value' => 'style1'],
+                            ['name' => 'meta_author_avatar', 'operator' => '===', 'value' => '1'],
                         ],
                     ],
                 ),
@@ -1383,6 +1417,7 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                     'conditions' => [
                         'terms' => [
                             ['name' => 'uipost_layout', 'operator' => '===', 'value' => 'style1'],
+                            ['name' => 'meta_author_avatar', 'operator' => '===', 'value' => '1'],
                         ],
                     ],
                 ),
@@ -1394,6 +1429,7 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                     'conditions' => [
                         'terms' => [
                             ['name' => 'uipost_layout', 'operator' => '===', 'value' => 'style1'],
+                            ['name' => 'meta_author_avatar', 'operator' => '===', 'value' => '1'],
                         ],
                     ],
                 ),
