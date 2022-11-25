@@ -94,6 +94,103 @@ if ( ! class_exists( 'UIPro_Config_UIDealership_User' ) ) {
                     'label'         => esc_html__( 'Show Email', 'uipro' ),
                     'default'       => 'yes'
                 ),
+                array(
+                    'type'          => Controls_Manager::SWITCHER,
+                    'id'            => 'user_address',
+                    'label'         => esc_html__( 'Show Address', 'uipro' ),
+                    'default'       => 'yes'
+                ),
+                array(
+                    'type'          => Controls_Manager::SWITCHER,
+                    'id'            => 'user_product_number',
+                    'label'         => esc_html__( 'Show Product Number', 'uipro' ),
+                    'default'       => 'yes'
+                ),
+                array(
+                    'id'          => 'large_desktop_columns',
+                    'label' => esc_html__( 'Large Desktop Columns', 'uipro' ),
+                    'type' => Controls_Manager::SELECT,
+                    'options'       => array(
+                        '1'    => esc_html__('1 Column', 'uipro'),
+                        '2'    => esc_html__('2 Columns', 'uipro'),
+                        '3'    => esc_html__('3 Columns', 'uipro'),
+                        '4'    => esc_html__('4 Columns', 'uipro'),
+                        '5'    => esc_html__('5 Columns', 'uipro'),
+                        '6'    => esc_html__('6 Columns', 'uipro'),
+                    ),
+                    'default'   => '3',
+                    'separator'     => 'before',
+                ),
+                array(
+                    'id'          => 'desktop_columns',
+                    'label' => esc_html__( 'Desktop Columns', 'uipro' ),
+                    'type' => Controls_Manager::SELECT,
+                    'options'       => array(
+                        '1'    => esc_html__('1 Column', 'uipro'),
+                        '2'    => esc_html__('2 Columns', 'uipro'),
+                        '3'    => esc_html__('3 Columns', 'uipro'),
+                        '4'    => esc_html__('4 Columns', 'uipro'),
+                        '5'    => esc_html__('5 Columns', 'uipro'),
+                        '6'    => esc_html__('6 Columns', 'uipro'),
+                    ),
+                    'default'   => '3',
+                ),
+                array(
+                    'id'          => 'laptop_columns',
+                    'label' => esc_html__( 'Laptop Columns', 'uipro' ),
+                    'type' => Controls_Manager::SELECT,
+                    'options'       => array(
+                        '1'    => esc_html__('1 Column', 'uipro'),
+                        '2'    => esc_html__('2 Columns', 'uipro'),
+                        '3'    => esc_html__('3 Columns', 'uipro'),
+                        '4'    => esc_html__('4 Columns', 'uipro'),
+                        '5'    => esc_html__('5 Columns', 'uipro'),
+                        '6'    => esc_html__('6 Columns', 'uipro'),
+                    ),
+                    'default'   => '3'
+                ),
+                array(
+                    'id'          => 'tablet_columns',
+                    'label' => esc_html__( 'Tablet Columns', 'uipro' ),
+                    'type' => Controls_Manager::SELECT,
+                    'options'       => array(
+                        '1'    => esc_html__('1 Column', 'uipro'),
+                        '2'    => esc_html__('2 Columns', 'uipro'),
+                        '3'    => esc_html__('3 Columns', 'uipro'),
+                        '4'    => esc_html__('4 Columns', 'uipro'),
+                        '5'    => esc_html__('5 Columns', 'uipro'),
+                        '6'    => esc_html__('6 Columns', 'uipro'),
+                    ),
+                    'default'   => '2'
+                ),
+                array(
+                    'id'          => 'mobile_columns',
+                    'label' => esc_html__( 'Mobile Columns', 'uipro' ),
+                    'type' => Controls_Manager::SELECT,
+                    'options'       => array(
+                        '1'    => esc_html__('1 Column', 'uipro'),
+                        '2'    => esc_html__('2 Columns', 'uipro'),
+                        '3'    => esc_html__('3 Columns', 'uipro'),
+                        '4'    => esc_html__('4 Columns', 'uipro'),
+                        '5'    => esc_html__('5 Columns', 'uipro'),
+                        '6'    => esc_html__('6 Columns', 'uipro'),
+                    ),
+                    'default'   => '1'
+                ),
+                array(
+                    'type'          => Controls_Manager::SELECT,
+                    'id'            => 'column_grid_gap',
+                    'label'         => esc_html__('Column Gap', 'uipro'),
+                    'description'   => esc_html__('Modified Gap Column', 'uipro'),
+                    'options'       => array(
+                        '' => esc_html__('Default', 'uipro'),
+                        'small' => esc_html__('Small', 'uipro'),
+                        'medium' => esc_html__('Medium', 'uipro'),
+                        'large' => esc_html__('Large', 'uipro'),
+                        'collapse' => esc_html__('Collapse', 'uipro'),
+                    ),
+                    'default'           => '',
+                ),
 
 				//Card Settings
 				array(
@@ -266,27 +363,21 @@ if ( ! class_exists( 'UIPro_Config_UIDealership_User' ) ) {
 					'default'       => 'after',
 				),
 				array(
-					'type'          =>  Controls_Manager::SELECT,
-					'name'          => 'name_heading_margin',
-					'label'         => esc_html__('Title Margin', 'uipro'),
-					'description'   => esc_html__('Set the vertical margin for name.', 'uipro'),
-					'options'       => array(
-						''          => esc_html__('Inherit', 'uipro'),
-						'default'   => esc_html__('Default', 'uipro'),
-						'small'     => esc_html__('Small', 'uipro'),
-						'medium'    => esc_html__('Medium', 'uipro'),
-						'large'     => esc_html__('Large', 'uipro'),
-						'xlarge'    => esc_html__('X-Large', 'uipro'),
-						'remove'    => esc_html__('None', 'uipro'),
-					),
-					'default'       => '',
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'name_heading_margin',
+                    'label'         => esc_html__( 'Title Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-name' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
 				),
 
-				//Designation settings
+				//Product Number settings
 				array(
 					'type'          => Controls_Manager::SELECT,
-					'name'          => 'designation_tag',
-					'label'         => esc_html__( 'Designation tag', 'uipro' ),
+					'name'          => 'product_number_tag',
+					'label'         => esc_html__( 'Product Number tag', 'uipro' ),
 					'options'       => array(
 						'h1'        => 'h1',
 						'h2'        => 'h2',
@@ -301,45 +392,70 @@ if ( ! class_exists( 'UIPro_Config_UIDealership_User' ) ) {
 						'meta'      => 'meta'
 					),
 					'default'       => 'meta',
-					'description'   => esc_html__( 'Choose Designation element.', 'uipro' ),
+					'description'   => esc_html__( 'Choose Product Number element.', 'uipro' ),
 					/* vc */
 					'admin_label' => false,
-					'start_section' => 'designation_settings',
-					'section_name'      => esc_html__('Designation Settings', 'uipro')
+					'start_section' => 'product_number_settings',
+					'section_name'      => esc_html__('Product Number Settings', 'uipro'),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'user_product_number', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+				),
+				array(
+					'type'          => Controls_Manager::TEXT,
+					'name'          => 'product_label',
+					'label'         => esc_html__('Product Number Label', 'uipro'),
+					'default'      => esc_html__('Products', 'uipro'),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'user_product_number', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
 				),
 				array(
 					'type'          => Group_Control_Typography::get_type(),
-					'name'          => 'designation_typography',
+					'name'          => 'product_number_typography',
 					'scheme'        => Typography::TYPOGRAPHY_1,
-					'label'         => esc_html__('Designation Font', 'uipro'),
-					'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
-					'selector'      => '{{WRAPPER}} .ui-designation',
+					'label'         => esc_html__('Product Number Font', 'uipro'),
+					'description'   => esc_html__('Select a font family', 'uipro'),
+					'selector'      => '{{WRAPPER}} .ui-product-number',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'user_product_number', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
 				),
 				array(
 					'type'          =>  Controls_Manager::COLOR,
-					'name'          => 'designation_color',
-					'label'         => esc_html__('Designation Color', 'uipro'),
-					'description'   => esc_html__('Set the color of designation.', 'uipro'),
+					'name'          => 'product_number_color',
+					'label'         => esc_html__('Product Number Color', 'uipro'),
+					'description'   => esc_html__('Set the color of Product Number.', 'uipro'),
 					'selectors' => [
-						'{{WRAPPER}} .ui-designation' => 'color: {{VALUE}}',
+						'{{WRAPPER}} .ui-product-number' => 'color: {{VALUE}}',
 					],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'user_product_number', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
 				),
-				array(
-					'type'          =>  Controls_Manager::SELECT,
-					'name'          => 'designation_margin',
-					'label'         => esc_html__('Designation Margin', 'uipro'),
-					'description'   => esc_html__('Set the vertical margin for designation.', 'uipro'),
-					'options'       => array(
-						''          => esc_html__('Inherit', 'uipro'),
-						'default'   => esc_html__('Default', 'uipro'),
-						'small'     => esc_html__('Small', 'uipro'),
-						'medium'    => esc_html__('Medium', 'uipro'),
-						'large'     => esc_html__('Large', 'uipro'),
-						'xlarge'    => esc_html__('X-Large', 'uipro'),
-						'remove'    => esc_html__('None', 'uipro'),
-					),
-					'default'       => '',
-				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'product_number_margin',
+                    'label'         => esc_html__( 'Product Number Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-product-number' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'user_product_number', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+                ),
 
 				//Email settings
 				array(
@@ -364,7 +480,12 @@ if ( ! class_exists( 'UIPro_Config_UIDealership_User' ) ) {
 					/* vc */
 					'admin_label' => false,
 					'start_section' => 'email_settings',
-					'section_name'      => esc_html__('Email Settings', 'uipro')
+					'section_name'      => esc_html__('Email Settings', 'uipro'),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'user_email', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
 				),
 				array(
 					'type'          => Group_Control_Typography::get_type(),
@@ -373,6 +494,11 @@ if ( ! class_exists( 'UIPro_Config_UIDealership_User' ) ) {
 					'label'         => esc_html__('Email Font', 'uipro'),
 					'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
 					'selector'      => '{{WRAPPER}} .ui-email',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'user_email', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
 				),
 				array(
 					'type'          =>  Controls_Manager::COLOR,
@@ -382,22 +508,26 @@ if ( ! class_exists( 'UIPro_Config_UIDealership_User' ) ) {
 					'selectors' => [
 						'{{WRAPPER}} .ui-email' => 'color: {{VALUE}}',
 					],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'user_email', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
 				),
 				array(
-					'type'          =>  Controls_Manager::SELECT,
-					'name'          => 'email_margin',
-					'label'         => esc_html__('Email Margin', 'uipro'),
-					'description'   => esc_html__('Set the vertical margin for email.', 'uipro'),
-					'options'       => array(
-						''          => esc_html__('Inherit', 'uipro'),
-						'default'   => esc_html__('Default', 'uipro'),
-						'small'     => esc_html__('Small', 'uipro'),
-						'medium'    => esc_html__('Medium', 'uipro'),
-						'large'     => esc_html__('Large', 'uipro'),
-						'xlarge'    => esc_html__('X-Large', 'uipro'),
-						'remove'    => esc_html__('None', 'uipro'),
-					),
-					'default'       => '',
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'email_margin',
+                    'label'         => esc_html__( 'Email Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-email' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'user_email', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
 				),
 
 
