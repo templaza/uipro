@@ -24,6 +24,40 @@ $text_alignment_fallback = ( $text_alignment && $text_breakpoint ) ? ((isset($in
 
 $general_styles     =   \UIPro_Elementor_Helper::get_general_styles($instance);
 
+$heading_line       = isset($instance['line_style'])?$instance['line_style']:'';
+$heading_line_class = ($heading_line == 'uk-heading-bullet' || $heading_line == 'uk-heading-line')?' '.$heading_line:'';
+
+// Text Background
+$text_background    = isset($instance['text_background'])?filter_var($instance['text_background'], FILTER_VALIDATE_BOOLEAN):false;
+
+$text_background_image = ( isset( $instance['text_background_image'] ) && $instance['text_background_image'] ) ? $instance['text_background_image'] : '';
+$text_background_src   = isset( $text_background_image['url'] ) ? $text_background_image['url'] : $text_background_image;
+//if ( strpos( $text_background_src, 'http://' ) !== false || strpos( $text_background_src, 'https://' ) !== false ) {
+//    $text_background_src = $text_background_src;
+//} elseif ( $text_background_src ) {
+//    $text_background_src = JURI::base( true ) . '/' . $text_background_src;
+//}
+
+$text_background_image_effect  = ( isset( $instance['text_background_image_effect'] ) && $instance['text_background_image_effect'] ) ? $instance['text_background_image_effect'] : '';
+$text_background_image_styles  = ( isset( $instance['text_background_image_size'] ) && $instance['text_background_image_size'] ) ? ' ' . $instance['text_background_image_size'] : '';
+
+$text_background_horizontal_start = ( isset( $instance['text_background_horizontal_start'] ) && $instance['text_background_horizontal_start'] ) ? $instance['text_background_horizontal_start'] : '0';
+$text_background_horizontal_end   = ( isset( $instance['text_background_horizontal_end'] ) && $instance['text_background_horizontal_end'] ) ? $instance['text_background_horizontal_end'] : '0';
+$text_background_horizontal       = ( ! empty( $text_background_horizontal_start ) || ! empty( $text_background_horizontal_end ) ) ? 'bgx: ' . $text_background_horizontal_start . ',' . $text_background_horizontal_end . ';' : '';
+
+$text_background_vertical_start = ( isset( $instance['text_background_vertical_start'] ) && $instance['text_background_vertical_start'] ) ? $instance['text_background_vertical_start'] : '0';
+$text_background_vertical_end   = ( isset( $instance['text_background_vertical_end'] ) && $instance['text_background_vertical_end'] ) ? $instance['text_background_vertical_end'] : '0';
+$text_background_vertical       = ( ! empty( $text_background_vertical_start ) || ! empty( $text_background_vertical_end ) ) ? 'bgy: ' . $text_background_vertical_start . ',' . $text_background_vertical_end . ';' : '';
+
+$text_background_easing     = ( isset( $instance['text_background_easing'] ) && $instance['text_background_easing'] ) ? ( (int) $instance['text_background_easing'] / 100 ) : '';
+$text_background_easing_cls = ( ! empty( $text_background_easing ) ) ? 'easing:' . $text_background_easing . ';' : '';
+
+$parallax_background_init = ( $text_background_image_effect == 'parallax' ) ? ' uk-parallax="' . $text_background_horizontal . $text_background_vertical . $text_background_easing_cls . '"' : '';
+$parallax_background_cls  = ( $text_background_image_effect == 'fixed' ) ? ' uk-background-fixed' : '';
+
+$text_background_class  = $text_background?' uk-text-background'.$parallax_background_cls.$text_background_image_styles.'"':'';
+$text_background_attrib = $text_background?' style="background-image: url('.$text_background_src.');"'. $parallax_background_init:'';
+
 // Block Alignment CLS.
 $block_cls = array();
 
@@ -143,7 +177,8 @@ if(!empty($instance['title'])) {
     if($instance['sub_heading_position']=='before_title'){
         $html .= $sub_heading;
     }
-    $html .= '<' . $instance['header_size'] . (!$_is_elementor ? $css : '') . ' class="title' . $general . $title_style . '">';
+    $html .= '<' . $instance['header_size'] . (!$_is_elementor ? $css : '') . ' class="title' . $general
+        . $title_style.$heading_line_class . '">';
     $html .= '<span class="heading-highlighted-wrapper">';
 
     if(isset($instance['link']['url']) && !empty($instance['link']['url'])) {
@@ -156,7 +191,7 @@ if(!empty($instance['title'])) {
         $html .= '<a class="'.$link_class.'" href="' . $instance['link']['url'] . '"'.$target.$nofollow.$attribs.'>';
     }
 
-    $html .= '<span class="heading-plain-text">' . $instance['title'] . '</span>';
+    $html .= '<span class="heading-plain-text'.$text_background_class.'"'.$text_background_attrib.'>' . $instance['title'] . '</span>';
     if ($highlight_title) {
         $html .= '<span class="heading-highlighted-text heading-highlighted-text-active">' . $highlight_title . $heading_style . '</span>';
     }
@@ -174,7 +209,9 @@ if(!empty($instance['title'])) {
     if($instance['sub_heading_position']=='after_title'){
         $html .= $sub_heading;
     }
-    $html .= $line;
+    if($heading_line != 'uk-heading-bullet' && $heading_line != 'uk-heading-line') {
+        $html .= $line;
+    }
     $html .= '</div>';
 
     echo ent2ncr($html);
