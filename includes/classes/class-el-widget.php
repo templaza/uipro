@@ -442,7 +442,7 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
             echo '<div class="templaza-widget-' . $this->get_base() . ' template-' . $base_file . $container . $margin_top . $margin_bottom . '">';
 
             \UIPro_Elementor_Helper::get_widget_template( $base_file,
-                array( $params => $settings, 'args' => $args ), $settings['template_path'] );
+                array( $params => $settings, 'args' => $args, 'el' => $this ), $settings['template_path'] );
 
             echo '</div>';
         }
