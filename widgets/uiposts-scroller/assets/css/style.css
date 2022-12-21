@@ -1,0 +1,66 @@
+.ui-posts-scroller .ticker-heading {
+  display: flex;
+  -ms-flex: 0 0 25%;
+  flex: 0 0 25%;
+  color: #fff;
+  background: #e91e63;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  line-height: 1;
+  margin-right: 25px;
+}
+.ui-posts-scroller .ticker-heading svg {
+  position: absolute;
+  left: auto;
+  top: 0;
+  height: 100%;
+  z-index: -1;
+  right: -25px;
+}
+.ui-posts-scroller .uiposts-scroller-ticker {
+  padding: 15px 0 15px 20px;
+}
+.ui-posts-scroller .uiposts-scroller-ticker .bx-wrapper {
+  padding: 0;
+  margin: 0;
+  flex: 1;
+  min-width: 1px;
+  border: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+.ui-posts-scroller .uiposts-scroller-ticker .slider-item {
+  max-width: 100%;
+}
+.ui-posts-scroller .uiposts-scroller-ticker .ticker-date-time {
+  color: #fff;
+  font-size: 12px;
+  line-height: 1;
+  padding: 3px 4px;
+  background: #e91e63;
+  text-transform: uppercase;
+}
+.ui-posts-scroller .ticker-controller {
+  padding-left: 10px;
+}
+.ui-posts-scroller .ticker-controller .ticker-right-control {
+  padding-left: 3px;
+}
+.ui-posts-scroller.layout-mode-scroller .uiposts-scroller-ticker {
+  padding-left: 0;
+}
+.ui-posts-scroller.layout-mode-scroller .ticker-day,
+.ui-posts-scroller.layout-mode-scroller .ticker-month {
+  display: block;
+}
+.ui-posts-scroller.layout-mode-scroller .ticker-day {
+  font-size: 42px;
+}
+.ui-posts-scroller.layout-mode-scroller .slider-item-content {
+  padding: 20px;
+}
+/*# sourceMappingURL=style.css.map */

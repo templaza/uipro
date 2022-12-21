@@ -1,0 +1,79 @@
+.ui-posts-scroller {
+  .ticker-heading {
+    display: flex;
+    -ms-flex: 0 0 25%;
+    flex: 0 0 25%;
+    color: #fff;
+    background: #e91e63;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    line-height: 1;
+    margin-right: 25px;
+    svg {
+      position: absolute;
+      left: auto;
+      top: 0;
+      height: 100%;
+      z-index: -1;
+      right: -25px;
+    }
+  }
+  .uiposts-scroller-ticker{
+      padding: 15px 0 15px 20px;
+    .bx-wrapper{
+      padding: 0;
+      margin: 0;
+      flex: 1;
+      min-width: 1px;
+      border: none;
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      box-shadow: none;
+    }
+    .slider-item{
+      max-width: 100%;
+      //padding: 15px 0 15px 20px;
+    }
+    //.ticker-content{
+    //  padding: 15px 0 15px 20px;
+    //}
+    //&.layout-mode-ticker {
+    //  .ticker-date-time-content-wrap {
+    //    position: relative;
+    //    right: 15px;
+    //  }
+    //}
+    .ticker-date-time{
+      color: #fff;
+      font-size: 12px;
+      line-height: 1;
+      padding: 3px 4px;
+      background: #e91e63;
+      text-transform: uppercase;
+    }
+  }
+  .ticker-controller{
+    padding-left: 10px;
+    .ticker-right-control{
+      padding-left: 3px;
+    }
+  }
+  &.layout-mode-scroller{
+    .uiposts-scroller-ticker{
+      padding-left: 0;
+    }
+    .ticker-day,
+    .ticker-month{
+      display: block;
+    }
+    .ticker-day{
+      font-size: 42px;
+    }
+    .slider-item-content{
+      padding: 20px;
+    }
+  }
+}

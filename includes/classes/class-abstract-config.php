@@ -201,8 +201,7 @@ if ( ! class_exists( 'UIPro_Abstract_Config' ) ) {
                         // enqueue depends
                         if ( $depends ) {
                             foreach ( $depends as $depend ) {
-                                if ( wp_script_is( $depend ) ) {
-
+                                if ( wp_style_is( $depend ) ) {
                                     wp_enqueue_style( $depend );
                                 } else {
                                     do_action( 'templaza-elements/enqueue-depends-styles', self::$base, $depend );
@@ -292,15 +291,17 @@ if ( ! class_exists( 'UIPro_Abstract_Config' ) ) {
             if ( $queue ) {
                 foreach ( $queue as $key => $assets ) {
                     if ( $key == 'styles' ) {
-                        if ( ! empty( $args['deps_src'] ) ) {
-                            foreach ( $args['deps_src'] as $deps_name => $deps_src ) {
-                                if ( ! wp_script_is( $deps_name, 'registered' ) ) {
-                                    wp_register_style( $deps_name, $deps_src );
+                        foreach ( $assets as $name => $args ) {
+                            if ( ! empty( $args['deps_src'] ) ) {
+                                foreach ( $args['deps_src'] as $deps_name => $deps_src ) {
+                                    if ( ! wp_style_is($deps_name, 'registered' ) ) {
+                                        wp_register_style( $deps_name, $deps_src );
+                                    }
                                 }
                             }
-                        }
-                        foreach ( $assets as $name => $args ) {
-                            wp_register_style( $name, $args['url'], $args['deps'], '', $args['media'] );
+                            if (! wp_style_is($name, 'registered')) {
+                                wp_register_style($name, $args['url'], $args['deps'], '', $args['media']);
+                            }
                         }
                     } else if ( $key == 'scripts' ) {
                         foreach ( $assets as $name => $args ) {
@@ -350,8 +351,9 @@ if ( ! class_exists( 'UIPro_Abstract_Config' ) ) {
                         foreach ( $assets as $name => $args ) {
                             if ( ! empty( $args['deps_src'] ) ) {
                                 foreach ( $args['deps_src'] as $deps_name => $deps_src ) {
-                                    if ( ! wp_script_is( $deps_name, 'registered' ) ) {
-                                        wp_register_style( $deps_name, $deps_src );
+                                    if ( wp_style_is( $deps_name, 'registered' ) ) {
+//                                        wp_register_style( $deps_name, $deps_src );
+                                        wp_enqueue_style($deps_name);
                                     }
                                 }
                             }
@@ -361,8 +363,9 @@ if ( ! class_exists( 'UIPro_Abstract_Config' ) ) {
                         foreach ( $assets as $name => $args ) {
                             if ( ! empty( $args['deps_src'] ) ) {
                                 foreach ( $args['deps_src'] as $deps_name => $deps_src ) {
-                                    if ( ! wp_script_is( $deps_name, 'registered' ) ) {
-                                        wp_register_script( $deps_name, $deps_src );
+                                    if ( wp_script_is( $deps_name, 'registered' ) ) {
+//                                        wp_register_script( $deps_name, $deps_src );
+                                        wp_enqueue_script( $deps_name );
                                     }
                                 }
                             }
