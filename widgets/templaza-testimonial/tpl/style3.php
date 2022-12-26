@@ -11,6 +11,7 @@ $testimonial_slider_effect    = !empty( $instance['testimonial_slider_effect'] )
 $testimonial_slider_number    = !empty( $instance['testimonial_slider_number'] ) ? $instance['testimonial_slider_number'] : 1;
 $testimonial_quote_size    = isset( $instance['testimonial_quote_size'] ) && $instance['testimonial_quote_size']['size'] ? $instance['testimonial_quote_size']['size'] : 32;
 $avatar_border    = isset( $instance['avatar_border'] ) && $instance['avatar_border'] ? ' '. $instance['avatar_border'] : '';
+$avatar_arrow    = isset( $instance['avatar_arrow'] ) && $instance['avatar_arrow'] ? ' '. $instance['avatar_arrow'] : '';
 $quote_icon = ( isset( $instance['quote_icon'] ) && $instance['quote_icon'] ) ? $instance['quote_icon'] : array();
 $nav_next_icon = ( isset( $instance['nav_next_icon'] ) && $instance['nav_next_icon'] ) ? $instance['nav_next_icon'] : array();
 $nav_preview_icon = ( isset( $instance['nav_preview_icon'] ) && $instance['nav_preview_icon'] ) ? $instance['nav_preview_icon'] : array();
@@ -73,7 +74,7 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
 	$general_styles     =   \UIPro_Elementor_Helper::get_general_styles($instance);
 ?>
 <div class="<?php echo $general_styles['container_cls']; ?> uk-position-relative" <?php echo $general_styles['animation']; ?>>
-    <div id="<?php echo $module_id;?>" class="templaza-testimonial <?php echo $general_styles['content_cls'];?> <?php echo esc_attr($testimonials_layout);?>">
+    <div id="<?php echo $module_id;?>" class="templaza-testimonial <?php echo $general_styles['content_cls'];?> <?php echo esc_attr($testimonials_layout.' '.$avatar_arrow);?>">
         <?php
         foreach ($templaza_testimonials as $item){
         ?>
@@ -168,7 +169,7 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
                             }
                         },
                         {
-                            breakpoint: 992,
+                            breakpoint: 960,
                             settings: {
                                 centerMode: <?php echo esc_attr($testimonial_slider_center); ?>,
                                 centerPadding: '0px',
@@ -184,7 +185,7 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
                             }
                         },
                         {
-                            breakpoint: 480,
+                            breakpoint: 575,
                             settings: {
                                 centerMode: <?php echo esc_attr($testimonial_slider_center); ?>,
                                 centerPadding: '0px',

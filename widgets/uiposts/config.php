@@ -1856,6 +1856,21 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                         ],
                     ],
                 ),
+                array(
+                    'name'          => 'meta_footer_width',
+                    'label' => esc_html__( 'Footer width', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'responsive'    =>  true,
+                    'size_units' => [ 'px','%' ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-posts.style1 .uk-card-footer' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'uipost_layout', 'operator' => 'in', 'value' => ['style1']],
+                        ],
+                    ],
+                ),
 
 				//Button settings
 				array(

@@ -42,6 +42,7 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
                         <li>
                             <div class="uk-flex-middle" data-uk-grid>
                                 <div class="ui-testimonial-content uk-width-expand@m">
+                                    <div class="tz-testimonial-inner uk-inline">
 	                                <?php
                                     if($item['quote_title']){
                                         ?>
@@ -113,7 +114,7 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
                                             ?>
                                         </div>
                                     </div>
-
+                                    </div>
                                 </div>
                             </div>
                         </li>

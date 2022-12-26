@@ -6,6 +6,9 @@ $name_tag      = isset($instance['name_tag']) ? $instance['name_tag'] : 'h3';
 $name_style    = isset($instance['name_heading_style']) && $instance['name_heading_style'] ? ' uk-'. $instance['name_heading_style'] : '';
 $name_position = isset($instance['name_position']) && $instance['name_position'] ? $instance['name_position'] : 'after';
 $text           = isset($instance['text']) && $instance['text'] ? $instance['text'] : '';
+$limit           = isset($instance['user_limit']) && $instance['user_limit'] ? $instance['user_limit'] : '';
+$user_orderby           = isset($instance['user_orderby']) && $instance['user_orderby'] ? $instance['user_orderby'] : 'login';
+$user_order           = isset($instance['user_order']) && $instance['user_order'] ? $instance['user_order'] : 'ASC';
 
 $large_desktop_columns    = ( isset( $instance['large_desktop_columns'] ) && $instance['large_desktop_columns'] ) ? $instance['large_desktop_columns'] : '4';
 $desktop_columns    = ( isset( $instance['desktop_columns'] ) && $instance['desktop_columns'] ) ? $instance['desktop_columns'] : '4';
@@ -45,12 +48,14 @@ $output         = '';
 
 $user_role   = ( isset( $instance['user_role'] ) && $instance['user_role'] ) ? $instance['user_role'] : '';
 if(!empty($user_role)){
-    $users = get_users( [ 'role__in' => $user_role ] );
+    $users = get_users( [ 'role__in' => $user_role, 'number' =>$limit, 'orderby' =>$user_orderby, 'order' => $user_order] );
 }
 if(!empty($users)){
     echo '<div class="ap-dealer-users uk-child-width-1-'.$large_desktop_columns.'@xl uk-child-width-1-'.$desktop_columns.'@l uk-child-width-1-'.$laptop_columns.'@m uk-child-width-1-'.$tablet_columns.'@s uk-child-width-1-'. $mobile_columns . $column_grid_gap.'" data-uk-grid>';
     foreach ($users as $user){
-        $url    = get_permalink( get_the_ID()).$user -> user_login;
+        $pageid         = (int)get_option('options_dealership_dealer_page_id',0);
+        $pageid         = !empty($pageid)?$pageid:get_the_ID();
+        $url            = get_permalink($pageid).$user -> user_login;
         $media = '<a href="'.esc_url($url).'"><img class="uk-transition-scale-up uk-transition-opaque" src="'.esc_url( get_avatar_url( $user->ID,300)).'" alt="'.$user->display_name.'"/></a>';
         $name     =  '<'.$name_tag.' class="ui-name uk-card-title'.$name_style.'"><a href="'.esc_url($url).'">'.$user->display_name.'</a></'.$name_tag.'>';
         if($user_product_number != ''){

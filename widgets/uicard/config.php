@@ -379,6 +379,7 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                     'name'          => 'icon_box_size',
                     'label' => esc_html__( 'Icon Box Size', 'uipro' ),
                     'type' => Controls_Manager::SLIDER,
+                    'responsive'    =>  true,
                     'size_units' => [ 'px','%' ],
                     'selectors' => [
                         '{{WRAPPER}} .ui-media' => 'width: {{SIZE}}{{UNIT}};height: {{SIZE}}{{UNIT}};display:flex; align-items:center;justify-content:center;',
@@ -396,11 +397,97 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                     'responsive'    =>  true,
                     'size_units'    => [ 'px', 'em', '%' ],
                     'selectors'     => [
-                        '{{WRAPPER}} .ui-media' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
+                        '{{WRAPPER}} .ui-media' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                     ],
                     'conditions' => [
                         'terms' => [
                             ['name' => 'layout_type', 'operator' => '===', 'value' => 'icon'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'      => Controls_Manager::SWITCHER,
+                    'name'      => 'icon_arrow',
+                    'label'     => esc_html__( 'Show icon Arrow', 'uipro' ),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout_type', 'operator' => '===', 'value' => 'icon'],
+                        ],
+                    ],
+                ),
+                array(
+                    'name'          => 'icon_arrow_width',
+                    'label' => esc_html__( 'Arrow width', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px', '%' ],
+                    'responsive'    =>  true,
+                    'range' => [
+                        'px' => [
+                            'min' => -1000,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => -100,
+                            'max' => 100,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'size' => 6,
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout_type', 'operator' => '===', 'value' => 'icon'],
+                            ['name' => 'icon_arrow', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-card.yes .ui-media::after' => 'border-width: {{SIZE}}{{UNIT}}; margin-left: -{{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'name'          => 'icon_arrow_bottom',
+                    'label' => esc_html__( 'Arrow Offset Bottom', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px', '%' ],
+                    'responsive'    =>  true,
+                    'range' => [
+                        'px' => [
+                            'min' => -1000,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => -100,
+                            'max' => 100,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'size' => -5,
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout_type', 'operator' => '===', 'value' => 'icon'],
+                            ['name' => 'icon_arrow', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-card.yes .ui-media::after' => 'bottom: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'label' => esc_html__( 'Arrow color', 'uipro' ),
+                    'name'  => 'arrow_color',
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-card.yes .ui-media::after' => 'border-top-color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout_type', 'operator' => '===', 'value' => 'icon'],
+                            ['name' => 'icon_arrow', 'operator' => '===', 'value' => 'yes'],
                         ],
                     ],
                 ),

@@ -38,4 +38,29 @@
       }
     }
   }
+  &.ui-visible{
+    .uk-slider-container{
+      &:after,&:before{
+        content:"";
+        position:absolute;
+        height:100%;
+        background: rgba(255,255,255,0.8);
+        width:100%;
+        z-index: 1;
+      }
+      &:before{
+        left:-100%;
+        top:0;
+        margin-right:40px;
+      }
+      &:after{
+        left:calc(100% - 1px);
+        top:0;
+        margin-left:40px;
+      }
+    }
+    .uk-slidernav{
+      z-index:2;
+    }
+  }
 }

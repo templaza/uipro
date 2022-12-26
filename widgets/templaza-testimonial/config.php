@@ -302,6 +302,89 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     ],
                 ),
                 array(
+                    'type'      => Controls_Manager::SWITCHER,
+                    'name'      => 'avatar_arrow',
+                    'label'     => esc_html__( 'Show Avatar Arrow', 'uipro' ),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout', 'operator' => '===', 'value' => 'style3'],
+                        ],
+                    ],
+                ),
+                array(
+                    'name'          => 'avatar_arrow_width',
+                    'label' => esc_html__( 'Arrow width', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px', '%' ],
+                    'responsive'    =>  true,
+                    'range' => [
+                        'px' => [
+                            'min' => -1000,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => -100,
+                            'max' => 100,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'size' => 10,
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'avatar_arrow', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .style3.yes .slick-center .ui-testimonial-avatar::after' => 'border-width: {{SIZE}}{{UNIT}}; margin-left: -{{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'name'          => 'avatar_arrow_bottom',
+                    'label' => esc_html__( 'Arrow Offset Bottom', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px', '%' ],
+                    'responsive'    =>  true,
+                    'range' => [
+                        'px' => [
+                            'min' => -1000,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => -100,
+                            'max' => 100,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'size' => -10,
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'avatar_arrow', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .style3.yes .slick-center .ui-testimonial-avatar::after' => 'bottom: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'label' => esc_html__( 'Arrow color', 'uipro' ),
+                    'name'  => 'arrow_color',
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .style3.yes .slick-center .ui-testimonial-avatar::after' => 'border-top-color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'avatar_arrow', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+                ),
+                array(
                     'type'          => Controls_Manager::ICONS,
                     'id'            => 'quote_icon',
                     'label'         => esc_html__( 'Quote Icon', 'uipro' ),
@@ -730,6 +813,7 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     'label'         => __( 'Wrap Dot Bottom', 'uipro' ),
                     'type'          => Controls_Manager::SLIDER,
                     'size_units'    => [ 'px'],
+                    'responsive'    =>  true,
                     'range' => [
                         'px' => [
                             'min' => -1000,

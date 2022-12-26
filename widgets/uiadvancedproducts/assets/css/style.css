@@ -29,5 +29,26 @@
   background-color: #333333;
   color: #ffffff;
 }
+.ui-advanced-products.ui-visible .uk-slider-container:after, .ui-advanced-products.ui-visible .uk-slider-container:before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.8);
+  width: 100%;
+  z-index: 1;
+}
+.ui-advanced-products.ui-visible .uk-slider-container:before {
+  left: -100%;
+  top: 0;
+  margin-right: 40px;
+}
+.ui-advanced-products.ui-visible .uk-slider-container:after {
+  left: calc(100% - 1px);
+  top: 0;
+  margin-left: 40px;
+}
+.ui-advanced-products.ui-visible .uk-slidernav {
+  z-index: 2;
+}
 
 /*# sourceMappingURL=style.css.map */

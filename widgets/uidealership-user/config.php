@@ -89,6 +89,36 @@ if ( ! class_exists( 'UIPro_Config_UIDealership_User' ) ) {
                     ),
                 ),
                 array(
+                    'type'      => Controls_Manager::NUMBER,
+                    'name'      => 'user_limit',
+                    'label'     => esc_html__( 'Limit User', 'uipro' ),
+                ),
+                array(
+                    'type'          => Controls_Manager::SELECT,
+                    'name'          => 'user_orderby',
+                    'label'         => esc_html__( 'User orderby ', 'uipro' ),
+                    'options'       => array(
+                        'ID'      => esc_html__( 'ID', 'uipro' ),
+                        'display_name'   => esc_html__( 'Display Name', 'uipro' ),
+                        'user_name'   => esc_html__( 'User Name', 'uipro' ),
+                        'user_login'   => esc_html__( 'User Login', 'uipro' ),
+                        'user_email'   => esc_html__( 'User Email', 'uipro' ),
+                        'registered'   => esc_html__( 'Registered Date', 'uipro' ),
+                        'post_count'   => esc_html__( 'Post Count', 'uipro' ),
+                    ),
+                    'default'       => 'login',
+                ),
+                array(
+                    'type'          => Controls_Manager::SELECT,
+                    'name'          => 'user_order',
+                    'label'         => esc_html__( 'User order', 'uipro' ),
+                    'options'       => array(
+                        'ASC'      => esc_html__( 'Ascending', 'uipro' ),
+                        'DESC'   => esc_html__( 'Descending ', 'uipro' ),
+                    ),
+                    'default'       => 'ASC',
+                ),
+                array(
                     'type'          => Controls_Manager::SWITCHER,
                     'id'            => 'user_email',
                     'label'         => esc_html__( 'Show Email', 'uipro' ),
