@@ -8,48 +8,49 @@ $masonry            = (isset($instance['masonry']) && $instance['masonry']) ? in
 
 //Get posts
 $limit          = ( isset( $instance['limit'] ) && $instance['limit'] ) ? $instance['limit'] : 4;
+$lead_limit     = ( isset( $instance['lead_limit'] ) && $instance['lead_limit'] ) ? $instance['lead_limit'] : 0;
 $resource       = ( isset( $instance['resource'] ) && $instance['resource'] ) ? $instance['resource'] : 'post';
 $ordering       = ( isset( $instance['ordering'] ) && $instance['ordering'] ) ? $instance['ordering'] : 'latest';
 $category   = ( isset( $instance[$resource.'_category'] ) && $instance[$resource.'_category'] ) ? $instance[$resource.'_category'] : array('0');
 $query_args = array(
     'post_type'         => $resource,
-    'posts_per_page'    => $limit,
+    'posts_per_page'    => $limit + $lead_limit,
 );
 switch ($ordering) {
-	case 'latest':
-		$query_args['orderby'] = 'date';
-		$query_args['order'] = 'DESC';
-		break;
-	case 'oldest':
-		$query_args['orderby'] = 'date';
-		$query_args['order'] = 'ASC';
-		break;
-	case 'random':
-		$query_args['orderby'] = 'rand';
-		break;
-	case 'popular':
-		$query_args['orderby'] = 'meta_value_num';
-		$query_args['order'] = 'DESC';
-		$query_args['meta_key'] = 'post_views_count';
-		break;
-	case 'sticky':
-		$query_args['post__in'] = get_option( 'sticky_posts' );
-		$query_args['ignore_sticky_posts'] = 1;
-		break;
+    case 'latest':
+        $query_args['orderby'] = 'date';
+        $query_args['order'] = 'DESC';
+        break;
+    case 'oldest':
+        $query_args['orderby'] = 'date';
+        $query_args['order'] = 'ASC';
+        break;
+    case 'random':
+        $query_args['orderby'] = 'rand';
+        break;
+    case 'popular':
+        $query_args['orderby'] = 'meta_value_num';
+        $query_args['order'] = 'DESC';
+        $query_args['meta_key'] = 'post_views_count';
+        break;
+    case 'sticky':
+        $query_args['post__in'] = get_option( 'sticky_posts' );
+        $query_args['ignore_sticky_posts'] = 1;
+        break;
 }
 if ($resource == 'post') {
-	$query_args['category']  =   implode(',', $category);
+    $query_args['category']  =   implode(',', $category);
 } else {
-	if (count($category) && $category[0] != '0') {
-		$query_args['tax_query'] =   array(
-			array(
-				'taxonomy' => $resource.'-category',
-				'field' => 'id',
-				'operator' => 'IN',
-				'terms' => $category,
-			)
-		);
-	}
+    if (count($category) && $category[0] != '0') {
+        $query_args['tax_query'] =   array(
+            array(
+                'taxonomy' => $resource.'-category',
+                'field' => 'id',
+                'operator' => 'IN',
+                'terms' => $category,
+            )
+        );
+    }
 }
 if ($pagination_type == 'default') {
     $query_args['paged'] = max( 1, get_query_var('paged') );
@@ -149,24 +150,24 @@ $uipost_layout   = ( isset( $instance['uipost_layout'] ) && $instance['uipost_la
 $filter_block_cls[] = '';
 
 if ( empty( $block_align ) ) {
-	if ( ! empty( $block_align_breakpoint ) && ! empty( $block_align_fallback ) ) {
-		$filter_block_cls[] = ' uk-margin-auto-right' . $block_align_breakpoint;
-		$filter_block_cls[] = 'uk-margin-remove-left' . $block_align_breakpoint . ( $block_align_fallback == 'center' ? ' uk-margin-auto' : ' uk-margin-auto-left' );
-	}
+    if ( ! empty( $block_align_breakpoint ) && ! empty( $block_align_fallback ) ) {
+        $filter_block_cls[] = ' uk-margin-auto-right' . $block_align_breakpoint;
+        $filter_block_cls[] = 'uk-margin-remove-left' . $block_align_breakpoint . ( $block_align_fallback == 'center' ? ' uk-margin-auto' : ' uk-margin-auto-left' );
+    }
 }
 
 if ( $block_align == 'center' ) {
-	$filter_block_cls[] = ' uk-margin-auto' . $block_align_breakpoint;
-	if ( ! empty( $block_align_breakpoint ) && ! empty( $block_align_fallback ) ) {
-		$filter_block_cls[] = 'uk-margin-auto' . ( $block_align_fallback == 'right' ? '-left' : '' );
-	}
+    $filter_block_cls[] = ' uk-margin-auto' . $block_align_breakpoint;
+    if ( ! empty( $block_align_breakpoint ) && ! empty( $block_align_fallback ) ) {
+        $filter_block_cls[] = 'uk-margin-auto' . ( $block_align_fallback == 'right' ? '-left' : '' );
+    }
 }
 
 if ( $block_align == 'right' ) {
-	$filter_block_cls[] = ' uk-margin-auto-left' . $block_align_breakpoint;
-	if ( ! empty( $block_align_breakpoint ) && ! empty( $block_align_fallback ) ) {
-		$filter_block_cls[] = $block_align_fallback == 'center' ? 'uk-margin-remove-right' . $block_align_breakpoint . ' uk-margin-auto' : 'uk-margin-auto-left';
-	}
+    $filter_block_cls[] = ' uk-margin-auto-left' . $block_align_breakpoint;
+    if ( ! empty( $block_align_breakpoint ) && ! empty( $block_align_fallback ) ) {
+        $filter_block_cls[] = $block_align_fallback == 'center' ? 'uk-margin-remove-right' . $block_align_breakpoint . ' uk-margin-auto' : 'uk-margin-auto-left';
+    }
 }
 
 $filter_block_cls = implode( ' ', array_filter( $filter_block_cls ) );
@@ -176,90 +177,57 @@ $general_styles     =   \UIPro_Elementor_Helper::get_general_styles($instance);
 $output         =   '';
 
 if (count($posts)) {
-	$output     .=   '<div class="ui-posts'. esc_attr($general_styles['container_cls']) .' '.$uipost_layout.'"' . $general_styles['animation'] . '>';
-	$output     .=   '<div class="ui-post-inner' . esc_attr($color_mode . ( $filter_position != 'top' ? $filter_grid_gap : '' ) . $general_styles['content_cls']) . '"'. ( $use_filter ? ' data-uk-filter="target: .ui-post-items; animation: '.esc_attr($filter_animate).'"' : '' ) . ( $filter_position != 'top' ? ' data-uk-grid' : '' ) .'>';
-	if ($use_filter) {
-		$output .=  '<div class="ui-post-filter'. $filter_container. $filter_block_cls . $filter_margin . $filter_align . ($filter_visibility ? ' uk-visible'. $filter_visibility : ''). ($filter_position == 'right' ? ' uk-flex-last' : '') .'">';
-		$tag_arg    =   array();
-		$cat_arg    =   array();
-		if ($pagination_type == 'ajax') {
-			$tags   =   get_terms( array ('taxonomy' => $resource. '_tag') );
-			if ($tags) {
-				foreach ( $tags as $term ) {
-					$tag_arg[$term->slug]	=   $term->name;
-				}
-			}
-			$cat_portfolio = $resource == 'post' ? get_terms( array ('taxonomy' => 'category') ) : get_terms( array ('taxonomy' => $resource.'-category') );
-			if ($cat_portfolio && count($cat_portfolio)) {
-				foreach ( $cat_portfolio as $term ) {
-					$cat_arg[$term->slug]   =   $term->name;
-				}
-			}
-		} else {
-			foreach ($posts as $item) {
-				$tags = wp_get_post_terms( $item->ID , $resource. '_tag' );
-				if ($tags) {
-					foreach ( $tags as $term ) {
-						$tag_arg[$term->slug]	=   $term->name;
-					}
-				}
-				$cat_portfolio = $resource == 'post' ? wp_get_post_terms( $item->ID , 'category' ) : wp_get_post_terms( $item->ID , $resource.'-category' );
-				if ($cat_portfolio && count($cat_portfolio)) {
-					foreach ( $cat_portfolio as $term ) {
-						$cat_arg[$term->slug]   =   $term->name;
-					}
-				}
-			}
-		}
+    $lead_position          = ( isset( $instance['lead_position'] ) && $instance['lead_position'] ) ? $instance['lead_position'] : 'top';
+    $lead_column_gutter     = ( isset( $instance['lead_column_gutter'] ) && $instance['lead_column_gutter'] ) ? ' uk-grid-'.$instance['lead_column_gutter'] : '';
+    $lead_column_divider    = (isset($instance['lead_column_divider']) && $instance['lead_column_divider']) ? filter_var($instance['lead_column_divider'], FILTER_VALIDATE_BOOLEAN) : 0;
+    $lead_width    = (isset($instance['image_width']) && $instance['image_width']) ? ' uk-width-'
+        . $instance['image_width'] : ' uk-width-1-2';
+    $lead_width_xl    = (isset($instance['lead_width_xl']) && $instance['lead_width_xl']) ? ' uk-width-'
+        . $instance['lead_width_xl'].'@xl' : ' uk-width-1-2@xl';
+    $lead_width_l    = (isset($instance['lead_width_l']) && $instance['lead_width_l']) ? ' uk-width-'
+        . $instance['lead_width_l'].'@l' : ' uk-width-1-2@l';
+    $lead_width_m    = (isset($instance['lead_width_m']) && $instance['lead_width_m']) ? ' uk-width-'
+        . $instance['lead_width_m'].'@m' : ' uk-width-1-2@m';
+    $lead_width_s    = (isset($instance['lead_width_s']) && $instance['lead_width_s']) ? ' uk-width-'
+        . $instance['lead_width_s'].'@s' : ' uk-width-1-2@s';
+    $expand_width   = $lead_width_xl == ' uk-width-1-1@xl' ? ' uk-width-1-1@xl' : ' uk-width-expand@xl';
+    $expand_width   .=$lead_width_l == ' uk-width-1-1@l' ? ' uk-width-1-1@l' : ' uk-width-expand@l';
+    $expand_width   .=$lead_width_m == ' uk-width-1-1@m' ? ' uk-width-1-1@m' : ' uk-width-expand@m';
+    $expand_width   .=$lead_width_s == ' uk-width-1-1@s' ? ' uk-width-1-1@s' : ' uk-width-expand@s';
+    $expand_width   .=$lead_width == ' uk-width-1-1' ? ' uk-width-1-1' : ' uk-width-expand';
 
-		$tags_content   =   $cats_content   =   '<ul class="'.($filter_position != 'top' ? 'uk-nav uk-nav-default' : 'uk-subnav').$filter_align.'"'.($filter_position == 'top' ? ' data-uk-margin' : '').'>';
-		if ($display_filter_header) {
-			$tags_content   =   '<h5>'.__('Topic', 'uipro').'</h5>'. $tags_content;
-			$cats_content   =   '<h5>'.__('Category', 'uipro').'</h5>'. $cats_content;
-		}
-		if (count($tag_arg)) {
-			$tags_content .=  '<li class="uk-active" data-uk-filter-control><a class="uk-button-text" href="#">'.esc_html__('Show All', 'uipro').'</a></li>';
-			foreach ($tag_arg as $tag_key => $tag_name) {
-				$tags_content .=  '<li data-uk-filter-control="[data-tag*='.$tag_key.']"><a class="uk-button-text" href="#">'.esc_attr($tag_name).'</a></li>';
-			}
-		}
-		if (count($cat_arg)) {
-			$cats_content .=  '<li class="uk-active" data-uk-filter-control><a class="uk-button-text" href="#">'.esc_html__('Show All', 'uipro').'</a></li>';
-			foreach ($cat_arg as $cat_key => $cat_name) {
-				$cats_content .=  '<li data-uk-filter-control="[data-cat*='.$cat_key.']"><a class="uk-button-text" href="#">'.esc_attr($cat_name).'</a></li>';
-			}
-		}
-		$tags_content   .=   '</ul>';
-		$cats_content   .=   '</ul>';
+    //Get lead items and items
+    $lead_items     = array();
+    $first_items    = array();
+    $first_limit    = 0;
+    if ($lead_limit) {
+        $lead_items     =   array_slice($posts, 0, $lead_limit);
+        if ($limit) {
+            if ($lead_position == 'between' && $limit>2) {
+                $first_items    =   array_slice($posts, $lead_limit, round($limit/2));
+                $posts          =   array_slice($posts, $lead_limit+round($limit/2));
+                $first_limit    =   round($limit/2);
+                $limit          =   $limit - round($limit/2);
+            } else {
+                $posts      =   array_slice($posts, $lead_limit);
+            }
+        }
+    }
 
-		if ( ( is_array($filter_type) && in_array('tag', $filter_type) ) || (is_string($filter_type) && $filter_type == 'tag') ) {
-			$output     .=   $tags_content;
-		}
-		if ( ( is_array($filter_type) && in_array('category', $filter_type) ) || (is_string($filter_type) && $filter_type == 'category') ) {
-			$output     .=   $cats_content;
-		}
-		if ($use_filter_sort) {
-			$output     .=   $display_filter_header ? '<h5>'.__('Sort', 'uipro').'</h5>' : '';
-			$output     .=   '<ul class="'.($filter_position != 'top' ? 'uk-nav uk-nav-default' : 'uk-subnav').$filter_align.'">';
-			$output     .=   '<li data-uk-filter-control="sort: data-date; order: desc"><a class="uk-button-text" href="#">'.__('Newest', 'uipro').'</a></li>';
-			$output     .=   '<li data-uk-filter-control="sort: data-date"><a class="uk-button-text" href="#">'.__('Oldest', 'uipro').'</a></li>';
-			$output     .=   '<li data-uk-filter-control="sort: data-hits; order: desc"><a class="uk-button-text" href="#">'.__('Most Popular', 'uipro').'</a></li>';
-			$output     .=   '</ul>';
-		}
-		$output .=  '</div>';
-	}
-	if ($use_slider) {
-		$output .= '<div data-uk-slider="'.($center_slider ? 'center: true' : '').'">';
-		$output .= '<div class="uk-position-relative">';
-		$output .= '<div class="uk-slider-container">';
-	}
-	$output     .=  '<div class="'.( $filter_position != 'top' ? 'uk-width-expand'.$filter_visibility : '' ).'">';
-	$output     .=  '<div class="ui-post-items uk-child-width-1-'.$large_desktop_columns.'@xl uk-child-width-1-'.$desktop_columns.'@l uk-child-width-1-'.$laptop_columns.'@m uk-child-width-1-'.$tablet_columns.'@s uk-child-width-1-'. $mobile_columns . $column_grid_gap . ($use_slider ? ' uk-slider-items': '') .'" data-uk-grid="'.($masonry ? 'masonry:true;' : '').'">';
-	foreach ($posts as $item) {
-		include plugin_dir_path(__FILE__).'post_item.php';
-	}
-	$output     .=  '</div>';
-	//end grid
+    $output     .=   '<div class="ui-posts'. esc_attr($general_styles['container_cls']) .' '.$uipost_layout.'"' . $general_styles['animation'] . '>';
+    $output .=  '<div class="ui-posts-list-items '.$lead_column_gutter.($lead_column_divider ? ' uk-grid-divider' : '').'" data-uk-grid>';
+
+    ob_start();
+    \UIPro_Elementor_Helper::get_widget_template('base_posts',
+        array('instance' => $instance, 'pre_val' => '', 'output' => '', 'posts' => array(
+            'first_items'   => $first_items,
+            'lead_items'    => $lead_items,
+            'last_items'    => $posts,
+        ), 'args' => $args), $template_path);
+    $output .= ob_get_contents();
+    ob_end_clean();
+    $output     .=  '</div>'; // End ui-posts-list-items
+
 
     // Pagination section
     switch ($pagination_type) {
@@ -284,32 +252,16 @@ if (count($posts)) {
             break;
     }
 
-	$output     .=  '</div>';
-	if ($use_slider) {
-		// End Slider Container
-		$output  .= '</div>';
-		if ($enable_navigation) {
-			// Nav
-			$output .= '<div class="'.($navigation_position == 'inside' ? '' : 'uk-hidden@l ').'uk-light"><a class="uk-position-center-left uk-position-small" href="#" data-uk-slidenav-previous data-uk-slider-item="previous"></a><a class="uk-position-center-right uk-position-small" href="#" data-uk-slidenav-next data-uk-slider-item="next"></a></div>';
-			$output .= $navigation_position == 'inside' ? '' : '<div class="uk-visible@l"><a class="uk-position-center-left-out uk-position-small" href="#" data-uk-slidenav-previous data-uk-slider-item="previous"></a><a class="uk-position-center-right-out uk-position-small" href="#" data-uk-slidenav-next data-uk-slider-item="next"></a></div>';
-		}
-		$output  .= '</div>';
-		if ($enable_dotnav) {
-			// Dot nav
-			$output .= '<ul class="uk-slider-nav uk-dotnav uk-flex-center uk-margin"></ul>';
-		}
-		// End Slider
-		$output  .= '</div>';
-	}
+//    $output     .=  '</div>';
 
-	$output     .=  '</div>';
-	if ($pagination_type == 'ajax') {
-		$output     .=  '<input type="hidden" class="ui-post-paging" value="'.base64_encode(json_encode($query_args)).'" />';
-		$output     .=  '<input type="hidden" class="ui-current-page" value="'.(get_query_var( 'paged' ) ? get_query_var('paged') : 1).'" />';
-		$output     .=  '<input type="hidden" class="ui-post-settings" value="'.base64_encode(json_encode($instance)).'" />';
-	}
+//	$output     .=  '</div>';
+    if ($pagination_type == 'ajax') {
+        $output     .=  '<input type="hidden" class="ui-post-paging" value="'.base64_encode(json_encode($query_args)).'" />';
+        $output     .=  '<input type="hidden" class="ui-current-page" value="'.(get_query_var( 'paged' ) ? get_query_var('paged') : 1).'" />';
+        $output     .=  '<input type="hidden" class="ui-post-settings" value="'.base64_encode(json_encode($instance)).'" />';
+    }
 
 	$output     .=  '</div>';
 
-	echo ent2ncr($output);
+    echo ent2ncr($output);
 }

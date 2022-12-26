@@ -329,6 +329,8 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                         ''              => esc_html__('Default', 'uipro'),
                         'line_style1'   => esc_html__('Style1', 'uipro'),
                         'line_style2'   => esc_html__('Style2', 'uipro'),
+                        'uk-heading-bullet'        => esc_html__('Bullet', 'uipro'),
+                        'uk-heading-line'          => esc_html__('Line', 'uipro'),
 
                     ),
                     'condition'     => array(
@@ -424,6 +426,7 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                     ],
                     'selectors' => [
                         '{{WRAPPER}} .line' => 'width: {{SIZE}}{{UNIT}};',
+                        '{{WRAPPER}} .uk-heading-line' => 'width: {{SIZE}}{{UNIT}};',
                     ],
                     'condition'     => array(
                         'line'    => 'yes'
@@ -452,6 +455,8 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                     ],
                     'selectors' => [
                         '{{WRAPPER}} .line' => 'height: {{SIZE}}{{UNIT}};',
+                        '{{WRAPPER}} .uk-heading-line >:before' => 'border-width: {{SIZE}}{{UNIT}};',
+                        '{{WRAPPER}} .uk-heading-line >:after' => 'border-width: {{SIZE}}{{UNIT}};',
                     ],
                     'condition'     => array(
                         'line'    => 'yes'
@@ -571,6 +576,148 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                     'admin_label'   => false,
 				),
 
+				// Text background
+				array(
+                    'type'         => Controls_Manager::SWITCHER,
+					'label'         => esc_html__( 'Enable Text Background', 'uipro' ),
+					'name'          => 'text_background',
+                    'default'       => false,
+                    'separator'     => 'before',
+				),
+				array(
+                    'type'         => Controls_Manager::MEDIA,
+					'label'         => esc_html__( 'Image', 'uipro' ),
+					'name'          => 'text_background_image',
+                    'condition'     => array(
+                        'text_background'   => 'yes'
+                    ),
+				),
+				array(
+                    'type'         => Controls_Manager::SELECT,
+                    'name'          => 'text_background_image_size',
+					'label'         => esc_html__( 'Image Size', 'uipro' ),
+                    'description'   => esc_html__( 'Determine whether the image will fit the section dimensions by clipping it or by filling the empty areas with the background color.', 'uipro' ),
+                    'options' => array(
+                        ''                      => esc_html__('Auto', 'uipro'),
+                        'uk-background-cover'   => esc_html__('Cover', 'uipro'),
+                        'uk-background-contain' => esc_html__('Contain', 'uipro'),
+                    ),
+                    'condition'     => array(
+                        'text_background'   => 'yes'
+                    ),
+				),
+				array(
+                    'type'         => Controls_Manager::SELECT,
+                    'name'          => 'text_background_image_effect',
+					'label'         => esc_html__( 'Image Effect', 'uipro' ),
+                    'description'   => esc_html__( 'Add a parallax effect or fix the background with regard to the viewport while scrolling.', 'uipro' ),
+                    'options' => array(
+                        ''          => esc_html__('None', 'uipro'),
+                        'parallax'  => esc_html__('Parallax', 'uipro'),
+                        'fixed'     => esc_html__('Fixed', 'uipro'),
+                    ),
+                    'condition'     => array(
+                        'text_background'   => 'yes'
+                    ),
+				),
+				array(
+                    'type'          => Controls_Manager::SLIDER,
+                    'name'          => 'text_background_horizontal_start',
+					'label'         => esc_html__( 'Horizontal Start', 'uipro' ),
+					'description'   => esc_html__( 'Animate the horizontal position (translateX) in pixels.', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px' ],
+                    'range' => [
+                        'px' => [
+                            'min' => -600,
+                            'max' => 600,
+                            'step' => 1,
+                        ],
+                    ],
+                    'condition'     => array(
+                        'text_background'   => 'yes',
+                        'text_background_image_effect'   => 'parallax',
+                    ),
+				),
+				array(
+                    'type'          => Controls_Manager::SLIDER,
+                    'name'          => 'text_background_horizontal_end',
+					'label'         => esc_html__( 'Horizontal End', 'uipro' ),
+					'description'   => esc_html__( 'Animate the horizontal position (translateX) in pixels.', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px' ],
+                    'range' => [
+                        'px' => [
+                            'min' => -600,
+                            'max' => 600,
+                            'step' => 1,
+                        ],
+                    ],
+                    'condition'     => array(
+                        'text_background'   => 'yes',
+                        'text_background_image_effect'   => 'parallax',
+                    ),
+				),
+				array(
+                    'type'          => Controls_Manager::SLIDER,
+                    'name'          => 'text_background_vertical_start',
+					'label'         => esc_html__( 'Vertical Start', 'uipro' ),
+					'description'   => esc_html__( 'Animate the vertical position (translateY) in pixels.', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px' ],
+                    'range' => [
+                        'px' => [
+                            'min' => -600,
+                            'max' => 600,
+                            'step' => 1,
+                        ],
+                    ],
+                    'condition'     => array(
+                        'text_background'   => 'yes',
+                        'text_background_image_effect'   => 'parallax',
+                    ),
+				),
+				array(
+                    'type'          => Controls_Manager::SLIDER,
+                    'name'          => 'text_background_vertical_end',
+					'label'         => esc_html__( 'Vertical End', 'uipro' ),
+					'description'   => esc_html__( 'Animate the vertical position (translateY) in pixels.', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px' ],
+                    'range' => [
+                        'px' => [
+                            'min' => -600,
+                            'max' => 600,
+                            'step' => 1,
+                        ],
+                    ],
+                    'condition'     => array(
+                        'text_background'   => 'yes',
+                        'text_background_image_effect'   => 'parallax',
+                    ),
+				),
+				array(
+                    'type'          => Controls_Manager::SLIDER,
+                    'name'          => 'text_background_easing',
+					'label'         => esc_html__( 'Easing', 'uipro' ),
+					'description'   => esc_html__( 'Set the animation easing. Zero transitions at an even speed, a positive value starts off quickly while a negative value starts off slowly.', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px' ],
+                    'range' => [
+                        'px' => [
+                            'min' => -200,
+                            'max' => 200,
+                            'step' => 1,
+                        ],
+                    ],
+                    'condition'     => array(
+                        'text_background'   => 'yes',
+                        'text_background_image_effect'   => 'parallax',
+                    ),
+				),
+
+
+
                 /* Style tab */
                 // Typo
                 array(
@@ -686,11 +833,14 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                     'description'   => esc_html__( 'Choose the separator color.', 'uipro' ),
                     'selectors'     => [
                         '{{WRAPPER}} .line' => 'background-color: {{VALUE}};',
+                        '{{WRAPPER}} .uk-heading-line >:before' => 'border-color: {{VALUE}};',
+                        '{{WRAPPER}} .uk-heading-line >:after' => 'border-color: {{VALUE}};',
+                        '{{WRAPPER}} .uk-heading-bullet::before' => 'border-color: {{VALUE}};',
                     ],
                     /*vc*/
                     'admin_label'   => false,
                     'condition'     => array(
-                        'line'    => 'yes'
+                        'line'    => 'yes',
                     ),
                 ),array(
                     'type'          => Controls_Manager::COLOR,

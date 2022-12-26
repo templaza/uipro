@@ -92,6 +92,7 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
 //            }
 
             $config_class::register_scripts();
+//            $config_class::enqueue_scripts();
         }
 
         /**
@@ -342,6 +343,11 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
             $depends = array();
             if ( ! empty( $assets['scripts'] ) ) {
                 foreach ( $assets['scripts'] as $key => $script ) {
+                    if(isset($script['deps_src']) && !empty($script['deps_src'])){
+                        foreach ($script['deps_src'] as $dep_name => $dep_src){
+                            $depends[]  = $dep_name;
+                        }
+                    }
                     $depends[] = $key;
                 }
             }
@@ -380,6 +386,11 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
             $depends = array();
             if ( ! empty( $assets['styles'] ) ) {
                 foreach ( $assets['styles'] as $key => $style ) {
+                    if(isset($style['deps_src']) && !empty($style['deps_src'])){
+                        foreach ($style['deps_src'] as $dep_name => $dep_src){
+                            $depends[]  = $dep_name;
+                        }
+                    }
                     $depends[] = $key;
                 }
             }
@@ -442,7 +453,7 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
             echo '<div class="templaza-widget-' . $this->get_base() . ' template-' . $base_file . $container . $margin_top . $margin_bottom . '">';
 
             \UIPro_Elementor_Helper::get_widget_template( $base_file,
-                array( $params => $settings, 'args' => $args ), $settings['template_path'] );
+                array( $params => $settings, 'args' => $args, 'el' => $this ), $settings['template_path'] );
 
             echo '</div>';
         }
