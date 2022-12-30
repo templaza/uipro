@@ -12,8 +12,8 @@ $first_items    = isset($posts['first_items'])?$posts['first_items']:array();
 $lead_position          = ( isset( $instance['lead_position'] ) && $instance['lead_position'] ) ? $instance['lead_position'] : 'top';
 $lead_column_gutter     = ( isset( $instance['lead_column_gutter'] ) && $instance['lead_column_gutter'] ) ? ' uk-grid-'.$instance['lead_column_gutter'] : '';
 $lead_column_divider    = (isset($instance['lead_column_divider']) && $instance['lead_column_divider']) ? filter_var($instance['lead_column_divider'], FILTER_VALIDATE_BOOLEAN) : 0;
-$lead_width    = (isset($instance['image_width']) && $instance['image_width']) ? ' uk-width-'
-    . $instance['image_width'] : ' uk-width-1-2';
+$lead_width    = (isset($instance['lead_width']) && $instance['lead_width']) ? ' uk-width-'
+    . $instance['lead_width'] : ' uk-width-1-1';
 $lead_width_xl    = (isset($instance['lead_width_xl']) && $instance['lead_width_xl']) ? ' uk-width-'
     . $instance['lead_width_xl'].'@xl' : ' uk-width-1-2@xl';
 $lead_width_l    = (isset($instance['lead_width_l']) && $instance['lead_width_l']) ? ' uk-width-'

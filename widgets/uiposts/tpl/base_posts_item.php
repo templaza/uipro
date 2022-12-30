@@ -5,6 +5,8 @@ $color_mode         = (isset($instance[$pre_val.'color_mode'] ) && $instance[$pr
 $pagination_type    = (isset($instance['pagination_type']) && $instance['pagination_type']) ? $instance['pagination_type'] : 'none';
 $masonry            = (isset($instance[$pre_val.'masonry']) && $instance[$pre_val.'masonry']) ? intval($instance[$pre_val.'masonry']) : 0;
 
+$card_divider       = (isset($instance[$pre_val.'card_divider'])) ? filter_var($instance[$pre_val.'card_divider'], FILTER_VALIDATE_BOOLEAN) : false;
+
 //Get posts
 //$limit          = ( isset( $instance['limit'] ) && $instance['limit'] ) ? $instance['limit'] : 4;
 //$lead_limit     = ( isset( $instance[$pre_val.'lead_limit'] ) && $instance[$pre_val.'lead_limit'] ) ? $instance[$pre_val.'lead_limit'] : 0;
@@ -164,7 +166,11 @@ if (count($posts)) {
         $output .= '<div class="uk-slider-container">';
     }
     $output     .=  '<div class="'.( $filter_position != 'top' ? 'uk-width-expand'.$filter_visibility : '' ).'">';
-    $output     .=  '<div class="ui-post-items uk-child-width-1-'.$large_desktop_columns.'@xl uk-child-width-1-'.$desktop_columns.'@l uk-child-width-1-'.$laptop_columns.'@m uk-child-width-1-'.$tablet_columns.'@s uk-child-width-1-'. $mobile_columns . $column_grid_gap . ($use_slider ? ' uk-slider-items': '') .'" data-uk-grid="'.($masonry ? 'masonry:true;' : '').'">';
+    $output     .=  '<div class="ui-post-items uk-child-width-1-'.$large_desktop_columns.'@xl uk-child-width-1-'
+        .$desktop_columns.'@l uk-child-width-1-'.$laptop_columns.'@m uk-child-width-1-'.$tablet_columns
+        .'@s uk-child-width-1-'. $mobile_columns . $column_grid_gap . ($use_slider ? ' uk-slider-items': '')
+        .($card_divider?' uk-grid-divider':'')
+        .'" data-uk-grid="'.($masonry ? 'masonry:true;' : '').'">';
 
     foreach ($posts as $i => $item) {
         ob_start();

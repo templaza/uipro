@@ -726,6 +726,11 @@ return array(
         'description'   => esc_html__('Set the Box Shadow of Card.', 'uipro'),
         'selector' => '{{WRAPPER}} .ui-posts-lead-item .uk-card',
     ),
+    array(
+        'type'          =>  Controls_Manager::SWITCHER,
+        'name'          => 'lead_card_divider',
+        'label'         => esc_html__('Card Divider', 'uipro'),
+    ),
 
     // Lead filter Settings
     array(

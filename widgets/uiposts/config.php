@@ -35,6 +35,8 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 			self::$icon = 'eicon-posts-grid';
 			self::$assets_path  =   plugin_dir_url(__FILE__). 'assets/';
 			parent::__construct();
+
+//            add_action( 'elementor/editor/after_enqueue_scripts', array($this, 'editor_enqueue_scripts') );
 		}
 
 		public function get_styles() {
@@ -64,6 +66,10 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 				)
 			);
 		}
+
+//        public function editor_enqueue_scripts(){
+//            wp_enqueue_script('uiposts-editor', plugins_url( 'assets/js/editor.js', __FILE__ ));
+//        }
 
 		/**
 		 * @return array
@@ -327,6 +333,7 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 					'label' => esc_html__( 'Card Size', 'uipro' ),
 					'default' => '',
 					'options' => [
+                        'none' => esc_html__('None', 'uipro'),
 						'' => esc_html__('Default', 'uipro'),
 						'small' => esc_html__('Small', 'uipro'),
 						'large' => esc_html__('Large', 'uipro'),
@@ -340,8 +347,10 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 					'responsive'    =>  true,
 					'size_units'    => [ 'px', 'em', '%' ],
 					'selectors'     => [
-						'{{WRAPPER}} .ui-posts.style1 .ui-post-info-wrap .uk-card-body' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+						'{{WRAPPER}} .ui-posts-intro-item .ui-post-info-wrap .uk-card-body' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 						'{{WRAPPER}} .ui-posts-intro-item .ui-post-info-wrap .uk-card-footer' => 'padding: 20px {{RIGHT}}{{UNIT}} 20px {{LEFT}}{{UNIT}};',
+						'{{WRAPPER}} .ui-posts.style1 .ui-post-info-wrap .uk-card-body' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+						'{{WRAPPER}} .ui-posts.style1 .ui-post-info-wrap .uk-card-footer' => 'padding: 20px {{RIGHT}}{{UNIT}} 20px {{LEFT}}{{UNIT}};',
 					],
 					'conditions' => [
 						'terms' => [
@@ -376,6 +385,11 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                     'description'   => esc_html__('Set the Box Shadow of Card.', 'uipro'),
                     'selector' => '{{WRAPPER}} .ui-posts.style1 .uk-card'
                         .',{{WRAPPER}} .ui-posts-intro-item .uk-card',
+                ),
+                array(
+                    'type'          =>  Controls_Manager::SWITCHER,
+                    'name'          => 'card_divider',
+                    'label'         => esc_html__('Card Divider', 'uipro'),
                 ),
 
 				//Filter Settings
@@ -1007,30 +1021,141 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 						],
 					],
 				),
-                array(
-                    'id'          => 'image_width',
-                    'label' => esc_html__( 'Image Width', 'uipro' ),
-                    'type' => Controls_Manager::SELECT,
-                    'options'       => array(
-                        '1-2'    => esc_html__('1-2', 'uipro'),
-                        '1-3'    => esc_html__('1-3', 'uipro'),
-                        '2-3'    => esc_html__('2-3', 'uipro'),
-                        '1-4'    => esc_html__('1-4', 'uipro'),
-                        '3-4'    => esc_html__('3-4', 'uipro'),
-                        '1-5'    => esc_html__('1-5', 'uipro'),
-                        '4-5'    => esc_html__('4-5', 'uipro'),
-                        '1-6'    => esc_html__('1-6', 'uipro'),
-                        '5-6'    => esc_html__('5-6', 'uipro'),
-                    ),
-                    'default'   => '1-2',
-                    'conditions' => [
-                        'relation' => 'or',
-                        'terms' => [
-                            ['name' => 'image_position', 'operator' => '===', 'value' => 'left'],
-                            ['name' => 'image_position', 'operator' => '===', 'value' => 'right'],
+                    array(
+                        'id'          => 'image_width_xl',
+                        'label' => esc_html__( 'Image Width Large Desktop', 'uipro' ),
+                        'type' => Controls_Manager::SELECT,
+                        'options'       => array(
+                            '1-1'    => esc_html__('1-1', 'uipro'),
+                            '1-2'    => esc_html__('1-2', 'uipro'),
+                            '1-3'    => esc_html__('1-3', 'uipro'),
+                            '2-3'    => esc_html__('2-3', 'uipro'),
+                            '1-4'    => esc_html__('1-4', 'uipro'),
+                            '3-4'    => esc_html__('3-4', 'uipro'),
+                            '1-5'    => esc_html__('1-5', 'uipro'),
+                            '2-5'    => esc_html__('2-5', 'uipro'),
+                            '3-5'    => esc_html__('3-5', 'uipro'),
+                            '4-5'    => esc_html__('4-5', 'uipro'),
+                            '1-6'    => esc_html__('1-6', 'uipro'),
+                            '5-6'    => esc_html__('5-6', 'uipro'),
+                        ),
+                        'default'   => '1-2',
+                        'conditions' => [
+                            'terms' =>[
+                                ['name' => 'hide_thumbnail', 'operator' => '!==', 'value' => '1'],
+                                ['name' => 'layout', 'operator' => '===', 'value' => ''],
+                                ['name' => 'image_position', 'operator' => 'in', 'value' => ['left','right']],
+                            ],
                         ],
-                    ],
-                ),
+                    ),
+                    array(
+                        'id'          => 'image_width_l',
+                        'label' => esc_html__( 'Image Width Desktop', 'uipro' ),
+                        'type' => Controls_Manager::SELECT,
+                        'options'       => array(
+                            '1-1'    => esc_html__('1-1', 'uipro'),
+                            '1-2'    => esc_html__('1-2', 'uipro'),
+                            '1-3'    => esc_html__('1-3', 'uipro'),
+                            '2-3'    => esc_html__('2-3', 'uipro'),
+                            '1-4'    => esc_html__('1-4', 'uipro'),
+                            '3-4'    => esc_html__('3-4', 'uipro'),
+                            '1-5'    => esc_html__('1-5', 'uipro'),
+                            '2-5'    => esc_html__('2-5', 'uipro'),
+                            '3-5'    => esc_html__('3-5', 'uipro'),
+                            '4-5'    => esc_html__('4-5', 'uipro'),
+                            '1-6'    => esc_html__('1-6', 'uipro'),
+                            '5-6'    => esc_html__('5-6', 'uipro'),
+                        ),
+                        'default'   => '1-2',
+                        'conditions' => [
+                            'terms' =>[
+                                ['name' => 'hide_thumbnail', 'operator' => '!==', 'value' => '1'],
+                                ['name' => 'layout', 'operator' => '===', 'value' => ''],
+                                ['name' => 'image_position', 'operator' => 'in', 'value' => ['left','right']],
+                            ],
+                        ],
+                    ),
+                    array(
+                        'id'          => 'image_width_m',
+                        'label' => esc_html__( 'Image Width Laptop', 'uipro' ),
+                        'type' => Controls_Manager::SELECT,
+                        'options'       => array(
+                            '1-1'    => esc_html__('1-1', 'uipro'),
+                            '1-2'    => esc_html__('1-2', 'uipro'),
+                            '1-3'    => esc_html__('1-3', 'uipro'),
+                            '2-3'    => esc_html__('2-3', 'uipro'),
+                            '1-4'    => esc_html__('1-4', 'uipro'),
+                            '3-4'    => esc_html__('3-4', 'uipro'),
+                            '1-5'    => esc_html__('1-5', 'uipro'),
+                            '2-5'    => esc_html__('2-5', 'uipro'),
+                            '3-5'    => esc_html__('3-5', 'uipro'),
+                            '4-5'    => esc_html__('4-5', 'uipro'),
+                            '1-6'    => esc_html__('1-6', 'uipro'),
+                            '5-6'    => esc_html__('5-6', 'uipro'),
+                        ),
+                        'default'   => '1-2',
+                        'conditions' => [
+                            'terms' =>[
+                                ['name' => 'hide_thumbnail', 'operator' => '!==', 'value' => '1'],
+                                ['name' => 'layout', 'operator' => '===', 'value' => ''],
+                                ['name' => 'image_position', 'operator' => 'in', 'value' => ['left','right']],
+                            ],
+                        ],
+                    ),
+                    array(
+                        'id'          => 'image_width_s',
+                        'label' => esc_html__( 'Image Width Tablet', 'uipro' ),
+                        'type' => Controls_Manager::SELECT,
+                        'options'       => array(
+                            '1-1'    => esc_html__('1-1', 'uipro'),
+                            '1-2'    => esc_html__('1-2', 'uipro'),
+                            '1-3'    => esc_html__('1-3', 'uipro'),
+                            '2-3'    => esc_html__('2-3', 'uipro'),
+                            '1-4'    => esc_html__('1-4', 'uipro'),
+                            '3-4'    => esc_html__('3-4', 'uipro'),
+                            '1-5'    => esc_html__('1-5', 'uipro'),
+                            '2-5'    => esc_html__('2-5', 'uipro'),
+                            '3-5'    => esc_html__('3-5', 'uipro'),
+                            '4-5'    => esc_html__('4-5', 'uipro'),
+                            '1-6'    => esc_html__('1-6', 'uipro'),
+                            '5-6'    => esc_html__('5-6', 'uipro'),
+                        ),
+                        'default'   => '1-2',
+                        'conditions' => [
+                            'terms' =>[
+                                ['name' => 'hide_thumbnail', 'operator' => '!==', 'value' => '1'],
+                                ['name' => 'layout', 'operator' => '===', 'value' => ''],
+                                ['name' => 'image_position', 'operator' => 'in', 'value' => ['left','right']],
+                            ],
+                        ],
+                    ),
+                    array(
+                        'id'          => 'image_width',
+                        'label' => esc_html__( 'Image Width Mobile', 'uipro' ),
+                        'type' => Controls_Manager::SELECT,
+                        'options'       => array(
+                            '1-1'    => esc_html__('1-1', 'uipro'),
+                            '1-2'    => esc_html__('1-2', 'uipro'),
+                            '1-3'    => esc_html__('1-3', 'uipro'),
+                            '2-3'    => esc_html__('2-3', 'uipro'),
+                            '1-4'    => esc_html__('1-4', 'uipro'),
+                            '3-4'    => esc_html__('3-4', 'uipro'),
+                            '1-5'    => esc_html__('1-5', 'uipro'),
+                            '2-5'    => esc_html__('2-5', 'uipro'),
+                            '3-5'    => esc_html__('3-5', 'uipro'),
+                            '4-5'    => esc_html__('4-5', 'uipro'),
+                            '1-6'    => esc_html__('1-6', 'uipro'),
+                            '5-6'    => esc_html__('5-6', 'uipro'),
+                        ),
+                        'default'   => '1-2',
+                        'conditions' => [
+                            'terms' =>[
+                                ['name' => 'hide_thumbnail', 'operator' => '!==', 'value' => '1'],
+                                ['name' => 'layout', 'operator' => '===', 'value' => ''],
+                                ['name' => 'image_position', 'operator' => 'in', 'value' => ['left','right']],
+                            ],
+                        ],
+                    ),
                 array(
                     'type'          => Controls_Manager::SELECT,
                     'id'            => 'image_margin',
