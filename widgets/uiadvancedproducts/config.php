@@ -49,7 +49,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 		public function get_scripts() {
 			return array(
 				'ui-advanced-product-loadmore' => array(
-					'src'   =>  'script.min.js',
+					'src'   =>  'script.js',
 					'deps'  =>  array('jquery','elementor-frontend')
 				)
 			);
@@ -83,6 +83,12 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
             if(isset(static::$cache[$store_id])){
                 return static::$cache[$store_id];
             }
+            $slug_cat = array(
+                'ap_category' => esc_html__( 'Advanced Product Category', 'uipro' ),
+                'ap_branch' => esc_html__( 'Branch', 'uipro' )
+            );
+            $slug_tax = array();
+            $options_filter = array();
 
 		    $options    = array(
                 array(
@@ -101,14 +107,14 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'type'          => Controls_Manager::SELECT2,
                     'id'            => 'ap_product_branch',
                     'label'         => esc_html__( 'Select Branch', 'uipro' ),
-                    'options'       => UIPro_Helper::get_cat_taxonomy( 'ap_branch' ),
+                    'options'       => UIPro_Helper::get_cat_taxonomy_slug( 'ap_branch' ),
                     'multiple'      => true,
                 ),
                 array(
                     'type'          => Controls_Manager::SELECT2,
                     'id'            => 'ap_product_category',
                     'label'         => esc_html__( 'Select Category', 'uipro' ),
-                    'options'       => UIPro_Helper::get_cat_taxonomy( 'ap_category' ),
+                    'options'       => UIPro_Helper::get_cat_taxonomy_slug( 'ap_category' ),
                     'multiple'      => true,
                 ),
             );
@@ -116,12 +122,12 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
             if(!empty($categories) && count($categories)){
                 foreach ($categories as $cat){
                     $slug           = get_post_meta($cat -> ID, 'slug', true);
-
+                    $slug_tax[''.get_post_meta($cat -> ID, 'slug', true)]   = $cat -> post_title;
                     if(!taxonomy_exists($slug)){
                         continue;
                     }
 
-                    $cat_options    = UIPro_Helper::get_cat_taxonomy( $slug );
+                    $cat_options    = UIPro_Helper::get_cat_taxonomy_slug( $slug );
                     if(empty($cat_options) || !count($cat_options)){
                         continue;
                     }
@@ -132,8 +138,20 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                         'options'       => $cat_options,
                         'multiple'      => true,
                     );
+                    $options_filter[]      = array(
+                        'type'          => Controls_Manager::SELECT2,
+                        'id'            => 'ap_product_'.$slug.'_filter',
+                        'label'         => sprintf(esc_html__( 'Select %s', 'uipro' ), $cat -> post_title),
+                        'options'       => $cat_options,
+                        'multiple'      => true,
+                        'condition'     => array(
+                            'filter_by'    => ''.$slug.'',
+                        ),
+                    );
                 }
             }
+
+            $all_tax = array_merge($slug_cat,$slug_tax);
 
             // Custom fields option
 
@@ -165,11 +183,10 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 						'latest'    => esc_html__('Latest', 'uipro'),
 						'oldest'    => esc_html__('Oldest', 'uipro'),
 						'popular'   => esc_html__('Popular', 'uipro'),
-						'sticky'   => esc_html__('Sticky Only', 'uipro'),
 						'random'    => esc_html__('Random', 'uipro'),
 					),
 					'default'       => 'latest',
-					'description'   => esc_html__( 'Select articles ordering from the list.', 'uipro' ),
+					'description'   => esc_html__( 'Select products ordering from the list.', 'uipro' ),
 				),
 				array(
 					'type'          => Controls_Manager::NUMBER,
@@ -412,6 +429,68 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'section_name'  => esc_html__('Filter Settings', 'uipro')
 				),
 				array(
+					'type'          => Controls_Manager::SWITCHER,
+					'id'            => 'filter_all',
+					'label'         => esc_html__('Show all', 'uipro'),
+					'description'   => esc_html__( 'Display filter all', 'uipro' ),
+					'label_on'      => esc_html__( 'Yes', 'uipro' ),
+					'label_off'     => esc_html__( 'No', 'uipro' ),
+					'return_value'  => '1',
+					'default'       => '0',
+				),
+                array(
+                    'id'    => 'filter_all_text',
+                    'label' => esc_html__( 'All Text', 'uipro' ),
+                    'type' => Controls_Manager::TEXT,
+                    'default' => esc_html__( 'All' , 'uipro' ),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'filter_all', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::SELECT,
+                    'name'          => 'filter_by',
+                    'show_label'    => true,
+                    'label'         => esc_html__( 'Filter By', 'uipro' ),
+                    'options'       => $all_tax,
+                    'default'       => 'ap_category',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'use_filter', 'operator' => '==', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::SELECT2,
+                    'id'            => 'ap_product_ap_category_filter',
+                    'label'         => esc_html__( 'Select Category', 'uipro' ),
+                    'options'       => UIPro_Helper::get_cat_taxonomy_slug( 'ap_category' ),
+                    'multiple'      => true,
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'use_filter', 'operator' => '===', 'value' => '1'],
+                            ['name' => 'filter_by', 'operator' => '===', 'value' => 'ap_category'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::SELECT2,
+                    'id'            => 'ap_product_ap_branch_filter',
+                    'label'         => esc_html__( 'Select Branch', 'uipro' ),
+                    'options'       => UIPro_Helper::get_cat_taxonomy_slug( 'ap_branch' ),
+                    'multiple'      => true,
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'use_filter', 'operator' => '===', 'value' => '1'],
+                            ['name' => 'filter_by', 'operator' => '===', 'value' => 'ap_branch'],
+                        ],
+                    ],
+                ),
+            ));
+            $options = array_merge($options,$options_filter, array(
+				array(
 					'type'          => Controls_Manager::SELECT,
 					'id'            => 'filter_position',
 					'label' => esc_html__( 'Filter Position', 'uipro' ),
@@ -421,6 +500,12 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 						'left' => esc_html__('Left', 'uipro'),
 						'right' => esc_html__('Right', 'uipro'),
 					],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'use_filter', 'operator' => '===', 'value' => '1'],
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'base'],
+                        ],
+                    ],
 				),
 				array(
 					'id'            => 'filter_width',
@@ -452,27 +537,13 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					],
 					'conditions' => [
 						'terms' => [
+                            ['name' => 'use_filter', 'operator' => '==', 'value' => '1'],
                             ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'filter_position', 'operator' => '!==', 'value' => 'top'],
 						],
 					],
 				),
-				array(
-					'type'          => Controls_Manager::SELECT2,
-					'id'            => 'filter_type',
-					'label' => esc_html__( 'Filter Type', 'uipro' ),
-					'default' => 'tag',
-					'multiple' => true,
-					'options' => [
-						'tag' => esc_html__('Tags', 'uipro'),
-						'category' => esc_html__('Categories', 'uipro'),
-					],
-                    'conditions' => [
-                        'terms' => [
-                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
-                        ],
-                    ],
-				),
+
 				array(
 					'type'          => Controls_Manager::SELECT,
 					'id'            => 'filter_grid_gap',
@@ -488,6 +559,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'           => '',
 					'conditions' => [
 						'terms' => [
+                            ['name' => 'use_filter', 'operator' => '==', 'value' => '1'],
                             ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'filter_position', 'operator' => '!==', 'value' => 'top'],
 						],
@@ -504,6 +576,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'       => '0',
                     'conditions' => [
                         'terms' => [
+                            ['name' => 'use_filter', 'operator' => '==', 'value' => '1'],
                             ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
@@ -519,6 +592,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'       => '1',
                     'conditions' => [
                         'terms' => [
+                            ['name' => 'use_filter', 'operator' => '==', 'value' => '1'],
                             ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
@@ -540,6 +614,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'           => '',
 					'conditions' => [
 						'terms' => [
+                            ['name' => 'use_filter', 'operator' => '==', 'value' => '1'],
                             ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'filter_position', 'operator' => '===', 'value' => 'top'],
 						],
@@ -558,6 +633,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'           => '',
 					'conditions' => [
 						'terms' => [
+                            ['name' => 'use_filter', 'operator' => '==', 'value' => '1'],
                             ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'filter_container', 'operator' => '!==', 'value' => ''],
 							['name' => 'filter_position', 'operator' => '===', 'value' => 'top'],
@@ -579,6 +655,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'           => '',
 					'conditions' => [
 						'terms' => [
+                            ['name' => 'use_filter', 'operator' => '==', 'value' => '1'],
                             ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'filter_position', 'operator' => '===', 'value' => 'top'],
 							['name' => 'filter_container', 'operator' => '!==', 'value' => ''],
@@ -599,6 +676,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'conditions' => [
 						'relation' => 'and',
 						'terms' => [
+                            ['name' => 'use_filter', 'operator' => '==', 'value' => '1'],
                             ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'filter_position', 'operator' => '===', 'value' => 'top'],
 							['name' => 'filter_container', 'operator' => '!==', 'value' => ''],
@@ -621,6 +699,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'conditions' => [
                         'relation' => 'and',
                         'terms' => [
+                            ['name' => 'use_filter', 'operator' => '==', 'value' => '1'],
                             ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
@@ -640,6 +719,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'           => '',
 					'conditions' => [
 						'terms' => [
+                            ['name' => 'use_filter', 'operator' => '==', 'value' => '1'],
                             ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'filter_text_alignment', 'operator' => '!==', 'value' => ''],
 						],
@@ -661,6 +741,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'conditions' => [
 						'relation' => 'and',
 						'terms' => [
+                            ['name' => 'use_filter', 'operator' => '==', 'value' => '1'],
                             ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'filter_text_alignment', 'operator' => '!==', 'value' => ''],
 							['name' => 'filter_text_alignment_breakpoint', 'operator' => '!==', 'value' => ''],
@@ -680,31 +761,12 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'       => 'slide',
                     'conditions' => [
                         'terms' => [
+                            ['name' => 'use_filter', 'operator' => '==', 'value' => '1'],
                             ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
 				),
-				array(
-					'type'          => Controls_Manager::SELECT,
-					'id'            => 'filter_margin',
-					'label'         => esc_html__('Margin Bottom', 'uipro'),
-					'description'   => esc_html__('Set the bottom margin.', 'uipro'),
-					'options'       => array(
-						'' => esc_html__('Default', 'uipro'),
-						'small' => esc_html__('Small', 'uipro'),
-						'medium' => esc_html__('Medium', 'uipro'),
-						'large' => esc_html__('Large', 'uipro'),
-						'xlarge' => esc_html__('X-Large', 'uipro'),
-						'remove' => esc_html__('None', 'uipro'),
-					),
-					'default'           => '',
-					'conditions' => [
-						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
-							['name' => 'filter_position', 'operator' => '===', 'value' => 'top'],
-						],
-					],
-				),
+
 				array(
 					'type'          => Controls_Manager::SELECT,
 					'id'            => 'filter_visibility',
@@ -720,10 +782,126 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'           => '',
                     'conditions' => [
                         'terms' => [
+                            ['name' => 'use_filter', 'operator' => '==', 'value' => '1'],
                             ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
                         ],
                     ],
 				),
+                array(
+                    'name'            => 'filter_font_family',
+                    'type'          => Group_Control_Typography::get_type(),
+                    'scheme'        => Typography::TYPOGRAPHY_1,
+                    'label'         => esc_html__('Filter Font', 'uipro'),
+                    'description'   => esc_html__('Select a font family, font size for the addon Filter.', 'uipro'),
+                    'selector'      => '{{WRAPPER}} .ap-filter a',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'use_filter', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'id'            => 'filter_color',
+                    'type'          =>  Controls_Manager::COLOR,
+                    'label'         => esc_html__('Filter Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ap-filter a' => 'color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'use_filter', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'id'            => 'filter_color_hover',
+                    'type'          =>  Controls_Manager::COLOR,
+                    'label'         => esc_html__('Filter Color Hover', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ap-filter a:hover' => 'color: {{VALUE}}',
+                        '{{WRAPPER}} .ap-filter a.active' => 'color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'use_filter', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'         => Controls_Manager::CHOOSE,
+                    'label'         => esc_html__( 'Filter alignment', 'uipro' ),
+                    'name'          => 'filter_align',
+                    'responsive'    => true, /* this will be add in responsive layout */
+                    'options'       => [
+                        'left'      => [
+                            'title' => esc_html__( 'Left', 'uipro' ),
+                            'icon'  => 'eicon-text-align-left',
+                        ],
+                        'center'    => [
+                            'title' => esc_html__( 'Center', 'uipro' ),
+                            'icon'  => 'eicon-text-align-center',
+                        ],
+                        'right'     => [
+                            'title' => esc_html__( 'Right', 'uipro' ),
+                            'icon'  => 'eicon-text-align-right',
+                        ],
+                        'justify'   => [
+                            'title' => esc_html__( 'Justified', 'uipro' ),
+                            'icon'  => 'eicon-text-align-justify',
+                        ],
+                    ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ap-filter'   => 'text-align: {{VALUE}}; align-items: {{VALUE}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'use_filter', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'filter_item_margin',
+                    'label'         => esc_html__( 'Filter Item Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ap-filter a' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'use_filter', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'filter_margin',
+                    'label'         => esc_html__( 'Filter Block Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ap-filter' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'use_filter', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'id'            => 'filter_loading_color',
+                    'type'          =>  Controls_Manager::COLOR,
+                    'label'         => esc_html__('Filter Loading Background', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .templaza-posts__loading' => 'background-color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'use_filter', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
 
 				//Slider Settings
 				array(
@@ -739,6 +917,28 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'section_name'  => esc_html__('Slider Settings', 'uipro'),
 
 				),
+				array(
+					'type'          => Controls_Manager::SWITCHER,
+					'id'            => 'enable_autoplay',
+					'label'         => esc_html__('Autoplay', 'uipro'),
+					'label_on'      => esc_html__( 'Yes', 'uipro' ),
+					'label_off'     => esc_html__( 'No', 'uipro' ),
+					'return_value'  => '1',
+					'default'       => '1',
+					'conditions' => [
+						'terms' => [
+							['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
+						],
+					],
+				),
+                array(
+                    'type'          => Controls_Manager::NUMBER,
+                    'id'            => 'slider_item_start',
+                    'label'         => esc_html__( 'Slider item to show', 'uipro' ),
+                    'min' => 0,
+                    'max' => 50,
+                    'step' => 1,
+                ),
 				array(
 					'type'          => Controls_Manager::SWITCHER,
 					'id'            => 'enable_navigation',
@@ -832,7 +1032,61 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                             ['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
                         ],
                     ],
-
+                ),
+                array(
+                    'type'          => Controls_Manager::SWITCHER,
+                    'id'            => 'slider_visible',
+                    'label'         => esc_html__('Visible all slider items', 'uipro'),
+                    'description'   => esc_html__( 'Visible all slider items', 'uipro' ),
+                    'label_on'      => esc_html__( 'Visible', 'uipro' ),
+                    'label_off'     => esc_html__( 'Hidden', 'uipro' ),
+                    'return_value'  => 'visible',
+                    'default'       => 'hidden',
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-slider-container' => 'overflow: {{VALUE}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'id'            => 'slider_item_overlay',
+                    'type'          =>  Controls_Manager::COLOR,
+                    'label'         => esc_html__('Slider Overlay Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .uk-slider-container::before' => 'background: {{VALUE}}',
+                        '{{WRAPPER}} .uk-slider-container::after' => 'background: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
+                            ['name' => 'slider_visible', 'operator' => '===', 'value' => 'visible'],
+                        ],
+                    ],
+                ),
+                array(
+                    'name'            => 'slider_item_overlay_space',
+                    'label'         => esc_html__( 'Overlay Space', 'uipro' ),
+                    'type'          => Controls_Manager::SLIDER,
+                    'responsive'    => true,
+                    'range' => [
+                        'px' => [
+                            'min' => -200,
+                            'max' => 500
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .uk-slider-container::before' => 'margin-left: -{{SIZE}}{{UNIT}}',
+                        '{{WRAPPER}} .uk-slider-container::after' => 'margin-left: {{SIZE}}{{UNIT}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
+                            ['name' => 'slider_visible', 'operator' => '===', 'value' => 'visible'],
+                        ],
+                    ],
                 ),
 
 				//Title configure
@@ -928,6 +1182,110 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                         ],
                     ],
 				),
+
+				// Author Settings
+				array(
+					'type'          => Controls_Manager::SWITCHER,
+					'id'            => 'show_author',
+					'label'         => esc_html__('Show Author', 'uipro'),
+					'description'   => esc_html__( 'Display author of product.', 'uipro' ),
+					'label_on'      => esc_html__( 'Yes', 'uipro' ),
+					'label_off'     => esc_html__( 'No', 'uipro' ),
+					'return_value'  => '1',
+					'default'       => '0',
+					'start_section' => 'author_settings',
+					'section_name'  => esc_html__('Author Settings', 'uipro'),
+				),
+                array(
+                    'name'            => 'author_font_family',
+                    'type'          => Group_Control_Typography::get_type(),
+                    'scheme'        => Typography::TYPOGRAPHY_1,
+                    'label'         => esc_html__('Author Font', 'uipro'),
+                    'description'   => esc_html__('Select a font family, font size for Author name.', 'uipro'),
+                    'selector'      => '{{WRAPPER}} .ap-author-name',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'show_author', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'id'            => 'author_color',
+                    'type'          =>  Controls_Manager::COLOR,
+                    'label'         => esc_html__('Author Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ap-author-name > a' => 'color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'show_author', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'id'            => 'author_color',
+                    'type'          =>  Controls_Manager::COLOR,
+                    'label'         => esc_html__('Author Color Hover', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ap-author-name > a:hover' => 'color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'show_author', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::SWITCHER,
+                    'id'            => 'show_author_avatar',
+                    'label'         => esc_html__('Show Author Avatar', 'uipro'),
+                    'description'   => esc_html__( 'Display author avatar.', 'uipro' ),
+                    'label_on'      => esc_html__( 'Yes', 'uipro' ),
+                    'label_off'     => esc_html__( 'No', 'uipro' ),
+                    'return_value'  => '1',
+                    'default'       => '0',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'show_author', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'name'            => 'author_avatar_height',
+                    'label'         => esc_html__( 'Avatar Height', 'uipro' ),
+                    'type'          => Controls_Manager::SLIDER,
+                    'responsive'    => true,
+                    'range' => [
+                        'px' => [
+                            'min' => 1,
+                            'max' => 1000
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ap-author-img-box img' => 'height: {{SIZE}}{{UNIT}}; width:auto;',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'show_author_avatar', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'author_margin',
+                    'label'         => esc_html__( 'Author Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ap-author-block' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'show_author', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+
+                ),
 
 				// Image Settings
 				array(

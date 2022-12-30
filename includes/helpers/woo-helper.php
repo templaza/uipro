@@ -673,9 +673,9 @@ class TemPlaza_Woo_El_Helper {
         woocommerce_template_loop_product_link_close();
         echo '</h2>';
     }
-    public static function add_to_cart_link() {
-        global $product;
-        echo sprintf(
+
+    public static function add_to_cart_link( $html, $product, $args ) {
+        return sprintf(
             '<a href="%s" data-quantity="%s" class="%s tz-loop-button tz-loop_atc_button" %s data-text="%s" data-title="%s" >%s<span class="add-to-cart-text loop_button-text">%s</span></a>',
             esc_url( $product->add_to_cart_url() ),
             esc_attr( isset( $args['quantity'] ) ? $args['quantity'] : 1 ),
@@ -686,6 +686,36 @@ class TemPlaza_Woo_El_Helper {
             '<i class="fas fa-shopping-cart"></i>',
             esc_html( $product->add_to_cart_text() )
         );
+    }
+    public static function star_rating_html( $html, $rating, $count ) {
+        $html = '<span class="max-rating rating-stars">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            </span>';
+        $html .= '<span class="user-rating rating-stars" style="width:' . ( ( $rating / 5 ) * 100 ) . '%">
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            <i class="fas fa-star"></i>
+            </span>';
+
+        $html .= '<span class="screen-reader-text">';
+
+        if ( 0 < $count ) {
+            /* translators: 1: rating 2: rating count */
+            $html .= sprintf( _n( 'Rated %1$s out of 5 based on %2$s customer rating', 'Rated %1$s out of 5 based on %2$s customer ratings', $count, 'agruco' ), '<strong class="rating">' . esc_html( $rating ) . '</strong>', '<span class="rating">' . esc_html( $count ) . '</span>' );
+        } else {
+            /* translators: %s: rating */
+            $html .= sprintf( esc_html__( 'Rated %s out of 5', 'agruco' ), '<strong class="rating">' . esc_html( $rating ) . '</strong>' );
+        }
+
+        $html .= '</span>';
+
+        return $html;
     }
     public static function templaza_product_taxonomy( $taxonomy = 'product_cat', $show_thumbnail = false ) {
         global $product;

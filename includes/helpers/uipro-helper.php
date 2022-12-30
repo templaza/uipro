@@ -26,7 +26,7 @@ class UIPro_Helper{
             $args  = array(
                 'pad_counts'   => 1,
                 'hierarchical' => 1,
-                'hide_empty'   => 1,
+                'hide_empty'   => false,
                 'orderby'      => 'name',
                 'menu_order'   => false
             );
@@ -44,6 +44,56 @@ class UIPro_Helper{
                             $cats[$prefix . $term->name] = $term->term_id;
                         } else {
                             $cats[$term->term_id] = $prefix . $term->name;
+                        }
+                    }
+                }
+            }
+        }
+
+        if(!empty($cats)){
+            static::$cache[$store_id]   = $cats;
+        }
+
+        return $cats;
+    }
+
+    public static function get_cat_taxonomy_slug( $term = 'category', $cats = false, $vc = false ) {
+        if ( ! $cats ) {
+            $cats = array();
+        }
+
+        $store_id   = __METHOD__;
+        $store_id  .= '::'.$term;
+        $store_id  .= '::'.serialize($cats);
+        $store_id  .= '::'.$vc;
+        $store_id   = md5($store_id);
+
+        if(isset(static::$cache[$store_id])){
+            return static::$cache[$store_id];
+        }
+
+        if ( is_admin() ) {
+            $args  = array(
+                'pad_counts'   => 1,
+                'hierarchical' => 1,
+                'hide_empty'   => false,
+                'orderby'      => 'name',
+                'menu_order'   => false
+            );
+            $terms = get_terms( $term, $args );
+            if ( is_wp_error( $terms ) ) {
+            } else {
+                if ( empty( $terms ) ) {
+                } else {
+                    $prefix = '';
+                    foreach ( $terms as $term ) {
+                        if ( $term->parent > 0 ) {
+                            $prefix = "--";
+                        }
+                        if ( $vc == true ) {
+                            $cats[$prefix . $term->name] = $term->slug;
+                        } else {
+                            $cats[$term->slug] = $prefix . $term->name;
                         }
                     }
                 }
