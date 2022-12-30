@@ -177,3 +177,5 @@ endif;
 
 $output .=  '</div>';
 $output .=  '</article>';
+
+echo ent2ncr($output);
