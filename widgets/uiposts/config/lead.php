@@ -1040,6 +1040,34 @@ return array(
         'default'       => '0',
     ),
     array(
+        'type'          => Controls_Manager::SWITCHER,
+        'id'            => 'lead_enable_slider_autoplay',
+        'label'         => esc_html__('Auto Play', 'uipro'),
+        'description'   => esc_html__( 'Enable Auto Play', 'uipro' ),
+        'label_on'      => esc_html__( 'Yes', 'uipro' ),
+        'label_off'     => esc_html__( 'No', 'uipro' ),
+        'return_value'  => '1',
+        'default'       => '0',
+        'conditions' => [
+            'terms' => [
+                ['name' => 'lead_use_slider', 'operator' => '===', 'value' => '1'],
+            ],
+        ],
+    ),
+    array(
+        'type'          => Controls_Manager::NUMBER,
+        'id'            => 'lead_slider_autoplay_interval',
+        'label'         => esc_html__('Auto Play Interval', 'uipro'),
+        'description'   => esc_html__( 'The delay between switching slides in autoplay mode.', 'uipro' ),
+        'default'       => 7000,
+        'conditions' => [
+            'terms' => [
+                ['name' => 'lead_use_slider', 'operator' => '===', 'value' => '1'],
+                ['name' => 'lead_enable_slider_autoplay', 'operator' => '===', 'value' => '1'],
+            ],
+        ],
+    ),
+    array(
         'type'          => Controls_Manager::DIMENSIONS,
         'name'          =>  'lead_slider_padding',
         'label'         => esc_html__( 'Slider Padding', 'uipro' ),
