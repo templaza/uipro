@@ -1257,6 +1257,27 @@ return array(
         ],
     ),
     array(
+        'type'          => Controls_Manager::SLIDER,
+        'id'            => 'lead_title_maxwidth',
+        'label'         => esc_html__('Title Max Width', 'uipro'),
+        'description'   => esc_html__('Set the title max width.', 'uipro'),
+        'size_units'    => [ 'px', '%' ],
+        'range' => [
+            'px' => [
+                'min' => 0,
+                'max' => 2500,
+                'step' => 1,
+            ],
+            '%' => [
+                'min' => 0,
+                'max' => 100,
+            ],
+        ],
+        'selectors' => [
+            '{{WRAPPER}} .ui-posts-lead-item .ui-title > *' => 'max-width: {{SIZE}}{{UNIT}};',
+        ],
+    ),
+    array(
         'type'          => Controls_Manager::SELECT,
         'id'            => 'lead_title_margin',
         'label'         => esc_html__('Title Margin', 'uipro'),

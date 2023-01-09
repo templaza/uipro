@@ -912,6 +912,29 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 					],
 				),
 				array(
+					'type'          => Controls_Manager::SLIDER,
+					'id'            => 'title_maxwidth',
+					'label'         => esc_html__('Title Max Width', 'uipro'),
+					'description'   => esc_html__('Set the title max width.', 'uipro'),
+                    'size_units'    => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 2500,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                        ],
+                    ],
+//					'default'           => '',
+                        'selectors' => [
+                            '{{WRAPPER}} .ui-posts.style1 .ui-title > *' => 'max-width: {{SIZE}}{{UNIT}};',
+                            '{{WRAPPER}} .ui-posts-intro-item .ui-title > *' => 'max-width: {{SIZE}}{{UNIT}};',
+                        ],
+				),
+				array(
 					'type'          => Controls_Manager::SELECT,
 					'id'            => 'title_margin',
 					'label'         => esc_html__('Title Margin', 'uipro'),
