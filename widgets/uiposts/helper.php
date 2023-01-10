@@ -149,11 +149,10 @@ class UIPro_UIPosts_Helper extends UIPro_Helper {
         }
         return apply_filters( 'templaza-elements-builder/uipost-meta-content', $meta_arr, $item);
     }
-    public static function get_post_except( $item,$instance ) {
-        $intro_number       =   ( isset( $instance['introtext_number'] ) && $instance['introtext_number'] ) ? $instance['introtext_number'] : '';
-        if(isset($intro_number) && $intro_number !=''){
-         $intro_text = wp_trim_words($item->post_excerpt,$intro_number);
-        return apply_filters( 'templaza-elements-builder/uipost-post-except',$intro_text, $item);
+    public static function get_post_except( $item, $intro_number = 0 ) {
+        if(isset($intro_number) && $intro_number){
+            $intro_text = wp_trim_words($item->post_excerpt,$intro_number);
+            return apply_filters( 'templaza-elements-builder/uipost-post-except',$intro_text, $item);
         }else{
             return apply_filters( 'templaza-elements-builder/uipost-post-except', $item->post_excerpt, $item);
         }

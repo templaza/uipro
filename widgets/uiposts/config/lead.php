@@ -727,6 +727,18 @@ return array(
         'selector' => '{{WRAPPER}} .ui-posts-lead-item .uk-card',
     ),
     array(
+        'type'          =>  Controls_Manager::SELECT,
+        'name'          => 'lead_card_gutter',
+        'label'         => esc_html__('Card Gutter', 'uipro'),
+        'options'       => array(
+            ''          => esc_html__('Default', 'uipro'),
+            'small'     => esc_html__('Small', 'uipro'),
+            'medium'    => esc_html__('Medium', 'uipro'),
+            'large'     => esc_html__('Large', 'uipro'),
+            'collapse'  => esc_html__('Collapse', 'uipro'),
+        ),
+    ),
+    array(
         'type'          =>  Controls_Manager::SWITCHER,
         'name'          => 'lead_card_divider',
         'label'         => esc_html__('Card Divider', 'uipro'),
@@ -1040,6 +1052,34 @@ return array(
         'default'       => '0',
     ),
     array(
+        'type'          => Controls_Manager::SWITCHER,
+        'id'            => 'lead_enable_slider_autoplay',
+        'label'         => esc_html__('Auto Play', 'uipro'),
+        'description'   => esc_html__( 'Enable Auto Play', 'uipro' ),
+        'label_on'      => esc_html__( 'Yes', 'uipro' ),
+        'label_off'     => esc_html__( 'No', 'uipro' ),
+        'return_value'  => '1',
+        'default'       => '0',
+        'conditions' => [
+            'terms' => [
+                ['name' => 'lead_use_slider', 'operator' => '===', 'value' => '1'],
+            ],
+        ],
+    ),
+    array(
+        'type'          => Controls_Manager::NUMBER,
+        'id'            => 'lead_slider_autoplay_interval',
+        'label'         => esc_html__('Auto Play Interval', 'uipro'),
+        'description'   => esc_html__( 'The delay between switching slides in autoplay mode.', 'uipro' ),
+        'default'       => 7000,
+        'conditions' => [
+            'terms' => [
+                ['name' => 'lead_use_slider', 'operator' => '===', 'value' => '1'],
+                ['name' => 'lead_enable_slider_autoplay', 'operator' => '===', 'value' => '1'],
+            ],
+        ],
+    ),
+    array(
         'type'          => Controls_Manager::DIMENSIONS,
         'name'          =>  'lead_slider_padding',
         'label'         => esc_html__( 'Slider Padding', 'uipro' ),
@@ -1226,6 +1266,27 @@ return array(
         'label'         => esc_html__('Title Hover Color', 'uipro'),
         'selectors' => [
             '{{WRAPPER}} .ui-posts-lead-item .ui-title > a:hover' => 'color: {{VALUE}}',
+        ],
+    ),
+    array(
+        'type'          => Controls_Manager::SLIDER,
+        'id'            => 'lead_title_maxwidth',
+        'label'         => esc_html__('Title Max Width', 'uipro'),
+        'description'   => esc_html__('Set the title max width.', 'uipro'),
+        'size_units'    => [ 'px', '%' ],
+        'range' => [
+            'px' => [
+                'min' => 0,
+                'max' => 2500,
+                'step' => 1,
+            ],
+            '%' => [
+                'min' => 0,
+                'max' => 100,
+            ],
+        ],
+        'selectors' => [
+            '{{WRAPPER}} .ui-posts-lead-item .ui-title > *' => 'max-width: {{SIZE}}{{UNIT}};',
         ],
     ),
     array(

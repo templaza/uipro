@@ -6,6 +6,7 @@ $pagination_type    = (isset($instance['pagination_type']) && $instance['paginat
 $masonry            = (isset($instance[$pre_val.'masonry']) && $instance[$pre_val.'masonry']) ? intval($instance[$pre_val.'masonry']) : 0;
 
 $card_divider       = (isset($instance[$pre_val.'card_divider'])) ? filter_var($instance[$pre_val.'card_divider'], FILTER_VALIDATE_BOOLEAN) : false;
+$card_gutter        = isset($instance[$pre_val.'card_gutter']) && !empty($instance[$pre_val.'card_gutter'])?$instance[$pre_val.'card_gutter']:'';
 
 //Get posts
 //$limit          = ( isset( $instance['limit'] ) && $instance['limit'] ) ? $instance['limit'] : 4;
@@ -28,6 +29,8 @@ $enable_navigation	= (isset($instance[$pre_val.'enable_navigation']) && $instanc
 $enable_dotnav	    = (isset($instance[$pre_val.'enable_dotnav']) && $instance[$pre_val.'enable_dotnav']) ? intval($instance[$pre_val.'enable_dotnav']) : 0;
 $center_slider	    = (isset($instance[$pre_val.'center_slider']) && $instance[$pre_val.'center_slider']) ? intval($instance[$pre_val.'center_slider']) : 0;
 $navigation_position= (isset($instance[$pre_val.'navigation_position']) && $instance[$pre_val.'navigation_position']) ? $instance[$pre_val.'navigation_position'] : '';
+$enable_autoplay    = (isset($instance[$pre_val.'enable_slider_autoplay']) && $instance[$pre_val.'enable_slider_autoplay']) ? intval($instance[$pre_val.'enable_slider_autoplay']) : 0;
+$autoplay_interval  = (isset($instance[$pre_val.'slider_autoplay_interval']) && $instance[$pre_val.'slider_autoplay_interval']) ? intval($instance[$pre_val.'slider_autoplay_interval']) : 7000;
 
 //Filter
 $use_filter 	    = (isset($instance[$pre_val.'use_filter']) && $instance[$pre_val.'use_filter']) ? intval($instance[$pre_val.'use_filter']) : 0;
@@ -161,7 +164,13 @@ if (count($posts)) {
         $output .=  '</div>';
     }
     if ($use_slider) {
-        $output .= '<div data-uk-slider="'.($center_slider ? 'center: true' : '').'">';
+        $slider_options = $center_slider ? 'center: true;' : '';
+        if($enable_autoplay) {
+            $slider_options .= $enable_autoplay ? 'autoplay: true;' : '';
+            $slider_options .= $autoplay_interval ? 'autoplay-interval: '.$autoplay_interval.';' : '';
+        }
+
+        $output .= '<div data-uk-slider="'.$slider_options.'">';
         $output .= '<div class="uk-position-relative">';
         $output .= '<div class="uk-slider-container">';
     }
@@ -170,6 +179,7 @@ if (count($posts)) {
         .$desktop_columns.'@l uk-child-width-1-'.$laptop_columns.'@m uk-child-width-1-'.$tablet_columns
         .'@s uk-child-width-1-'. $mobile_columns . $column_grid_gap . ($use_slider ? ' uk-slider-items': '')
         .($card_divider?' uk-grid-divider':'')
+        .($card_gutter?' uk-grid-'.$card_gutter:'')
         .'" data-uk-grid="'.($masonry ? 'masonry:true;' : '').'">';
 
     foreach ($posts as $i => $item) {
