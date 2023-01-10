@@ -83,7 +83,7 @@ if ( ! class_exists( 'UIPro_El_UIAdvancedProducts_Ajax' ) ) {
             }
             $ap_tax_val = $_POST['filter_value'];
             $ap_tax = $_POST['filter_by'];
-            if($ap_tax_val !=0){
+            if($ap_tax_val != '0' || $ap_tax_val != 0){
                 $query_args['tax_query'] = array(
                     array(
                         'taxonomy' => $ap_tax,
