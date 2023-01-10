@@ -387,6 +387,18 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                         .',{{WRAPPER}} .ui-posts-intro-item .uk-card',
                 ),
                 array(
+                    'type'          =>  Controls_Manager::SELECT,
+                    'name'          => 'card_gutter',
+                    'label'         => esc_html__('Card Gutter', 'uipro'),
+                    'options'       => array(
+                        ''          => esc_html__('Default', 'uipro'),
+                        'small'     => esc_html__('Small', 'uipro'),
+                        'medium'    => esc_html__('Medium', 'uipro'),
+                        'large'     => esc_html__('Large', 'uipro'),
+                        'collapse'  => esc_html__('Collapse', 'uipro'),
+                    ),
+                ),
+                array(
                     'type'          =>  Controls_Manager::SWITCHER,
                     'name'          => 'card_divider',
                     'label'         => esc_html__('Card Divider', 'uipro'),

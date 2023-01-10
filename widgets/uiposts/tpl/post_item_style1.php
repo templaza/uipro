@@ -28,8 +28,9 @@ $image_margin   = ( isset( $instance['image_margin'] ) && $instance['image_margi
 $cover_image    = $cover_image ? ' tz-image-cover' : '';
 
 //Intro
-$show_intro 	= (isset($instance['show_introtext']) && $instance['show_introtext']) ? intval($instance['show_introtext']) : 0;
-$dropcap        = (isset($instance['content_dropcap']) && $instance['content_dropcap']) ? ' uk-dropcap' : '';
+$show_intro 	    = (isset($instance['show_introtext']) && $instance['show_introtext']) ? intval($instance['show_introtext']) : 0;
+$introtext_number   = (isset($instance['introtext_number']) && $instance['introtext_number']) ? intval($instance['introtext_number']) : 0;
+$dropcap            = (isset($instance['content_dropcap']) && $instance['content_dropcap']) ? ' uk-dropcap' : '';
 
 //Button
 $show_readmore 	= (isset($instance['show_readmore']) && $instance['show_readmore']) ? intval($instance['show_readmore']) : 0;
@@ -157,7 +158,7 @@ if(count($meta_middle_position)) {
 }
 
 if ($show_intro && $item->post_excerpt) {
-	$output .= '<div class="ui-post-introtext'.esc_attr($dropcap).'">'. wp_kses(UIPro_UIPosts_Helper::get_post_except($item,$instance), wp_kses_allowed_html('post')) .'</div>';
+	$output .= '<div class="ui-post-introtext'.esc_attr($dropcap).'">'. wp_kses(UIPro_UIPosts_Helper::get_post_except($item,$introtext_number), wp_kses_allowed_html('post')) .'</div>';
 }
 
 if(count($meta_bottom_position)) {

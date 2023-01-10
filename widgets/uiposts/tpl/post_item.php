@@ -46,6 +46,7 @@ $cover_image    = $cover_image ? ' tz-image-cover' : '';
 
 //Intro
 $show_intro 	= (isset($instance[$pre_val.'show_introtext']) && $instance[$pre_val.'show_introtext']) ? intval($instance[$pre_val.'show_introtext']) : 0;
+$introtext_number   = (isset($instance[$pre_val.'introtext_number']) && $instance[$pre_val.'introtext_number']) ? intval($instance[$pre_val.'introtext_number']) : 0;
 $dropcap        = (isset($instance[$pre_val.'content_dropcap']) && $instance[$pre_val.'content_dropcap']) ? ' uk-dropcap' : '';
 
 //Button
@@ -169,7 +170,7 @@ if(count($meta_middle_position)) {
 }
 
 if ($show_intro && $item->post_excerpt) {
-    $output .= '<div class="ui-post-introtext'.esc_attr($dropcap).'">'. wp_kses(UIPro_UIPosts_Helper::get_post_except($item,$instance), wp_kses_allowed_html('post')) .'</div>';
+    $output .= '<div class="ui-post-introtext'.esc_attr($dropcap).'">'. wp_kses(UIPro_UIPosts_Helper::get_post_except($item,$introtext_number), wp_kses_allowed_html('post')) .'</div>';
 }
 
 if(count($meta_bottom_position)) {
