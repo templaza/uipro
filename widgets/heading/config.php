@@ -427,6 +427,7 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                     'selectors' => [
                         '{{WRAPPER}} .line' => 'width: {{SIZE}}{{UNIT}};',
                         '{{WRAPPER}} .uk-heading-line' => 'width: {{SIZE}}{{UNIT}};',
+                        '{{WRAPPER}} .uk-heading-bullet::before' => 'height: {{SIZE}}{{UNIT}};',
                     ],
                     'condition'     => array(
                         'line'    => 'yes'
@@ -457,6 +458,7 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                         '{{WRAPPER}} .line' => 'height: {{SIZE}}{{UNIT}};',
                         '{{WRAPPER}} .uk-heading-line >:before' => 'border-width: {{SIZE}}{{UNIT}};',
                         '{{WRAPPER}} .uk-heading-line >:after' => 'border-width: {{SIZE}}{{UNIT}};',
+                        '{{WRAPPER}} .uk-heading-bullet::before' => 'border-left-width: {{SIZE}}{{UNIT}};',
                     ],
                     'condition'     => array(
                         'line'    => 'yes'
