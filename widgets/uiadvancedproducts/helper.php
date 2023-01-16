@@ -76,7 +76,7 @@ class UIPro_UIAdvancedProducts_Helper extends UIPro_Helper {
         $data   = array();
         $fields = self::get_custom_fields();
 
-        if(empty($fields) || !count($fields)){
+        if(empty($fields) || !count($fields) || !class_exists('Advanced_Product\Helper\FieldHelper')){
             return $data;
         }
 
