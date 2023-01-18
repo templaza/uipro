@@ -1223,7 +1223,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     ],
                 ),
                 array(
-                    'id'            => 'author_color',
+                    'id'            => 'author_color_hover',
                     'type'          =>  Controls_Manager::COLOR,
                     'label'         => esc_html__('Author Color Hover', 'uipro'),
                     'selectors' => [
