@@ -467,7 +467,7 @@ if ( ! class_exists( 'UIPro_Config_UISocial' ) ) {
                         'icon_color' => 'custom',
                     ],
                     'selectors' => [
-                        '{{WRAPPER}} .elementor-social-icon' => 'background-color: {{VALUE}};',
+                        '{{WRAPPER}} .ui-social-icon-link' => 'background-color: {{VALUE}};',
                     ],
                 ),
                 array(
@@ -478,8 +478,8 @@ if ( ! class_exists( 'UIPro_Config_UISocial' ) ) {
                         'icon_color' => 'custom',
                     ],
                     'selectors' => [
-                        '{{WRAPPER}} .elementor-social-icon i' => 'color: {{VALUE}};',
-                        '{{WRAPPER}} .elementor-social-icon svg' => 'fill: {{VALUE}};',
+                        '{{WRAPPER}} .ui-social-icon-link i' => 'color: {{VALUE}};',
+                        '{{WRAPPER}} .ui-social-icon-link svg' => 'fill: {{VALUE}};',
                     ],
                 ),
                 array(
@@ -577,7 +577,7 @@ if ( ! class_exists( 'UIPro_Config_UISocial' ) ) {
                         'icon_color' => 'custom',
                     ],
                     'selectors' => [
-                        '{{WRAPPER}} .elementor-social-icon:hover' => 'background-color: {{VALUE}};',
+                        '{{WRAPPER}} .ui-social-icon-link:hover' => 'background-color: {{VALUE}};',
                     ],
                     'start_section' => 'icon_hover_section_style',
                     'section_tab'   => Controls_Manager::TAB_STYLE,
@@ -592,8 +592,8 @@ if ( ! class_exists( 'UIPro_Config_UISocial' ) ) {
                         'icon_color' => 'custom',
                     ],
                     'selectors' => [
-                        '{{WRAPPER}} .elementor-social-icon:hover i' => 'color: {{VALUE}};',
-                        '{{WRAPPER}} .elementor-social-icon:hover svg' => 'fill: {{VALUE}};',
+                        '{{WRAPPER}} .ui-social-icon-link:hover i' => 'color: {{VALUE}};',
+                        '{{WRAPPER}} .ui-social-icon-link:hover svg' => 'fill: {{VALUE}};',
                     ],
                 ),
                 array(
