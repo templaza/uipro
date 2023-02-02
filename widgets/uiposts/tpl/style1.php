@@ -1,5 +1,8 @@
 <?php
 defined( 'ABSPATH' ) || exit;
+
+use TemPlazaFramework\Functions as TemplazaFramework_Functions;
+
 $_is_elementor  = (isset($args['page_builder']) && $args['page_builder'] == 'elementor')?true:false;
 
 $color_mode         = (isset($instance['color_mode'] ) && $instance['color_mode'] ) ? ' uk-'. $instance['color_mode'] : '';
@@ -11,6 +14,21 @@ $limit          = ( isset( $instance['limit'] ) && $instance['limit'] ) ? $insta
 $resource       = ( isset( $instance['resource'] ) && $instance['resource'] ) ? $instance['resource'] : 'post';
 $ordering       = ( isset( $instance['ordering'] ) && $instance['ordering'] ) ? $instance['ordering'] : 'latest';
 $category   = ( isset( $instance[$resource.'_category'] ) && $instance[$resource.'_category'] ) ? $instance[$resource.'_category'] : array('0');
+
+$show_featured  = isset( $instance['show_featured'] ) ? $instance['show_featured'] : '';
+
+// Disable show featured option if post type doesn't support this feature in templaza framework
+if(class_exists('TemPlazaFramework\Functions')){
+    $options     = TemplazaFramework_Functions::get_global_settings();
+    $featured_posttypes = array();
+    if(isset($options['enable-featured-for-posttypes'])&& !empty($options['enable-featured-for-posttypes'])){
+        $featured_posttypes = $options['enable-featured-for-posttypes'];
+    }
+    if(!in_array($resource, $featured_posttypes)){
+        $show_featured  = '';
+    }
+}
+
 $query_args = array(
     'post_type'         => $resource,
     'posts_per_page'    => $limit,
@@ -53,6 +71,28 @@ if ($resource == 'post') {
 }
 if ($pagination_type == 'default') {
     $query_args['paged'] = max( 1, get_query_var('paged') );
+}
+if($show_featured == '1') {
+    $query_args['meta_query'] = array(
+        array(
+            'key' => 'templaza-featured',
+            'value' => '1'
+        )
+    );
+}elseif($show_featured == '0'){
+    $query_args['meta_query'] = array(
+        'relation' => 'OR',
+        array(
+            'key'       => 'templaza-featured',
+            'compare'   => '!=',
+            'value'     => '1'
+        ),
+        array(
+            'key' => 'templaza-featured',
+            'compare' => 'NOT EXISTS',
+            'value' => 'null',
+        )
+    );
 }
 
 // Based on WP get_posts() default function

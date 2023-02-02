@@ -16,6 +16,7 @@ defined( 'ABSPATH' ) || exit;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
 use Elementor\Core\Schemes\Typography;
+use TemPlazaFramework\Functions as TemplazaFramework_Functions;
 
 require_once __DIR__.'/helper.php';
 if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
@@ -36,7 +37,7 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 			self::$assets_path  =   plugin_dir_url(__FILE__). 'assets/';
 			parent::__construct();
 
-//            add_action( 'elementor/editor/after_enqueue_scripts', array($this, 'editor_enqueue_scripts') );
+            add_action( 'elementor/editor/after_enqueue_scripts', array($this, 'editor_enqueue_scripts') );
 		}
 
 		public function get_styles() {
@@ -67,9 +68,25 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 			);
 		}
 
-//        public function editor_enqueue_scripts(){
-//            wp_enqueue_script('uiposts-editor', plugins_url( 'assets/js/editor.js', __FILE__ ));
-//        }
+        public function editor_enqueue_scripts(){
+		    if(!wp_script_is('uiposts-editor')) {
+                wp_enqueue_script('uiposts-editor', plugins_url('assets/js/editor.js', __FILE__));
+
+                $uipost_editor = array(
+                    'i18n'  => array(
+                        'featured_only'  => esc_html__('Featured Only', 'uipro')
+                    )
+                );
+                if (class_exists('TemPlazaFramework\Functions')) {
+                    $options = TemplazaFramework_Functions::get_global_settings();
+
+                    if (isset($options['enable-featured-for-posttypes']) && !empty($options['enable-featured-for-posttypes'])) {
+                        $uipost_editor['enable_featured_for_posttypes'] = $options['enable-featured-for-posttypes'];
+                    }
+                }
+                wp_localize_script('uiposts-editor', 'elementor__uiposts_editor', $uipost_editor);
+            }
+        }
 
 		/**
 		 * @return array
@@ -126,6 +143,16 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 					'label_off' => esc_html__( 'No', 'uipro' ),
 					'return_value' => '1',
 					'default' => '0',
+				),
+				array(
+					'type'          => Controls_Manager::SELECT,
+					'id'            => 'show_featured',
+					'label'         => esc_html__( 'Featured', 'uipro' ),
+					'options'       => array(
+						''          => esc_html__('Show', 'uipro'),
+						'0'         => esc_html__('Hide', 'uipro'),
+						'1'         => esc_html__('Only Featured', 'uipro'),
+					),
 				),
 				array(
 					'type'          => Controls_Manager::SELECT,
