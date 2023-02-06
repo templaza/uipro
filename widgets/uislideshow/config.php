@@ -35,6 +35,11 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 			parent::__construct();
 
 		}
+        public function get_styles() {
+            return ['el-uislideshow' => array(
+                'src'   => 'style.css'
+            )];
+        }
 
 		/**
 		 * @return array
@@ -506,6 +511,15 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 					),
 					'default' => '',
 				),
+                array(
+                    'name' => 'slideshow_overlay_background',
+                    'type' => Controls_Manager::COLOR,
+                    'label'     => esc_html__( 'Slideshow Background Overlay Color', 'uipro' ),
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-media::before' => 'background-color: {{VALUE}}',
+                    ],
+
+                ),
 				array(
 					'id' => 'slideshow_transition',
 					'type' => Controls_Manager::SELECT,
@@ -624,6 +638,99 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 						],
 					],
 				),
+                array(
+                    'id' => 'navigation_dot_group',
+                    'type' => Controls_Manager::SWITCHER,
+                    'label'     => esc_html__( 'Dots & Nav in one box', 'uipro' ),
+                    'label_on' => esc_html__( 'Yes', 'uipro' ),
+                    'label_off' => esc_html__( 'No', 'uipro' ),
+                    'return_value' => '1',
+                    'default' => 0,
+                    'start_section' => 'separator_navigation_group_options',
+                    'section_name'      => esc_html__('Nav & Dots Group Settings', 'uipro')
+                ),
+                array(
+                    'id' => 'navigation_dot_group_position',
+                    'type' => Controls_Manager::SELECT,
+                    'label'     => esc_html__( 'Box Position', 'uipro' ),
+                    'options'         => array(
+                        '' => esc_html__( 'Inherit', 'uipro' ),
+                        'relative' => esc_html__( 'Relative', 'uipro' ),
+                        'absolute' => esc_html__( 'Absolute', 'uipro' ),
+                    ),
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-navigation-group' => 'position: {{VALUE}}',
+                    ],
+                    'condition'     => array(
+                        'navigation_dot_group'    => '1'
+                    ),
+                    'default' => 'relative',
+                ),
+                array(
+                    'name'            => 'navigation_dot_group_width',
+                    'label'         => esc_html__( 'Box Width', 'uipro' ),
+                    'type'          => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px', '%' ],
+                    'responsive'    => true,
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 2000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => '%',
+                        'size' => 100,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-navigation-group' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+                    'condition'     => array(
+                        'navigation_dot_group'    => '1'
+                    ),
+                ),
+                array(
+                    'name' => 'navigation_dot_group_background',
+                    'type' => Controls_Manager::COLOR,
+                    'label'     => esc_html__( 'Box Background Color', 'uipro' ),
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-navigation-group' => 'background-color: {{VALUE}}',
+                    ],
+                    'condition'     => array(
+                        'navigation_dot_group'    => '1'
+                    ),
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'navigation_dot_group_margin',
+                    'label'         => esc_html__( 'Box Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-navigation-group' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'condition'     => array(
+                        'navigation_dot_group'    => '1'
+                    ),
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'navigation_dot_group_padding',
+                    'label'         => esc_html__( 'Box Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-navigation-group' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'condition'     => array(
+                        'navigation_dot_group'    => '1'
+                    ),
+                ),
 				array(
 					'id' => 'navigation',
 					'type' => Controls_Manager::SELECT,
@@ -639,21 +746,21 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 					'start_section' => 'separator_navigation_options',
 					'section_name'      => esc_html__('Navigation Settings', 'uipro')
 				),
-				array(
-					'id' => 'navigation_below',
-					'type' => Controls_Manager::SWITCHER,
-					'label'     => esc_html__( 'Show below slideshow', 'uipro' ),
-					'label_on' => esc_html__( 'Yes', 'uipro' ),
-					'label_off' => esc_html__( 'No', 'uipro' ),
-					'return_value' => '1',
-					'default' => 0,
-					'conditions' => [
-						'terms' => [
-							['name' => 'navigation', 'operator' => '!==', 'value' => ''],
-							['name' => 'navigation', 'operator' => '!==', 'value' => 'title'],
-						],
-					],
-				),
+                array(
+                    'id' => 'navigation_below',
+                    'type' => Controls_Manager::SWITCHER,
+                    'label'     => esc_html__( 'Show below slideshow', 'uipro' ),
+                    'label_on' => esc_html__( 'Yes', 'uipro' ),
+                    'label_off' => esc_html__( 'No', 'uipro' ),
+                    'return_value' => '1',
+                    'default' => 0,
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'navigation', 'operator' => '!==', 'value' => ''],
+                            ['name' => 'navigation', 'operator' => '!==', 'value' => 'title'],
+                        ],
+                    ],
+                ),
 				array(
 					'id' => 'navigation_vertical',
 					'type' => Controls_Manager::SWITCHER,

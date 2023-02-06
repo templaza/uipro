@@ -51,6 +51,7 @@ $navigation_cls  = ( $navigation == ' uk-position-bottom-center' ) ? ' uk-flex-c
 $navigation_cls .= ( $navigation == ' uk-position-bottom-right' || $navigation == ' uk-position-center-right' || $navigation == ' uk-position-top-right' ) ? ' uk-flex-right' : '';
 
 $navigation_below = ( isset( $instance['navigation_below'] ) && $instance['navigation_below'] ) ? 1 : 0;
+$navigation_group = ( isset( $instance['navigation_dot_group'] ) && $instance['navigation_dot_group'] ) ? 1 : 0;
 
 $navigation_below_cls        = ( $navigation_below ) ? ( ( isset( $instance['navigation_below_position'] ) && $instance['navigation_below_position'] ) ? ' uk-flex-' . $instance['navigation_below_position'] : '' ) : false;
 $navigation_below_margin_cls = ( $navigation_below ) ? ( ( isset( $instance['navigation_below_margin'] ) && $instance['navigation_below_margin'] ) ? ' uk-margin-' . $instance['navigation_below_margin'] : '' ) : false;
@@ -488,7 +489,7 @@ if ( isset( $instance['uislideshow_items'] ) && count( (array) $instance['uislid
 		$render_linkscroll = ( empty( $check_target ) && isset($button_link['url']) && strpos( $button_link['url'], '#' ) === 0 ) ? ' uk-scroll' : '';
 
 		$output .= '<li class="el-item uk-margin-remove item-' . $key . '"' . $media_background . '>';
-		$output .= ( $kenburns_transition ) ? '<div class="uk-position-cover uk-animation-kenburns uk-animation-reverse' . $kenburns_transition . '"' . $kenburns_duration . '>' : '';
+		$output .= ( $kenburns_transition ) ? '<div class="ui-media uk-position-cover uk-animation-kenburns uk-animation-reverse' . $kenburns_transition . '"' . $kenburns_duration . '>' : '';
 
 		if ($media_type == 'video') {
 			$video_parse = parse_url( $video );
@@ -525,7 +526,7 @@ if ( isset( $instance['uislideshow_items'] ) && count( (array) $instance['uislid
 
 		$output .= $media_overlay;
 
-		$output .= '<div class="uk-position-cover uk-flex' . $overlay_positions . $overlay_container_cls . $overlay_container_padding . $overlay_margin_cls . '">';
+		$output .= '<div class="ui-content uk-position-cover uk-flex' . $overlay_positions . $overlay_container_cls . $overlay_container_padding . $overlay_margin_cls . '">';
 
 		$output .= '<div class="' . $overlay_styles_int . $overlay_pos_int . $overlay_width . $overlay_transition . $text_item_color_cls . $overlay_styles . $overlay_padding . ( ! empty( $overlay_transition ) ? $overlay_transition : '' ) . ' uk-margin-remove-first-child"' . ( empty( $overlay_transition ) ? $overlay_parallax_cls : '' ) . '>';
 
@@ -563,9 +564,9 @@ if ( isset( $instance['uislideshow_items'] ) && count( (array) $instance['uislid
 
 		if ( ! empty( $button_title ) && isset($button_link['url']) && $button_link['url']) {
 			$button_attribs    =   \UIPro_Elementor_Helper::get_link_attribs($button_link);
-			$output .= '<div class="' . $btn_margin_top . '">';
+			$output .= '<div class="ui-buttons"><div class="elementor-repeater-item-'. $value['_id'] .' ' . $btn_margin_top . '">';
 			$output .= '<a class="' . $button_style_cls . $button_shape . '" href="' . $button_link['url'] . '"' . ( $button_attribs ? $button_attribs : $attribs ) . $render_linkscroll . $button_transition . '>' . $button_title . '</a>';
-			$output .= '</div>';
+			$output .= '</div></div>';
 		}
 
 		$output .= '</div>';
@@ -577,21 +578,24 @@ if ( isset( $instance['uislideshow_items'] ) && count( (array) $instance['uislid
 }
 
 $output .= '</ul>';
+if($navigation_group){
+    $output .= '<div class="ui-navigation-group">';
+}
 
 if ( $slidenav_position == 'default' ) {
 	$output .= ( $slidenav_on_hover ) ? '<div class="uk-hidden-hover uk-hidden-touch' . $slidenav_breakpoint_cls . $item_color . '">' : '<div class="tz-sidenav' . $slidenav_breakpoint_cls . $item_color . '">';
-	$output .= '<a class="ui-slidenav ' . $slidenav_margin . $larger_style_init . ' uk-position-center-left" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>';
-	$output .= '<a class="ui-slidenav ' . $slidenav_margin . $larger_style_init . ' uk-position-center-right" href="#" uk-slidenav-next uk-slideshow-item="next"></a>';
+	$output .= '<a class="ui-slidenav ' . $slidenav_margin . $larger_style_init . ' uk-position-center-left" href="#" data-uk-slidenav-previous data-uk-slideshow-item="previous"></a>';
+	$output .= '<a class="ui-slidenav ' . $slidenav_margin . $larger_style_init . ' uk-position-center-right" href="#" data-uk-slidenav-next data-uk-slideshow-item="next"></a>';
 	$output .= '</div> ';
 } elseif ( $slidenav_position == 'outside' ) {
 	$output .= ( $slidenav_on_hover ) ? '<div class="ui-sidenav-outside uk-hidden-hover uk-hidden-touch' . $slidenav_breakpoint_cls . $slidenav_outside_color . '">' : '<div class="ui-sidenav-outside' . $slidenav_breakpoint_cls . $slidenav_outside_color . '">';
-	$output .= '<a class="ui-slidenav ' . $slidenav_margin . $larger_style_init . ' uk-position-center-left-out" href="#" uk-slidenav-previous uk-slideshow-item="previous" uk-toggle="cls: uk-position-center-left-out uk-position-center-left; mode: media; media:' . $slidenav_outside_breakpoint . '"></a>';
-	$output .= '<a class="ui-slidenav ' . $slidenav_margin . $larger_style_init . ' uk-position-center-right-out" href="#" uk-slidenav-next uk-slideshow-item="next" uk-toggle="cls: uk-position-center-right-out uk-position-center-right; mode: media; media:' . $slidenav_outside_breakpoint . '"></a>';
+	$output .= '<a class="ui-slidenav ' . $slidenav_margin . $larger_style_init . ' uk-position-center-left-out" href="#" data-uk-slidenav-previous data-uk-slideshow-item="previous" uk-toggle="cls: uk-position-center-left-out uk-position-center-left; mode: media; media:' . $slidenav_outside_breakpoint . '"></a>';
+	$output .= '<a class="ui-slidenav ' . $slidenav_margin . $larger_style_init . ' uk-position-center-right-out" href="#" data-uk-slidenav-next data-uk-slideshow-item="next" uk-toggle="cls: uk-position-center-right-out uk-position-center-right; mode: media; media:' . $slidenav_outside_breakpoint . '"></a>';
 	$output .= '</div> ';
 } elseif ( $slidenav_position != '' ) {
 	$output .= ( $slidenav_on_hover ) ? '<div class="uk-slidenav-container uk-hidden-hover uk-hidden-touch' . $slidenav_position_cls . $slidenav_margin . $slidenav_breakpoint_cls . $item_color . '">' : '<div class="uk-slidenav-container' . $slidenav_position_cls . $slidenav_margin . $slidenav_breakpoint_cls . $item_color . '">';
-	$output .= '<a class="ui-slidenav' . $larger_style_init . '" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>';
-	$output .= '<a class="ui-slidenav' . $larger_style_init . '" href="#" uk-slidenav-next uk-slideshow-item="next"></a>';
+	$output .= '<a class="ui-slidenav' . $larger_style_init . '" href="#" data-uk-slidenav-previous data-uk-slideshow-item="previous"></a>';
+	$output .= '<a class="ui-slidenav' . $larger_style_init . '" href="#" data-uk-slidenav-next data-uk-slideshow-item="next"></a>';
 	$output .= '</div>';
 }
 
@@ -661,7 +665,9 @@ if ( $navigation_control == 'dotnav' ) {
 		$output .= '</div> ';
 	}
 }
-
+if($navigation_group){
+    $output .= '</div>';
+}
 if ( ! $navigation_below ) {
 	$output .= '</div>';
 }

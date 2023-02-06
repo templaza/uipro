@@ -711,7 +711,6 @@ if ( ! class_exists( 'UIPro_Config_UIGallery' ) ) {
 					'name'            => 'thumbnail_height',
 					'label'         => esc_html__( 'Thumbnail Height', 'uipro' ),
 					'type'          => Controls_Manager::SLIDER,
-					'devices'       => [ 'desktop', 'tablet', 'mobile' ],
 					'responsive'    => true,
 					'range' => [
 						'px' => [

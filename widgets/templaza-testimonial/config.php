@@ -1441,6 +1441,22 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     ],
                 ),
                 array(
+                    'label' => esc_html__( 'Next, Preview Color', 'uipro' ),
+                    'name'  => 'quote_next_preview_color',
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .slick-arrow' => 'color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'label' => esc_html__( 'Next, Preview Hover Color', 'uipro' ),
+                    'name'  => 'quote_next_preview_hover_color',
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .slick-arrow:hover' => 'color: {{VALUE}}',
+                    ],
+                ),
+                array(
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'quote_author_typography',
                     'scheme'        => Typography::TYPOGRAPHY_1,

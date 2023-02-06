@@ -1,0 +1,24 @@
+svg.circletext {
+    fill: currentColor;
+    height: auto;
+    transform-origin: center;
+    width: 100%;
+}
+.rotate svg.circletext:hover{
+    -webkit-animation-name: rotate;
+    animation-name: rotate;
+    animation-duration: 5s;
+    -o-animation-iteration-count: infinite;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear;
+}
+@keyframes rotate {
+    from {
+        transform: rotate(0);
+        -webkit-filter: blur(0.5px);
+    }
+    to {
+        transform: rotate(360deg);
+        -webkit-filter: blur(0px);
+    }
+}
