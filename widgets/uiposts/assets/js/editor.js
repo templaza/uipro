@@ -5,7 +5,7 @@
             window.elementor.hooks.addAction('panel/open_editor/widget/uipro-uiposts', function (panel, model, view) {
 
                 var __resource  = panel.$el.find("[data-setting=\"resource\"]"),
-                    // __featured_ctr = panel.$el.find("#elementor-controls .elementor-control.elementor-control-show_featured"),
+                    __featured_ctr = panel.$el.find("#elementor-controls .elementor-control.elementor-control-show_featured"),
                     __ordering = panel.$el.find("[data-setting=\"ordering\"]");
 
                 if(__resource.length){
@@ -19,10 +19,12 @@
                     __resource.on("change", function(event){
                         var __value = $(this).val();
 
-                        if(__featured_posttypes.indexOf(__value) !== -1) {
-                            __featured_ctr.removeClass("elementor-hidden-control");
-                        }else{
-                            __featured_ctr.addClass("elementor-hidden-control");
+                        if(__featured_ctr !== undefined){
+                            if(__featured_posttypes.indexOf(__value) !== -1) {
+                                __featured_ctr.removeClass("elementor-hidden-control");
+                            }else{
+                                __featured_ctr.addClass("elementor-hidden-control");
+                            }
                         }
                         // if(__featured_posttypes.indexOf(__value) !== -1) {
                         //     if(!__ordering.find("option[value=\"featured\"]").length){
