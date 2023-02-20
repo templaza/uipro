@@ -65,6 +65,10 @@ class UIPro{
      */
     public function init_elements() {
 
+        if (!function_exists('is_plugin_active')) {
+            include_once(ABSPATH . 'wp-admin/includes/plugin.php');
+        }
+
         if ( !is_plugin_active( 'elementor/elementor.php' ) ) {
             return;
         }
