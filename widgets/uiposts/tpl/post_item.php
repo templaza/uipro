@@ -42,7 +42,7 @@ $expand_width   .=$image_width == ' uk-width-1-1' ? ' uk-width-1-1' : ' uk-width
 $image_border   = (isset($instance[$pre_val.'image_border']) && $instance[$pre_val.'image_border']) ? ' uk-overflow-hidden '. $instance[$pre_val.'image_border'] : '';
 $cover_image    = (isset($instance[$pre_val.'cover_image']) && $instance[$pre_val.'cover_image']) ? intval($instance[$pre_val.'cover_image']) : 0;
 $image_margin   = ( isset( $instance[$pre_val.'image_margin'] ) && $instance[$pre_val.'image_margin'] ) ? ' uk-margin-'. $instance[$pre_val.'image_margin'] : ' uk-margin';
-$cover_image    = $cover_image ? ' tz-image-cover' : '';
+$cover_image    = $cover_image ? ' tz-image-cover uk-cover-container' : '';
 
 //Intro
 $show_intro 	= (isset($instance[$pre_val.'show_introtext']) && $instance[$pre_val.'show_introtext']) ? intval($instance[$pre_val.'show_introtext']) : 0;
@@ -135,7 +135,10 @@ if (!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == '
     if ($image_position == 'left' || $image_position == 'right') {
         $output .=  '<div class="uk-card-media-'.$image_position.' uk-cover-container'.($image_position == 'right' ? ' uk-flex-last@m' : '').$image_width_xl.$image_width_l.$image_width_m.$image_width_s.$image_width.'">';
     }
-    $output .=  '<a class="ui-post-thumbnail uk-display-block uk-card-media-top'.esc_attr($cover_image.$image_border).'" href="'. get_permalink( $item->ID ) .'">'. UIPro_UIPosts_Helper::get_post_thumbnail($item, $thumbnail_size, ($image_position == 'left' || $image_position == 'right' ? 'data-uk-cover' : '')) .'</a>';
+    $uk_cover   = ($image_position == 'left' || $image_position == 'right' || !empty($cover_image)? array('data-uk-cover' => '') : '');
+    $output .=  '<a class="ui-post-thumbnail uk-display-block uk-card-media-top'
+        .esc_attr($cover_image.$image_border).'" href="'. get_permalink( $item->ID ) .'">'
+        . UIPro_UIPosts_Helper::get_post_thumbnail($item, $thumbnail_size, $uk_cover) .'</a>';
     if ($image_position == 'left' || $image_position == 'right') {
         $output .=  '<canvas width="600" height="400"></canvas>';
         $output .=  '</div>';
