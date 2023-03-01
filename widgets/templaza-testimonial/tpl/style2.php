@@ -51,7 +51,7 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
                                         </h3>
                                         <?php
                                     }
-                                    if ($quote_icon && isset($quote_icon['value'])) {
+                                    if ($quote_icon && isset($quote_icon['value']) && !empty($quote_icon['value'])) {
                                         ?>
                                         <span class="quote-icon">
                                         <?php
