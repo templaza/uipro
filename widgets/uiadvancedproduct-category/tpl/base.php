@@ -33,7 +33,15 @@ if($source == 'ap_category'){
         );
         $cat_results = get_terms($get_terms_attributes);
     } else{
-        $cat_results = '';
+        $get_terms_attributes = array (
+            'taxonomy' => $source, //empty string(''), false, 0 don't work, and return empty array
+            'orderby' => 'name',
+            'order' => 'ASC',
+            'term_taxonomy_id'       => $category,
+            'hide_empty' => $hide_empty, //can be 1, '1' too
+
+        );
+        $cat_results = get_terms($get_terms_attributes);
     }
 }else{
     $custom_tax = ( isset( $instance['ap_product_'.$source.''] ) && $instance['ap_product_'.$source.''] ) ? $instance['ap_product_'.$source.''] : '';

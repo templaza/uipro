@@ -188,9 +188,6 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 				[
 					'type'          =>  Controls_Manager::MEDIA,
 					'label'         => esc_html__('Select Thumbnail:', 'uipro'),
-					'default' => [
-						'url' => \Elementor\Utils::get_placeholder_image_src(),
-					],
 				]
 			);
 			$repeater->add_group_control(
@@ -667,6 +664,168 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
                     'default' => 'relative',
                 ),
                 array(
+                    'type'          => Controls_Manager::CHOOSE,
+                    'id'            => 'navigation_dot_group_position_x',
+                    'label'         => esc_html__( 'Box Horizontal Orientation', 'uipro' ),
+                    'options' => [
+                        'left' => [
+                            'title' => esc_html__( 'Left', 'uipro' ),
+                            'icon' => 'eicon-h-align-left',
+                        ],
+                        'right' => [
+                            'title' => esc_html__( 'Right', 'uipro' ),
+                            'icon' => 'eicon-h-align-right',
+                        ],
+                    ],
+                    'default'       => 'left',
+                    'condition'     => array(
+                        'navigation_dot_group_position'    => 'absolute'
+                    ),
+                ),
+                array(
+                    'name'          => 'navigation_dot_group_offsetx',
+                    'label' => esc_html__( 'Offset', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px', '%' ],
+                    'responsive'    =>  true,
+                    'range' => [
+                        'px' => [
+                            'min' => -2000,
+                            'max' => 2000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => -200,
+                            'max' => 200,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'size' => 0,
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'navigation_dot_group_position', 'operator' => '===', 'value' => 'absolute'],
+                            ['name' => 'navigation_dot_group_position_x', 'operator' => '===', 'value' => 'left'],
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-navigation-group' => 'left: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'name'          => 'navigation_dot_group_offsetx_right',
+                    'label' => esc_html__( 'Offset', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'responsive'    =>  true,
+                    'size_units' => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => -2000,
+                            'max' => 2000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => -200,
+                            'max' => 200,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'size' => 0,
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'navigation_dot_group_position', 'operator' => '===', 'value' => 'absolute'],
+                            ['name' => 'navigation_dot_group_position_x', 'operator' => '===', 'value' => 'right'],
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-navigation-group' => 'right: {{SIZE}}{{UNIT}}; left: auto;',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::CHOOSE,
+                    'id'            => 'navigation_dot_group_position_y',
+                    'label'         => esc_html__( 'Box Vertical Orientation', 'uipro' ),
+                    'options' => [
+                        'top' => [
+                            'title' => esc_html__( 'Top', 'uipro' ),
+                            'icon' => 'eicon-v-align-top',
+                        ],
+                        'bottom' => [
+                            'title' => esc_html__( 'Bottom', 'uipro' ),
+                            'icon' => 'eicon-v-align-bottom',
+                        ],
+                    ],
+                    'default'       => 'bottom',
+                    'condition'     => array(
+                        'navigation_dot_group_position'    => 'absolute'
+                    ),
+                ),
+                array(
+                    'name'          => 'navigation_dot_group_offsety',
+                    'label' => esc_html__( 'Offset', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'responsive'    =>  true,
+                    'size_units' => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => -2000,
+                            'max' => 2000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => -200,
+                            'max' => 200,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'size' => 0,
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'navigation_dot_group_position', 'operator' => '===', 'value' => 'absolute'],
+                            ['name' => 'navigation_dot_group_position_y', 'operator' => '===', 'value' => 'top'],
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-navigation-group' => 'top: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'name'          => 'navigation_dot_group_offsety_bottom',
+                    'label' => esc_html__( 'Offset', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'responsive'    =>  true,
+                    'size_units' => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => -2000,
+                            'max' => 2000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => -200,
+                            'max' => 200,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'size' => 0,
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'navigation_dot_group_position', 'operator' => '===', 'value' => 'absolute'],
+                            ['name' => 'navigation_dot_group_position_y', 'operator' => '===', 'value' => 'bottom'],
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-navigation-group' => 'bottom: {{SIZE}}{{UNIT}}; top:auto;',
+                    ],
+                ),
+                array(
                     'name'            => 'navigation_dot_group_width',
                     'label'         => esc_html__( 'Box Width', 'uipro' ),
                     'type'          => Controls_Manager::SLIDER,
@@ -1044,6 +1203,32 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 						],
 					],
 				),
+                array(
+                    'name' => 'slidenav_color',
+                    'type'=>Controls_Manager::COLOR,
+                    'label'=>__( 'Color', 'uipro' ),
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-slidenav' => 'color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'slidenav_position', 'operator' => '!==', 'value' => ''],
+                        ],
+                    ],
+                ),
+                array(
+                    'name' => 'slidenav_color_hover',
+                    'type'=>Controls_Manager::COLOR,
+                    'label'=>__( 'Color Hover', 'uipro' ),
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-slidenav' => 'color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'slidenav_position', 'operator' => '!==', 'value' => ''],
+                        ],
+                    ],
+                ),
 				array(
 					'id' => 'larger_style',
 					'type' => Controls_Manager::SWITCHER,
@@ -1271,6 +1456,7 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 						'large' => esc_html__( 'Large', 'uipro' ),
 						'xlarge' => esc_html__( 'X-Large', 'uipro' ),
 						'2xlarge' => esc_html__( '2X-Large', 'uipro' ),
+						'custom' => esc_html__( 'Custom', 'uipro' ),
 					),
 					'default' => '',
 					'conditions' => [
@@ -1280,6 +1466,34 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 						],
 					],
 				),
+                array(
+                    'name'            => 'overlay_width_custom',
+                    'label'         => esc_html__( 'Overlay Custom Width', 'uipro' ),
+                    'type'          => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px', '%' ],
+                    'responsive'    => true,
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 2000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => '%',
+                        'size' => 100,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .uk-panel' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+                    'condition'     => array(
+                        'overlay_width'    => 'custom'
+                    ),
+                ),
 
 				array(
 					'id' => 'overlay_transition',
@@ -1515,7 +1729,7 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 					'name' => 'title_font_family',
 					'type'          => Group_Control_Typography::get_type(),
 					'scheme'        => Typography::TYPOGRAPHY_1,
-					'title'=>__( 'Font Family', 'uipro' ),
+					'label'=>__( 'Font Family', 'uipro' ),
 					'selector'      => '{{WRAPPER}} .ui-title',
 				),
 				array(
@@ -1552,7 +1766,7 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 				array(
 					'name' => 'custom_title_color',
 					'type'=>Controls_Manager::COLOR,
-					'title'=>__( 'Custom Color', 'uipro' ),
+					'label'=>__( 'Custom Color', 'uipro' ),
 					'selectors' => [
 						'{{WRAPPER}} .ui-title' => 'color: {{VALUE}}',
 					],
@@ -1600,10 +1814,24 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 						'medium' => esc_html__( 'Medium', 'uipro' ),
 						'large' => esc_html__( 'Large', 'uipro' ),
 						'xlarge' => esc_html__( 'X-Large', 'uipro' ),
+						'custom' => esc_html__( 'Custom', 'uipro' ),
 						'remove' => esc_html__( 'None', 'uipro' ),
 					),
 					'default' => '',
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'title_margin_top_custom',
+                    'label'         => esc_html__( 'Title Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'condition'     => array(
+                        'title_margin_top'    => 'custom'
+                    ),
+                ),
 				array(
 					'id' => 'use_title_parallax',
 					'type' => Controls_Manager::SWITCHER,
@@ -1793,7 +2021,7 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 					'name' => 'meta_font_family',
 					'type'          => Group_Control_Typography::get_type(),
 					'scheme'        => Typography::TYPOGRAPHY_1,
-					'title'=>__( 'Font Family', 'uipro' ),
+					'label'=>__( 'Font Family', 'uipro' ),
 					'selector'      => '{{WRAPPER}} .ui-meta',
 					'start_section' => 'separator_meta_style_options',
 					'section_name'      => esc_html__('Meta Settings', 'uipro')
@@ -1840,7 +2068,7 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 				array(
 					'name' => 'custom_meta_color',
 					'type'=>Controls_Manager::COLOR,
-					'title'=>__( 'Custom Color', 'uipro' ),
+					'label'=>__( 'Custom Color', 'uipro' ),
 					'selectors' => [
 						'{{WRAPPER}} .ui-meta' => 'color: {{VALUE}}',
 					],
@@ -2095,7 +2323,7 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 					'name' => 'content_font_family',
 					'type'          => Group_Control_Typography::get_type(),
 					'scheme'        => Typography::TYPOGRAPHY_1,
-					'title'=>__( 'Font Family', 'uipro' ),
+					'label'=>__( 'Font Family', 'uipro' ),
 					'selector'      => '{{WRAPPER}} .ui-content',
 					'start_section' => 'separator_content_style_options',
 					'section_name'      => esc_html__('Content Settings', 'uipro')
@@ -2115,7 +2343,7 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 				array(
 					'name' => 'content_color',
 					'type'=>Controls_Manager::COLOR,
-					'title'=>__( 'Color', 'uipro' ),
+					'label'=>__( 'Color', 'uipro' ),
 					'selectors' => [
 						'{{WRAPPER}} .ui-content' => 'color: {{VALUE}}',
 					],
@@ -2384,6 +2612,9 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 					'type' => Controls_Manager::COLOR,
 					'label'     => esc_html__( 'Background Color', 'uipro' ),
 					'default' => '#1e87f0',
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-buttons .uk-button' => 'background-color: {{VALUE}};',
+                    ],
 					'conditions' => [
 						'terms' => [
 							['name' => 'link_button_style', 'operator' => '===', 'value' => 'custom'],
@@ -2391,14 +2622,17 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 					],
 				),
 				array(
-					'name' => 'button_color',
+					'name' => 'button_gl_color',
 					'type'=>Controls_Manager::COLOR,
-					'title'=>__( 'Button Color', 'uipro' ),
+					'label'=>__( 'Button Color', 'uipro' ),
 					'conditions' => [
 						'terms' => [
 							['name' => 'link_button_style', 'operator' => '===', 'value' => 'custom'],
 						],
 					],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-buttons .uk-button' => 'color: {{VALUE}};',
+                    ],
 				),
 				array(
 					'name' => 'button_background_hover',
@@ -2410,16 +2644,22 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 							['name' => 'link_button_style', 'operator' => '===', 'value' => 'custom'],
 						],
 					],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-buttons .uk-button:hover' => 'background-color: {{VALUE}};',
+                    ],
 				),
 				array(
-					'name' => 'button_hover_color',
+					'name' => 'button_gl_hover_color',
 					'type'=>Controls_Manager::COLOR,
-					'title'=>__( 'Hover Button Color', 'uipro' ),
+					'label'=>__( 'Hover Button Color', 'uipro' ),
 					'conditions' => [
 						'terms' => [
 							['name' => 'link_button_style', 'operator' => '===', 'value' => 'custom'],
 						],
 					],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-buttons .uk-button:hover' => 'color: {{VALUE}};',
+                    ],
 				),
 
 				array(
@@ -2430,8 +2670,22 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 						'' => esc_html__( 'Default', 'uipro' ),
 						'uk-button-small' => esc_html__( 'Small', 'uipro' ),
 						'uk-button-large' => esc_html__( 'Large', 'uipro' ),
+						'custom' => esc_html__( 'Custom', 'uipro' ),
 					),
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'link_button_padding',
+                    'label'         => esc_html__( 'Button Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-buttons .uk-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'condition'     => array(
+                        'link_button_size'    => 'custom'
+                    ),
+                ),
 				array(
 					'id' => 'link_button_shape',
 					'type' => Controls_Manager::SELECT,
@@ -2463,10 +2717,24 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 						'medium' => esc_html__( 'Medium', 'uipro' ),
 						'large' => esc_html__( 'Large', 'uipro' ),
 						'xlarge' => esc_html__( 'X-Large', 'uipro' ),
+						'custom' => esc_html__( 'Custom', 'uipro' ),
 						'remove' => esc_html__( 'None', 'uipro' ),
 					),
 					'default' => '',
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'button_margin_top_custom',
+                    'label'         => esc_html__( 'Button Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-buttons' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'condition'     => array(
+                        'button_margin_top'    => 'custom'
+                    ),
+                ),
 				array(
 					'id' => 'use_button_parallax',
 					'type' => Controls_Manager::SWITCHER,

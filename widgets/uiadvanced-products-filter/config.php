@@ -505,6 +505,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
                     'description'   => esc_html__('Set the color of input form.', 'uipro'),
                     'selectors' => [
                         '{{WRAPPER}} .advanced-product-search-form .ap-search-item input' => 'color: {{VALUE}}',
+                        '{{WRAPPER}} .advanced-product-search-form .ap-search-item select' => 'color: {{VALUE}}',
                     ],
                 ),
                 array(

@@ -1223,6 +1223,7 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     'selectors' => [
                         '{{WRAPPER}} .quote-icon i' => 'font-size: {{SIZE}}px;',
                         '{{WRAPPER}} .quote-icon ' => 'width: {{SIZE}}px;',
+                        '{{WRAPPER}} .quote-icon svg' => 'width: {{SIZE}}px;',
                     ],
 					'start_section' => 'style',
 					'section_tab'   => Controls_Manager::TAB_STYLE,
@@ -1254,6 +1255,7 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     'selectors' => [
                         '{{WRAPPER}} .quote-icon i' => 'font-size: {{SIZE}}px;',
                         '{{WRAPPER}} .quote-icon ' => 'width: {{SIZE}}px;',
+                        '{{WRAPPER}} .quote-icon svg' => 'width: {{SIZE}}px;',
                     ],
                     'condition'     => array(
                         'layout'    => 'style1'

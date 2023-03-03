@@ -340,6 +340,7 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 					],
 					'selectors' => [
 						'{{WRAPPER}} .ui-media' => 'font-size: {{SIZE}}{{UNIT}};',
+						'{{WRAPPER}} .ui-media svg' => 'width: {{SIZE}}{{UNIT}};',
 					],
 					'conditions' => [
 						'terms' => [
@@ -354,6 +355,7 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 					'description'   => esc_html__('Set the color of Icon.', 'uipro'),
 					'selectors' => [
 						'{{WRAPPER}} .ui-media' => 'color: {{VALUE}}',
+						'{{WRAPPER}} .ui-media svg' => 'fill: {{VALUE}}',
 					],
 					'conditions' => [
 						'terms' => [

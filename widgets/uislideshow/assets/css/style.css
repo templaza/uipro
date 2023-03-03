@@ -13,3 +13,6 @@
 .ui-navigation-group .ui-nav-control{
     position:relative !important;
 }
+.ui-navigation-group .ui-nav-control .uk-dotnav{
+    margin:0 !important;
+}

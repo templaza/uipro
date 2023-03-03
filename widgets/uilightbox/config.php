@@ -59,6 +59,11 @@ if ( ! class_exists( 'UIPro_Config_UILightbox' ) ) {
 			$options = array(
                 array(
                     'type'          => Controls_Manager::TEXT,
+                    'name'          => 'title',
+                    'label'         => esc_html__( 'Title', 'uipro' ),
+                ),
+                array(
+                    'type'          => Controls_Manager::TEXT,
                     'name'          => 'caption',
                     'label'         => esc_html__( 'Caption', 'uipro' ),
                     'description'   => esc_html__( 'Insert URL Caption', 'uipro' ),
@@ -123,7 +128,9 @@ if ( ! class_exists( 'UIPro_Config_UILightbox' ) ) {
                     'selectors' => [
                         '{{WRAPPER}} .ui-lightbox' => 'width: {{SIZE}}{{UNIT}};',
                         '{{WRAPPER}} .ui-lightbox:before, {{WRAPPER}} .ui-lightbox:after' => 'width: {{SIZE}}{{UNIT}};',
+                        '{{WRAPPER}} .ui-title-lightbox .icon' => 'width: {{SIZE}}{{UNIT}};',
                     ],
+
                 ),
                 array(
                     'name'          => 'height',
@@ -151,6 +158,7 @@ if ( ! class_exists( 'UIPro_Config_UILightbox' ) ) {
                     'selectors' => [
                         '{{WRAPPER}} .ui-lightbox' => 'height: {{SIZE}}{{UNIT}};',
                         '{{WRAPPER}} .ui-lightbox:before, {{WRAPPER}} .ui-lightbox:after' => 'height: {{SIZE}}{{UNIT}};',
+                        '{{WRAPPER}} .ui-title-lightbox .icon' => 'height: {{SIZE}}{{UNIT}};',
                     ],
                 ),
                 array(
@@ -178,7 +186,21 @@ if ( ! class_exists( 'UIPro_Config_UILightbox' ) ) {
                     ],
                     'selectors' => [
                         '{{WRAPPER}} .ui-lightbox' => 'font-size: {{SIZE}}{{UNIT}};',
+                        '{{WRAPPER}} .ui-title-lightbox .icon' => 'font-size: {{SIZE}}{{UNIT}};',
                     ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'button_margin',
+                    'label'         => esc_html__( 'Button Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-title-lightbox .icon' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'condition'     => array(
+                        'title!'    => ''
+                    ),
                 ),
                 array(
                     'type'          => Controls_Manager::SWITCHER,
@@ -214,12 +236,29 @@ if ( ! class_exists( 'UIPro_Config_UILightbox' ) ) {
                     ],
                 ),
                 array(
+                    'id'            => 'title-color',
+                    'type'          =>  Controls_Manager::COLOR,
+                    'label'         => esc_html__('Title Color', 'uipro'),
+                    'description'   => esc_html__( 'Choose title color', 'uipro' ),
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-title-lightbox' => 'color: {{VALUE}}',
+                    ],
+                    'separator'     => 'before',
+                    'start_section' => 'color-style-settings',
+                    'section_name'  => esc_html__('Color Style', 'uipro'),
+                    'condition'     => array(
+                        'title!'    => ''
+                    ),
+
+                ),
+                array(
                     'id'            => 'color',
                     'type'          =>  Controls_Manager::COLOR,
                     'label'         => esc_html__('Icon Color', 'uipro'),
                     'description'   => esc_html__( 'Choose icon color', 'uipro' ),
                     'selectors' => [
                         '{{WRAPPER}} .ui-lightbox' => 'color: {{VALUE}}',
+                        '{{WRAPPER}} .ui-title-lightbox .icon' => 'color: {{VALUE}}',
                     ],
                     'separator'     => 'before',
                     'start_section' => 'color-style-settings',
@@ -231,21 +270,21 @@ if ( ! class_exists( 'UIPro_Config_UILightbox' ) ) {
                     'label'         => esc_html__( 'Background Color', 'uipro' ),
                     'description'   => esc_html__( 'Choose icon background color', 'uipro' ),
                     'types'         => [ 'classic', 'gradient', 'video' ],
-                    'selector'      => '{{WRAPPER}} .ui-lightbox',
+                    'selector'      => '{{WRAPPER}} .ui-lightbox, {{WRAPPER}} .ui-title-lightbox .icon',
                     'separator'     => 'before',
                 ),
                 array(
                     'type'          => \Elementor\Group_Control_Border::get_type(),
                     'name'          => 'border',
                     'label'         => esc_html__( 'Border', 'uipro' ),
-                    'selector'      => '{{WRAPPER}} .ui-lightbox',
+                    'selector'      => '{{WRAPPER}} .ui-lightbox, {{WRAPPER}} .ui-title-lightbox .icon',
                     'separator'     => 'before',
                 ),
                 array(
                     'type'          => \Elementor\Group_Control_Box_Shadow::get_type(),
                     'name'          => 'box_shadow',
                     'label'         => esc_html__( 'Box Shadow', 'uipro' ),
-                    'selector'      => '{{WRAPPER}} .ui-lightbox',
+                    'selector'      => '{{WRAPPER}} .ui-lightbox, {{WRAPPER}} .ui-title-lightbox .icon',
                     'separator'     => 'before',
                 ),
                 array(
@@ -255,6 +294,7 @@ if ( ! class_exists( 'UIPro_Config_UILightbox' ) ) {
                     'description'   => esc_html__( 'Choose icon color on hover', 'uipro' ),
                     'selectors' => [
                         '{{WRAPPER}} .ui-lightbox:hover' => 'color: {{VALUE}}',
+                        '{{WRAPPER}} .ui-title-lightbox:hover .icon' => 'color: {{VALUE}}',
                     ],
                     'separator'     => 'before',
                     'start_section' => 'color-style-hover-settings',
@@ -266,21 +306,21 @@ if ( ! class_exists( 'UIPro_Config_UILightbox' ) ) {
                     'label'         => esc_html__( 'Background Color Hover', 'uipro' ),
                     'description'   => esc_html__( 'Choose icon background color on hover', 'uipro' ),
                     'types'         => [ 'classic', 'gradient', 'video' ],
-                    'selector'      => '{{WRAPPER}} .ui-lightbox:hover',
+                    'selector'      => '{{WRAPPER}} .ui-lightbox:hover, {{WRAPPER}} .ui-title-lightbox:hover .icon',
                     'separator'     => 'before',
                 ),
                 array(
                     'type'          => \Elementor\Group_Control_Border::get_type(),
                     'name'          => 'border_hover',
                     'label'         => esc_html__( 'Border Hover', 'uipro' ),
-                    'selector'      => '{{WRAPPER}} .ui-lightbox:hover',
+                    'selector'      => '{{WRAPPER}} .ui-lightbox:hover, {{WRAPPER}} .ui-title-lightbox :hover .icon',
                     'separator'     => 'before',
                 ),
                 array(
                     'type'          => \Elementor\Group_Control_Box_Shadow::get_type(),
                     'name'          => 'box_shadow_hover',
                     'label'         => esc_html__( 'Box Shadow Hover', 'uipro' ),
-                    'selector'      => '{{WRAPPER}} .ui-lightbox:hover',
+                    'selector'      => '{{WRAPPER}} .ui-lightbox:hover, {{WRAPPER}} .ui-title-lightbox:hover .icon',
                     'separator'     => 'before',
                 ),
 			);

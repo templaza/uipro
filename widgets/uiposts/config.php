@@ -28,8 +28,7 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 		/**
 		 * UIPro_Config_Heading constructor.
 		 */
-		public function __construct() {
-			// info
+		public function __construct() {			// info
 			self::$base = 'uiposts';
 			self::$name = esc_html__( 'TemPlaza: UI Posts', 'uipro' );
 			self::$desc = esc_html__( 'Add UI Posts Box.', 'uipro' );
@@ -1371,8 +1370,7 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                 array(
                     'type'          => Controls_Manager::SELECT,
                     'id'            => 'intro_position',
-                    'label'         => esc_html__( 'Border', 'uipro' ),
-                    'description'   => esc_html__( 'Select the image\'s border style.', 'uipro' ),
+                    'label'         => esc_html__( 'Position', 'uipro' ),
                     'options'       => array(
                         'absolute' => esc_html__('Absolute', 'uipro'),
                         'relative' => esc_html__('Relative', 'uipro'),
@@ -1380,13 +1378,30 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                     'default'       => 'absolute',
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'show_introtext', 'operator' => '===', 'value' => '1'],
                             ['name' => 'uipost_layout', 'operator' => '===', 'value' => 'style1'],
                         ],
                     ],
                     'selectors' => [
                         '{{WRAPPER}} .ui-posts.style1 .uk-card-body' => 'position: {{VALUE}}',
                         '{{WRAPPER}} .ui-posts-intro-item .uk-card-body' => 'position: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::SELECT,
+                    'id'            => 'intro_block',
+                    'label'         => esc_html__( 'Display', 'uipro' ),
+                    'options'       => array(
+                        'inline-block' => esc_html__('Inline', 'uipro'),
+                        'block' => esc_html__('Block', 'uipro'),
+                    ),
+                    'default'       => 'inline-block',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'uipost_layout', 'operator' => '===', 'value' => 'style1'],
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-posts.style1 .uk-card-body' => 'display: {{VALUE}}',
                     ],
                 ),
 				array(
@@ -1417,7 +1432,6 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 					],
                     'conditions' => [
                         'terms' => [
-                            ['name' => 'show_introtext', 'operator' => '===', 'value' => '1'],
                             ['name' => 'uipost_layout', 'operator' => '===', 'value' => 'style1'],
                         ],
                     ],

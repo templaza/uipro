@@ -5,6 +5,7 @@ $link               =   isset($instance['link']) && $instance['link'] ? $instanc
 $lightbox_width     =   isset($instance['lightbox_width']) && $instance['lightbox_width'] ? $instance['lightbox_width'] : array();
 $lightbox_height    =   isset($instance['lightbox_height']) && $instance['lightbox_height'] ? $instance['lightbox_height'] : array();
 $caption            =   isset($instance['caption']) && $instance['caption'] ? ' data-caption="'.$instance['caption'].'"' : '';
+$title              =   isset($instance['title']) && $instance['title'] ? $instance['title'] : '';
 $icon               =   isset($instance['icon']) && $instance['icon'] ? $instance['icon'] : array();
 $autoplay 	        =   (isset($instance['autoplay']) && $instance['autoplay']) ? intval($instance['autoplay']) : 0;
 $ripple_effect 	    =   (isset($instance['ripple_effect']) && $instance['ripple_effect']) ? intval($instance['ripple_effect']) : 0;
@@ -25,7 +26,11 @@ if ($link && $icon && isset($icon['value'])) {
     }
 	$output         =   '<div class="uilightbox'. $general_styles['container_cls'] .'"' . $general_styles['animation'] . '>';
 	$output         .=  '<div class="uilightbox-inner' . $general_styles['content_cls'] . '" data-uk-lightbox="'.$lightbox_options.'">';
-    $output         .=  '<a class="ui-lightbox uk-inline uk-border-pill uk-height-small uk-width-small'.$ripple_effect.'" data-elementor-open-lightbox="no" href="'.$link.'"'.$caption.' data-attrs="'.$data_attrs.'"><span class="uk-flex-inline uk-flex-middle uk-flex-center">'.$lightbox_icon.'</span></a>';
+    if($title !=''){
+        $output .= '<a class="ui-title-lightbox" data-elementor-open-lightbox="no" href="' . $link . '"' . $caption . ' data-attrs="' . $data_attrs . '"><span class="uk-flex-inline icon uk-flex-middle uk-flex-center uk-inline uk-border-pill uk-height-small uk-width-small ' . $ripple_effect . '">' . $lightbox_icon . '</span>' . $title . '</a>';
+    }else {
+        $output .= '<a class="ui-lightbox uk-inline uk-border-pill uk-height-small uk-width-small' . $ripple_effect . '" data-elementor-open-lightbox="no" href="' . $link . '"' . $caption . ' data-attrs="' . $data_attrs . '"><span class="uk-flex-inline uk-flex-middle uk-flex-center">' . $lightbox_icon . '</span></a>';
+    }
 	$output         .=  '</div>';
 	$output         .=  '</div>';
 	echo ent2ncr($output);

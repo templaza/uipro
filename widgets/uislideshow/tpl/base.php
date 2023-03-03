@@ -528,7 +528,7 @@ if ( isset( $instance['uislideshow_items'] ) && count( (array) $instance['uislid
 
 		$output .= '<div class="ui-content uk-position-cover uk-flex' . $overlay_positions . $overlay_container_cls . $overlay_container_padding . $overlay_margin_cls . '">';
 
-		$output .= '<div class="' . $overlay_styles_int . $overlay_pos_int . $overlay_width . $overlay_transition . $text_item_color_cls . $overlay_styles . $overlay_padding . ( ! empty( $overlay_transition ) ? $overlay_transition : '' ) . ' uk-margin-remove-first-child"' . ( empty( $overlay_transition ) ? $overlay_parallax_cls : '' ) . '>';
+		$output .= '<div class="' . $overlay_styles_int . $overlay_pos_int . $overlay_width . $overlay_transition . $text_item_color_cls . $overlay_styles . $overlay_padding . ( ! empty( $overlay_transition ) ? $overlay_transition : '' ) . ' "' . ( empty( $overlay_transition ) ? $overlay_parallax_cls : '' ) . '>';
 
 		if ( $meta_alignment == 'top' && $item_meta ) {
 			$output .= '<' . $meta_element . ' class="ui-meta' . $meta_style . '"' . $meta_transition . '>';
@@ -628,7 +628,13 @@ if ( $navigation_control == 'dotnav' ) {
 			$image_src  = isset( $media_item['url'] ) ? $media_item['url'] : '';
 
 			$nav_image     = ( isset( $value['thumbnail'] ) && $value['thumbnail'] ) ? $value['thumbnail'] : '';
-			$nav_image_src = isset( $nav_image['url'] ) ? $nav_image['url'] : '';
+            var_dump($nav_image);
+			if($nav_image !=''){
+                $nav_image_src = isset( $nav_image['url'] ) ? $nav_image['url'] : '';
+            }else{
+                $nav_image_src = isset( $media_item['url'] ) ? $media_item['url'] : '';
+            }
+
 
 			$image_alt      = ( isset( $value['image_alt'] ) && $value['image_alt'] ) ? $value['image_alt'] : '';
 			$title_alt_text = ( isset( $value['title'] ) && $value['title'] ) ? $value['title'] : '';
