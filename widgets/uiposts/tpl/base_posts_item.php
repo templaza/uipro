@@ -6,6 +6,7 @@ $pagination_type    = (isset($instance['pagination_type']) && $instance['paginat
 $masonry            = (isset($instance[$pre_val.'masonry']) && $instance[$pre_val.'masonry']) ? intval($instance[$pre_val.'masonry']) : 0;
 
 $card_divider       = (isset($instance[$pre_val.'card_divider'])) ? filter_var($instance[$pre_val.'card_divider'], FILTER_VALIDATE_BOOLEAN) : false;
+$card_divider_horiz = (isset($instance[$pre_val.'card_divider_horizontal'])) ? filter_var($instance[$pre_val.'card_divider_horizontal'], FILTER_VALIDATE_BOOLEAN) : false;
 $card_gutter        = isset($instance[$pre_val.'card_gutter']) && !empty($instance[$pre_val.'card_gutter'])?$instance[$pre_val.'card_gutter']:'';
 
 //Get posts
@@ -179,6 +180,7 @@ if (count($posts)) {
         .$desktop_columns.'@l uk-child-width-1-'.$laptop_columns.'@m uk-child-width-1-'.$tablet_columns
         .'@s uk-child-width-1-'. $mobile_columns . $column_grid_gap . ($use_slider ? ' uk-slider-items': '')
         .($card_divider?' uk-grid-divider':'')
+        .($card_divider_horiz?' uk-grid-divider-horizontal':'')
         .($card_gutter?' uk-grid-'.$card_gutter:'')
         .'" data-uk-grid="'.($masonry ? 'masonry:true;' : '').'">';
 

@@ -429,6 +429,11 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                     'name'          => 'card_divider',
                     'label'         => esc_html__('Card Divider', 'uipro'),
                 ),
+                array(
+                    'type'          =>  Controls_Manager::SWITCHER,
+                    'name'          => 'card_divider_horizontal',
+                    'label'         => esc_html__('Card Divider Horizontal', 'uipro'),
+                ),
 
 				//Filter Settings
 				array(

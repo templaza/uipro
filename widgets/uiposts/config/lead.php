@@ -743,6 +743,11 @@ return array(
         'name'          => 'lead_card_divider',
         'label'         => esc_html__('Card Divider', 'uipro'),
     ),
+    array(
+        'type'          =>  Controls_Manager::SWITCHER,
+        'name'          => 'lead_card_divider_horizontal',
+        'label'         => esc_html__('Card Divider Horizontal', 'uipro'),
+    ),
 
     // Lead filter Settings
     array(
