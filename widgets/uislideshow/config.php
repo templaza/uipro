@@ -1826,7 +1826,7 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
                     'responsive'    =>  true,
                     'size_units'    => [ 'px', 'em', '%' ],
                     'selectors'     => [
-                        '{{WRAPPER}} .ui-title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                        '{{WRAPPER}} .ui-title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
                     ],
                     'condition'     => array(
                         'title_margin_top'    => 'custom'
@@ -2122,18 +2122,32 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 				array(
 					'id' => 'meta_margin_top',
 					'type' => Controls_Manager::SELECT,
-					'label'     => esc_html__( 'Margin Top', 'uipro' ),
-					'description' => esc_html__( 'Set the top margin.', 'uipro' ),
+					'label'     => esc_html__( 'Margin', 'uipro' ),
+					'description' => esc_html__( 'Set the margin.', 'uipro' ),
 					'options'         => array(
 						'' => esc_html__( 'Default', 'uipro' ),
 						'small' => esc_html__( 'Small', 'uipro' ),
 						'medium' => esc_html__( 'Medium', 'uipro' ),
 						'large' => esc_html__( 'Large', 'uipro' ),
 						'xlarge' => esc_html__( 'X-Large', 'uipro' ),
+						'custom' => esc_html__( 'Custom', 'uipro' ),
 						'remove' => esc_html__( 'None', 'uipro' ),
 					),
 					'default' => '',
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'meta_margin_top_custom',
+                    'label'         => esc_html__( 'Meta Margin Custom', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-meta' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                    ],
+                    'condition'     => array(
+                        'meta_margin_top'    => 'custom'
+                    ),
+                ),
 				array(
 					'id' => 'use_meta_parallax',
 					'type' => Controls_Manager::SWITCHER,
@@ -2370,10 +2384,24 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 						'medium' => esc_html__( 'Medium', 'uipro' ),
 						'large' => esc_html__( 'Large', 'uipro' ),
 						'xlarge' => esc_html__( 'X-Large', 'uipro' ),
+						'custom' => esc_html__( 'Custom', 'uipro' ),
 						'remove' => esc_html__( 'None', 'uipro' ),
 					),
 					'default' => '',
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'content_margin_top_custom',
+                    'label'         => esc_html__( 'Content Margin Custom', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-content' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                    ],
+                    'condition'     => array(
+                        'content_margin_top'    => 'custom'
+                    ),
+                ),
 				array(
 					'id' => 'use_content_parallax',
 					'type' => Controls_Manager::SWITCHER,

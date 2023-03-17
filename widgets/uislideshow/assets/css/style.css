@@ -16,3 +16,6 @@
 .ui-navigation-group .ui-nav-control .uk-dotnav{
     margin:0 !important;
 }
+.ui-slideshow-wrapper .ui-slideshow .ui-media img{
+    max-width:none;
+}

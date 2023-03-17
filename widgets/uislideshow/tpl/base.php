@@ -15,7 +15,7 @@ $attrs_slideshow[] = ( isset( $instance['autoplay'] ) && $instance['autoplay'] )
 $attrs_slideshow[] = ( isset( $instance['autoplay'] ) && $instance['autoplay'] ) && ( isset( $instance['autoplay_interval'] ) && isset( $instance['autoplay_interval']['size'] ) && $instance['autoplay_interval']['size'] ) ? 'autoplayInterval: ' . ( (int) $instance['autoplay_interval']['size'] * 1000 ) : '';
 $attrs_slideshow[] = ( isset( $instance['slideshow_transition'] ) && $instance['slideshow_transition'] ) ? 'animation: ' . $instance['slideshow_transition'] : '';
 $attrs_slideshow[] = ( isset( $instance['velocity'] ) && isset( $instance['velocity']['size'] ) && $instance['velocity']['size'] ) ? 'velocity: ' . (int) $instance['velocity']['size'] / 100 : '';
-$attrs_slideshow   = ' uk-slideshow="' . implode( '; ', array_filter( $attrs_slideshow ) ) . '"';
+$attrs_slideshow   = ' data-uk-slideshow="' . implode( '; ', array_filter( $attrs_slideshow ) ) . '"';
 
 $kenburns_transition = ( isset( $instance['kenburns_transition'] ) && $instance['kenburns_transition'] ) ? ' uk-transform-origin-' . $instance['kenburns_transition'] : '';
 
@@ -497,7 +497,7 @@ if ( isset( $instance['uislideshow_items'] ) && count( (array) $instance['uislid
 				case 'youtu.be':
 					$id  = trim( $video_parse['path'], '/' );
 					$src = '//www.youtube.com/embed/' . $id;
-					$output .= '<iframe src="'.esc_url($src).'?iv_load_policy=3&amp;autoplay=1&amp;controls=0&amp;showinfo=0&amp;rel=0&amp;loop=1&amp;modestbranding=1&amp;wmode=transparent&amp;playsinline=1" width="1920" height="1080" frameborder="0" allowfullscreen data-uk-cover></iframe>';
+					$output .= '<iframe src="'.esc_url($src).'?iv_load_policy=3&amp;autoplay=1&amp;controls=0&amp;showinfo=0&amp;rel=0&amp;loop=1&amp;modestbranding=1&amp;wmode=transparent&amp;playsinline=1" width="1920" height="1080"  allowfullscreen data-uk-cover></iframe>';
 					break;
 
 				case 'www.youtube.com':
@@ -505,21 +505,21 @@ if ( isset( $instance['uislideshow_items'] ) && count( (array) $instance['uislid
 					parse_str( $video_parse['query'], $query );
 					$id  = $query['v'];
 					$src = '//www.youtube.com/embed/' . $id;
-					$output .= '<iframe src="'.esc_url($src).'?iv_load_policy=3&amp;autoplay=1&amp;controls=0&amp;showinfo=0&amp;rel=0&amp;loop=1&amp;modestbranding=1&amp;wmode=transparent&amp;playsinline=1" width="1920" height="1080" frameborder="0" allowfullscreen data-uk-cover></iframe>';
+					$output .= '<iframe src="'.esc_url($src).'?iv_load_policy=3&amp;autoplay=1&amp;controls=0&amp;showinfo=0&amp;rel=0&amp;loop=1&amp;modestbranding=1&amp;wmode=transparent&amp;playsinline=1" width="1920" height="1080" allowfullscreen data-uk-cover></iframe>';
 					break;
 
 				case 'vimeo.com':
 				case 'www.vimeo.com':
 					$id  = trim( $video_parse['path'], '/' );
 					$src = '//player.vimeo.com/video/' . $id;
-					$output .= '<iframe src="'.esc_url($src).'?autoplay=1&amp;loop=1&amp;muted=1&amp;autopause=0&amp;title=0&amp;byline=0&amp;portrait=0&amp;controls=0" width="1920" height="1080" frameborder="0" allowfullscreen data-uk-cover></iframe>';
+					$output .= '<iframe src="'.esc_url($src).'?autoplay=1&amp;loop=1&amp;muted=1&amp;autopause=0&amp;title=0&amp;byline=0&amp;portrait=0&amp;controls=0" width="1920" height="1080"  allowfullscreen data-uk-cover></iframe>';
 					break;
 				default :
 					$output .= '<video src="'.esc_url($video).'" autoplay loop muted playsinline data-uk-cover></video>';
 					break;
 			}
 		} else {
-			$output .= '<img class="ui-image" src="' . esc_url($image_src) . '" ' . $image_alt_init . ' uk-cover>';
+			$output .= '<img class="ui-image" src="' . esc_url($image_src) . '" ' . $image_alt_init . ' data-uk-cover>';
 		}
 
 		$output .= ( $kenburns_transition ) ? '</div>' : '';
@@ -664,7 +664,7 @@ if ( $navigation_control == 'dotnav' ) {
 		foreach ( $instance['uislideshow_items'] as $key => $value ) {
 			$image_title    = ( isset( $value['title'] ) && $value['title'] ) ? $value['title'] : '';
 			$output .= '<li>';
-			$output .= '<a data-uk-slideshow-item="' . $key . '" href="#" class="uk-padding-small"><div class="uk-grid-small" uk-grid><h2 class="ui-nav-title-num uk-width-auto@l uk-width-1-1">'.($key+1).'.</h2><'.$navigation_title_selector.' class="uk-width-expand">'.$image_title.'</'.$navigation_title_selector.'></div></a>';
+			$output .= '<a data-uk-slideshow-item="' . $key . '" href="#" class="uk-padding-small"><div class="uk-grid-small" data-uk-grid><h2 class="ui-nav-title-num uk-width-auto@l uk-width-1-1">'.($key+1).'.</h2><'.$navigation_title_selector.' class="uk-width-expand">'.$image_title.'</'.$navigation_title_selector.'></div></a>';
 			$output .= '</li>';
 		}
 		$output .= '</ul></div>';
