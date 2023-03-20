@@ -28,11 +28,11 @@ $min_height = ( isset( $instance['min_height'] ) && isset( $instance['min_height
 $height     = ( isset( $instance['height'] ) && $instance['height'] ) ? $instance['height'] : '';
 $height_cls = '';
 if ( $height == 'full' ) {
-	$height_cls .= ' uk-height-viewport="offset-top: true; ' . $min_height . '"';
+	$height_cls .= ' data-uk-height-viewport="offset-top: true; ' . $min_height . '"';
 } elseif ( $height == 'percent' ) {
-	$height_cls .= ' uk-height-viewport="offset-top: true; ' . $min_height . 'offset-bottom: 20"';
+	$height_cls .= ' data-uk-height-viewport="offset-top: true; ' . $min_height . 'offset-bottom: 20"';
 } elseif ( $height == 'section' ) {
-	$height_cls .= ' uk-height-viewport="offset-top: true; ' . $min_height . 'offset-bottom: !.elementor-section +"';
+	$height_cls .= ' data-uk-height-viewport="offset-top: true; ' . $min_height . 'offset-bottom: !.elementor-section +"';
 }
 
 // Navigation settings.
