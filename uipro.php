@@ -57,7 +57,7 @@ class UIPro{
         add_action( 'init', array( $this, 'ui_load_plugin_textdomain' ) );
     }
     public function ui_load_plugin_textdomain() {
-        load_plugin_textdomain( 'uipro', false, UIPRO_PATH . '/languages' );
+        load_plugin_textdomain( 'uipro', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
     }
 
     /**
