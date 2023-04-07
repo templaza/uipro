@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
 use Elementor\Core\Schemes\Typography;
-require_once ABSPATH.'wp-content/plugins/uipro/widgets/uiadvancedproducts/helper.php';
+require_once plugin_dir_path( __DIR__ ).'uiadvancedproducts/helper.php';
 if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
 	/**
 	 * Class UIPro_Config_Uiadvancedproduct_Category
