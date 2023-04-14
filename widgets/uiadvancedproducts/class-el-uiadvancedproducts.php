@@ -132,9 +132,9 @@ if ( ! class_exists( 'UIPro_El_UIAdvancedProducts' ) ) {
                 $wp_query_tmp       = $wp_query;
                 // Set $wp_query to new object
                 $wp_query           = !empty($ap_posts)?$ap_posts:$wp_query_tmp;
-
-                AP_Templates::load_my_layout('archive.content');
-
+                if(is_plugin_active('advanced-product/advanced-product.php')) {
+                    AP_Templates::load_my_layout('archive.content');
+                }
                 // Assign $wp_query again
                 $wp_query = $wp_query_tmp;
             }else {

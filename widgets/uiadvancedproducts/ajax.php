@@ -34,7 +34,9 @@ if ( ! class_exists( 'UIPro_El_UIAdvancedProducts_Ajax' ) ) {
                 $ap_posts       =   new WP_Query($query_args);
                 if($ap_posts -> have_posts()){
                     while ($ap_posts -> have_posts()) { $ap_posts -> the_post();
-                        AP_Templates::load_my_layout('archive.content-item');
+                        if(is_plugin_active('advanced-product/advanced-product.php')) {
+                            AP_Templates::load_my_layout('archive.content-item');
+                        }
                     }
                 }
             }else {
@@ -98,7 +100,9 @@ if ( ! class_exists( 'UIPro_El_UIAdvancedProducts_Ajax' ) ) {
                 if($ap_posts -> have_posts()){
                     while ($ap_posts -> have_posts()) {
                         $ap_posts -> the_post();
-                        AP_Templates::load_my_layout('archive.content-item',true,false,$args);
+                        if(is_plugin_active('advanced-product/advanced-product.php')) {
+                            AP_Templates::load_my_layout('archive.content-item', true, false, $args);
+                        }
                     }
                     wp_reset_postdata();
                 }else{

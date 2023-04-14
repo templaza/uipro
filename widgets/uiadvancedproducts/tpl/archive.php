@@ -168,7 +168,10 @@ if($ap_posts && $ap_posts -> have_posts()) {
         <?php
         while ($ap_posts -> have_posts()) {
             $ap_posts -> the_post();
-            AP_Templates::load_my_layout('archive.content-item',true,false,$args);
+                if(is_plugin_active('advanced-product/advanced-product.php')){
+                AP_Templates::load_my_layout('archive.content-item',true,false,$args);
+                }
+
         }
         ?>
     </div>
