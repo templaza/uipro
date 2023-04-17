@@ -99,7 +99,6 @@ if($ap_posts && $ap_posts -> have_posts()) {
     $use_filter_sort 	= (isset($instance['use_filter_sort']) && $instance['use_filter_sort']) ? intval($instance['use_filter_sort']) : 0;
     $display_filter_header 	= (isset($instance['display_filter_header']) && $instance['display_filter_header']) ? intval($instance['display_filter_header']) : 0;
     $filter_animate 	= (isset($instance['filter_animate']) && $instance['filter_animate']) ? $instance['filter_animate'] : 'slide';
-    $filter_margin 	    = (isset($instance['filter_margin']) && $instance['filter_margin']) ? ' uk-margin-'. $instance['filter_margin'] : ' uk-margin';
     $filter_visibility 	= (isset($instance['filter_visibility']) && $instance['filter_visibility']) ? $instance['filter_visibility'] : '';
 
     $filter_all 	    = (isset($instance['filter_all']) && $instance['filter_all']) ? intval($instance['filter_all']) : 0;
