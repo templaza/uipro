@@ -1,24 +1,30 @@
 # UIPro
+
 UIPro - Wordpress Plugin
 
-Changelogs:
+_Documentation: https://docs.templaza.com_
 
-Version 1.0.3 - 10/11/2022
+_Forum: https://www.templaza.com/forums.html_
 
-    - Remove $text_domain in uipro
-    - Fix style element WooGrid layout 1
-    - Fix style element WooGrid layout 6
-    - Fix translate and add language file
-    - Add uipost style 1
-    - Support control tabs and control popovers
-    - Update icon for meta post
-    - Update quickview advanced product style
-    - Update icon view for advanced product style 4
+_Ticket: https://www.templaza.com/tz_membership/addticket.html_
 
-Version 1.0.2 - 29/07/2022
+_FanPage: https://www.facebook.com/templaza_
 
-    - Add element account, add options advanced product
+_Twitter: https://twitter.com/templazavn_
 
-Version 1.0.1 - 06/05/2022
+_Google+: https://plus.google.com/+Templaza_
 
-    - Fix issue load elements overflow (page speed)
+## Getting Started
+ 
+ ### Installation
+ 
+ 1. Download the plugin .zip file
+ 2. Log in to your WordPress admin panel
+ 3. Go to Plugins > click "Add New" button > upload the plugin .zip file 
+ 4. Click "Install Now" and activate the plugin
+ 
+## Changelogs:
+
+Go read the entire changelog at [this link](https://github.com/templaza/uipro/blob/master/CHANGELOG.md)
+
+Looking for older versions of TemPlaza Framework? Check the [releases](https://github.com/templaza/uipro/releases)
