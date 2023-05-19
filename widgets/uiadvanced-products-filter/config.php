@@ -107,6 +107,13 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
                     ),
                 ),
                 array(
+                    'name'            => 'title_border',
+                    'type'          =>  \Elementor\Group_Control_Border::get_type(),
+                    'label' => esc_html__( 'Title Border', 'uipro' ),
+                    'description'   => esc_html__( 'Title Border.', 'uipro' ),
+                    'selector' => '{{WRAPPER}} .inventory-title-search',
+                ),
+                array(
                     'type'          => Controls_Manager::SELECT,
                     'name'          => 'title_tag',
                     'label'         => esc_html__( 'Title tag', 'uipro' ),
@@ -127,6 +134,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
                         'title!'    => ''
                     ),
                 ),
+
                 array(
                     'type'          => Controls_Manager::SELECT2,
                     'id'            => 'uiap_custom_fields',

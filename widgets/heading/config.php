@@ -269,7 +269,7 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                     'responsive'    =>  true,
                     'size_units'    => [ 'px', 'em', '%' ],
                     'selectors'     => [
-                        '{{WRAPPER}} .sub-heading' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                        '{{WRAPPER}} .sub-heading .sub-heading-content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                     ],
                     'condition'     => array(
                         'sub_heading!'    => ''
@@ -802,7 +802,7 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                     'label'         => esc_html__('Sub heading background', 'uipro'),
                     'description'   => esc_html__('Choose sub heading background.', 'uipro'),
                     'selectors' => [
-                        '{{WRAPPER}} .sub-heading' => 'background-color: {{VALUE}}',
+                        '{{WRAPPER}} .sub-heading .sub-heading-content' => 'background-color: {{VALUE}}',
                     ],
                     'condition'     => array(
                         'sub_heading!'    => ''

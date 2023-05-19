@@ -3,267 +3,174 @@
 use Advanced_Product\Helper\AP_Custom_Field_Helper;
 $general_styles = \UIPro_Elementor_Helper::get_general_styles($instance);
 $limit      = ( isset( $instance['limit'] ) && $instance['limit'] ) ? $instance['limit'] : 4;
-//$resource       = ( isset( $instance['resource'] ) && $instance['resource'] ) ? $instance['resource'] : 'post';
 $resource   = 'ap_product';
-$ap_product_source   = ( isset( $instance['ap_product_source'] ) && $instance['ap_product_source'] ) ? $instance['ap_product_source'] : '';
+$source   = ( isset( $instance['source'] ) && $instance['source'] ) ? $instance['source'] : '';
 $ordering   = ( isset( $instance['ordering'] ) && $instance['ordering'] ) ? $instance['ordering'] : 'latest';
 $branch     = ( isset( $instance[$resource.'_branch'] ) && $instance[$resource.'_branch'] ) ? $instance[$resource.'_branch'] : array('0');
-$category   = ( isset( $instance[$resource.'_category'] ) && $instance[$resource.'_category'] ) ? $instance[$resource.'_category'] : array('0');
+$image_size   = ( isset( $instance['image_size'] ) && $instance['image_size'] ) ? $instance['image_size'] : 'full';
+$category   = ( isset( $instance['ap_product_category'] ) && $instance['ap_product_category'] ) ? $instance['ap_product_category'] : '';
 
-if($ap_product_source !='custom') {
-    $query_args = array(
-        'post_type' => $resource,
-        'posts_per_page' => $limit,
-    );
-    switch ($ordering) {
-        case 'latest':
-            $query_args['orderby'] = 'date';
-            $query_args['order'] = 'DESC';
-            break;
-        case 'oldest':
-            $query_args['orderby'] = 'date';
-            $query_args['order'] = 'ASC';
-            break;
-        case 'random':
-            $query_args['orderby'] = 'rand';
-            break;
-        case 'popular':
-            $query_args['orderby'] = 'meta_value_num';
-            $query_args['order'] = 'DESC';
-            $query_args['meta_key'] = 'post_views_count';
-            break;
-        case 'sticky':
-            $query_args['post__in'] = get_option('sticky_posts');
-            $query_args['ignore_sticky_posts'] = 1;
-            break;
-    }
-    $tax_query = array();
+$card_style    = ( isset( $instance['card_style'] ) && $instance['card_style'] ) ? $instance['card_style'] : '';
+$card_size    = ( isset( $instance['card_size'] ) && $instance['card_size'] ) ? $instance['card_size'] : '';
 
-    if (!empty($branch) && count($branch) && $branch[0] != '0') {
-        $tax_query[] = array(
-            'taxonomy' => 'ap_branch',
-            'field' => 'id',
-            'operator' => 'IN',
-            'terms' => $branch,
+$large_desktop_columns    = ( isset( $instance['large_desktop_columns'] ) && $instance['large_desktop_columns'] ) ? $instance['large_desktop_columns'] : '4';
+$desktop_columns    = ( isset( $instance['desktop_columns'] ) && $instance['desktop_columns'] ) ? $instance['desktop_columns'] : '4';
+$laptop_columns     = ( isset( $instance['laptop_columns'] ) && $instance['laptop_columns'] ) ? $instance['laptop_columns'] : '3';
+$tablet_columns     = ( isset( $instance['tablet_columns'] ) && $instance['tablet_columns'] ) ? $instance['tablet_columns'] : '2';
+$mobile_columns     = ( isset( $instance['mobile_columns'] ) && $instance['mobile_columns'] ) ? $instance['mobile_columns'] : '1';
+$column_grid_gap    = ( isset( $instance['column_grid_gap'] ) && $instance['column_grid_gap'] ) ? ' uk-grid-'. $instance['column_grid_gap'] : '';
+$show_product_count = (isset($instance['show_product_count']) && $instance['show_product_count']) ? intval($instance['show_product_count']) : 0;
+$title_overlay = (isset($instance['title_overlay']) && $instance['title_overlay']) ? intval($instance['title_overlay']) : 1;
+
+$title_position      = !empty( $instance['title_position'] ) ? $instance['title_position'] : 'uk-position-bottom-left';
+$product_single_label      = !empty( $instance['product_single_label'] ) ? $instance['product_single_label'] : '';
+$product_label      = !empty( $instance['product_label'] ) ? $instance['product_label'] : '';
+
+$slider_visible      = !empty( $instance['slider_wrap_visible'] ) ? $instance['slider_wrap_visible'] : '';
+$slider_nav = (isset($instance['show_nav']) && $instance['show_nav']) ? intval($instance['show_nav']) : 0;
+$slider_dots = (isset($instance['show_dots']) && $instance['show_dots']) ? intval($instance['show_dots']) : 0;
+$image_cover = (isset($instance['image_cover']) && $instance['image_cover']) ? intval($instance['image_cover']) : 0;
+if($source == 'ap_category'){
+    if(empty($category) || $category == ''){
+        $get_terms_attributes = array (
+            'taxonomy' => 'ap_category', //empty string(''), false, 0 don't work, and return empty array
+            'orderby' => 'name',
+            'order' => 'ASC',
+            'hide_empty' => true, //can be 1, '1' too
         );
-    }
-    if (count($category) && $category[0] != '0') {
-        $tax_query[] = array(
-            'taxonomy' => 'ap_category',
-            'field' => 'id',
-            'operator' => 'IN',
-            'terms' => $category,
+        $cat_results = get_terms($get_terms_attributes);
+    } else{
+        $get_terms_attributes = array (
+            'taxonomy' => $source, //empty string(''), false, 0 don't work, and return empty array
+            'orderby' => 'name',
+            'order' => 'ASC',
+            'term_taxonomy_id'       => $category,
+            'hide_empty' => $hide_empty, //can be 1, '1' too
+
         );
+        $cat_results = get_terms($get_terms_attributes);
     }
-
-    // Custom categories
-    $categories = UIPro_UIAdvancedProducts_Helper::get_custom_categories();
-    if (!empty($categories) && count($categories)) {
-        foreach ($categories as $cat) {
-            $slug = get_post_meta($cat->ID, 'slug', true);
-
-            if (!taxonomy_exists($slug)) {
-                continue;
-            }
-
-            $custom_cat = (isset($instance[$slug]) && $instance[$slug]) ? $instance[$slug] : array();
-
-            if (!empty($custom_cat) && count($custom_cat)) {
-                $tax_query[] = array(
-                    'taxonomy' => $slug,
-                    'field' => 'id',
-                    'operator' => 'IN',
-                    'terms' => $custom_cat,
-                );
-            }
-
-        }
-    }
-
-    if (!empty($tax_query) && count($tax_query)) {
-        $query_args['tax_query'] = $tax_query;
-    }
-
-// Based on WP get_posts() default function
-    $defaults = array(
-        'numberposts' => 5,
-        'category' => 0,
-        'orderby' => 'date',
-        'order' => 'DESC',
-        'include' => array(),
-        'exclude' => array(),
-        'meta_key' => '',
-        'meta_value' => '',
-        'post_type' => 'post',
-        'suppress_filters' => true,
-    );
-
-    $parsed_args = wp_parse_args($query_args, $defaults);
-    if (empty($parsed_args['post_status'])) {
-        $parsed_args['post_status'] = ('attachment' === $parsed_args['post_type']) ? 'inherit' : 'publish';
-    }
-    if (!empty($parsed_args['numberposts']) && empty($parsed_args['posts_per_page'])) {
-        $parsed_args['posts_per_page'] = $parsed_args['numberposts'];
-    }
-    if (!empty($parsed_args['category'])) {
-        $parsed_args['cat'] = $parsed_args['category'];
-    }
-    if (!empty($parsed_args['include'])) {
-        $incposts = wp_parse_id_list($parsed_args['include']);
-        $parsed_args['posts_per_page'] = count($incposts);  // Only the number of posts included.
-        $parsed_args['post__in'] = $incposts;
-    } elseif (!empty($parsed_args['exclude'])) {
-        $parsed_args['post__not_in'] = wp_parse_id_list($parsed_args['exclude']);
-    }
-
-    $parsed_args['ignore_sticky_posts'] = true;
-    if ($pagination_type == 'none') {
-        $parsed_args['no_found_rows'] = true;
-    }
-
-    $post_query = new WP_Query($parsed_args);
-    $products = $post_query->posts;
 }else{
-    $products   = isset($instance['ap_products_custom']) ? $instance['ap_products_custom'] : array();
+    $custom_tax = ( isset( $instance['ap_product_'.$source.''] ) && $instance['ap_product_'.$source.''] ) ? $instance['ap_product_'.$source.''] : '';
+    if(empty($custom_tax) || $custom_tax == ''){
+        $get_terms_attributes = array (
+            'taxonomy' => $source, //empty string(''), false, 0 don't work, and return empty array
+            'orderby' => 'name',
+            'order' => 'ASC',
+            'hide_empty' => true, //can be 1, '1' too
+            'number' => 0, //can be 1, '1' too
+        );
+        $cat_results = get_terms($get_terms_attributes);
+    } else{
+        $get_terms_attributes = array (
+            'taxonomy' => $source, //empty string(''), false, 0 don't work, and return empty array
+            'orderby' => 'name',
+            'order' => 'ASC',
+            'term_ids'       => $custom_tax,
+            'hide_empty' => false, //can be 1, '1' too
+
+        );
+        $cat_results = get_terms($get_terms_attributes);
+    }
 }
-$slide_option = '';
-if($instance['slideshow_transition']){
-    $slide_option .='animation: '.$instance['slideshow_transition'].'';
+$title_cls = '';
+if($title_overlay){
+    $title_cls .=' uk-overlay uk-position-absolute '.$title_position;
 }
-$custom_fields   = isset($instance['custom_fields']) ? $instance['custom_fields'] : array();
-if($products){
-    ?>
-<div class="ap_slideshow uk-slider <?php echo esc_attr($general_styles['container_cls'] . $general_styles['content_cls']);?>" <?php echo wp_kses($general_styles['animation'],'post');?>>
-    <div class="ap_tiny_slideshow_wrap">
-        <?php
-        foreach ($products as $item) {
-            if ($post = get_page_by_path($item['ap_products'], OBJECT, 'ap_product')){
-                $product_id = $post->ID;
-            }
-            if( $product_id ) {
-                ?>
-                <div class="ap_slideshow-tiny-item">
-                    <div class="ap_slideshow-item uk-flex uk-flex-middle" data-uk-grid>
-                        <div class="ap-slideshow-image uk-flex-last@m uk-width-1-2@m">
-                            <?php
-                            if($item['image']['id'] ==''){
-                                echo get_the_post_thumbnail($product_id,'full');
-                            }else{
-                                ?>
-                                <img src="<?php echo esc_url($item['image']['url']);?>" alt="<?php echo esc_attr(get_the_title($product_id)); ?>"/>
-                            <?php } ?>
-                        </div>
-                        <div class="ap-slideshow-info uk-width-1-2@m">
-                            <h3 class="ap-slideshow-title">
-                                <?php echo esc_html(get_the_title($product_id)); ?>
-                            </h3>
-                            <div class="uk-flex uk-flex-between ap-single-top-fields">
+if($cat_results){
+?>
+<div class="ap_category_element<?php echo esc_attr($general_styles['container_cls'] . $general_styles['content_cls']);?>" <?php echo wp_kses($general_styles['animation'],'post');?>>
+    <div class="uk-position-relative <?php echo esc_attr($slider_visible).' '.$general_styles['content_cls'];?>" data-uk-slider>
+        <?php if($slider_visible ==''){ ?>
+        <div class="uk-slider-container">
+        <?php } ?>
+            <ul class="uk-slider-items tz-ap-category uk-child-width-1-<?php echo esc_attr($mobile_columns.$column_grid_gap);?> uk-child-width-1-<?php echo esc_attr($tablet_columns);?>@s
+             uk-child-width-1-<?php echo esc_attr($laptop_columns);?>@m uk-child-width-1-<?php echo esc_attr($desktop_columns);?>@l uk-child-width-1-<?php echo esc_attr($large_desktop_columns);?>@xl uk-grid">
+                <?php
+                foreach ($cat_results as $cat){
+                    $att_id = (get_field('image','term_'.$cat->term_id));
+                    ?>
+                    <li>
+                        <div class="uk-card <?php echo esc_attr('uk-card-'.$card_style.' uk-card-'.$card_size);?>">
+                            <div class="uk-card-media-top">
                                 <?php
-                                if($custom_fields){
-                                foreach ($custom_fields as $field_item){
-                                    $ap_item = AP_Custom_Field_Helper::get_custom_field_option_by_field_name($field_item);
-                                    $f_value    = get_field($ap_item['name'], $product_id);
-                                    if(!empty($f_value)){
-                                        if($ap_item['type'] !='taxonomy'){
-                                            ?>
-                                            <div class="ap-custom-fields">
-                                                <div class="ap-field-label"><?php echo esc_html($ap_item['label']); ?></div>
-                                                <div class="ap-field-value">
-                                                    <?php
-                                                    if($ap_item['type'] == 'file'){
-                                                        $file_url   = '';
-                                                        if(is_array($f_value)){
-                                                            $file_url   = $f_value['url'];
-                                                        }elseif(is_numeric($f_value)){
-                                                            $file_url   = wp_get_attachment_url($f_value);
-                                                        }else{
-                                                            $file_url   = $f_value;
-                                                        }
-                                                        ?>
-                                                        <a href="<?php echo esc_url($file_url); ?>" download><?php
-                                                            echo esc_html__('Download', 'uipro')?></a>
-                                                        <?php
-                                                    }else{
-                                                        ?><?php echo esc_html(the_field($ap_item['name'], $product_id)); ?>
-                                                    <?php } ?>
-                                                </div>
-                                            </div>
+                                if($att_id){
+                                    ?>
+                                    <div class="uk-cover-container ap-category-image">
+                                        <?php if($image_cover){ ?>
+                                        <a href="<?php echo esc_url(get_term_link($cat->term_id));?>">
+                                            <canvas width="440" height="440"></canvas>
                                             <?php
-                                        }
-                                    }
-                                }
+                                            echo wp_get_attachment_image($att_id,$image_size,'',array( "data-uk-cover" => "" ) );
+                                            ?>
+                                        </a>
+                                        <?php }else{ ?>
+                                            <a href="<?php echo esc_url(get_term_link($cat->term_id));?>">
+                                                <?php
+                                                echo wp_get_attachment_image($att_id,$image_size,'','' );
+                                                ?>
+                                            </a>
+                                        <?php } ?>
+                                    </div>
+                                    <?php
                                 }
                                 ?>
                             </div>
-                            <div class="ap-single-desc">
-                                <?php
-                                if($item['ap_description']){
-                                    echo $item['ap_description'];
-                                }else{
-                                    echo get_the_excerpt($product_id);
-                                }
-                                ?>
-                            </div>
-                            <?php if($instance['button_text']){
-                                ?>
-                                <div class="ap-slideshow-readmore uk-flex">
-                                    <a class="ui-button" href="<?php echo esc_url(get_permalink($product_id));?>">
-                                        <?php echo esc_html($instance['button_text']);?>
-                                    </a>
-                                </div>
                             <?php
+                            if($title_overlay){
+                                ?>
+                                <a class="uk-flex uk-overlay-primary uk-position-cover" href="<?php echo esc_url(get_term_link($cat->term_id));?>"></a>
+                                <?php
                             }
                             ?>
-                            <div class="ap-custom-text">
+
+                            <div class="uk-card-body <?php echo esc_attr($title_cls);?>">
                                 <?php
-                                if($item['ap_text_meta']){
+                                if($show_product_count){
                                     ?>
-                                    <span class="ap-custom-meta">
-                                    <?php
-                                    echo $item['ap_text_meta'];
+                                    <span class="ap-product-count">
+                                    <?php echo sprintf(__("%s ", 'uipro'), $cat->count);
+                                    if($cat->count == 1 && $product_single_label !=''){
+                                        echo esc_html($product_single_label);
+                                    }else{
+                                        echo esc_html($product_label);
+                                    }
                                     ?>
-                                    </span>
+                                </span>
                                     <?php
                                 }
                                 ?>
-                                <?php
-                                if($item['ap_text_custom']){
-                                ?>
-                                <div class="ap-custom-desc">
-                                    <?php
-                                    echo $item['ap_text_custom'];
-                                    ?>
-                                </div>
-                                <?php
-                                    }
-                                ?>
+                                <h3 class="ap-title">
+                                    <a href="<?php echo esc_url(get_term_link($cat->term_id));?>">
+                                        <?php echo esc_html($cat->name);?>
+                                    </a>
+                                </h3>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    </li>
+                    <?php
+                }
+                ?>
+            </ul>
+    <?php if($slider_visible ==''){ ?>
+        </div>
+    <?php } ?>
+
+        <?php
+        if($slider_nav){
+            ?>
+            <a class="uk-position-center-left-out " href="#" data-uk-slidenav-previous data-uk-slider-item="previous"></a>
+            <a class="uk-position-center-right-out " href="#" data-uk-slidenav-next data-uk-slider-item="next"></a>
             <?php
-            }
+        }
+        if($slider_dots){
+            ?>
+            <ul class="uk-slider-nav uk-dotnav uk-flex-center uk-margin"></ul>
+            <?php
         }
         ?>
     </div>
 </div>
-<script type="text/javascript">
-    jQuery(document).ready(function(){
-        var slider = tns({
-            container: '.ap_tiny_slideshow_wrap',
-            items: 1,
-            mode: 'gallery',
-            animateIn: 'tns-fadeIn',
-            animateOut: 'tns-fadeOut',
-            speed: 1000,
-            mouseDrag: true,
-            slideBy: 'page',
-            center: true,
-            loop: false,
-            nav:false,
-            controlsText:["<span data-uk-icon='icon:chevron-left; ratio:1.2'></span>", "<span data-uk-icon='icon:chevron-right; ratio:1.2'></span>"],
-        });
-    })
-</script>
+
 <?php
 }
