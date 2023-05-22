@@ -90,6 +90,7 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                 'options'       => array(
                     'base'      => esc_html__( 'Slider', 'uipro' ),
                     'grid'      => esc_html__( 'Grid', 'uipro' ),
+                    'style1'    => esc_html__( 'Slider Style1', 'uipro' ),
                 ),
                 'default'       => 'base',
             ),
@@ -173,6 +174,22 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                     'label_off' => esc_html__( 'No', 'uipro' ),
                     'return_value' => '1',
                     'default' => '0',
+                ),
+                array(
+                    'name'          => 'product_single_label',
+                    'label'         => esc_html__('Single Label', 'uipro'),
+                    'type' => Controls_Manager::TEXT,
+                    'condition'     => array(
+                        'show_product_count'    => '1'
+                    ),
+                ),
+                array(
+                    'name'          => 'product_label',
+                    'label'         => esc_html__('Product Label', 'uipro'),
+                    'type' => Controls_Manager::TEXT,
+                    'condition'     => array(
+                        'show_product_count'    => '1'
+                    ),
                 ),
                 array(
                     'id' => 'hide_empty',
@@ -393,6 +410,7 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                     'label' => __( 'Image Width', 'uipro' ),
                     'type' => Controls_Manager::SLIDER,
                     'size_units' => [ 'px','%' ],
+                    'responsive'    =>  true,
                     'range' => [
                         'px' => [
                             'min' => 0,
@@ -419,6 +437,7 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                     'label' => __( 'Image Height', 'uipro' ),
                     'type' => Controls_Manager::SLIDER,
                     'size_units' => [ 'px','%' ],
+                    'responsive'    =>  true,
                     'range' => [
                         'px' => [
                             'min' => 0,
@@ -451,6 +470,31 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                     'default' => '0',
                 ),
                 array(
+                    'name'          => 'cover_height',
+                    'label' => __( 'Image Cover Height', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px','%' ],
+                    'responsive'    =>  true,
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 2000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                            'step' => 1,
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ap-category-image' => 'height: {{SIZE}}{{UNIT}};',
+                    ],
+                    'condition'     => array(
+                        'image_cover'    => '1'
+                    ),
+                ),
+                array(
                     'type'          => Controls_Manager::DIMENSIONS,
                     'name'          =>  'image_radius',
                     'label'         => esc_html__( 'Image Border radius', 'uipro' ),
@@ -458,6 +502,32 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                     'size_units'    => [ 'px', 'em', '%' ],
                     'selectors'     => [
                         '{{WRAPPER}} .tz-ap-category .ap-category-image' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'image_hover_margin',
+                    'label'         => esc_html__( 'Image Hover Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-card:hover img' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'name'          => 'image_hover_animation',
+                    'label' => __( 'Transition Duration', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units'    => ['s'],
+                    'range'         => [
+                        's' => [
+                            'min' => 0,
+                            'max' => 10,
+                            'step' => 0.1,
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ap-category-image img' => 'transition: all {{SIZE}}s ease-in-out;',
                     ],
                 ),
 
@@ -479,6 +549,69 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                         '{{WRAPPER}} .ap-title a' => 'color: {{VALUE}}',
                     ],
                 ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'title_color_hover',
+                    'label'         => esc_html__('Title Color Hover', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .uk-card:hover .ap-title a' => 'color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'title_margin',
+                    'label'         => esc_html__( 'Title Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ap-title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'id' => 'title_overlay',
+                    'type' => Controls_Manager::SWITCHER,
+                    'label'     => esc_html__( 'Title overlay', 'uipro' ),
+                    'label_on' => esc_html__( 'Yes', 'uipro' ),
+                    'label_off' => esc_html__( 'No', 'uipro' ),
+                    'return_value' => '1',
+                    'default' => '1',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout', 'operator' => 'in', 'value' => ['style1']],
+                        ],
+                    ],
+                ),
+                array(
+                    'label' => esc_html__( 'Overlay background color', 'uipro' ),
+                    'name'  => 'title_overlay_bg',
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .uk-overlay-primary' => 'background-color: {{VALUE}}',
+                    ],
+                    'condition'     => array(
+                        'title_overlay'    => '1'
+                    ),
+                ),
+                array(
+                    'type'      => Controls_Manager::SELECT,
+                    'name'      => 'title_position',
+                    'label'     => esc_html__( 'Title position', 'uipro' ),
+                    'options'       => array(
+                        'uk-position-top-left' => esc_html__('Top Left', 'uipro'),
+                        'uk-position-top-center' => esc_html__('Top Center', 'uipro'),
+                        'uk-position-top-right' => esc_html__('Top Right', 'uipro'),
+                        'uk-position-center' => esc_html__('Center', 'uipro'),
+                        'uk-position-center-left' => esc_html__('Center Left', 'uipro'),
+                        'uk-position-center-right' => esc_html__('Center right', 'uipro'),
+                        'uk-position-bottom-left' => esc_html__('Bottom left', 'uipro'),
+                        'uk-position-bottom-center' => esc_html__('Bottom Center', 'uipro'),
+                        'uk-position-bottom-right' => esc_html__('Bottom Right', 'uipro'),
+                    ),
+                    'default'       => 'uk-position-bottom-left',
+                    'condition'     => array(
+                        'title_overlay'    => '1'
+                    ),
+                ),
 
                 array(
                     'type'          => Group_Control_Typography::get_type(),
@@ -496,6 +629,25 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                         '{{WRAPPER}} .ap-product-count' => 'color: {{VALUE}}',
                     ],
                 ),
+                array(
+                    'type'      => Controls_Manager::SELECT,
+                    'name'      => 'slider_wrap_visible',
+                    'label'     => esc_html__( 'Slider visible', 'uipro' ),
+                    'options'       => array(
+                        '' => esc_html__('Default', 'uipro'),
+                        'tz-visible' => esc_html__('Visible', 'uipro'),
+                        'tz-visible-right' => esc_html__('Visible right', 'uipro'),
+                        'tz-visible-left' => esc_html__('Visible left', 'uipro'),
+                    ),
+                    'default'       => '',
+                    'start_section' => 'slider_settings',
+                    'section_name'  => esc_html__( 'Slider Settings', 'uipro' ),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout', 'operator' => '===', 'value' => 'style1'],
+                        ],
+                    ],
+                ),
 
                 array(
                     'id' => 'show_nav',
@@ -505,11 +657,11 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                     'label_off' => esc_html__( 'No', 'uipro' ),
                     'return_value' => '1',
                     'default' => '0',
-                    'start_section' => 'slider_settings',
-                    'section_name'      => esc_html__('Slider Settings', 'uipro'),
-                    'condition'     => array(
-                        'layout'    => 'base'
-                    ),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout', 'operator' => 'in', 'value' => ['base','style1']],
+                        ],
+                    ],
                 ),
                 array(
                     'type'          =>  \Elementor\Group_Control_Border::get_type(),
@@ -585,9 +737,11 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                     'label_off' => esc_html__( 'No', 'uipro' ),
                     'return_value' => '1',
                     'default' => '0',
-                    'condition'     => array(
-                        'layout'    => 'base'
-                    ),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout', 'operator' => 'in', 'value' => ['base','style1']],
+                        ],
+                    ],
                 ),
                 array(
                     'label' => esc_html__( 'Dots Slider Color', 'uipro' ),

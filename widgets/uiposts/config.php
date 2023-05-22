@@ -2271,10 +2271,7 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 					'name'            => 'button_border',
 					'type'          =>  \Elementor\Group_Control_Border::get_type(),
 					'label' => esc_html__( 'Button Border', 'uipro' ),
-					'selectors' => [
-					    '{{WRAPPER}} .ui-posts.style1 .ui-post-button',
-					    '{{WRAPPER}} .ui-posts-intro-item .ui-post-button',
-                        ],
+                    'selector' => '{{WRAPPER}} .ui-post-button',
 					'conditions' => [
 						'terms' => [
 							['name' => 'button_style', 'operator' => '===', 'value' => 'custom'],
@@ -2286,7 +2283,6 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 					'type'          =>  Controls_Manager::COLOR,
 					'label'         => esc_html__('Hover Background Color', 'uipro'),
 					'selectors' => [
-						'{{WRAPPER}} .ui-posts.style1 .ui-post-button:hover' => 'background-color: {{VALUE}}',
 						'{{WRAPPER}} .ui-posts-intro-item .ui-post-button:hover' => 'background-color: {{VALUE}}',
 					],
 					'default' => '#0f7ae5',

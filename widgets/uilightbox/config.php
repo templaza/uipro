@@ -236,6 +236,19 @@ if ( ! class_exists( 'UIPro_Config_UILightbox' ) ) {
                     ],
                 ),
                 array(
+                    'type'          => Group_Control_Typography::get_type(),
+                    'name'          => 'title_typography',
+                    'scheme'        => Typography::TYPOGRAPHY_1,
+                    'label'         => esc_html__('Title Font', 'uipro'),
+                    'description'   => esc_html__('Select a font family.', 'uipro'),
+                    'selector'      => '{{WRAPPER}} .ui-title-lightbox',
+                    'start_section' => 'title-style-settings',
+                    'section_name'  => esc_html__('Title Settings', 'uipro'),
+                    'condition'     => array(
+                        'title!'    => ''
+                    ),
+                ),
+                array(
                     'id'            => 'title-color',
                     'type'          =>  Controls_Manager::COLOR,
                     'label'         => esc_html__('Title Color', 'uipro'),
