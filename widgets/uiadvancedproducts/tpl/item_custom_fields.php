@@ -25,7 +25,8 @@ if(!empty($fields)){
                     $f_val_html = trim($html);
                 }elseif(is_string($f_value)){
                     $f_val_html = '<span>'.$f_value.'</span>';
-                }else{
+                }elseif(is_array($f_value)){
+
                     $f_value    = array_values($f_value);
                     $f_val_html = '<span>'.join(',', $f_value).'</span>';
                 }

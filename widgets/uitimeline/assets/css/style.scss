@@ -59,6 +59,10 @@
 
         }
       }
+      .image-space{
+        order:-1;
+
+      }
     }
     .uitimeline-img{
       img{
@@ -86,7 +90,13 @@
             margin-right:15px !important;
           }
         }
-
+      }
+      .timeframe_ontitle{
+        .ui-timeline-inner{
+          &:before{
+            left:20px;
+          }
+        }
       }
     }
   }

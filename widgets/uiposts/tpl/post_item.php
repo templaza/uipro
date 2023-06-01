@@ -58,6 +58,8 @@ $button_class   .=(isset($instance[$pre_val.'button_size']) && $instance[$pre_va
 $button_class   .=(isset($instance[$pre_val.'button_margin_top']) && $instance[$pre_val.'button_margin_top']) ? ' uk-margin-' . $instance[$pre_val.'button_margin_top'].'-top' : ' uk-margin-top';
 $button_class   .=(isset($instance[$pre_val.'button_shape']) && $instance[$pre_val.'button_shape']) ? ' uk-border-' . $instance[$pre_val.'button_shape'] : '';
 
+$button_icon   = ( isset( $instance['button_icon'] ) && $instance['button_icon'] ) ? $instance['button_icon'] : array();
+$button_position   = ( isset( $instance['button_icon'] ) && $instance['button_icon_position'] ) ? $instance['button_icon_position'] : 'before';
 //Get post excerpt
 $item->post_excerpt = apply_filters( 'the_excerpt', get_the_excerpt($item->ID) );
 $item->post_excerpt = preg_replace('/<a class="more-link".*?<\/a>/i', '', $item->post_excerpt);
@@ -183,7 +185,15 @@ if(count($meta_bottom_position)) {
 }
 
 if($show_readmore) {
-    $output .= '<a class="ui-post-button' . esc_attr($button_class) . '" href="'. get_permalink( $item->ID ) .'"'.$button_target.'>'. esc_html($button_text) .'</a>';
+    $icon = '';
+    if ($button_icon && isset($button_icon['value'])) {
+        if (is_array($button_icon['value']) && isset($button_icon['value']['url']) && $button_icon['value']['url']) {
+            $icon  .=  '<span class="uipost-btn-icon-box"><img src="'.$button_icon['value']['url'].'" class="uipost-btn-icon" data-uk-svg /></span>';
+        } elseif (is_string($button_icon['value']) && $button_icon['value']) {
+            $icon  .=  '<span class="uipost-btn-icon-box"><i class="' . $button_icon['value'] .' uipost-btn-icon" aria-hidden="true"></i></span>';
+        }
+    }
+    $output .= '<a class="ui-post-button' . esc_attr($button_class) . '" href="'. get_permalink( $item->ID ) .'"'.$button_target.'>'.($button_position == 'before' ? ''.$icon.'' : ''). esc_html($button_text) .($button_position == 'after' ? ''.$icon.'' : '').'</a>';
 }
 
 $output .= '</div>'; // End card body

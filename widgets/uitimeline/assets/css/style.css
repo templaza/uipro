@@ -42,6 +42,9 @@
   border: 1px solid #ccc;
   content: "";
 }
+.templaza-widget-uitimeline.template-style1 .frame-even .image-space {
+  order: -1;
+}
 .templaza-widget-uitimeline.template-style1 .uitimeline-img img {
   width: 100%;
 }
@@ -59,6 +62,9 @@
   .templaza-widget-uitimeline.template-style1 .ui-timeline-inner .frame-even .ui-timeline-date, .templaza-widget-uitimeline.template-style1 .ui-timeline-inner .frame-old .ui-timeline-date {
     margin-left: 0 !important;
     margin-right: 15px !important;
+  }
+  .templaza-widget-uitimeline.template-style1 .timeframe_ontitle .ui-timeline-inner:before {
+    left: 20px;
   }
 }
 

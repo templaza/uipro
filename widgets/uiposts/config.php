@@ -2227,6 +2227,73 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 						'button_style'    => 'custom'
 					),
 				),
+                array(
+                    'type'          => Controls_Manager::ICONS,
+                    'id'            => 'button_icon',
+                    'label'         => esc_html__( 'Button Icon', 'uipro' ),
+                    'condition' => array(
+                        'button_style'    => 'custom'
+                    ),
+                ),
+                array(
+                    'type'          => Controls_Manager::SELECT,
+                    'id'            => 'button_icon_position',
+                    'label'         => esc_html__( 'Button Icon Position', 'uipro' ),
+                    'options'       => array(
+                        'before'    => esc_html__('Before', 'uipro'),
+                        'after'     => esc_html__('After', 'uipro')
+                    ),
+                    'default'       => 'before',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'button_icon', 'operator' => '!=', 'value' => ''],
+                        ],
+                    ],
+                ),
+                array(
+                    'name'          => 'button_icon_spacing',
+                    'label' => esc_html__( 'Icon Spacing', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px'],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 200,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'size' => 5,
+                    ],
+                    'condition'     => array(
+                        'button_icon_position'    => 'after'
+                    ),
+                    'selectors' => [
+                        '{{WRAPPER}} .uipost-btn-icon-box' => 'margin-left: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'name'          => 'button_icon_spacing_right',
+                    'label' => esc_html__( 'Icon Spacing', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px'],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 200,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'size' => 5,
+                    ],
+                    'condition'     => array(
+                        'button_icon_position'    => 'before'
+                    ),
+                    'selectors' => [
+                        '{{WRAPPER}} .uipost-btn-icon-box' => 'margin-right: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
 				array(
 					'id'            => 'button_background',
 					'type'          =>  Controls_Manager::COLOR,

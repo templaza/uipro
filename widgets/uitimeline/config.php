@@ -149,6 +149,19 @@ if ( ! class_exists( 'UIPro_Config_UITimeline' ) ) {
 
                 ),
                 array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'item_margin_custom',
+                    'label'         => esc_html__( 'Item custom margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-timeline-inner .uk-card' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'condition'     => array(
+                        'layout'    => 'style1'
+                    ),
+                ),
+                array(
                     'id'          => 'large_desktop_columns',
                     'label' => esc_html__( 'Large Desktop Columns', 'uipro' ),
                     'type' => Controls_Manager::SELECT,
@@ -236,6 +249,15 @@ if ( ! class_exists( 'UIPro_Config_UITimeline' ) ) {
                     ),
                 ),
                 array(
+                    'type'          => Controls_Manager::SWITCHER,
+                    'id'            => 'timeframe_on_title',
+                    'label'         => esc_html__('Time Frame on Title', 'uipro'),
+                    'label_on'      => esc_html__( 'Yes', 'uipro' ),
+                    'label_off'     => esc_html__( 'No', 'uipro' ),
+                    'return_value'  => '1',
+                    'default'       => '0',
+                ),
+                array(
                     'type'          => Controls_Manager::SELECT,
                     'id'            => 'timeframe_margin',
                     'label'         => esc_html__('Time Frame Margin', 'uipro'),
@@ -267,6 +289,14 @@ if ( ! class_exists( 'UIPro_Config_UITimeline' ) ) {
                     'condition'     => array(
                         'layout'    => 'style1'
                     ),
+                ),
+                array(
+                    'name'            => 'timeframe_font_family',
+                    'type'          => Group_Control_Typography::get_type(),
+                    'scheme'        => Typography::TYPOGRAPHY_1,
+                    'label'         => esc_html__('Time Frame Font', 'uipro'),
+                    'description'   => esc_html__('Select a font family.', 'uipro'),
+                    'selector'      => '{{WRAPPER}} .ui-timeline-date',
                 ),
                 array(
                     'id'            => 'timeframe_background',
@@ -315,6 +345,37 @@ if ( ! class_exists( 'UIPro_Config_UITimeline' ) ) {
                     ],
                     'start_section' => 'image_settings',
                     'section_name'      => esc_html__('Image Box Settings', 'uipro'),
+                    'condition'     => array(
+                        'timeframe_on_title'    => '0'
+                    ),
+                ),
+                array(
+                    'name'          => 'image_box_space',
+                    'label' => esc_html__( 'Image Space', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'responsive'    =>  true,
+                    'size_units' => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'size' => 100,
+                    ],
+                    'condition'     => array(
+                        'timeframe_on_title'    => '1'
+                    ),
+                    'selectors' => [
+                        '{{WRAPPER}} .image-space' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
                 ),
                 array(
                     'type'          => Controls_Manager::SELECT,
@@ -393,12 +454,50 @@ if ( ! class_exists( 'UIPro_Config_UITimeline' ) ) {
                     ],
                 ),
                 array(
+                    'name'          => 'short_line_height',
+                    'label' => esc_html__( 'Short Line Height', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'responsive'    =>  true,
+                    'size_units' => [ 'px'],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 50,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'size' => 1,
+                    ],
+                    'condition'     => array(
+                        'timeframe_on_title'    => '1'
+                    ),
+                    'selectors' => [
+                        '{{WRAPPER}} .line-box .line ' => 'height: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+
+                array(
                     'id'            => 'line_color',
                     'type'          =>  Controls_Manager::COLOR,
                     'label'         => esc_html__('Line Color', 'uipro'),
                     'selectors' => [
                         '{{WRAPPER}} .line, {{WRAPPER}} .ui-timeline-inner::before' => 'background-color: {{VALUE}}',
                     ],
+                    'condition'     => array(
+                        'layout'    => 'style1'
+                    ),
+                ),
+                array(
+                    'id'          => 'circle_position',
+                    'label' => esc_html__( 'Circle Position', 'uipro' ),
+                    'type' => Controls_Manager::SELECT,
+                    'options'       => array(
+                        'uk-position-relative'    => esc_html__('Middle', 'uipro'),
+                        'uk-position-top'    => esc_html__('Top', 'uipro'),
+                        'uk-position-bottom'    => esc_html__('Bottom', 'uipro'),
+                    ),
+                    'default'   => 'uk-position-relative',
                     'condition'     => array(
                         'layout'    => 'style1'
                     ),

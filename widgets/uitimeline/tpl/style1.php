@@ -17,11 +17,27 @@ $laptop_columns         = ( isset( $instance['laptop_columns'] ) && $instance['l
 $tablet_columns         = ( isset( $instance['tablet_columns'] ) && $instance['tablet_columns'] ) ? $instance['tablet_columns'] : '2';
 $mobile_columns         = ( isset( $instance['mobile_columns'] ) && $instance['mobile_columns'] ) ? $instance['mobile_columns'] : '1';
 $timeframe_margin       = isset($instance['timeframe_margin']) && $instance['timeframe_margin'] ? ' uk-margin-'.$instance['timeframe_margin'].'-bottom' : ' uk-margin-bottom';
+$timeframe_ontitle      = isset($instance['timeframe_on_title']) ? $instance['timeframe_on_title'] : '';
+$circle_position      = isset($instance['circle_position']) ? $instance['circle_position'] : '';
+
 $image_class            = " attachment-$image_size size-$image_size";
 $general_styles         =   \UIPro_Elementor_Helper::get_general_styles($instance);
+if($circle_position == 'uk-position-top'){
+    $circle_cl = 'uk-position-absolute uk-position-top';
+}elseif($circle_position == 'uk-position-bottom'){
+    $circle_cl = 'uk-position-absolute uk-position-bottom';
+}else{
+    $circle_cl = 'uk-position-relative';
+}
+if($timeframe_ontitle){
+    $el_cl = ' timeframe_ontitle';
+    $mobile_cl = ' uk-visible@s';
+}else{
+    $mobile_cl = $el_cl =' ';
+}
 $output         =   '';
 if (count($timeline)) {
-	$output     =   '<div class="ui-timeline'. $general_styles['container_cls'] .'"' . $general_styles['animation'] . '>';
+	$output     =   '<div class="ui-timeline '.$el_cl.' '. $general_styles['container_cls'] .'"' . $general_styles['animation'] . '>';
 	$output     .=  '<div class="ui-timeline-inner' . $general_styles['content_cls'] . '">';
 	$dateline   =   '';
 	$content    =   '';
@@ -30,7 +46,7 @@ if (count($timeline)) {
     foreach ($timeline as $key => $item) {
         if($d % 2==0){
             $content .=  '<div class="uk-card frame-even uk-grid-collapse uk-child-width-1-2" data-uk-grid>';
-            $content .=  '<div class="uk-card-media-left tz-timeline-img-box uk-width-expand uk-width-1-2@s uk-grid-collapse" data-uk-grid>';
+            $content .=  '<div class="uk-card-media-left tz-timeline-img-box uk-width-expand uk-width-1-2@s uk-grid-collapse uk-text-right@s" data-uk-grid>';
             $line_cl = 'uk-flex-last@s';
             $time_cl = 'uk-flex-left@s uk-flex-right uk-flex-center';
         }else{
@@ -39,18 +55,35 @@ if (count($timeline)) {
             $line_cl = '';
             $time_cl = 'uk-flex-right uk-flex-center';
         }
-        $content .=  '<div class="line-box '.$line_cl.' uk-flex uk-flex-middle uk-position-relative "><div class="line  uk-position-relative"></div></div>';
+        $content .=  '<div class="line-box '.$line_cl.' uk-flex uk-flex-middle uk-position-relative "><div class="line  '.$circle_cl.'"></div></div>';
         $content .=  '<div class="image-box uk-width-expand"> <div class="uitimeline-img">';
-        $content .=  wp_get_attachment_image( $item['image']['id'], $image_size, false, array('class' => trim( $image_class )) ). '';
+        if($timeframe_ontitle){
+            $content .=  '<div class="ui-timeline-date uk-inline">'.esc_attr($item['date']).'</div>';
+        }else{
+            $content .=  wp_get_attachment_image( $item['image']['id'], $image_size, false, array('class' => trim( $image_class )) ). '';
+        }
         $content .=  '</div>';
         $meta_content   =  isset($item['meta']) && $item['meta'] ? '<'.$meta_tag.' class="ui-timeline-meta uk-margin-remove-top '.esc_attr($meta_heading_style.$meta_margin).'">'.$item['meta'].'</'.$meta_tag.'>' : '';
         $content .=  ($meta_position == 'before-title') ? $meta_content : '';
         $content .=  '<'.$title_tag.' class="ui-timeline-title uk-card-title  '.esc_attr($title_heading_style.$title_margin).'">'. esc_html($item['title']) .'</'.$title_tag.'>';
         $content .=  ($meta_position == 'after-title') ? $meta_content : '';
+        if($timeframe_ontitle){
+            $content .=  '<div class="image-only-box-mobile uk-hidden@s uk-margin-bottom ">';
+            $content .=  wp_get_attachment_image( $item['image']['id'], $image_size, false, array('class' => trim( $image_class )) ). '';
+            $content .=  '</div>';
+        }
         $content .=  isset($item['content']) && $item['content'] ? '<div class="ui-timeline-description'.esc_attr($dropcap).'">'. wp_kses($item['content'], wp_kses_allowed_html('post')) .'</div>' : '';
         $content .=  '</div></div>';
-        $content .=  '<div class="uk-flex tz-timeline-date-box uk-width-1-4 uk-width-1-2@s  uk-flex-middle '.$time_cl.' ">';
-        $content .=  '<div class="ui-timeline-date">'.esc_attr($item['date']).'</div>';
+        $content .=  '<div class="uk-flex tz-timeline-date-box '.$mobile_cl.' uk-width-1-4 uk-width-1-2@s  uk-flex-middle '.$time_cl.' ">';
+        if($timeframe_ontitle){
+            $content .=  '<div class="image-only-box uk-flex uk-flex-between"><div class="uk-width-expand">';
+            $content .=  wp_get_attachment_image( $item['image']['id'], $image_size, false, array('class' => trim( $image_class )) ). '';
+            $content .=  '</div>';
+            $content .=  '<div class="image-space"></div>';
+            $content .=  '</div>';
+        }else{
+            $content .=  '<div class="ui-timeline-date">'.esc_attr($item['date']).'</div>';
+        }
         $content .=  '</div>';
         $content .=  '</div>';
         $d++;
@@ -59,5 +92,4 @@ if (count($timeline)) {
 	$output     .=  '</div>';
 	$output     .=  '</div>';
 
-	echo ent2ncr($output);
-}
+	echo ent2ncr($output);}
