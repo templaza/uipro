@@ -744,6 +744,19 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                     ],
                 ),
                 array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'dots_margin',
+                    'label'         => esc_html__( 'Dots Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-dotnav' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                    ],
+                    'condition'     => array(
+                        'show_dots'    => '1'
+                    ),
+                ),
+                array(
                     'label' => esc_html__( 'Dots Slider Color', 'uipro' ),
                     'name'  => 'quote_dots_color',
                     'type' => \Elementor\Controls_Manager::COLOR,

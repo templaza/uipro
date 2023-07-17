@@ -489,9 +489,6 @@ if ( isset( $instance['uisliders_items'] ) && count( (array) $instance['uislider
 		$button_link    =   $value['link'];
 		$button_title   =   ( isset( $value['button_title'] ) && $value['button_title'] ) ? $value['button_title'] : '';
 
-		if ( empty( $button_title ) ) {
-			$button_title .= $all_button_title;
-		}
 
 		$check_target = ( isset( $instance['link_new_tab'] ) && $instance['link_new_tab'] ) ? $instance['link_new_tab'] : '';
 
@@ -530,7 +527,7 @@ if ( isset( $instance['uisliders_items'] ) && count( (array) $instance['uislider
 					break;
 			}
 		} else {
-			$output .= '<img class="ui-image" src="' . esc_url($image_src) . '" ' . $image_alt_init . $image_cover .'>';
+			$output .= '<img class="ui-image" src="' . esc_url($image_src) . '" ' . $image_alt_init .' '. $image_cover .'>';
 		}
         $output .='<div class="uk-overlay-default uk-transition-toggle uk-position-cover"></div>';
         if($image_cover){
@@ -645,7 +642,6 @@ if ( $navigation_control == 'dotnav' ) {
 			$image_src  = isset( $media_item['url'] ) ? $media_item['url'] : '';
 
 			$nav_image     = ( isset( $value['thumbnail'] ) && $value['thumbnail'] ) ? $value['thumbnail'] : '';
-            var_dump($nav_image);
 			if($nav_image !=''){
                 $nav_image_src = isset( $nav_image['url'] ) ? $nav_image['url'] : '';
             }else{
