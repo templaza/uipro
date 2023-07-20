@@ -11,24 +11,6 @@
 .ui-advanced-products .ui-post-tags > a:not(:last-child) {
   margin-right: 8px;
 }
-.ui-advanced-products .ui-post-pagination {
-  display: flex;
-  justify-content: center;
-  line-height: 1;
-}
-.ui-advanced-products .ui-post-pagination > .page-numbers {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 100px;
-  width: 45px;
-  height: 45px;
-  margin: 0 2px;
-}
-.ui-advanced-products .ui-post-pagination > .page-numbers.current, .ui-advanced-products .ui-post-pagination > .page-numbers:hover {
-  background-color: #333333;
-  color: #ffffff;
-}
 .ui-advanced-products.ui-visible .uk-slider-container:after, .ui-advanced-products.ui-visible .uk-slider-container:before {
   content: "";
   position: absolute;
@@ -50,3 +32,5 @@
 .ui-advanced-products.ui-visible .uk-slidernav {
   z-index: 2;
 }
+
+/*# sourceMappingURL=style.css.map */

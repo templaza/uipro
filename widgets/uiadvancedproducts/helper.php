@@ -71,6 +71,12 @@ class UIPro_UIAdvancedProducts_Helper extends UIPro_Helper {
         return $fields;
     }
 
+    public static function get_product_type_options(){
+        global $wpdb;
+        $sql    = $wpdb->get_row("SELECT post_name FROM $wpdb->posts WHERE post_excerpt='ap_product_type' AND post_type='ap_custom_field'");
+
+        return $sql;
+    }
     public static function get_custom_field_options(){
 
         $data   = array();
