@@ -149,9 +149,11 @@ if($ap_posts && $ap_posts -> have_posts()) {
             }
             foreach ($filter_value as $item){
                 $ap_tax = get_term_by( 'slug', $item, $filter_by );
-                ?>
-                <a href="javascript:" data-value="<?php echo esc_attr($item);?>"><?php echo esc_html($ap_tax->name);?></a>
-                <?php
+                if($ap_tax){
+                    ?>
+                    <a href="javascript:" data-value="<?php echo esc_attr($item);?>"><?php echo esc_html($ap_tax->name);?></a>
+                    <?php
+                }
             }
             ?>
         </div>
