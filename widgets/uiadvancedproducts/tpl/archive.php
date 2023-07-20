@@ -6,6 +6,7 @@ use Advanced_Product\AP_Templates;
 $limit      = ( isset( $instance['limit'] ) && $instance['limit'] ) ? $instance['limit'] : 4;
 $branch     = ( isset( $instance['ap_product_branch'] ) && $instance['ap_product_branch'] ) ? $instance['ap_product_branch'] : '';
 $category   = ( isset( $instance['ap_product_category'] ) && $instance['ap_product_category'] ) ? $instance['ap_product_category'] : '';
+$product_type   = ( isset( $instance['uiap_product_type'] ) && $instance['uiap_product_type'] ) ? $instance['uiap_product_type'] : '';
 $ordering   = ( isset( $instance['ordering'] ) && $instance['ordering'] ) ? $instance['ordering'] : 'latest';
 $pagination_type    = (isset($instance['pagination_type']) && $instance['pagination_type']) ? $instance['pagination_type'] : 'none';
 
@@ -75,6 +76,23 @@ if (!empty($categories) && count($categories)) {
 if (!empty($tax_query) && count($tax_query)) {
     $query_args['tax_query'] = $tax_query;
 }
+
+if(isset($product_type) && !empty($product_type)){
+    if(is_array($product_type)){
+        if(count($product_type) >= 2){
+            $type_meta['relation'] = 'OR';
+        }
+        foreach ($product_type as $type_item){
+            $type_meta[] = array(
+                'key' => 'ap_product_type',
+                'value' => $type_item,
+                'compare' => 'LIKE',
+            );
+        }
+    }
+    $query_args['meta_query']= $type_meta;
+}
+
 if ($pagination_type == 'default') {
     $query_args['paged'] = max( 1, get_query_var('paged') );
 }
@@ -161,7 +179,7 @@ if($ap_posts && $ap_posts -> have_posts()) {
         }
     }
     ?>
-    <div class="ui-post-items ap-product-container uk-position-relative <?php echo esc_attr($module_id);?> uk-child-width-1-<?php echo $large_desktop_columns;?>@xl
+    <div class="ui-post-items templaza-ap-archive ap-product-container uk-position-relative <?php echo esc_attr($module_id);?> uk-child-width-1-<?php echo $large_desktop_columns;?>@xl
     uk-child-width-1-<?php echo $desktop_columns;?>@l
     uk-child-width-1-<?php echo $laptop_columns;?>@m
     uk-child-width-1-<?php echo $tablet_columns;?>@s
@@ -172,7 +190,6 @@ if($ap_posts && $ap_posts -> have_posts()) {
                 if(is_plugin_active('advanced-product/advanced-product.php')){
                 AP_Templates::load_my_layout('archive.content-item',true,false,$args);
                 }
-
         }
         ?>
     </div>
@@ -219,7 +236,7 @@ if($ap_posts && $ap_posts -> have_posts()) {
                 break;
             case 'default':
                 $big = 999999999; // need an unlikely integer
-                $output .= '<div class="ui-post-pagination uk-text-center uk-margin-large-top">';
+                $output .= '<div class="templaza-blog-pagenavi ui-post-pagination uk-text-center uk-margin-large-top"><nav class="navigation pagination"><div class="nav-links">';
                 $output .= paginate_links(array(
                     'base' => str_replace($big, '%#%', esc_url(get_pagenum_link($big))),
                     'format' => '?paged=%#%',
@@ -228,7 +245,7 @@ if($ap_posts && $ap_posts -> have_posts()) {
                     'prev_text' => '<span data-uk-icon="arrow-left"></span>',
                     'next_text' => '<span data-uk-icon="arrow-right"></span>',
                 ));
-                $output .= '</div>';
+                $output .= '</div></nav></div>';
                 break;
         }
 
