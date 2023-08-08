@@ -78,7 +78,7 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
         <?php
         foreach ($templaza_testimonials as $item){
         ?>
-        <div class="templaza-testimonial-item<?php echo esc_attr($image_class); ?>">
+        <div class="templaza-testimonial-item">
             <?php
             $image  =   isset( $item['author_image'] ) && $item['author_image'] ? $item['author_image'] : array();
              if (isset( $image['url'] ) && $image['url'] ) : ?>
