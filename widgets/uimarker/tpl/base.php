@@ -40,6 +40,16 @@ $content_style .= ( isset( $instance['content_margin_top'] ) && $instance['conte
 $btn_margin_top = ( isset( $instance['button_margin_top'] ) && $instance['button_margin_top'] ) ? 'uk-margin-' . $instance['button_margin_top'] . '-top' : 'uk-margin-top';
 $button_style = ( isset( $instance['link_button_style'] ) && $instance['link_button_style'] ) ? $instance['link_button_style'] : '';
 $button_size  = ( isset( $instance['link_button_size'] ) && $instance['link_button_size'] ) ? ' ' . $instance['link_button_size'] : '';
+$icon               = ( isset( $instance['button_icon'] ) && $instance['button_icon'] ) ? $instance['button_icon'] : array();
+$icon_position       = ( isset( $instance['button_icon_position'] ) && $instance['button_icon_position'] ) ? $instance['button_icon_position'] : '';
+$btn_icon          = '';
+if($icon && isset($icon['value'])) {
+    if (is_array($icon['value']) && isset($icon['value']['url']) && $icon['value']['url']) {
+        $btn_icon   .=  '<img src="btn_icon '.$icon['value']['url'].'" alt="'.$title.'" data-uk-svg />';
+    } elseif (is_string($icon['value']) && $icon['value']) {
+        $btn_icon   .=  '<i class="btn_icon ' . $icon['value'] .'" aria-hidden="true"></i>';
+    }
+}
 $button_style_cls = '';
 if ( empty( $button_style ) ) {
 	$button_style_cls .= 'uk-button uk-button-default' . $button_size;
@@ -142,9 +152,14 @@ if (count($uimarker_items)) {
 			$output .= '</' . $meta_element . '>';
 		}
 
-		if ( $button_title && $title_link ) {
+		if ( $button_title || $btn_icon ) {
+		    if($icon_position == 'left'){
+                $btn_title = $btn_icon. $button_title;
+            }else{
+                $btn_title = $button_title.$btn_icon;
+            }
 			$output .= '<div class="' . $btn_margin_top . '">';
-			$output .= '<a class="' . $button_style_cls . '" href="' . $title_link['url'] . '"' . $attribs . '>' . $button_title . '</a>';
+			$output .= '<a class="' . $button_style_cls . '" href="' . $title_link['url'] . '"' . $attribs . '>' . $btn_title . '</a>';
 			$output .= '</div>';
 		}
 

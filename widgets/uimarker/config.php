@@ -608,9 +608,25 @@ if ( ! class_exists( 'UIPro_Config_UIMarker' ) ) {
 						'uk-card-small' => __('Small', 'uipro'),
 						'' => __('Default', 'uipro'),
 						'uk-card-large' => __('Large', 'uipro'),
+						'custom' => __('Custom', 'uipro'),
 					),
 					'default'           => 'uk-card-small',
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'card_size_custom',
+                    'label'         => esc_html__( 'Card Padding Custom', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-card-body' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'card_size', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+                ),
 				array(
 					'id'            => 'marker_background',
 					'label'         => __( 'Background Color', 'uipro' ),
@@ -646,7 +662,7 @@ if ( ! class_exists( 'UIPro_Config_UIMarker' ) ) {
 					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'         => esc_html__('Title Font', 'uipro'),
 					'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
-					'selector'      => '{{WRAPPER}} .ui-text .ui-text-subtitle',
+					'selector'      => '{{WRAPPER}} .ui-title',
 					'start_section' => 'title',
 					'section_name'      => esc_html__('Title Settings', 'uipro')
 				),
@@ -726,7 +742,7 @@ if ( ! class_exists( 'UIPro_Config_UIMarker' ) ) {
 					'type'          =>  Controls_Manager::COLOR,
 					'label'         => esc_html__('Custom Color', 'uipro'),
 					'selectors' => [
-						'{{WRAPPER}} .ui-text .ui-text-subtitle' => 'color: {{VALUE}}',
+						'{{WRAPPER}} .ui-title' => 'color: {{VALUE}}',
 					],
 					'condition'     => array(
 						'title_color'    => ''
@@ -912,12 +928,22 @@ if ( ! class_exists( 'UIPro_Config_UIMarker' ) ) {
 					),
 					'default' => '',
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'content_graph_margin',
+                    'label'         => esc_html__( 'Content row margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px'],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-content p' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
 				array(
 					'id'            => 'content_color',
 					'type'          =>  Controls_Manager::COLOR,
 					'label'         => esc_html__('Custom Color', 'uipro'),
 					'selectors' => [
-						'{{WRAPPER}} .ui-text .ui-text-subtitle' => 'color: {{VALUE}}',
+						'{{WRAPPER}} .ui-content' => 'color: {{VALUE}}',
 					],
 				),
 				array(
@@ -990,21 +1016,17 @@ if ( ! class_exists( 'UIPro_Config_UIMarker' ) ) {
 					'name'          => 'button_font_family',
 					'type'          => Group_Control_Typography::get_type(),
 					'scheme'        => Typography::TYPOGRAPHY_1,
-					'label'         => esc_html__('Content Font', 'uipro'),
-					'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
-					'selector'      => '{{WRAPPER}} .ui-text .ui-text-subtitle',
-					'condition' => array(
-						'link_button_style'    => 'custom'
-					),
+					'label'         => esc_html__('Button Font', 'uipro'),
+					'description'   => esc_html__('Select a font family.', 'uipro'),
+					'selector'      => '{{WRAPPER}} .uk-button',
 				),
 				array(
 					'id'            => 'button_background',
 					'type'          =>  Controls_Manager::COLOR,
 					'label'         => esc_html__('Background Color', 'uipro'),
 					'selectors' => [
-						'{{WRAPPER}} .ui-text .ui-text-subtitle' => 'background-color: {{VALUE}}',
+						'{{WRAPPER}} .uk-button' => 'background-color: {{VALUE}}',
 					],
-					'default' => '#1e87f0',
 					'condition' => array(
 						'link_button_style'    => 'custom'
 					),
@@ -1014,7 +1036,7 @@ if ( ! class_exists( 'UIPro_Config_UIMarker' ) ) {
 					'type'          =>  Controls_Manager::COLOR,
 					'label'         => esc_html__('Button Color', 'uipro'),
 					'selectors' => [
-						'{{WRAPPER}} .ui-text .ui-text-subtitle' => 'color: {{VALUE}}',
+						'{{WRAPPER}} .uk-button' => 'color: {{VALUE}}',
 					],
 					'condition' => array(
 						'link_button_style'    => 'custom'
@@ -1025,9 +1047,8 @@ if ( ! class_exists( 'UIPro_Config_UIMarker' ) ) {
 					'type'          =>  Controls_Manager::COLOR,
 					'label'         => esc_html__('Hover Background Color', 'uipro'),
 					'selectors' => [
-						'{{WRAPPER}} .ui-text .ui-text-subtitle' => 'background-color: {{VALUE}}',
+						'{{WRAPPER}} .uk-button:hover' => 'background-color: {{VALUE}}',
 					],
-					'default' => '#0f7ae5',
 					'condition' => array(
 						'link_button_style'    => 'custom'
 					),
@@ -1037,12 +1058,40 @@ if ( ! class_exists( 'UIPro_Config_UIMarker' ) ) {
 					'type'          =>  Controls_Manager::COLOR,
 					'label'         => esc_html__('Hover Button Color', 'uipro'),
 					'selectors' => [
-						'{{WRAPPER}} .ui-text .ui-text-subtitle' => 'color: {{VALUE}}',
+						'{{WRAPPER}} .uk-button:hover' => 'color: {{VALUE}}',
 					],
 					'condition' => array(
 						'link_button_style'    => 'custom'
 					),
 				),
+                array(
+                    'type'          => Controls_Manager::ICONS,
+                    'name'          => 'button_icon',
+                    'label'         => esc_html__('Button Icon:', 'uipro'),
+                    'condition' => array(
+                        'link_button_style'    => 'custom'
+                    ),
+                ),
+                array(
+                    'id'    => 'button_icon_position',
+                    'type' => Controls_Manager::SELECT,
+                    'label' => __('Icon position', 'uipro'),
+                    'options' => array(
+                        'right' => __('Right', 'uipro'),
+                        'left' => __('Left', 'uipro'),
+                    ),
+                    'default' => 'right',
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'button_icon_margin',
+                    'label'         => esc_html__( 'Icon margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px'],
+                    'selectors'     => [
+                        '{{WRAPPER}} .btn_icon' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
 				array(
 					'id'    => 'link_button_size',
 					'type' => Controls_Manager::SELECT,
@@ -1051,8 +1100,24 @@ if ( ! class_exists( 'UIPro_Config_UIMarker' ) ) {
 						'' => __('Default', 'uipro'),
 						'uk-button-small' => __('Small', 'uipro'),
 						'uk-button-large' => __('Large', 'uipro'),
+						'custom' => __('Custom', 'uipro'),
 					),
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'button_size_custom',
+                    'label'         => esc_html__( 'Button Padding Custom', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'link_button_size', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+                ),
 				array(
 					'id'    => 'button_margin_top',
 					'type' => Controls_Manager::SELECT,
