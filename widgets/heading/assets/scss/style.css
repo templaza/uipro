@@ -112,5 +112,11 @@
 .sc_heading.right {
   align-items: end !important;
 }
+.sc_heading .sub-heading:before {
+  content: "";
+}
+.sc_heading .sub-heading:after {
+  content: "";
+}
 
 /*# sourceMappingURL=style.css.map */

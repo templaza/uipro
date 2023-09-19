@@ -254,7 +254,7 @@ if (count($posts)) {
         }
     }
 
-    $output     .=   '<div class="ui-posts'. esc_attr($general_styles['container_cls']) .' '.$uipost_layout.'"' . $general_styles['animation'] . '>';
+    $output     .=   '<div class="ui-posts'. esc_attr($general_styles['container_cls']) .' '.$uipost_layout.' '.$resource.'"' . $general_styles['animation'] . '>';
     $output .=  '<div class="ui-posts-list-items '.$lead_column_gutter.($lead_column_divider ? ' uk-grid-divider' : '').'" data-uk-grid>';
 
     ob_start();

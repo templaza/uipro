@@ -105,7 +105,7 @@ if ( $css ) {
 }
 
 if ( $instance['sub_heading'] && $instance['sub_heading'] <> '' ) {
-	$sub_heading = '<span class="sub-heading uk-flex uk-flex-inline"><span class="sub-heading-content">' . $instance['sub_heading'] . '</span></span>';
+	$sub_heading = '<span class="sub-heading uk-flex uk-flex-inline uk-flex-middle"><span class="sub-heading-content">' . $instance['sub_heading'] . '</span></span>';
 }
 
 if ( $instance['line'] && $instance['line'] <> '' ) {

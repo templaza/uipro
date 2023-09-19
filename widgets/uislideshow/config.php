@@ -1190,6 +1190,25 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 					'section_name'      => esc_html__('SlideNav Settings', 'uipro')
 				),
 				array(
+					'id' => 'slidenav_next_text',
+					'type' => Controls_Manager::TEXT,
+					'label'     => esc_html__( 'Next Text', 'uipro' ),
+					'default' => '',
+				),
+				array(
+					'id' => 'slidenav_preview_text',
+					'type' => Controls_Manager::TEXT,
+					'label'     => esc_html__( 'Preview Text', 'uipro' ),
+					'default' => '',
+				),
+                array(
+                    'name' => 'slidenav_text_typography',
+                    'type'          => Group_Control_Typography::get_type(),
+                    'scheme'        => Typography::TYPOGRAPHY_1,
+                    'label'=>__( 'Font Family', 'uipro' ),
+                    'selector'      => '{{WRAPPER}} .ui-slidenav',
+                ),
+				array(
 					'id' => 'slidenav_on_hover',
 					'type' => Controls_Manager::SWITCHER,
 					'label'     => esc_html__( 'Show on hover only', 'uipro' ),
@@ -1204,11 +1223,36 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 					],
 				),
                 array(
+                    'type'          =>  \Elementor\Group_Control_Border::get_type(),
+                    'name'          => 'slidenav_border',
+                    'label'         => esc_html__('Nav Border', 'uipro'),
+                    'description' => esc_html__( 'Nav Border.', 'uipro' ),
+                    'selector' => '{{WRAPPER}} .ui-slidenav',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'slidenav_position', 'operator' => '!==', 'value' => ''],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          =>  \Elementor\Group_Control_Border::get_type(),
+                    'name'          => 'slidenav_border_hover',
+                    'label'         => esc_html__('Nav Border Hover', 'uipro'),
+                    'description' => esc_html__( 'Nav Border Hover.', 'uipro' ),
+                    'selector' => '{{WRAPPER}} .ui-slidenav:hover',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'slidenav_position', 'operator' => '!==', 'value' => ''],
+                        ],
+                    ],
+                ),
+                array(
                     'name' => 'slidenav_color',
                     'type'=>Controls_Manager::COLOR,
-                    'label'=>__( 'Color', 'uipro' ),
+                    'label'=>__( 'Icon Color', 'uipro' ),
                     'selectors' => [
                         '{{WRAPPER}} .ui-slidenav' => 'color: {{VALUE}}',
+                        '{{WRAPPER}} .ui-slideshow .tz-sidenav .ui-slidenav:before' => 'background-color: {{VALUE}}',
                     ],
                     'conditions' => [
                         'terms' => [
@@ -1219,9 +1263,10 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
                 array(
                     'name' => 'slidenav_color_hover',
                     'type'=>Controls_Manager::COLOR,
-                    'label'=>__( 'Color Hover', 'uipro' ),
+                    'label'=>__( 'Icon Color Hover', 'uipro' ),
                     'selectors' => [
-                        '{{WRAPPER}} .ui-slidenav' => 'color: {{VALUE}}',
+                        '{{WRAPPER}} .ui-slidenav:hover' => 'color: {{VALUE}}',
+                        '{{WRAPPER}} .ui-slideshow .tz-sidenav .ui-slidenav:hover:before' => 'background-color: {{VALUE}}',
                     ],
                     'conditions' => [
                         'terms' => [
@@ -2713,6 +2758,28 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
                     'condition'     => array(
                         'link_button_size'    => 'custom'
                     ),
+                ),
+                array(
+                    'name' => 'link_button_radius',
+                    'type'          => Controls_Manager::SLIDER,
+                    'label'     => esc_html__( 'Button Radius', 'uipro' ),
+                    'size_units' => [ 'px','%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 500,
+                            'step'=> 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                            'step'=> 1,
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-buttons .uk-button' => 'border-radius: {{SIZE}}{{UNIT}};',
+                    ],
+                    'description' => esc_html__( 'Border Radius of Button', 'uipro' ),
                 ),
 				array(
 					'id' => 'link_button_shape',

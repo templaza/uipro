@@ -223,59 +223,6 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
 					'admin_label'    => true,
 				),
 
-				// Sub heading
-				array(
-					'type'          => Controls_Manager::TEXTAREA,
-					'label'         => esc_html__( 'Sub heading', 'uipro' ),
-					'name'          => 'sub_heading',
-					'default'       => '',
-					'description'   => esc_html__( 'Enter sub heading.', 'uipro' ),
-                    'separator'     => 'before',
-				),
-                array(
-                    'type'          => Controls_Manager::SELECT,
-                    'name'          => 'sub_heading_position',
-                    'default'       => 'before_title',
-                    'label'         => esc_html__( 'Sub heading position', 'uipro' ),
-                    'description'   => esc_html__( 'Position to display Sub heading.', 'uipro' ),
-                    'options'       => array(
-                        'before_title'       => esc_html__('Before Title', 'uipro'),
-                        'after_title'        => esc_html__('After Title', 'uipro'),
-                    ),
-                    'condition'     => array(
-                        'sub_heading!'    => ''
-                    ),
-                    /* vc */
-                    'admin_label'    => true,
-                    'separator'     => 'before',
-                ),
-                array(
-                    'type'          => Controls_Manager::DIMENSIONS,
-                    'name'          =>  'sub_heading_margin',
-                    'label'         => esc_html__( 'Sub Heading margin', 'uipro' ),
-                    'responsive'    =>  true,
-                    'size_units'    => [ 'px', 'em', '%' ],
-                    'selectors'     => [
-                        '{{WRAPPER}} .sub-heading' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                    ],
-                    'condition'     => array(
-                        'sub_heading!'    => ''
-                    ),
-                ),
-                array(
-                    'type'          => Controls_Manager::DIMENSIONS,
-                    'name'          =>  'sub_heading_padding',
-                    'label'         => esc_html__( 'Sub Heading padding', 'uipro' ),
-                    'responsive'    =>  true,
-                    'size_units'    => [ 'px', 'em', '%' ],
-                    'selectors'     => [
-                        '{{WRAPPER}} .sub-heading .sub-heading-content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                    ],
-                    'condition'     => array(
-                        'sub_heading!'    => ''
-                    ),
-                ),
-
 				// Config
 				array(
 					'type'          => Controls_Manager::SWITCHER,
@@ -717,7 +664,287 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                         'text_background_image_effect'   => 'parallax',
                     ),
 				),
+                // Sub heading
+                array(
+                    'type'          => Controls_Manager::TEXTAREA,
+                    'label'         => esc_html__( 'Sub heading', 'uipro' ),
+                    'name'          => 'sub_heading',
+                    'default'       => '',
+                    'description'   => esc_html__( 'Enter sub heading.', 'uipro' ),
+                    'separator'     => 'before',
+                    'start_section' => 'sub-heading-options',
+                    'section_name'  => esc_html__( 'Sub Heading options', 'uipro' ),
+                ),
+                array(
+                    'type'          => Controls_Manager::SELECT,
+                    'name'          => 'sub_heading_position',
+                    'default'       => 'before_title',
+                    'label'         => esc_html__( 'Sub heading position', 'uipro' ),
+                    'description'   => esc_html__( 'Position to display Sub heading.', 'uipro' ),
+                    'options'       => array(
+                        'before_title'       => esc_html__('Before Title', 'uipro'),
+                        'after_title'        => esc_html__('After Title', 'uipro'),
+                    ),
+                    'condition'     => array(
+                        'sub_heading!'    => ''
+                    ),
+                    /* vc */
+                    'admin_label'    => true,
+                    'separator'     => 'before',
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'sub_heading_margin',
+                    'label'         => esc_html__( 'Sub Heading margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .sub-heading' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'condition'     => array(
+                        'sub_heading!'    => ''
+                    ),
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'sub_heading_padding',
+                    'label'         => esc_html__( 'Sub Heading padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .sub-heading .sub-heading-content' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'condition'     => array(
+                        'sub_heading!'    => ''
+                    ),
+                ),
+                array(
+                    'type'          => Controls_Manager::SELECT,
+                    'name'          => 'sub_heading_style',
+                    'default'       => '',
+                    'label'         => esc_html__( 'Sub heading style', 'uipro' ),
+                    'options'       => array(
+                        ''       => esc_html__('Choose style', 'uipro'),
+                        'line'        => esc_html__('Line', 'uipro'),
+                    ),
+                    'condition'     => array(
+                        'sub_heading!'    => ''
+                    ),
+                    'separator'     => 'before',
+                ),
+                array(
+                    'type'         => Controls_Manager::SWITCHER,
+                    'label'         => esc_html__( 'Enable line left', 'uipro' ),
+                    'name'          => 'sub_heading_line_left',
+                    'default'       => false,
+                    'separator'     => 'before',
+                    'condition'     => array(
+                        'sub_heading_style'    => 'line'
+                    ),
+                ),
+                array(
+                    'type'          => Controls_Manager::SLIDER,
+                    'name'          =>  'sub_heading_line_left_width',
+                    'label'         => esc_html__( 'Left Line width', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 30,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .sub-heading:before' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'relation' => 'and',
+                        'terms' => [
+                            ['name' => 'sub_heading_style', 'operator' => '===', 'value' => 'line'],
+                            ['name' => 'sub_heading_line_left', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::SLIDER,
+                    'name'          =>  'sub_heading_line_left_height',
+                    'label'         => esc_html__( 'Left Line height', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 1,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .sub-heading:before' => 'height: {{SIZE}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'relation' => 'and',
+                        'terms' => [
+                            ['name' => 'sub_heading_style', 'operator' => '===', 'value' => 'line'],
+                            ['name' => 'sub_heading_line_left', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'sub_heading_line_left_bg',
+                    'label'         => esc_html__('Left Line Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .sub-heading:before' => 'background-color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'relation' => 'and',
+                        'terms' => [
+                            ['name' => 'sub_heading_style', 'operator' => '===', 'value' => 'line'],
+                            ['name' => 'sub_heading_line_left', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'sub_heading_line_left_margin',
+                    'label'         => esc_html__( 'Left line margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .sub-heading:before' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'relation' => 'and',
+                        'terms' => [
+                            ['name' => 'sub_heading_style', 'operator' => '===', 'value' => 'line'],
+                            ['name' => 'sub_heading_line_left', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'         => Controls_Manager::SWITCHER,
+                    'label'         => esc_html__( 'Enable line right', 'uipro' ),
+                    'name'          => 'sub_heading_line_right',
+                    'default'       => false,
+                    'separator'     => 'before',
+                    'condition'     => array(
+                        'sub_heading_style'    => 'line'
+                    ),
+                ),
+                array(
+                    'type'          => Controls_Manager::SLIDER,
+                    'name'          =>  'sub_heading_line_right_width',
+                    'label'         => esc_html__( 'Right Line width', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 30,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .sub-heading:after' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'relation' => 'and',
+                        'terms' => [
+                            ['name' => 'sub_heading_style', 'operator' => '===', 'value' => 'line'],
+                            ['name' => 'sub_heading_line_right', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::SLIDER,
+                    'name'          =>  'sub_heading_line_right_height',
+                    'label'         => esc_html__( 'Line right height', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 1,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .sub-heading:after' => 'height: {{SIZE}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'relation' => 'and',
+                        'terms' => [
+                            ['name' => 'sub_heading_style', 'operator' => '===', 'value' => 'line'],
+                            ['name' => 'sub_heading_line_right', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+                ),
 
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'sub_heading_line_right_bg',
+                    'label'         => esc_html__('Right line Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .sub-heading:after' => 'background-color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'relation' => 'and',
+                        'terms' => [
+                            ['name' => 'sub_heading_style', 'operator' => '===', 'value' => 'line'],
+                            ['name' => 'sub_heading_line_right', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'sub_heading_line_right_margin',
+                    'label'         => esc_html__( 'Right line margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .sub-heading:after' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'relation' => 'and',
+                        'terms' => [
+                            ['name' => 'sub_heading_style', 'operator' => '===', 'value' => 'line'],
+                            ['name' => 'sub_heading_line_right', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+                ),
 
 
                 /* Style tab */

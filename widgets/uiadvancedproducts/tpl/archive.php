@@ -32,6 +32,16 @@ switch ($ordering) {
         $query_args['order'] = 'DESC';
         $query_args['meta_key'] = 'post_views_count';
         break;
+    case 'price_low':
+        $query_args['orderby'] = 'meta_value_num';
+        $query_args['order'] = 'DESC';
+        $query_args['meta_key'] = 'ap_price';
+        break;
+    case 'price':
+        $query_args['orderby'] = 'meta_value_num';
+        $query_args['order'] = 'ASC';
+        $query_args['meta_key'] = 'ap_price';
+        break;
 }
 $tax_query  = array();
 if(isset($branch) && !empty($branch)){
@@ -129,6 +139,7 @@ if($ap_posts && $ap_posts -> have_posts()) {
     $use_slider 	    = (isset($instance['use_slider']) && $instance['use_slider']) ? intval($instance['use_slider']) : 0;
     $autoplay	        = (isset($instance['enable_autoplay']) && $instance['enable_autoplay']) ? intval($instance['enable_autoplay']) : 0;
     $enable_navigation	= (isset($instance['enable_navigation']) && $instance['enable_navigation']) ? intval($instance['enable_navigation']) : 0;
+    $navigation_in_group	= (isset($instance['navigation_in_group']) && $instance['navigation_in_group']) ? intval($instance['navigation_in_group']) : 0;
     $enable_dotnav	    = (isset($instance['enable_dotnav']) && $instance['enable_dotnav']) ? intval($instance['enable_dotnav']) : 0;
     $center_slider	    = (isset($instance['center_slider']) && $instance['center_slider']) ? intval($instance['center_slider']) : 0;
     $navigation_position= (isset($instance['navigation_position']) && $instance['navigation_position']) ? $instance['navigation_position'] : '';
@@ -201,17 +212,35 @@ if($ap_posts && $ap_posts -> have_posts()) {
         </div>
         <?php
         if ($enable_navigation) {
+            if($navigation_in_group){
+                ?>
+                <div class="tz-nav-group">
+                <?php
+            }
             if($navigation_position == 'inside'){ ?>
             <div class="<?php echo $navigation_position == 'inside' ? '' : 'uk-hidden@l'; ?> uk-light">
                 <a class="uk-position-center-left uk-slidernav uk-position-small" href="#" data-uk-slidenav-previous data-uk-slider-item="previous"></a>
                 <a class="uk-position-center-right uk-slidernav uk-position-small" href="#" data-uk-slidenav-next data-uk-slider-item="next"></a>
             </div>
-            <?php } ?>
+            <?php }elseif($navigation_position == ''){ ?>
             <div class="uk-visible@l">
                 <a class="uk-position-center-left-out uk-slidernav uk-position-small" href="#" data-uk-slidenav-previous data-uk-slider-item="previous"></a>
                 <a class="uk-position-center-right-out uk-slidernav uk-position-small" href="#" data-uk-slidenav-next data-uk-slider-item="next"></a>
             </div>
         <?php
+            }else{
+                ?>
+                <div class="uk-nav-wrap uk-flex uk-position-<?php echo esc_attr($navigation_position);?>">
+                    <a class="uk-slidernav" href="#" data-uk-slidenav-previous data-uk-slider-item="previous"></a>
+                    <a class="uk-slidernav" href="#" data-uk-slidenav-next data-uk-slider-item="next"></a>
+                </div>
+                <?php
+            }
+            if($navigation_in_group){
+            ?>
+                </div>
+            <?php
+            }
         }
         ?>
         </div>

@@ -203,6 +203,8 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 						'oldest'    => esc_html__('Oldest', 'uipro'),
 						'popular'   => esc_html__('Popular', 'uipro'),
 						'random'    => esc_html__('Random', 'uipro'),
+						'price'    => esc_html__('Price ASC', 'uipro'),
+						'price_low'    => esc_html__('Price DESC', 'uipro'),
 					),
 					'default'       => 'latest',
 					'description'   => esc_html__( 'Select products ordering from the list.', 'uipro' ),
@@ -936,6 +938,21 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'section_name'  => esc_html__('Slider Settings', 'uipro'),
 
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'slider_box_padding',
+                    'label'         => esc_html__( 'Slider Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-slider-items' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
 				array(
 					'type'          => Controls_Manager::SWITCHER,
 					'id'            => 'enable_autoplay',
@@ -957,6 +974,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'min' => 0,
                     'max' => 50,
                     'step' => 1,
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
                 ),
 				array(
 					'type'          => Controls_Manager::SWITCHER,
@@ -981,6 +1003,13 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'options' => [
 						'' => esc_html__('Outside', 'uipro'),
 						'inside' => esc_html__('Inside', 'uipro'),
+                        'top-left' => esc_html__( 'Top Left', 'uipro' ),
+                        'top-right' => esc_html__( 'Top Right', 'uipro' ),
+                        'center-left' => esc_html__( 'Center Left', 'uipro' ),
+                        'center-right' => esc_html__( 'Center Right', 'uipro' ),
+                        'bottom-left' => esc_html__( 'Bottom Left', 'uipro' ),
+                        'bottom-center' => esc_html__( 'Bottom Center', 'uipro' ),
+                        'bottom-right' => esc_html__( 'Bottom Right', 'uipro' ),
 					],
 					'conditions' => [
 						'terms' => [
@@ -989,6 +1018,38 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 						],
 					],
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'navigation_pos_margin',
+                    'label'         => esc_html__( 'Next Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-slidenav-next' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
+                            ['name' => 'enable_navigation', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'navigation_margin_custom',
+                    'label'         => esc_html__( 'Navigation Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-nav-wrap' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
+                            ['name' => 'enable_navigation', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
 				array(
 					'type'          => Controls_Manager::SWITCHER,
 					'id'            => 'enable_dotnav',
@@ -1037,21 +1098,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 						],
 					],
 				),
-                array(
-                    'type'          => Controls_Manager::DIMENSIONS,
-                    'name'          => 'slider_box_padding',
-                    'label'         => esc_html__( 'Slider Padding', 'uipro' ),
-                    'responsive'    =>  true,
-                    'size_units'    => [ 'px', 'em', '%' ],
-                    'selectors'     => [
-                        '{{WRAPPER}} .uk-slider-items' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
-                    ],
-                    'conditions' => [
-                        'terms' => [
-                            ['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
-                        ],
-                    ],
-                ),
+
                 array(
                     'type'          => Controls_Manager::SWITCHER,
                     'id'            => 'slider_visible',

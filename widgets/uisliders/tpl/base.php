@@ -192,7 +192,7 @@ if ( ! empty( $overlay_opacity_start ) && empty( $overlay_opacity_end ) ) {
 $overlay_parallax_cls = '';
 
 if ( ! empty( $overlay_horizontal ) || ! empty( $overlay_vertical ) || ! empty( $overlay_scale ) || ! empty( $overlay_rotate ) || ! empty( $overlay_opacity ) ) {
-	$overlay_parallax_cls .= ' uk-slideshow-parallax="' . $overlay_horizontal . $overlay_vertical . $overlay_scale . $overlay_rotate . $overlay_opacity . '"';
+	$overlay_parallax_cls .= ' data-uk-slideshow-parallax="' . $overlay_horizontal . $overlay_vertical . $overlay_scale . $overlay_rotate . $overlay_opacity . '"';
 }
 
 // Title Parallax.
@@ -240,7 +240,7 @@ $use_title_parallax = ( isset( $instance['use_title_parallax'] ) && $instance['u
 $title_transition   = '';
 if ( empty( $overlay_transition ) && $use_title_parallax ) {
 	if ( ! empty( $title_horizontal ) || ! empty( $title_vertical ) || ! empty( $title_scale ) || ! empty( $title_rotate ) || ! empty( $title_opacity ) ) {
-		$title_transition .= ' uk-slideshow-parallax="' . $title_horizontal . $title_vertical . $title_scale . $title_rotate . $title_opacity . '"';
+		$title_transition .= ' data-uk-slideshow-parallax="' . $title_horizontal . $title_vertical . $title_scale . $title_rotate . $title_opacity . '"';
 	}
 }
 
@@ -290,7 +290,7 @@ $use_meta_parallax = ( isset( $instance['use_meta_parallax'] ) && $instance['use
 $meta_transition = '';
 if ( empty( $overlay_transition ) && $use_meta_parallax ) {
 	if ( ! empty( $meta_horizontal ) || ! empty( $meta_vertical ) || ! empty( $meta_scale ) || ! empty( $meta_rotate ) || ! empty( $meta_opacity ) ) {
-		$meta_transition .= ' uk-slideshow-parallax="' . $meta_horizontal . $meta_vertical . $meta_scale . $meta_rotate . $meta_opacity . '"';
+		$meta_transition .= ' data-uk-slideshow-parallax="' . $meta_horizontal . $meta_vertical . $meta_scale . $meta_rotate . $meta_opacity . '"';
 	}
 }
 
@@ -340,7 +340,7 @@ $use_content_parallax = ( isset( $instance['use_content_parallax'] ) && $instanc
 $content_transition = '';
 if ( empty( $overlay_transition ) && $use_content_parallax ) {
 	if ( ! empty( $content_horizontal ) || ! empty( $content_vertical ) || ! empty( $content_scale ) || ! empty( $content_rotate ) || ! empty( $content_opacity ) ) {
-		$content_transition .= ' uk-slideshow-parallax="' . $content_horizontal . $content_vertical . $content_scale . $content_rotate . $content_opacity . '"';
+		$content_transition .= ' data-uk-slideshow-parallax="' . $content_horizontal . $content_vertical . $content_scale . $content_rotate . $content_opacity . '"';
 	}
 }
 
@@ -388,7 +388,7 @@ $use_button_parallax = ( isset( $instance['use_button_parallax'] ) && $instance[
 $button_transition   = '';
 if ( empty( $overlay_transition ) && $use_button_parallax ) {
 	if ( ! empty( $button_horizontal ) || ! empty( $button_vertical ) || ! empty( $button_scale ) || ! empty( $button_rotate ) || ! empty( $button_opacity ) ) {
-		$button_transition .= ' uk-slideshow-parallax="' . $button_horizontal . $button_vertical . $button_scale . $button_rotate . $button_opacity . '"';
+		$button_transition .= ' data-uk-slideshow-parallax="' . $button_horizontal . $button_vertical . $button_scale . $button_rotate . $button_opacity . '"';
 	}
 }
 

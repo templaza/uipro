@@ -173,15 +173,15 @@ if ( ! class_exists( 'UIPro_Config_UILightbox' ) ) {
                         ],
                     ],
                     'desktop_default' => [
-                        'size' => 48,
+                        'size' => 30,
                         'unit' => 'px',
                     ],
                     'tablet_default' => [
-                        'size' => 32,
+                        'size' => 20,
                         'unit' => 'px',
                     ],
                     'mobile_default' => [
-                        'size' => 24,
+                        'size' => 18,
                         'unit' => 'px',
                     ],
                     'selectors' => [

@@ -1,5 +1,4 @@
 <?php
-
 $_is_elementor  = (isset($args['page_builder']) && $args['page_builder'] == 'elementor')?true:false;
 $name          = isset($instance['name']) ? $instance['name'] : '';
 $name_tag      = isset($instance['name_tag']) ? $instance['name_tag'] : 'h3';
@@ -17,12 +16,19 @@ $tablet_columns     = ( isset( $instance['tablet_columns'] ) && $instance['table
 $mobile_columns     = ( isset( $instance['mobile_columns'] ) && $instance['mobile_columns'] ) ? $instance['mobile_columns'] : '1';
 $column_grid_gap    = ( isset( $instance['column_grid_gap'] ) && $instance['column_grid_gap'] ) ? ' uk-grid-'. $instance['column_grid_gap'] : '';
 
+$cover_image    = (isset($instance['cover_image']) && $instance['cover_image']) ? intval($instance['cover_image']) : 0;
+$cover_image    = $cover_image ? ' tz-image-cover uk-cover-container' : '';
+$ukcover_image    = $cover_image ? ' data-uk-cover' : '';
+$image_transition   = ( isset( $instance['image_transition'] ) && $instance['image_transition'] ) ? ' uk-transition-' . $instance['image_transition'] . ' uk-transition-opaque' : '';
+$flash_effect   =   isset($instance['flash_effect']) ? intval($instance['flash_effect']) : 0;
+$imgclass         =  $flash_effect ? ' ui-image-flash-effect uk-position-relative uk-overflow-hidden' : '';
 
 //Product Number
 $user_product_number          = isset($instance['user_product_number']) ? $instance['user_product_number'] : '';
 $product_label          = isset($instance['product_label']) ? $instance['product_label'] : '';
+$product_label_regular          = isset($instance['product_label_regular']) ? $instance['product_label_regular'] : '';
 $product_number_tag      = isset($instance['product_number_tag']) ? $instance['product_number_tag'] : 'meta';
-$product_number_style    = isset($instance['product_number_margin']) && $instance['product_number_margin'] ? ($instance['product_number_margin'] == 'default' ? ' uk-margin' : ' uk-margin-'. $instance['product_number_margin']) : '';
+$product_number_style    = '';
 if ($product_number_tag == 'lead' || $product_number_tag == 'meta') {
 	$product_number_style  .=  ' uk-text-'.$product_number_tag;
 	$product_number_tag    =   'p';
@@ -50,16 +56,23 @@ $user_role   = ( isset( $instance['user_role'] ) && $instance['user_role'] ) ? $
 if(!empty($user_role)){
     $users = get_users( [ 'role__in' => $user_role, 'number' =>$limit, 'orderby' =>$user_orderby, 'order' => $user_order] );
 }
+$product_label_txt = '';
 if(!empty($users)){
     echo '<div class="ap-dealer-users uk-child-width-1-'.$large_desktop_columns.'@xl uk-child-width-1-'.$desktop_columns.'@l uk-child-width-1-'.$laptop_columns.'@m uk-child-width-1-'.$tablet_columns.'@s uk-child-width-1-'. $mobile_columns . $column_grid_gap.'" data-uk-grid>';
     foreach ($users as $user){
         $pageid         = (int)get_option('options_dealership_dealer_page_id',0);
         $pageid         = !empty($pageid)?$pageid:get_the_ID();
         $url            = get_permalink($pageid).$user -> user_login;
-        $media = '<a href="'.esc_url($url).'"><img class="uk-transition-scale-up uk-transition-opaque" src="'.esc_url( get_avatar_url( $user->ID,300)).'" alt="'.$user->display_name.'"/></a>';
+
+        if(count_user_posts( $user->ID , "ap_product"  )==1){
+            $product_label_txt = $product_label_regular;
+        }else{
+            $product_label_txt = $product_label;
+        }
+        $media = '<a class="uk-position-relative uk-display-block '.$cover_image.' '.$imgclass.'" href="'.esc_url($url).'"><img '.$ukcover_image.' class="'.$image_transition.' " src="'.esc_url( get_avatar_url( $user->ID,300)).'" alt="'.$user->display_name.'"/></a>';
         $name     =  '<'.$name_tag.' class="ui-name uk-card-title'.$name_style.'"><a href="'.esc_url($url).'">'.$user->display_name.'</a></'.$name_tag.'>';
         if($user_product_number != ''){
-            $user_product_number     =  '<'.$product_number_tag.' class="ui-product-number '.$product_number_style.'">'.count_user_posts( $user->ID , "ap_product"  ). ' '.$product_label.'</'.$product_number_tag.'>';
+            $user_product_number     =  '<'.$product_number_tag.' class="ui-product-number '.$product_number_style.'">'.count_user_posts( $user->ID , "ap_product"  ). ' '.$product_label_txt.'</'.$product_number_tag.'>';
         }
         if($email !=''){
             $email     =  '<'.$email_tag.' class="ui-email '.$email_style.'">'.$user->user_email.'</'.$email_tag.'>';
@@ -67,7 +80,7 @@ if(!empty($users)){
         $output     ='<div class="ap-dealership-user">';
         $output     .=   '<div class="ui-card uk-card'. $card_style . $card_size . $general_styles['container_cls'] .'"' . $general_styles['animation'] . '>';
         if ($media && $image_appear == 'top') {
-            $output .=  '<div class="uk-card-media-top ui-media"><div class="uk-inline-clip uk-transition-toggle" tabindex="0">';
+            $output .=  '<div class="uk-card-media-top ui-media"><div class=" uk-transition-toggle" tabindex="0">';
             $output .=  $media;
             $output .=  '</div></div>';
         }

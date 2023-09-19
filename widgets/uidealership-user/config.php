@@ -319,6 +319,80 @@ if ( ! class_exists( 'UIPro_Config_UIDealership_User' ) ) {
 					'start_section' => 'image_settings',
 					'section_name'      => esc_html__('Image Settings', 'uipro')
 				),
+                array(
+                    'type'          => Controls_Manager::SWITCHER,
+                    'id'            => 'cover_image',
+                    'label'         => esc_html__('Cover Image', 'uipro'),
+                    'description'   => esc_html__( 'Whether to display image cover.', 'uipro' ),
+                    'label_on'      => esc_html__( 'Yes', 'uipro' ),
+                    'label_off'     => esc_html__( 'No', 'uipro' ),
+                    'return_value'  => '1',
+                    'default'       => '0',
+                ),
+                array(
+                    'name'            => 'thumbnail_height',
+                    'label'         => esc_html__( 'Image Height', 'uipro' ),
+                    'type'          => Controls_Manager::SLIDER,
+                    'responsive'    => true,
+                    'range' => [
+                        'px' => [
+                            'min' => 1,
+                            'max' => 1000
+                        ],
+                    ],
+                    'desktop_default' => [
+                        'size' => 220,
+                        'unit' => 'px',
+                    ],
+                    'tablet_default' => [
+                        'size' => 220,
+                        'unit' => 'px',
+                    ],
+                    'mobile_default' => [
+                        'size' => 220,
+                        'unit' => 'px',
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .tz-image-cover' => 'height: {{SIZE}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'cover_image', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'image_border_radius',
+                    'label'         => esc_html__( 'Image border radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-media img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::SWITCHER,
+                    'id'            => 'flash_effect',
+                    'label'         => esc_html__('Flash Effect', 'uipro'),
+                    'label_on'      => esc_html__( 'Yes', 'uipro' ),
+                    'label_off'     => esc_html__( 'No', 'uipro' ),
+                    'return_value'  => '1',
+                    'default'       => '0'
+                ),
+                array(
+                    'type'          => Controls_Manager::SELECT,
+                    'id'            => 'image_transition',
+                    'label'         => esc_html__( 'Transition', 'uipro' ),
+                    'description'   => esc_html__( 'Select the image\'s transition style.', 'uipro' ),
+                    'options'       => array(
+                        '' => __('None', 'uipro'),
+                        'scale-up' => __('Scales Up', 'uipro'),
+                        'scale-down' => __('Scales Down', 'uipro'),
+                    ),
+                    'default'       => '',
+                ),
 
 				//Name settings
 				array(
@@ -438,6 +512,17 @@ if ( ! class_exists( 'UIPro_Config_UIDealership_User' ) ) {
 					'name'          => 'product_label',
 					'label'         => esc_html__('Product Number Label', 'uipro'),
 					'default'      => esc_html__('Products', 'uipro'),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'user_product_number', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+				),
+				array(
+					'type'          => Controls_Manager::TEXT,
+					'name'          => 'product_label_regular',
+					'label'         => esc_html__('1 Product Label', 'uipro'),
+					'default'      => esc_html__('Product', 'uipro'),
                     'conditions' => [
                         'terms' => [
                             ['name' => 'user_product_number', 'operator' => '===', 'value' => 'yes'],

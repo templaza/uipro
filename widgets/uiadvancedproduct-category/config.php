@@ -532,6 +532,28 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                 ),
 
                 array(
+                    'type'          => Controls_Manager::SWITCHER,
+                    'id'            => 'flash_effect',
+                    'label'         => esc_html__('Flash Effect', 'uipro'),
+                    'label_on'      => esc_html__( 'Yes', 'uipro' ),
+                    'label_off'     => esc_html__( 'No', 'uipro' ),
+                    'return_value'  => '1',
+                    'default'       => '0'
+                ),
+                array(
+                    'type'          => Controls_Manager::SELECT,
+                    'id'            => 'image_transition',
+                    'label'         => esc_html__( 'Transition', 'uipro' ),
+                    'description'   => esc_html__( 'Select the image\'s transition style.', 'uipro' ),
+                    'options'       => array(
+                        '' => __('None', 'uipro'),
+                        'scale-up' => __('Scales Up', 'uipro'),
+                        'scale-down' => __('Scales Down', 'uipro'),
+                    ),
+                    'default'       => '',
+                ),
+
+                array(
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'title_typography',
                     'scheme'        => Typography::TYPOGRAPHY_1,
@@ -581,6 +603,7 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                         ],
                     ],
                 ),
+
                 array(
                     'label' => esc_html__( 'Overlay background color', 'uipro' ),
                     'name'  => 'title_overlay_bg',
@@ -588,6 +611,17 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                     'selectors' => [
                         '{{WRAPPER}} .uk-overlay-primary' => 'background-color: {{VALUE}}',
                     ],
+                    'condition'     => array(
+                        'title_overlay'    => '1'
+                    ),
+                ),
+                array(
+                    'type'          => \Elementor\Group_Control_Background::get_type(),
+                    'name'          => 'title_overlay_bg_gradient',
+                    'label'         => __( 'Overlay Background', 'uipro' ),
+                    'default'       => '',
+                    'types'         => [ 'gradient' ],
+                    'selector'      => '{{WRAPPER}} .uk-overlay-primary',
                     'condition'     => array(
                         'title_overlay'    => '1'
                     ),
@@ -664,6 +698,77 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                     ],
                 ),
                 array(
+                    'type'          => Controls_Manager::SELECT,
+                    'id'            => 'navigation_position',
+                    'label' => esc_html__( 'Navigation Position', 'uipro' ),
+                    'default' => '',
+                    'options' => [
+                        '' => esc_html__('Outside', 'uipro'),
+                        'inside' => esc_html__('Inside', 'uipro'),
+                        'top-left' => esc_html__( 'Top Left', 'uipro' ),
+                        'top-right' => esc_html__( 'Top Right', 'uipro' ),
+                        'center-left' => esc_html__( 'Center Left', 'uipro' ),
+                        'center-right' => esc_html__( 'Center Right', 'uipro' ),
+                        'bottom-left' => esc_html__( 'Bottom Left', 'uipro' ),
+                        'bottom-center' => esc_html__( 'Bottom Center', 'uipro' ),
+                        'bottom-right' => esc_html__( 'Bottom Right', 'uipro' ),
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout', 'operator' => '!=', 'value' => 'grid'],
+                            ['name' => 'show_nav', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'navigation_pos_margin',
+                    'label'         => esc_html__( 'Next Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-slidenav-next' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout', 'operator' => '!=', 'value' => 'grid'],
+                            ['name' => 'show_nav', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'navigation_pos_margin_pre',
+                    'label'         => esc_html__( 'Preview Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-slidenav-previous' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout', 'operator' => '!=', 'value' => 'grid'],
+                            ['name' => 'show_nav', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'navigation_margin_custom',
+                    'label'         => esc_html__( 'Navigation Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-nav-wrap' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout', 'operator' => '!=', 'value' => 'grid'],
+                            ['name' => 'show_nav', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
                     'type'          =>  \Elementor\Group_Control_Border::get_type(),
                     'name'          => 'nav_border',
                     'label'         => esc_html__('Nav Border', 'uipro'),
@@ -671,6 +776,18 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                     'condition'     => array(
                         'show_nav'    => '1'
                     ),
+                ),
+                array(
+                    'type'          =>  \Elementor\Group_Control_Box_Shadow::get_type(),
+                    'name'          => 'nav_shadow',
+                    'label'         => esc_html__('Nav Shadow', 'uipro'),
+                    'selector' => '{{WRAPPER}} .uk-slidenav',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout', 'operator' => '!=', 'value' => 'grid'],
+                            ['name' => 'show_nav', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
                 ),
                 array(
                     'type'          => Controls_Manager::DIMENSIONS,

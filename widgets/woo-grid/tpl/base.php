@@ -175,6 +175,32 @@ add_filter( 'woocommerce_loop_add_to_cart_link', array(
             }
             break;
 
+        case 'layout-9':
+            add_action('templaza_product_loop_thumbnail_element_'.$loop_layout, array(
+                TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::get_instance(),
+                'product_loop_buttons_open'
+            ), 10);
+
+            if (!empty($featured_icons) && $featured_icons['wishlist'] == '1') {
+                add_action('templaza_product_loop_thumbnail_element_'.$loop_layout, array(
+                    TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::get_instance(),
+                    'templaza_wishlist_button'
+                ), 20);
+            }
+
+            if (!empty($featured_icons) && $featured_icons['quickview'] == '1') {
+                add_action('templaza_product_loop_thumbnail_element_'.$loop_layout, array(
+                    TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::get_instance(),
+                    'templaza_quick_view_button'
+                ), 15);
+            }
+
+            add_action('templaza_product_loop_thumbnail_element_'.$loop_layout, array(
+                TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::get_instance(),
+                'product_loop_buttons_close'
+            ), 25);
+            break;
+
         // Icons over thumbnail on hover
         default:
             add_action('templaza_product_loop_thumbnail_element_'.$loop_layout, array(
@@ -485,6 +511,39 @@ add_filter( 'woocommerce_loop_add_to_cart_link', array(
                                 TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::templaza_wishlist_button();
                             }
                             echo '</div>';
+                            break;
+                        case 'layout-9':
+                            TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::templaza_product_taxonomy();
+                            echo '<h2 class="woocommerce-loop-product__title">';
+                            woocommerce_template_loop_product_link_open();
+                            the_title();
+                            woocommerce_template_loop_product_link_close();
+                            echo '</h2>';
+                            woocommerce_template_loop_price();
+                            woocommerce_template_loop_rating();
+                            // Add variation
+                            if ( $loop_variation ) {
+                                // Add loop buttons
+                                    TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::product_loop_form_open();
+
+                                if ( $loop_variation_ajax==false ) {
+
+                                    TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::display_variation_dropdown();
+                                }
+                                $text = '';
+
+                                TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::product_variable_add_to_cart_text($text);
+                                TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::close_variation_form();
+
+                                TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::product_loop_form_close();
+                            }
+
+                            if (!empty($featured_icons) && $featured_icons['cart']=='1' ) {
+                                woocommerce_template_loop_add_to_cart();
+                                if ( $loop_variation ) {
+                                        TemPlaza_Woo_El\TemPlaza_Woo_El_Helper::product_loop_quick_shop();
+                                }
+                            }
                             break;
                         default:
                             woocommerce_template_loop_rating();

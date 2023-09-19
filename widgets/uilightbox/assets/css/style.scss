@@ -4,6 +4,22 @@
     height: 100%;
   }
 }
+.templaza-widget-uilightbox{
+  .ui-lightbox{
+    -webkit-transition: all 0.3s linear;
+    -moz-transition: all 0.3s linear;
+    -ms-transition: all 0.3s linear;
+    -o-transition: all 0.3s linear;
+    transition: all 0.3s linear;
+    &:hover{
+      -webkit-transition: all 0.3s linear;
+      -moz-transition: all 0.3s linear;
+      -ms-transition: all 0.3s linear;
+      -o-transition: all 0.3s linear;
+      transition: all 0.3s linear;
+    }
+  }
+}
 .ui-lightbox-ripple {
   position: relative;
   &:before, &:after {

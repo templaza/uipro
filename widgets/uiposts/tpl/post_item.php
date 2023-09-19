@@ -63,10 +63,14 @@ $button_position   = ( isset( $instance['button_icon'] ) && $instance['button_ic
 //Get post excerpt
 $item->post_excerpt = apply_filters( 'the_excerpt', get_the_excerpt($item->ID) );
 $item->post_excerpt = preg_replace('/<a class="more-link".*?<\/a>/i', '', $item->post_excerpt);
-
-//Get Item Tags
+$flash_effect   =   isset($instance['flash_effect']) ? intval($instance['flash_effect']) : 0;
+$imgclass         =  $flash_effect ? ' ui-image-flash-effect uk-position-relative uk-overflow-hidden' : '';
+$image_transition   = ( isset( $instance['image_transition'] ) && $instance['image_transition'] ) ? ' uk-transition-' . $instance['image_transition'] . ' uk-transition-opaque' : '';
+$tran_toggle = ' ';
+if($image_transition){
+    $tran_toggle = ' uk-transition-toggle ';
+}
 $tags = wp_get_post_terms( $item->ID , $resource. '_tag' );
-
 $i = 1;
 $tag_content    =   '';
 $tag_slugs      =   array();
@@ -132,13 +136,21 @@ $meta_bottom_margin     =   ( isset( $instance[$pre_val.'meta_bottom_margin'] ) 
 $meta_footer_margin     =   ( isset( $instance[$pre_val.'meta_footer_margin'] ) && $instance[$pre_val.'meta_footer_margin'] ) ? ' uk-margin-'. $instance[$pre_val.'meta_footer_margin'] : ' uk-margin';
 
 $output .=  '<article data-tag="'.esc_attr(implode(' ', $tag_slugs)).'" data-cat="'.esc_attr(implode(' ', $cat_slugs)).'" data-date="'.esc_attr(get_the_date('Y-m-d', $item)).'" data-hits="'.esc_attr(get_post_meta($item->ID, 'post_views_count', true)).'">';
-$output .= '<div class="uk-article uk-card'.esc_attr($card_style.$card_size_cls.( $thumbnail_hover ? ' uk-transition-toggle uk-overflow-hidden' : '' ).(!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'left' || $image_position == 'right') ? ' uk-grid-collapse' : '')).'"'.(!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'left' || $image_position == 'right') ? ' data-uk-grid' : '').'>';
+$output .= '<div class="uk-article uk-card'.esc_attr($card_style.$tran_toggle.$card_size_cls.( $thumbnail_hover ? ' uk-transition-toggle uk-overflow-hidden' : '' ).(!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'left' || $image_position == 'right') ? ' uk-grid-collapse' : '')).'"'.(!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'left' || $image_position == 'right') ? ' data-uk-grid' : '').'>';
 if (!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'top' || $image_position == 'left' || $image_position == 'right') ) :
     if ($image_position == 'left' || $image_position == 'right') {
         $output .=  '<div class="uk-card-media-'.$image_position.' uk-cover-container'.($image_position == 'right' ? ' uk-flex-last@m' : '').$image_width_xl.$image_width_l.$image_width_m.$image_width_s.$image_width.'">';
     }
     $uk_cover   = ($image_position == 'left' || $image_position == 'right' || !empty($cover_image)? array('data-uk-cover' => '') : '');
-    $output .=  '<a class="ui-post-thumbnail uk-display-block uk-card-media-top'
+    if($image_transition){
+        $tran_cl = array('class'=>''.$image_transition.'');
+        if(is_array($uk_cover) && !empty($uk_cover)){
+            $uk_cover = array_merge($uk_cover,$tran_cl);
+        }else{
+            $uk_cover = $tran_cl;
+        }
+    }
+    $output .=  '<a class="'.$imgclass.' ui-post-thumbnail uk-display-block uk-card-media-top'
         .esc_attr($cover_image.$image_border).'" href="'. get_permalink( $item->ID ) .'">'
         . UIPro_UIPosts_Helper::get_post_thumbnail($item, $thumbnail_size, $uk_cover) .'</a>';
     if ($image_position == 'left' || $image_position == 'right') {
@@ -147,7 +159,7 @@ if (!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == '
     }
 endif;
 if ($layout == 'thumbnail') {
-    $output .= '<a href="'. get_permalink( $item->ID ) .'"><div class="uk-position-cover uk-overlay uk-overlay-primary'.esc_attr( $thumbnail_hover ? ' uk-transition-fade' : '' ).'"></div></a>';
+    $output .= '<a class="ui-post-thumb-box" href="'. get_permalink( $item->ID ) .'"><div class="uk-position-cover uk-overlay uk-overlay-primary'.esc_attr( $thumbnail_hover ? ' uk-transition-fade' : '' ).'"></div></a>';
 }
 
 $output .= '<div class="ui-post-info-wrap'.esc_attr(($layout == 'thumbnail' ? ' uk-position-bottom uk-light' : '').( $thumbnail_hover && $thumbnail_hover_transition ? $thumbnail_hover_transition : '' ).(!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'left' || $image_position == 'right') ? $expand_width : '')).'">';

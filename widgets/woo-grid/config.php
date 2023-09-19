@@ -95,6 +95,7 @@ if ( ! class_exists( 'UIPro_Config_Woo_Grid' ) ) {
                         'layout-5' => esc_html__( 'Simple', 'uipro' ),
                         'layout-6' => esc_html__( 'Standard button', 'uipro' ),
                         'layout-7' => esc_html__( 'Info on hover', 'uipro' ),
+                        'layout-9' => esc_html__( 'Quick Shop button', 'uipro' ),
                     ),
                     'default'   => 'layout-1',
                     'condition'     => array(

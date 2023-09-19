@@ -25,11 +25,17 @@ $title_overlay = (isset($instance['title_overlay']) && $instance['title_overlay'
 $title_position      = !empty( $instance['title_position'] ) ? $instance['title_position'] : 'uk-position-bottom-left';
 $product_single_label      = !empty( $instance['product_single_label'] ) ? $instance['product_single_label'] : '';
 $product_label      = !empty( $instance['product_label'] ) ? $instance['product_label'] : '';
+$navigation_position      = !empty( $instance['navigation_position'] ) ? $instance['navigation_position'] : '';
 
 $slider_visible      = !empty( $instance['slider_wrap_visible'] ) ? $instance['slider_wrap_visible'] : '';
 $slider_nav = (isset($instance['show_nav']) && $instance['show_nav']) ? intval($instance['show_nav']) : 0;
 $slider_dots = (isset($instance['show_dots']) && $instance['show_dots']) ? intval($instance['show_dots']) : 0;
-$image_cover = (isset($instance['image_cover']) && $instance['image_cover']) ? intval($instance['image_cover']) : 0;
+$cover_image    = (isset($instance['image_cover']) && $instance['image_cover']) ? intval($instance['image_cover']) : 0;
+$cover_image    = $cover_image ? ' tz-image-cover uk-cover-container' : '';
+
+$image_transition   = ( isset( $instance['image_transition'] ) && $instance['image_transition'] ) ? ' uk-transition-' . $instance['image_transition'] . ' uk-transition-opaque' : '';
+$flash_effect   =   isset($instance['flash_effect']) ? intval($instance['flash_effect']) : 0;
+$imgclass         =  $flash_effect ? ' ui-image-flash-effect uk-position-relative uk-overflow-hidden' : '';
 if($source == 'ap_category'){
     if(empty($category) || $category == ''){
         $get_terms_attributes = array (
@@ -91,17 +97,17 @@ if($cat_results){
                     $att_id = (get_field('image','term_'.$cat->term_id));
                     ?>
                     <li>
-                        <div class="uk-card <?php echo esc_attr('uk-card-'.$card_style.' uk-card-'.$card_size);?>">
-                            <div class="uk-card-media-top">
+                        <div class="uk-card uk-transition-toggle <?php echo esc_attr('uk-card-'.$card_style.' uk-card-'.$card_size.' '.$imgclass);?>">
+                            <div class="uk-card-media-top ">
                                 <?php
                                 if($att_id){
                                     ?>
-                                    <div class="uk-cover-container ap-category-image">
-                                        <?php if($image_cover){ ?>
-                                        <a href="<?php echo esc_url(get_term_link($cat->term_id));?>">
+                                    <div class=" ap-category-image ">
+                                        <?php if($cover_image){ ?>
+                                        <a class="uk-position-relative uk-display-block  <?php echo esc_attr($cover_image);?>" href="<?php echo esc_url(get_term_link($cat->term_id));?>">
                                             <canvas width="440" height="440"></canvas>
                                             <?php
-                                            echo wp_get_attachment_image($att_id,$image_size,'',array( "data-uk-cover" => "" ) );
+                                            echo wp_get_attachment_image($att_id,$image_size,'',array( "data-uk-cover" => "", "class" => " $image_transition" ) );
                                             ?>
                                         </a>
                                         <?php }else{ ?>
@@ -158,10 +164,24 @@ if($cat_results){
 
         <?php
         if($slider_nav){
+            if($navigation_position == 'inside'){
+                ?>
+                <a class="uk-position-center-left " href="#" data-uk-slidenav-previous data-uk-slider-item="previous"></a>
+                <a class="uk-position-center-right " href="#" data-uk-slidenav-next data-uk-slider-item="next"></a>
+                <?php
+            }elseif($navigation_position == ''){
             ?>
             <a class="uk-position-center-left-out " href="#" data-uk-slidenav-previous data-uk-slider-item="previous"></a>
             <a class="uk-position-center-right-out " href="#" data-uk-slidenav-next data-uk-slider-item="next"></a>
             <?php
+            }else{
+                ?>
+                <div class="uk-nav-wrap uk-flex uk-position-<?php echo esc_attr($navigation_position);?>">
+                    <a class="uk-slidernav" href="#" data-uk-slidenav-previous data-uk-slider-item="previous"></a>
+                    <a class="uk-slidernav" href="#" data-uk-slidenav-next data-uk-slider-item="next"></a>
+                </div>
+                <?php
+            }
         }
         if($slider_dots){
             ?>

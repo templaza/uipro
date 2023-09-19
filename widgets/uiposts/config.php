@@ -1,6 +1,6 @@
 <?php
 /**
- * UIPro Heading config class
+ * UIPro Post config class
  *
  * @version     1.0.0
  * @author      TemPlaza
@@ -808,6 +808,135 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 						],
 					],
 				),
+                    array(
+                        'type'          => Controls_Manager::DIMENSIONS,
+                        'name'          => 'navigation_pos_margin',
+                        'label'         => esc_html__( 'Next Margin', 'uipro' ),
+                        'responsive'    =>  true,
+                        'size_units'    => [ 'px', 'em', '%' ],
+                        'selectors'     => [
+                            '{{WRAPPER}} .uk-slidenav-next' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                        ],
+                        'conditions' => [
+                            'terms' => [
+                                ['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
+                                ['name' => 'enable_navigation', 'operator' => '===', 'value' => '1'],
+                            ],
+                        ],
+                    ),
+                    array(
+                        'type'          => Controls_Manager::DIMENSIONS,
+                        'name'          => 'navigation_pos_margin_pre',
+                        'label'         => esc_html__( 'Preview Margin', 'uipro' ),
+                        'responsive'    =>  true,
+                        'size_units'    => [ 'px', 'em', '%' ],
+                        'selectors'     => [
+                            '{{WRAPPER}} .uk-slidenav-previous' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                        ],
+                        'conditions' => [
+                            'terms' => [
+                                ['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
+                                ['name' => 'enable_navigation', 'operator' => '===', 'value' => '1'],
+                            ],
+                        ],
+                    ),
+
+                    array(
+                        'type'          =>  \Elementor\Group_Control_Border::get_type(),
+                        'name'          => 'nav_border',
+                        'label'         => esc_html__('Nav Border', 'uipro'),
+                        'selector' => '{{WRAPPER}} .uk-slider .uk-slidenav',
+                        'conditions' => [
+                            'terms' => [
+                                ['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
+                                ['name' => 'enable_navigation', 'operator' => '===', 'value' => '1'],
+                            ],
+                        ],
+                    ),
+                    array(
+                        'type'          =>  \Elementor\Group_Control_Box_Shadow::get_type(),
+                        'name'          => 'nav_shadow',
+                        'label'         => esc_html__('Nav Shadow', 'uipro'),
+                        'selector' => '{{WRAPPER}} .uk-slidenav',
+                        'conditions' => [
+                            'terms' => [
+                                ['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
+                                ['name' => 'enable_navigation', 'operator' => '===', 'value' => '1'],
+                            ],
+                        ],
+                    ),
+                    array(
+                        'type'          => Controls_Manager::DIMENSIONS,
+                        'name'          =>  'nav_radius',
+                        'label'         => esc_html__( 'Nav radius', 'uipro' ),
+                        'responsive'    =>  true,
+                        'size_units'    => [ 'px', 'em', '%' ],
+                        'selectors'     => [
+                            '{{WRAPPER}} .uk-slider .uk-slidenav' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
+                        ],
+                        'conditions' => [
+                            'terms' => [
+                                ['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
+                                ['name' => 'enable_navigation', 'operator' => '===', 'value' => '1'],
+                            ],
+                        ],
+                    ),
+                    array(
+                        'label' => esc_html__( 'Nav background color', 'uipro' ),
+                        'name'  => 'nav_bg',
+                        'type' => \Elementor\Controls_Manager::COLOR,
+                        'selectors' => [
+                            '{{WRAPPER}} .uk-slider .uk-slidenav' => 'background-color: {{VALUE}}',
+                        ],
+                        'conditions' => [
+                            'terms' => [
+                                ['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
+                                ['name' => 'enable_navigation', 'operator' => '===', 'value' => '1'],
+                            ],
+                        ],
+                    ),
+                    array(
+                        'label' => esc_html__( 'Nav color', 'uipro' ),
+                        'name'  => 'nav_color',
+                        'type' => \Elementor\Controls_Manager::COLOR,
+                        'selectors' => [
+                            '{{WRAPPER}} .uk-slider .uk-slidenav' => 'color: {{VALUE}}',
+                        ],
+                        'conditions' => [
+                            'terms' => [
+                                ['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
+                                ['name' => 'enable_navigation', 'operator' => '===', 'value' => '1'],
+                            ],
+                        ],
+                    ),
+                    array(
+                        'label' => esc_html__( 'Nav Hover background color', 'uipro' ),
+                        'name'  => 'nav_bg_hover',
+                        'type' => \Elementor\Controls_Manager::COLOR,
+                        'selectors' => [
+                            '{{WRAPPER}} .uk-slider .uk-slidenav:hover' => 'background-color: {{VALUE}}',
+                        ],
+                        'conditions' => [
+                            'terms' => [
+                                ['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
+                                ['name' => 'enable_navigation', 'operator' => '===', 'value' => '1'],
+                            ],
+                        ],
+                    ),
+                    array(
+                        'label' => esc_html__( 'Nav Hover color', 'uipro' ),
+                        'name'  => 'nav_color_hover',
+                        'type' => \Elementor\Controls_Manager::COLOR,
+                        'selectors' => [
+                            '{{WRAPPER}} .uk-slider .uk-slidenav:hover' => 'color: {{VALUE}}',
+                        ],
+                        'conditions' => [
+                            'terms' => [
+                                ['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
+                                ['name' => 'enable_navigation', 'operator' => '===', 'value' => '1'],
+                            ],
+                        ],
+                    ),
 				array(
 					'type'          => Controls_Manager::SWITCHER,
 					'id'            => 'enable_dotnav',
@@ -1341,6 +1470,27 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                         'image_border'    => 'custom'
                     ),
                 ),
+                array(
+                    'type'          => Controls_Manager::SWITCHER,
+                    'id'            => 'flash_effect',
+                    'label'         => esc_html__('Flash Effect', 'uipro'),
+                    'label_on'      => esc_html__( 'Yes', 'uipro' ),
+                    'label_off'     => esc_html__( 'No', 'uipro' ),
+                    'return_value'  => '1',
+                    'default'       => '0'
+                ),
+                array(
+                    'type'          => Controls_Manager::SELECT,
+                    'id'            => 'image_transition',
+                    'label'         => esc_html__( 'Transition', 'uipro' ),
+                    'description'   => esc_html__( 'Select the image\'s transition style.', 'uipro' ),
+                    'options'       => array(
+                        '' => __('None', 'uipro'),
+                        'scale-up' => __('Scales Up', 'uipro'),
+                        'scale-down' => __('Scales Down', 'uipro'),
+                    ),
+                    'default'       => '',
+                ),
 				array(
 					'type'          => \Elementor\Group_Control_Image_Size::get_type(),
 					'name' => 'thumbnail', // // Usage: `{name}_size` and `{name}_custom_dimension`, in this case `thumbnail_size` and `thumbnail_custom_dimension`.
@@ -1770,6 +1920,61 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                     ),
                     'default' => '',
                     'separator'     => 'before',
+                ),
+                array(
+                    'type'          => Controls_Manager::SELECT,
+                    'id'            => 'meta_on_thumb_position',
+                    'label'         => esc_html__('Meta Thumb Position', 'uipro'),
+                    'options'       => array(
+                        '' => esc_html__('Default', 'uipro'),
+                        'uk-position-top-left' => esc_html__('Top Left', 'uipro'),
+                        'uk-position-top-center' => esc_html__('Top Center', 'uipro'),
+                        'uk-position-top-right' => esc_html__('Top Right', 'uipro'),
+                        'uk-position-center' => esc_html__('Center', 'uipro'),
+                        'uk-position-center-left' => esc_html__('Center Left', 'uipro'),
+                        'uk-position-center-right' => esc_html__('Center Right', 'uipro'),
+                        'uk-position-bottom-left' => esc_html__('Bottom Left', 'uipro'),
+                        'uk-position-bottom-center' => esc_html__('Bottom Center', 'uipro'),
+                        'uk-position-bottom-right' => esc_html__('Bottom Right', 'uipro'),
+                    ),
+                    'default'           => '',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_top_position', 'operator' => '!=', 'value' => ''],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'meta_thumb_padding',
+                    'label'         => esc_html__( 'Meta Thumb Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-posts.style1 .ui-post-meta-thumb' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'uipost_layout', 'operator' => 'in', 'value' => ['style1']],
+                            ['name' => 'meta_thumb_position', 'operator' => '!=', 'value' => ''],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'meta_thumb_margin',
+                    'label'         => esc_html__( 'Meta Thumb Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-posts.style1 .ui-post-meta-thumb' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'uipost_layout', 'operator' => 'in', 'value' => ['style1']],
+                            ['name' => 'meta_thumb_position', 'operator' => '!=', 'value' => ''],
+                        ],
+                    ],
                 ),
                 array(
                     'id'            => 'meta_thumb_background_color',

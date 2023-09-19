@@ -54,4 +54,14 @@
   &.right{
     align-items:end !important;
   }
+  .sub-heading{
+    &:before{
+      content:"";
+
+    }
+    &:after{
+      content:"";
+
+    }
+  }
 }

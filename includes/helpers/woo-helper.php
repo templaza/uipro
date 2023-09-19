@@ -768,5 +768,125 @@ class TemPlaza_Woo_El_Helper {
 
         echo '</div>';
     }
+    /**
+     * Open product Loop form.
+     *
+     * @since 1.0.0
+     *
+     * @return void
+     */
+    public static function product_loop_form_open() {
+        global $product;
+
+        if ( ! $product->is_type( 'variable' ) ) {
+            return;
+        }
+
+        echo '<div class="product-loop__form">';
+    }
+
+    /**
+     * Close product Loop form.
+     *
+     * @since 1.0.0
+     *
+     * @return void
+     */
+    public static function product_loop_form_close() {
+        global $product;
+
+        if ( ! $product->is_type( 'variable' ) ) {
+            return;
+        }
+        echo '</div>';
+    }
+    /**
+     * Variation loop
+     *
+     * @since 1.0.0
+     *
+     * @return void
+     */
+    public static function display_variation_dropdown() {
+        global $product;
+
+        if ( ! $product->is_type( 'variable' ) ) {
+            return;
+        }
+
+        // Get Available variations?
+        $get_variations = count( $product->get_children() ) <= apply_filters( 'woocommerce_ajax_variation_threshold', 30, $product );
+
+        // Load the template.
+        wc_get_template(
+            'loop/add-to-cart-variable.php',
+            array(
+                'available_variations' => $get_variations ? $product->get_available_variations() : false,
+                'attributes'           => $product->get_variation_attributes(),
+                'selected_attributes'  => $product->get_default_attributes(),
+            )
+        );
+    }
+    /**
+     * Variable add to cart loop
+     *
+     * @since 1.0.0
+     *
+     * @return string
+     */
+    public static function product_variable_add_to_cart_text( $text ) {
+        global $product;
+
+        if ( ! $product->is_type( 'variable' ) ) {
+            return $text;
+        }
+
+        if ( $product->is_purchasable() ) {
+            $text = esc_html__( 'Add to cart', 'templaza-framework' );
+
+        }
+
+        return $text;
+    }
+    /**
+     * Close variation form
+     *
+     * @since 1.0.0
+     *
+     * @return void
+     */
+    public static function close_variation_form() {
+        global $product;
+
+        if ( ! $product->is_type( 'variable' ) ) {
+            return;
+        }
+
+        echo sprintf(
+            '<a href="#" class="product-close-variations-form ">%s</a>',
+            '<i class="fas fa-close"></i>'
+        );
+    }
+    /**
+     * Quick shop button.
+     *
+     * @since 1.0.0
+     *
+     * @return void
+     */
+    public static function product_loop_quick_shop() {
+        global $product;
+
+        if ( ! $product->is_type( 'variable' ) ) {
+            return;
+        }
+
+        echo sprintf(
+            '<a href="#" class="product-quick-shop-button templaza-btn" data-product_id="%s" >%s%s</a>',
+            esc_attr( $product->get_id() ),
+            '<i class="fas fa-shopping-cart"></i>',
+            esc_html__( 'Quick Shop', 'templaza-framework' )
+        );
+    }
 }
 TemPlaza_Woo_El_Helper::get_instance();

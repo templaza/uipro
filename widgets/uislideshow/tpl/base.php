@@ -183,7 +183,7 @@ if ( ! empty( $overlay_opacity_start ) && empty( $overlay_opacity_end ) ) {
 $overlay_parallax_cls = '';
 
 if ( ! empty( $overlay_horizontal ) || ! empty( $overlay_vertical ) || ! empty( $overlay_scale ) || ! empty( $overlay_rotate ) || ! empty( $overlay_opacity ) ) {
-	$overlay_parallax_cls .= ' uk-slideshow-parallax="' . $overlay_horizontal . $overlay_vertical . $overlay_scale . $overlay_rotate . $overlay_opacity . '"';
+	$overlay_parallax_cls .= ' data-uk-slideshow-parallax="' . $overlay_horizontal . $overlay_vertical . $overlay_scale . $overlay_rotate . $overlay_opacity . '"';
 }
 
 // Title Parallax.
@@ -231,7 +231,7 @@ $use_title_parallax = ( isset( $instance['use_title_parallax'] ) && $instance['u
 $title_transition   = '';
 if ( empty( $overlay_transition ) && $use_title_parallax ) {
 	if ( ! empty( $title_horizontal ) || ! empty( $title_vertical ) || ! empty( $title_scale ) || ! empty( $title_rotate ) || ! empty( $title_opacity ) ) {
-		$title_transition .= ' uk-slideshow-parallax="' . $title_horizontal . $title_vertical . $title_scale . $title_rotate . $title_opacity . '"';
+		$title_transition .= ' data-uk-slideshow-parallax="' . $title_horizontal . $title_vertical . $title_scale . $title_rotate . $title_opacity . '"';
 	}
 }
 
@@ -281,7 +281,7 @@ $use_meta_parallax = ( isset( $instance['use_meta_parallax'] ) && $instance['use
 $meta_transition = '';
 if ( empty( $overlay_transition ) && $use_meta_parallax ) {
 	if ( ! empty( $meta_horizontal ) || ! empty( $meta_vertical ) || ! empty( $meta_scale ) || ! empty( $meta_rotate ) || ! empty( $meta_opacity ) ) {
-		$meta_transition .= ' uk-slideshow-parallax="' . $meta_horizontal . $meta_vertical . $meta_scale . $meta_rotate . $meta_opacity . '"';
+		$meta_transition .= ' data-uk-slideshow-parallax="' . $meta_horizontal . $meta_vertical . $meta_scale . $meta_rotate . $meta_opacity . '"';
 	}
 }
 
@@ -331,7 +331,7 @@ $use_content_parallax = ( isset( $instance['use_content_parallax'] ) && $instanc
 $content_transition = '';
 if ( empty( $overlay_transition ) && $use_content_parallax ) {
 	if ( ! empty( $content_horizontal ) || ! empty( $content_vertical ) || ! empty( $content_scale ) || ! empty( $content_rotate ) || ! empty( $content_opacity ) ) {
-		$content_transition .= ' uk-slideshow-parallax="' . $content_horizontal . $content_vertical . $content_scale . $content_rotate . $content_opacity . '"';
+		$content_transition .= ' data-uk-slideshow-parallax="' . $content_horizontal . $content_vertical . $content_scale . $content_rotate . $content_opacity . '"';
 	}
 }
 
@@ -379,7 +379,7 @@ $use_button_parallax = ( isset( $instance['use_button_parallax'] ) && $instance[
 $button_transition   = '';
 if ( empty( $overlay_transition ) && $use_button_parallax ) {
 	if ( ! empty( $button_horizontal ) || ! empty( $button_vertical ) || ! empty( $button_scale ) || ! empty( $button_rotate ) || ! empty( $button_opacity ) ) {
-		$button_transition .= ' uk-slideshow-parallax="' . $button_horizontal . $button_vertical . $button_scale . $button_rotate . $button_opacity . '"';
+		$button_transition .= ' data-uk-slideshow-parallax="' . $button_horizontal . $button_vertical . $button_scale . $button_rotate . $button_opacity . '"';
 	}
 }
 
@@ -487,8 +487,8 @@ if ( isset( $instance['uislideshow_items'] ) && count( (array) $instance['uislid
 		$check_target = ( isset( $instance['link_new_tab'] ) && $instance['link_new_tab'] ) ? $instance['link_new_tab'] : '';
 
 		$render_linkscroll = ( empty( $check_target ) && isset($button_link['url']) && strpos( $button_link['url'], '#' ) === 0 ) ? ' uk-scroll' : '';
-
-		$output .= '<li class="el-item uk-margin-remove item-' . $key . '"' . $media_background . '>';
+        $number = intval($key + 1);
+		$output .= '<li class="el-item uk-margin-remove item-' . $key . '"' . $media_background . ' data-number="'.$number.'">';
 		$output .= ( $kenburns_transition ) ? '<div class="ui-media uk-position-cover uk-animation-kenburns uk-animation-reverse' . $kenburns_transition . '"' . $kenburns_duration . '>' : '';
 
 		if ($media_type == 'video') {
@@ -526,7 +526,7 @@ if ( isset( $instance['uislideshow_items'] ) && count( (array) $instance['uislid
 
 		$output .= $media_overlay;
 
-		$output .= '<div class="ui-content uk-position-cover uk-flex' . $overlay_positions . $overlay_container_cls . $overlay_container_padding . $overlay_margin_cls . '">';
+		$output .= '<div class="ui-content-wrap uk-position-cover uk-flex' . $overlay_positions . $overlay_container_cls . $overlay_container_padding . $overlay_margin_cls . '">';
 
 		$output .= '<div class="' . $overlay_styles_int . $overlay_pos_int . $overlay_width . $overlay_transition . $text_item_color_cls . $overlay_styles . $overlay_padding . ( ! empty( $overlay_transition ) ? $overlay_transition : '' ) . ' "' . ( empty( $overlay_transition ) ? $overlay_parallax_cls : '' ) . '>';
 
@@ -581,19 +581,20 @@ $output .= '</ul>';
 if($navigation_group){
     $output .= '<div class="ui-navigation-group">';
 }
-
+$next_text      = ( isset( $instance['slidenav_next_text'] ) && $instance['slidenav_next_text'] ) ? $instance['slidenav_next_text'] : '';
+$preview_text      = ( isset( $instance['slidenav_preview_text'] ) && $instance['slidenav_preview_text'] ) ? $instance['slidenav_preview_text'] : '';
 if ( $slidenav_position == 'default' ) {
-	$output .= ( $slidenav_on_hover ) ? '<div class="uk-hidden-hover uk-hidden-touch' . $slidenav_breakpoint_cls . $item_color . '">' : '<div class="tz-sidenav' . $slidenav_breakpoint_cls . $item_color . '">';
-	$output .= '<a class="ui-slidenav ' . $slidenav_margin . $larger_style_init . ' uk-position-center-left" href="#" data-uk-slidenav-previous data-uk-slideshow-item="previous"></a>';
-	$output .= '<a class="ui-slidenav ' . $slidenav_margin . $larger_style_init . ' uk-position-center-right" href="#" data-uk-slidenav-next data-uk-slideshow-item="next"></a>';
+	$output .= ( $slidenav_on_hover ) ? '<div class="uk-hidden-hover tz-sidenav  uk-hidden-touch' . $slidenav_breakpoint_cls . $item_color . '">' : '<div class="tz-sidenav' . $slidenav_breakpoint_cls . $item_color . '">';
+	$output .= '<a class="ui-slidenav ' . $slidenav_margin . $larger_style_init . ' uk-position-center-left" href="#" data-uk-slidenav-previous data-uk-slideshow-item="previous"><span>'.$preview_text.'</span></a>';
+	$output .= '<a class="ui-slidenav ' . $slidenav_margin . $larger_style_init . ' uk-position-center-right" href="#" data-uk-slidenav-next data-uk-slideshow-item="next"><span>'.$next_text.'</span></a>';
 	$output .= '</div> ';
 } elseif ( $slidenav_position == 'outside' ) {
 	$output .= ( $slidenav_on_hover ) ? '<div class="ui-sidenav-outside uk-hidden-hover uk-hidden-touch' . $slidenav_breakpoint_cls . $slidenav_outside_color . '">' : '<div class="ui-sidenav-outside' . $slidenav_breakpoint_cls . $slidenav_outside_color . '">';
-	$output .= '<a class="ui-slidenav ' . $slidenav_margin . $larger_style_init . ' uk-position-center-left-out" href="#" data-uk-slidenav-previous data-uk-slideshow-item="previous" uk-toggle="cls: uk-position-center-left-out uk-position-center-left; mode: media; media:' . $slidenav_outside_breakpoint . '"></a>';
-	$output .= '<a class="ui-slidenav ' . $slidenav_margin . $larger_style_init . ' uk-position-center-right-out" href="#" data-uk-slidenav-next data-uk-slideshow-item="next" uk-toggle="cls: uk-position-center-right-out uk-position-center-right; mode: media; media:' . $slidenav_outside_breakpoint . '"></a>';
+	$output .= '<a class="ui-slidenav ' . $slidenav_margin . $larger_style_init . ' uk-position-center-left-out" href="#" data-uk-slidenav-previous data-uk-slideshow-item="previous" data-uk-toggle="cls: uk-position-center-left-out uk-position-center-left; mode: media; media:' . $slidenav_outside_breakpoint . '"></a>';
+	$output .= '<a class="ui-slidenav ' . $slidenav_margin . $larger_style_init . ' uk-position-center-right-out" href="#" data-uk-slidenav-next data-uk-slideshow-item="next" data-uk-toggle="cls: uk-position-center-right-out uk-position-center-right; mode: media; media:' . $slidenav_outside_breakpoint . '"></a>';
 	$output .= '</div> ';
 } elseif ( $slidenav_position != '' ) {
-	$output .= ( $slidenav_on_hover ) ? '<div class="uk-slidenav-container uk-hidden-hover uk-hidden-touch' . $slidenav_position_cls . $slidenav_margin . $slidenav_breakpoint_cls . $item_color . '">' : '<div class="uk-slidenav-container' . $slidenav_position_cls . $slidenav_margin . $slidenav_breakpoint_cls . $item_color . '">';
+	$output .= ( $slidenav_on_hover ) ? '<div class="uk-slidenav-container  uk-hidden-hover uk-hidden-touch' . $slidenav_position_cls . $slidenav_margin . $slidenav_breakpoint_cls . $item_color . '">' : '<div class="uk-slidenav-container' . $slidenav_position_cls . $slidenav_margin . $slidenav_breakpoint_cls . $item_color . '">';
 	$output .= '<a class="ui-slidenav' . $larger_style_init . '" href="#" data-uk-slidenav-previous data-uk-slideshow-item="previous"></a>';
 	$output .= '<a class="ui-slidenav' . $larger_style_init . '" href="#" data-uk-slidenav-next data-uk-slideshow-item="next"></a>';
 	$output .= '</div>';
