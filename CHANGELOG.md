@@ -1,5 +1,29 @@
 # Changelogs:
 
+## Version 1.0.6 - 11/10/2023
+
+**Fix bugs:**
+
+- Fix underfine image class
+
+**Improvement:**
+
+- Update style element
+- Update style cart filter
+- Update new style for timeline 
+- Update source get advanced product by product type
+- Update show icon in advanced product archive demo page
+- Remove css pagination modules
+
+**Added:**
+
+- Add link for title
+- Add uislider element
+- Add setting product status for deader
+- Add Sub heading background in heading element
+- Add option show introtext in element uiadvanced product
+- Add new style (slider style1) for advanced product category element
+
 ## Version 1.0.4 - 18/04/2023
 
 **Fix bugs:**
