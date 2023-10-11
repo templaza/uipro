@@ -1595,11 +1595,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default' => '1',
 					'start_section' => 'content_settings',
 					'section_name'  => esc_html__('Content Settings', 'uipro'),
-                    'conditions' => [
-                        'terms' => [
-                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
-                        ],
-                    ],
+
 				),
 				array(
 					'name'          => 'content_font_family',

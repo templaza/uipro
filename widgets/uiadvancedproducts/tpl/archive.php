@@ -147,7 +147,9 @@ if($ap_posts && $ap_posts -> have_posts()) {
     $slider_start       = (isset($instance['slider_item_start']) && $instance['slider_item_start']) ? $instance['slider_item_start'] : '0';
 
     $show_author 	    = (isset($instance['show_author']) && $instance['show_author']) ? intval($instance['show_author']) : 0;
+    $show_intro 	    = (isset($instance['show_introtext']) && $instance['show_introtext']) ? intval($instance['show_introtext']) : 0;
     $args['show_author'] = $show_author;
+    $args['show_intro'] = $show_intro;
     $args['ap_class'] = 'templazaFadeInUp';
 
     $general_styles = \UIPro_Elementor_Helper::get_general_styles($instance);
