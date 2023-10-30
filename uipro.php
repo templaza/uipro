@@ -23,6 +23,8 @@ class UIPro{
     protected static $instance;
     protected static $_core_els    = array();
 
+    protected $cache    = array();
+
     public function __construct()
     {
         require_once dirname(__FILE__).'/includes/autoloader.php';
@@ -99,8 +101,17 @@ class UIPro{
             }
         }
 
+        $store_id   = __METHOD__;
+        $store_id  .= '::'.serialize($elements);
+        $store_id   = md5($store_id);
+
+        if(isset($this -> cache[$store_id])){
+            return $this -> cache[$store_id];
+        }
+
         foreach ( $elements as $plugin => $group ) {
-            foreach ( $group as $element ) {
+            for ($i=0;$i<count( $group);$i++) {
+                $element    = $group[$i];
                 $file_config = UIPRO_WIDGETS_PATH.'/' . $element . "/config.php";
                 if ( file_exists( $file_config ) ) {
                     require_once $file_config;
@@ -108,6 +119,7 @@ class UIPro{
             }
         }
 
+        return $this -> cache[$store_id] = true;
     }
 
     /**
@@ -139,6 +151,7 @@ class UIPro{
     public static function get_elements_from_path(){
         $core_path  = UIPRO_WIDGETS_PATH;
         $folders = glob( $core_path . '/*', GLOB_ONLYDIR );
+
         if(count($folders)) {
             foreach ( $folders as $path ) {
                 $folder = basename($path);
