@@ -164,17 +164,20 @@ if (!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == '
             $uk_cover = $tran_cl;
         }
     }
-    $output .=  '<a class="'.$imgclass.' uk-height-1-1 ui-post-thumbnail uk-display-block uk-card-media-top'
+    $output .=  '<a class="'.$imgclass.' uk-height-1-1 ui-post-thumbnail uk-position-relative uk-display-block uk-card-media-top'
         .esc_attr($cover_image.$image_border).'" href="'. get_permalink( $item->ID ) .'">'
         . UIPro_UIPosts_Helper::get_post_thumbnail($item, $thumbnail_size, $uk_cover) .'' ;
-        $output .=  '<canvas width="600" height="400"></canvas>';
+        if(!empty($cover_image)){
+            $output .=  '<canvas width="600" height="400"></canvas>';
+        }
+        if(count($meta_thumb_position)) {
+            $output .= '<span class="ui-post-meta-thumb uk-article-meta uk-flex uk-flex-middle ' . $meta_on_thumb_pos . '">';
+            $output .= wp_kses(implode('', $meta_thumb_position), wp_kses_allowed_html('post'));
+            $output .= '</span>';
+        }
         $output .= '</a>';
 
-    if(count($meta_thumb_position)) {
-        $output .= '<div class="ui-post-meta-thumb uk-article-meta uk-flex uk-flex-middle ' . $meta_on_thumb_pos . '">';
-        $output .= wp_kses(implode('', $meta_thumb_position), wp_kses_allowed_html('post'));
-        $output .= '</div>';
-    }
+
     if ($image_position == 'left' || $image_position == 'right') {
         
         $output .=  '</div>';

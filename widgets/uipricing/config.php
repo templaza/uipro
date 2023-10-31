@@ -120,7 +120,7 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 					'label'         => esc_html__('Icon Color', 'uipro'),
 					'description'   => esc_html__('Set the color of Icon.', 'uipro'),
 					'selectors' => [
-						'{{WRAPPER}} .ui-icon{{CURRENT_ITEM}}' => 'color: {{VALUE}}',
+						'{{WRAPPER}} .pricing-icon{{CURRENT_ITEM}}' => 'color: {{VALUE}}',
 					],
 				]
 			);
@@ -347,6 +347,12 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 						],
 					],
 				),
+                array(
+                    'name' => 'card_border',
+                    'type' => \Elementor\Group_Control_Border::get_type(),
+                    'label' => __( 'Card Border', 'uipro' ),
+                    'selector' => '{{WRAPPER}} .ui-pricing-body',
+                ),
 				array(
 					'type'          => Controls_Manager::SELECT,
 					'name'          => 'card_size',
@@ -515,10 +521,26 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 						'medium'    => esc_html__('Medium', 'uipro'),
 						'large'     => esc_html__('Large', 'uipro'),
 						'xlarge'    => esc_html__('X-Large', 'uipro'),
+						'custom'    => esc_html__('Custom', 'uipro'),
 						'remove'    => esc_html__('None', 'uipro'),
 					),
 					'default'       => '',
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'meta_margin_custom',
+                    'label'         => esc_html__( 'Custom margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_margin', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .plan-period' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
 				array(
 					'type'          =>  Controls_Manager::SELECT,
 					'name'          => 'meta_alignment',
@@ -855,10 +877,36 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 						'medium'    => esc_html__('Medium', 'uipro'),
 						'large'     => esc_html__('Large', 'uipro'),
 						'xlarge'    => esc_html__('X-Large', 'uipro'),
+						'custom'    => esc_html__('Custom', 'uipro'),
 						'remove'    => esc_html__('None', 'uipro'),
 					),
 					'default'       => '',
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'button_margin_custom',
+                    'label'         => esc_html__( 'Custom margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'button_margin', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-button' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'button_margin_padding',
+                    'label'         => esc_html__( 'Button Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
 			);
 			$options    = array_merge($options, $this->get_general_options());
 

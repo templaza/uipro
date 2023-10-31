@@ -646,6 +646,19 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                         'title_overlay'    => '1'
                     ),
                 ),
+                array(
+                    'label' => esc_html__( 'Background title box', 'uipro' ),
+                    'name'  => 'title_bg',
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .ap-title-wrap' => 'background-color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout', 'operator' => 'in', 'value' => ['style1']],
+                        ],
+                    ],
+                ),
 
                 array(
                     'type'          => Group_Control_Typography::get_type(),

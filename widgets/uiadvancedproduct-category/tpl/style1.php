@@ -130,7 +130,7 @@ if($cat_results){
                             }
                             ?>
 
-                            <div class="uk-card-body <?php echo esc_attr($title_cls);?>">
+                            <div class="uk-card-body ap-title-wrap <?php echo esc_attr($title_cls);?>">
                                 <?php
                                 if($show_product_count){
                                     ?>

@@ -18,7 +18,10 @@ $button_full_width    = isset($instance['button_full_width']) && $instance['butt
 $button_margin  = isset($instance['button_margin']) && $instance['button_margin'] ? ($instance['button_margin'] == 'default' ? ' uk-margin' : ' uk-margin-'. $instance['button_margin']) : '';
 $label_text   = ( isset( $instance['label_text'] ) && $instance['label_text'] ) ? $instance['label_text'] : '';
 $label_styles = ( isset( $instance['label_styles'] ) && $instance['label_styles'] ) ? ' ' . $instance['label_styles'] : ' uk-label';
-
+$btn_style = '';
+if($button_style == ' uk-button-custom'){
+    $btn_style = 'custom';
+}
 // Meta
 $meta_element   = ( isset( $instance['meta_tag'] ) && $instance['meta_tag'] ) ? $instance['meta_tag'] : 'div';
 $meta_style_cls = ( isset( $instance['meta_style'] ) && $instance['meta_style'] ) ? $instance['meta_style'] : '';
@@ -49,7 +52,7 @@ $price_symbol_heading  = ( isset( $instance['symbol_style'] ) && $instance['symb
 $description_style  = ( isset( $instance['description_style'] ) && $instance['description_style'] ) ? ' uk-' . $instance['description_style'] : '';
 $description_style .= ( isset( $instance['description_color'] ) && $instance['description_color'] ) ? ' uk-text-' . $instance['description_color'] : '';
 $description_style .= ( isset( $instance['description_text_transform'] ) && $instance['description_text_transform'] ) ? ' uk-text-' . $instance['description_text_transform'] : '';
-$description_style .= ( isset( $instance['description_margin_top'] ) && $instance['description_margin_top'] ) ? ' uk-margin-' . $instance['description_margin_top'] . '-top' : ' uk-margin-top';
+$description_style .= ( isset( $instance['description_margin'] ) && $instance['description_margin'] ) ? ' uk-margin-' . $instance['description_margin'] . '-top' : ' uk-margin-top';
 
 //Card Style
 $card_style     = isset($instance['card_style']) && $instance['card_style'] ? ' uk-card-'. $instance['card_style'] : '';
@@ -121,7 +124,7 @@ if ($title) {
 			$output .= '<li class="ui-item">';
 			if ( $media ) {
 				$output .= '<div class="uk-grid-small uk-child-width-expand uk-flex-nowrap uk-flex-middle" data-uk-grid>';
-				$output .= '<div class="uk-width-auto ui-icon elementor-repeater-item-'. $item['_id'] .'">';
+				$output .= '<div class="uk-width-auto pricing-icon elementor-repeater-item-'. $item['_id'] .'">';
 				$output .= $media;
 				$output .= '</div>';
 				$output .= '<div>';
@@ -145,7 +148,7 @@ if ($title) {
 		$output .= '</div>';
 	}
 
-	$output     .=  $button_text ? '<div class="ui-button'.$button_margin.'"><a class="uk-button'.$button_style.$button_shape.$button_size.($button_full_width ? ' uk-width-1-1' : '').'" href="'.$url.'"'.$attribs.'>'.$button_text.'</a></div>' : '';
+	$output     .=  $button_text ? '<div class="ui-button'.$button_margin.' '.$btn_style.'"><a class="uk-button'.$button_style.$button_shape.$button_size.($button_full_width ? ' uk-width-1-1' : '').'" href="'.$url.'"'.$attribs.'>'.$button_text.'</a></div>' : '';
 
 	$output     .=  '</div>';
 

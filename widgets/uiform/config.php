@@ -180,6 +180,16 @@ if ( ! class_exists( 'UIPro_Config_UIForm' ) ) {
                     ],
                 ),
                 array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'button_margin',
+                    'label'         => esc_html__( 'Button Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '.templaza-section {{WRAPPER}} .wpforms-container form .wpforms-submit-container' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+                array(
                     'label' => esc_html__( 'Button Border', 'uipro' ),
                     'name'          => 'button_border',
                     'type' => \Elementor\Group_Control_Border::get_type(),

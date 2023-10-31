@@ -200,8 +200,15 @@ if (count($posts)) {
         $output  .= '</div>';
         if ($enable_navigation) {
             // Nav
-            $output .= '<div class="'.($navigation_position == 'inside' ? '' : 'uk-hidden@l ').'uk-light"><a class="uk-position-center-left uk-position-small" href="#" data-uk-slidenav-previous data-uk-slider-item="previous"></a><a class="uk-position-center-right uk-position-small" href="#" data-uk-slidenav-next data-uk-slider-item="next"></a></div>';
-            $output .= $navigation_position == 'inside' ? '' : '<div class="uk-visible@l"><a class="uk-position-center-left-out uk-position-small" href="#" data-uk-slidenav-previous data-uk-slider-item="previous"></a><a class="uk-position-center-right-out uk-position-small" href="#" data-uk-slidenav-next data-uk-slider-item="next"></a></div>';
+            if($navigation_position == 'inside'){
+                $output .= '<div class="'.($navigation_position == 'inside' ? '' : 'uk-hidden@l ').'uk-light"><a class="uk-position-center-left uk-position-small" href="#" data-uk-slidenav-previous data-uk-slider-item="previous"></a><a class="uk-position-center-right uk-position-small" href="#" data-uk-slidenav-next data-uk-slider-item="next"></a></div>';
+            }elseif($navigation_position == ''){
+                $output .= $navigation_position == 'inside' ? '' : '<div class="uk-visible@l"><a class="uk-position-center-left-out uk-position-small" href="#" data-uk-slidenav-previous data-uk-slider-item="previous"></a><a class="uk-position-center-right-out uk-position-small" href="#" data-uk-slidenav-next data-uk-slider-item="next"></a></div>';
+            }else{
+                $output .= '<div class="uk-nav-wrap uk-flex uk-position-' .esc_attr($navigation_position).'"><a class="uk-slidernav" href="#" data-uk-slidenav-previous data-uk-slider-item="previous"></a><a class="uk-slidernav" href="#" data-uk-slidenav-next data-uk-slider-item="next"></a></div>';
+
+            }
+
         }
         $output  .= '</div>';
         if ($enable_dotnav) {

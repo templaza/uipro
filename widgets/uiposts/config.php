@@ -800,6 +800,13 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 					'options' => [
 						'' => esc_html__('Outside', 'uipro'),
 						'inside' => esc_html__('Inside', 'uipro'),
+                        'top-left' => esc_html__( 'Top Left', 'uipro' ),
+                        'top-right' => esc_html__( 'Top Right', 'uipro' ),
+                        'center-left' => esc_html__( 'Center Left', 'uipro' ),
+                        'center-right' => esc_html__( 'Center Right', 'uipro' ),
+                        'bottom-left' => esc_html__( 'Bottom Left', 'uipro' ),
+                        'bottom-center' => esc_html__( 'Bottom Center', 'uipro' ),
+                        'bottom-right' => esc_html__( 'Bottom Right', 'uipro' ),
 					],
 					'conditions' => [
 						'terms' => [
@@ -808,6 +815,22 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 						],
 					],
 				),
+                    array(
+                        'type'          => Controls_Manager::DIMENSIONS,
+                        'name'          => 'navigation_margin_custom',
+                        'label'         => esc_html__( 'Navigation Margin', 'uipro' ),
+                        'responsive'    =>  true,
+                        'size_units'    => [ 'px', 'em', '%' ],
+                        'selectors'     => [
+                            '{{WRAPPER}} .uk-nav-wrap' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                        ],
+                        'conditions' => [
+                            'terms' => [
+                                ['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
+                                ['name' => 'enable_navigation', 'operator' => '===', 'value' => '1'],
+                            ],
+                        ],
+                    ),
                     array(
                         'type'          => Controls_Manager::DIMENSIONS,
                         'name'          => 'navigation_pos_margin',
