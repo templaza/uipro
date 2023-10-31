@@ -28,6 +28,8 @@ if ( !class_exists( 'UIPro_El' ) ) {
 
 		private $loaded_controls = array();
 
+		protected $cache    = array();
+
 		/**
 		 * UIPro_El constructor.
 		 */
@@ -73,26 +75,39 @@ if ( !class_exists( 'UIPro_El' ) ) {
 		 */
 		public function load_widgets( $widgets_manager ) {
 
+		    $store_id   = __METHOD__;
+		    $store_id  .= '::'.serialize($widgets_manager);
+		    $store_id   = md5($store_id);
+
+		    if(isset($this -> cache[$store_id])){
+		        return $this -> cache[$store_id];
+            }
+
 			// parent class
 			require_once( UIPRO_CLASSES_PATH . '/class-el-widget.php' );
 
-			$widgets = UIPro_Helper::get_elements();
-			foreach ( $widgets as $group => $_widgets ) {
-				foreach ( $_widgets as $widget ) {
-					if ( $group != 'widgets' ) {
-						$file = apply_filters( 'templaza-elements/el-widget-file', UIPRO_WIDGETS_PATH . "/$widget/class-el-$widget.php", $widget );
+			if($widgets = UIPro_Helper::get_elements()){
+                foreach ( $widgets as $group => $_widgets ) {
+    //				foreach ( $_widgets as $widget ) {
+                    for ($i=0;$i<count( $_widgets); $i++) {
+                        $widget = $_widgets[$i];
+                        if ( $group != 'widgets' ) {
+                            $file = apply_filters( 'templaza-elements/el-widget-file', UIPRO_WIDGETS_PATH . "/$widget/class-el-$widget.php", $widget );
 
-						if ( file_exists( $file ) ) {
-							include_once $file;
-							$class = '\UIPro_El_' . str_replace( '-', '_', ucfirst( $widget ) );
+                            if ( file_exists( $file ) ) {
+                                include_once $file;
+                                $class = '\UIPro_El_' . str_replace( '-', '_', ucfirst( $widget ) );
 
-							if ( class_exists( $class ) ) {
-								$widgets_manager->register( new $class() );
-							}
-						}
-					}
-				}
+                                if ( class_exists( $class ) ) {
+                                    $widgets_manager->register( new $class() );
+                                }
+                            }
+                        }
+                    }
+                }
+                return $this -> cache[$store_id]   = true;
 			}
+
 		}
 
 		/**
@@ -114,6 +129,15 @@ if ( !class_exists( 'UIPro_El' ) ) {
 			if(empty($widgets)){
 			    return;
             }
+
+			$store_id   = __METHOD__;
+			$store_id  .= '::'.serialize($widgets);
+			$store_id   = md5($store_id);
+
+			if(isset($this -> cache[$store_id])){
+			    return $this -> cache[$store_id];
+            }
+
             foreach ( $widgets as $group => $_widgets ) {
                 if(empty($_widgets)){
                     continue;
@@ -131,6 +155,8 @@ if ( !class_exists( 'UIPro_El' ) ) {
                     }
                 }
             }
+
+            return $this -> cache[$store_id]    = true;
 		}
 
         /**
@@ -147,30 +173,36 @@ if ( !class_exists( 'UIPro_El' ) ) {
                 return false;
             }
 
+            $store_id   = __METHOD__;
+            $store_id  .= '::'.$path;
+            $store_id   = md5($store_id);
+
+            if(isset($this -> cache[$store_id])){
+                return $this -> cache[$store_id];
+            }
+
             $files  = glob($path.'/*', GLOB_ONLYDIR);
 
-//            $controls_manager = \Elementor\Plugin::$instance->controls_manager;
+            if(!empty($files)){
 
-            foreach ( $files as $file ) {
-                $control    = basename($file);
-                $control    = str_replace('-', '_', $control);
+                foreach ( $files as $file ) {
+                    $control    = basename($file);
+                    $control    = str_replace('-', '_', $control);
 
-                if((!isset($this -> loaded_controls[$control]) || !$this -> loaded_controls[$control])
-                    && file_exists($file.'/'.$control.'.php') ){
-                    require_once $file.'/'.$control.'.php';
+                    if((!isset($this -> loaded_controls[$control]) || !$this -> loaded_controls[$control])
+                        && file_exists($file.'/'.$control.'.php') ){
+                        require_once $file.'/'.$control.'.php';
+                    }
+
+                    $class = 'UIPro\Elementor\Control\\'.ucfirst($control);
+
+                    if(!class_exists($class)){
+                        continue;
+                    }
+                    $this -> loaded_controls[$control] = $class::instance();
+
                 }
-
-                $class = 'UIPro\Elementor\Control\\'.ucfirst($control);
-
-                if(!class_exists($class)){
-                    continue;
-                }
-                $this -> loaded_controls[$control] = $class::instance();
-//
-//                $controls_manager -> register_control($control, $control_obj);
-//                $control_obj    = $class::instance();
-//                $controls_manager -> register($control_obj);
-
+                return $this -> cache[$store_id]    = true;
             }
         }
 

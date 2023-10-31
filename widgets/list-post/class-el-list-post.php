@@ -56,11 +56,20 @@ if ( ! class_exists( 'UIPro_El_List_Post' ) ) {
             return $temp;
         }
 
+        protected $cache    = array();
+
         protected function get_posts($settings){
 
+		    $store_id   = __METHOD__;
+		    $store_id  .= '::'.serialize($settings);
+		    $store_id   = md5($store_id);
+
+		    if(isset($this -> cache[$store_id])){
+		        return $this -> cache[$store_id];
+            }
+
             $number_posts   = $settings['number_posts'] != ''?$settings['number_posts']:4;
-//            $feature_post   = ( ! empty( $settings['display_feature'] ) && $settings['display_feature'] == 'yes' ) ? $settings['display_feature'] : false;
-//            $number_posts   = $feature_post?$number_posts:$number_posts - 1;
+
             $query_args     = array(
                 'post_type'           => 'post',
                 'posts_per_page'      => $number_posts,
@@ -85,7 +94,15 @@ if ( ! class_exists( 'UIPro_El_List_Post' ) ) {
                     $query_args['orderby'] = 'rand';
             }
 
-            return new WP_Query( $query_args );
+            $myposts    = new WP_Query( $query_args );
+
+            if(!empty($myposts) && !is_wp_error($myposts)){
+                return $this -> cache[$store_id]    = $myposts;
+            }
+
+            return false;
+
+//            return new WP_Query( $query_args );
         }
     }
 }
