@@ -11,9 +11,9 @@
     background:#333;
     &:before{
       content:"";
-      width:30%;
+      width:40%;
       height:100%;
-      left:-15%;
+      left:-20%;
       background:#333;
       position:absolute;
     }
@@ -22,7 +22,7 @@
     .truck{
       &:before{
         left:auto;
-        right:-15%;
+        right:-20%;
       }
     }
   }

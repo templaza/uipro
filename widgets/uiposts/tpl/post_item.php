@@ -70,6 +70,10 @@ $tran_toggle = ' ';
 if($image_transition){
     $tran_toggle = ' uk-transition-toggle ';
 }
+$flash_cl = '';
+if($flash_effect){
+    $flash_cl = ' flash-effect';
+}
 $tags = wp_get_post_terms( $item->ID , $resource. '_tag' );
 $i = 1;
 $tag_content    =   '';
@@ -159,7 +163,7 @@ if (!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == '
     }
 endif;
 if ($layout == 'thumbnail') {
-    $output .= '<a class="ui-post-thumb-box" href="'. get_permalink( $item->ID ) .'"><div class="uk-position-cover uk-overlay uk-overlay-primary'.esc_attr( $thumbnail_hover ? ' uk-transition-fade' : '' ).'"></div></a>';
+    $output .= '<a class="ui-post-thumb-box '.$flash_cl.'" href="'. get_permalink( $item->ID ) .'"><div class="uk-position-cover uk-overlay uk-overlay-primary'.esc_attr( $thumbnail_hover ? ' uk-transition-fade' : '' ).'"></div></a>';
 }
 
 $output .= '<div class="ui-post-info-wrap'.esc_attr(($layout == 'thumbnail' ? ' uk-position-bottom uk-light' : '').( $thumbnail_hover && $thumbnail_hover_transition ? $thumbnail_hover_transition : '' ).(!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'left' || $image_position == 'right') ? $expand_width : '')).'">';

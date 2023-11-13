@@ -90,7 +90,7 @@
   height: 100%;
   overflow: hidden;
 }
-.ui-posts .ui-post-thumb-box:before {
+.ui-posts .ui-post-thumb-box.flash-effect:before {
   position: absolute;
   top: 0;
   left: -100%;
@@ -102,7 +102,7 @@
   transform: skewX(-25deg);
   z-index: 2;
 }
-.ui-posts .ui-post-thumb-box:hover:before {
+.ui-posts .ui-post-thumb-box.flash-effect:hover:before {
   -webkit-animation: slide 1.3s;
   animation: slide 1.3s;
 }
