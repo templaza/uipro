@@ -42,7 +42,33 @@ if ($email_tag == 'lead' || $email_tag == 'meta') {
 	$email_style  .=  ' uk-text-'.$email_tag;
 	$email_tag    =   'p';
 }
-$media          = '';
+$media  = '';
+$icon_mail  = '';
+$icon_address  = '';
+$address          = isset($instance['user_address']) ? $instance['user_address'] : '';
+$address_icon    =   isset($instance['address_icon']) ? $instance['address_icon'] : array();
+if ($address_icon && isset($address_icon['value'])) {
+    if (is_array($address_icon['value']) && isset($address_icon['value']['url']) && $address_icon['value']['url']) {
+        $icon_address   .=  '<span><img src="'.$address_icon['value']['url'].'" alt="svg-icon" data-uk-svg /></span>';
+    } elseif (is_string($address_icon['value']) && $address_icon['value']) {
+        $icon_address   .=  '<span><i class="' . $address_icon['value'] . '" aria-hidden="true"></i></span>';
+    }
+}
+$email_icon    =   isset($instance['email_icon']) ? $instance['email_icon'] : array();
+if ($email_icon && isset($email_icon['value'])) {
+    if (is_array($email_icon['value']) && isset($email_icon['value']['url']) && $email_icon['value']['url']) {
+        $icon_mail   .=  '<span><img src="'.$email_icon['value']['url'].'" alt="svg-icon" data-uk-svg /></span>';
+    } elseif (is_string($email_icon['value']) && $email_icon['value']) {
+        $icon_mail   .=  '<span><i class="' . $email_icon['value'] . '" aria-hidden="true"></i></span>';
+    }
+}
+if(!empty($email_icon)){
+    if ($email_icon['library'] == 'svg'){
+        $shortcode  .= ' submit_icon="'.$submit_icon['value']['url'].'"';
+    }else{
+        $shortcode  .= ' submit_icon="'.$submit_icon['value'].'"';
+    }
+}
 $image_appear   =   ( isset( $instance['image_appear'] ) && $instance['image_appear'] ) ? $instance['image_appear'] : '';
 
 //Card Style
@@ -74,8 +100,14 @@ if(!empty($users)){
         if($user_product_number != ''){
             $user_product_number     =  '<'.$product_number_tag.' class="ui-product-number '.$product_number_style.'">'.count_user_posts( $user->ID , "ap_product"  ). ' '.$product_label_txt.'</'.$product_number_tag.'>';
         }
+        if($address !=''){
+            $map_location   = get_field('_dls_map_location', 'user_'.$user -> ID);
+            if(!empty($map_location)){
+                $address = '<div class="ui-address">'.$icon_address.$map_location.'</div>';
+            }
+        }
         if($email !=''){
-            $email     =  '<'.$email_tag.' class="ui-email '.$email_style.'">'.$user->user_email.'</'.$email_tag.'>';
+            $email     =  '<'.$email_tag.' class="ui-email '.$email_style.'">'.$icon_mail.$user->user_email.'</'.$email_tag.'>';
         }
         $output     ='<div class="ap-dealership-user">';
         $output     .=   '<div class="ui-card uk-card'. $card_style . $card_size . $general_styles['container_cls'] .'"' . $general_styles['animation'] . '>';
@@ -86,13 +118,13 @@ if(!empty($users)){
         }
         $output     .=  '<div class="uk-card-body' . $general_styles['content_cls'] . '">';
         if ($name_position == 'before') {
-            $output         .=  $name.$email.$user_product_number;
+            $output         .=  $name.$address.$email.$user_product_number;
         }
         if ($image_appear == 'inside') {
             $output     .=  $media ? '<div class="ui-media"><div class="uk-inline-clip uk-transition-toggle" tabindex="0">'.$media.'</div></div>' : '';
         }
         if ($name_position == 'after') {
-            $output         .=  $name.$email.$user_product_number;
+            $output         .=  $name.$address.$email.$user_product_number;
         }
         $output     .=  '<div class="ui-card-text">'.$text.'</div>';
 

@@ -346,7 +346,7 @@ if ( ! class_exists( 'UIPro_Config_UITimeline' ) ) {
                     'start_section' => 'image_settings',
                     'section_name'      => esc_html__('Image Box Settings', 'uipro'),
                     'condition'     => array(
-                        'timeframe_on_title'    => '0'
+                        'timeframe_on_title!'    => '1'
                     ),
                 ),
                 array(

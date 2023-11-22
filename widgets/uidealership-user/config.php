@@ -435,6 +435,14 @@ if ( ! class_exists( 'UIPro_Config_UIDealership_User' ) ) {
 					],
 				),
 				array(
+					'type'          =>  Controls_Manager::COLOR,
+					'name'          => 'name_color_hover',
+					'label'         => esc_html__('Title Color Hover', 'uipro'),
+					'selectors' => [
+						'{{WRAPPER}} .ui-name:hover a' => 'color: {{VALUE}}',
+					],
+				),
+				array(
 					'type'          => Controls_Manager::SELECT,
 					'name'          => 'name_heading_style',
 					'default'       => 'h3',
@@ -476,6 +484,105 @@ if ( ! class_exists( 'UIPro_Config_UIDealership_User' ) ) {
                         '{{WRAPPER}} .ui-name' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                     ],
 				),
+                //Address settings
+				array(
+					'type'          => Group_Control_Typography::get_type(),
+					'name'          => 'address_typography',
+					'scheme'        => Typography::TYPOGRAPHY_1,
+					'label'         => esc_html__('Address Font', 'uipro'),
+					'selector'      => '{{WRAPPER}} .ui-address',
+                    'start_section' => 'address_settings',
+                    'section_name'      => esc_html__('Address Settings', 'uipro')
+				),
+				array(
+					'type'          =>  Controls_Manager::COLOR,
+					'name'          => 'address_color',
+					'label'         => esc_html__('Address Color', 'uipro'),
+					'selectors' => [
+						'{{WRAPPER}} .ui-address' => 'color: {{VALUE}}',
+					],
+				),
+				array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'address_padding',
+                    'label'         => esc_html__( 'Address Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-address' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+				),
+				array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'address_margin',
+                    'label'         => esc_html__( 'Address Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-address' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+				),
+                array(
+                    'type'          => Controls_Manager::ICONS,
+                    'id'            => 'address_icon',
+                    'label'         => esc_html__( 'Address Icon', 'uipro' ),
+                ),
+                array(
+                    'name'          => 'address_icon_size',
+                    'label' => __( 'Icon Size', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 400,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 14,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-address i' => 'font-size: {{SIZE}}{{UNIT}};',
+                        '{{WRAPPER}} .ui-address svg' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'icon_address_color',
+                    'label'         => esc_html__('Icon Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-address i' => 'color: {{VALUE}}',
+                        '{{WRAPPER}} .ui-address svg' => 'fill: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'name'          => 'address_icon_spacing',
+                    'label' => esc_html__( 'Icon Spacing', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px'],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 200,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'size' => 5,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-address span' => 'margin-right: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'name'            => 'address_border',
+                    'type'          =>  \Elementor\Group_Control_Border::get_type(),
+                    'label' => esc_html__( 'Address Border', 'uipro' ),
+                    'description'   => esc_html__( 'Address Border.', 'uipro' ),
+                    'selector' => '{{WRAPPER}} .ui-address',
+                ),
 
 				//Product Number settings
 				array(
@@ -644,6 +751,65 @@ if ( ! class_exists( 'UIPro_Config_UIDealership_User' ) ) {
                         ],
                     ],
 				),
+                array(
+                    'type'          => Controls_Manager::ICONS,
+                    'id'            => 'email_icon',
+                    'label'         => esc_html__( 'Email Icon', 'uipro' ),
+                ),
+                array(
+                    'name'          => 'email_icon_size',
+                    'label' => __( 'Icon Size', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 400,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 14,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-email i' => 'font-size: {{SIZE}}{{UNIT}};',
+                        '{{WRAPPER}} .ui-email svg' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'icon_email_color',
+                    'label'         => esc_html__('Icon Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-email i' => 'color: {{VALUE}}',
+                        '{{WRAPPER}} .ui-email svg' => 'fill: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'user_email', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+                ),
+                array(
+                    'name'          => 'email_icon_spacing',
+                    'label' => esc_html__( 'Icon Spacing', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px'],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 200,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'size' => 5,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-email span' => 'margin-right: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
 
 
 			);

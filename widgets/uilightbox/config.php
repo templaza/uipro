@@ -314,6 +314,19 @@ if ( ! class_exists( 'UIPro_Config_UILightbox' ) ) {
                     'section_name'  => esc_html__('Color Style Hover', 'uipro')
                 ),
                 array(
+                    'id'            => 'title-color-hover',
+                    'type'          =>  Controls_Manager::COLOR,
+                    'label'         => esc_html__('Title Color Hover', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-title-lightbox:hover' => 'color: {{VALUE}}',
+                    ],
+                    'separator'     => 'before',
+                    'condition'     => array(
+                        'title!'    => ''
+                    ),
+
+                ),
+                array(
                     'name'          => 'background_color_hover',
                     'type'          =>  \Elementor\Group_Control_Background::get_type(),
                     'label'         => esc_html__( 'Background Color Hover', 'uipro' ),

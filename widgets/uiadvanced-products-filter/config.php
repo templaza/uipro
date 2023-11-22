@@ -514,6 +514,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
                     'selectors' => [
                         '{{WRAPPER}} .advanced-product-search-form .ap-search-item input' => 'color: {{VALUE}}',
                         '{{WRAPPER}} .advanced-product-search-form .ap-search-item select' => 'color: {{VALUE}}',
+                        '{{WRAPPER}} .advanced-product-search-form .ap-search-item select option' => 'color: {{VALUE}}',
                     ],
                 ),
                 array(
@@ -550,6 +551,14 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
                     'description'   => esc_html__('Set the hover color of Button form.', 'uipro'),
                     'selectors' => [
                         '{{WRAPPER}} .advanced-product-search-form .ap-search-item.ap-search-button .templaza-btn:hover' => 'color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'form_bg_button_overlay',
+                    'label'         => esc_html__('Button Overlay Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .advanced-product-search-form .ap-search-button button:before' => 'background-color: {{VALUE}}',
                     ],
                 ),
 			) ;
