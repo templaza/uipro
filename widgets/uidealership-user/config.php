@@ -128,7 +128,13 @@ if ( ! class_exists( 'UIPro_Config_UIDealership_User' ) ) {
                     'type'          => Controls_Manager::SWITCHER,
                     'id'            => 'user_address',
                     'label'         => esc_html__( 'Show Address', 'uipro' ),
-                    'default'       => 'yes'
+                    'default'       => 'no'
+                ),
+                array(
+                    'type'          => Controls_Manager::SWITCHER,
+                    'id'            => 'user_number',
+                    'label'         => esc_html__( 'Show Phone Number', 'uipro' ),
+                    'default'       => 'no'
                 ),
                 array(
                     'type'          => Controls_Manager::SWITCHER,
@@ -808,6 +814,109 @@ if ( ! class_exists( 'UIPro_Config_UIDealership_User' ) ) {
                     ],
                     'selectors' => [
                         '{{WRAPPER}} .ui-email span' => 'margin-right: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                //Phone Number settings
+
+				array(
+					'type'          => Group_Control_Typography::get_type(),
+					'name'          => 'phone_typography',
+					'scheme'        => Typography::TYPOGRAPHY_1,
+					'label'         => esc_html__('Phone Font', 'uipro'),
+					'selector'      => '{{WRAPPER}} .ui-phone',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'user_number', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+                    'start_section' => 'phone_settings',
+                    'section_name'      => esc_html__('Phone Settings', 'uipro'),
+				),
+				array(
+					'type'          =>  Controls_Manager::COLOR,
+					'name'          => 'phone_color',
+					'label'         => esc_html__('Phone Color', 'uipro'),
+					'selectors' => [
+						'{{WRAPPER}} .ui-phone' => 'color: {{VALUE}}',
+					],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'user_number', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+				),
+				array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'phone_margin',
+                    'label'         => esc_html__( 'Phone Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-phone' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'user_number', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+				),
+                array(
+                    'type'          => Controls_Manager::ICONS,
+                    'id'            => 'phone_icon',
+                    'label'         => esc_html__( 'Phone Icon', 'uipro' ),
+                ),
+                array(
+                    'name'          => 'phone_icon_size',
+                    'label' => __( 'Icon Size', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 400,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 14,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-phone i' => 'font-size: {{SIZE}}{{UNIT}};',
+                        '{{WRAPPER}} .ui-phone svg' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'icon_phone_color',
+                    'label'         => esc_html__('Icon Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-phone i' => 'color: {{VALUE}}',
+                        '{{WRAPPER}} .ui-phone svg' => 'fill: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'user_number', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+                ),
+                array(
+                    'name'          => 'phone_icon_spacing',
+                    'label' => esc_html__( 'Icon Spacing', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px'],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 200,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'size' => 5,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-phone span' => 'margin-right: {{SIZE}}{{UNIT}};',
                     ],
                 ),
 

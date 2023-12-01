@@ -143,11 +143,18 @@ if ( ! class_exists( 'UIPro_Config_UIShape' ) ) {
                     'label' => esc_html__( 'Shape Background Color','uipro' ),
                     'type' => Controls_Manager::COLOR,
                     'selectors' => [
-                        '{{WRAPPER}} .tz-shape' => 'background-color: {{VALUE}};',
+                            '{{WRAPPER}} .tz-shape' => 'background-color: {{VALUE}};',
                         '{{WRAPPER}} .truck:before' => 'background-color: {{VALUE}};',
                     ],
                     'start_section' => 'icon_section_style',
                     'section_tab'   => Controls_Manager::TAB_STYLE,
+                    'section_name'  => esc_html__( self::$name, 'uipro' ),
+                ),
+                array(
+                    'name' => 'border',
+                    'type' => \Elementor\Group_Control_Border::get_type(),
+                    'label' => __( 'Border', 'uipro' ),
+                    'selector' => '{{WRAPPER}} .tz-shape',
                 ),
 
 			);

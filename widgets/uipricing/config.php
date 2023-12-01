@@ -795,7 +795,21 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 					'type' => \Elementor\Controls_Manager::COLOR,
 					'separator'     => 'before',
 					'selectors' => [
-						'{{WRAPPER}} .ui-button > a' => 'background-color: {{VALUE}}',
+						'{{WRAPPER}} .ui-button' => 'background-color: {{VALUE}}',
+					],
+					'conditions' => [
+						'terms' => [
+							['name' => 'button_style', 'operator' => '===', 'value' => 'custom'],
+						],
+					],
+				),
+				array(
+					'id'          => 'background_color_overlay',
+					'label' => __( 'Background Overlay Color', 'uipro' ),
+					'type' => \Elementor\Controls_Manager::COLOR,
+					'separator'     => 'before',
+					'selectors' => [
+						'{{WRAPPER}} .ui-button:before' => 'background-color: {{VALUE}}',
 					],
 					'conditions' => [
 						'terms' => [

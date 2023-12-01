@@ -225,12 +225,29 @@ if ( ! class_exists( 'UIPro_Config_UIForm' ) ) {
                     'selector'      => '{{WRAPPER}} form button, {{WRAPPER}} form input[type="button"], {{WRAPPER}} form input[type="submit"]',
                 ),
                 array(
+                    'type'          => Group_Control_Typography::get_type(),
+                    'name'          => 'label_typography',
+                    'scheme'        => Typography::TYPOGRAPHY_1,
+                    'label'         => esc_html__('Label Font', 'uipro'),
+                    'selector'      => '{{WRAPPER}} form .wpforms-field .wpforms-field-label',
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'label_color',
+                    'label'         => esc_html__('Label Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} form .wpforms-field .wpforms-field-label' => 'color: {{VALUE}} !important;',
+                    ],
+                ),
+                array(
                     'type'          =>  Controls_Manager::COLOR,
                     'name'          => 'input_color',
                     'label'         => esc_html__('Input Color', 'uipro'),
                     'description'   => esc_html__('Set the color of input.', 'uipro'),
                     'selectors' => [
-                        '{{WRAPPER}} form input, {{WRAPPER}} form select, {{WRAPPER}} form textarea ' => 'color: {{VALUE}} !important;',
+                        '{{WRAPPER}} form input, {{WRAPPER}} form select, {{WRAPPER}} form textarea ,
+                         {{WRAPPER}} form .wpforms-field input[type="text"],
+                         {{WRAPPER}} form .wpforms-field input[type="email"] ' => 'color: {{VALUE}} !important;',
                     ],
                 ),
                 array(

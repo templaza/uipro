@@ -35,7 +35,7 @@ if ($product_number_tag == 'lead' || $product_number_tag == 'meta') {
 }
 
 //Email
-$email          = isset($instance['user_email']) ? $instance['user_email'] : '';
+$show_email          = isset($instance['user_email']) ? $instance['user_email'] : '';
 $email_tag      = isset($instance['email_tag']) ? $instance['email_tag'] : 'meta';
 $email_style    = '';
 if ($email_tag == 'lead' || $email_tag == 'meta') {
@@ -44,8 +44,9 @@ if ($email_tag == 'lead' || $email_tag == 'meta') {
 }
 $media  = '';
 $icon_mail  = '';
+$icon_phone  = '';
 $icon_address  = '';
-$address          = isset($instance['user_address']) ? $instance['user_address'] : '';
+$show_address          = isset($instance['user_address']) ? $instance['user_address'] : '';
 $address_icon    =   isset($instance['address_icon']) ? $instance['address_icon'] : array();
 if ($address_icon && isset($address_icon['value'])) {
     if (is_array($address_icon['value']) && isset($address_icon['value']['url']) && $address_icon['value']['url']) {
@@ -62,13 +63,16 @@ if ($email_icon && isset($email_icon['value'])) {
         $icon_mail   .=  '<span><i class="' . $email_icon['value'] . '" aria-hidden="true"></i></span>';
     }
 }
-if(!empty($email_icon)){
-    if ($email_icon['library'] == 'svg'){
-        $shortcode  .= ' submit_icon="'.$submit_icon['value']['url'].'"';
-    }else{
-        $shortcode  .= ' submit_icon="'.$submit_icon['value'].'"';
+$show_number          = isset($instance['user_number']) ? $instance['user_number'] : '';
+$phone_icon    =   isset($instance['phone_icon']) ? $instance['phone_icon'] : array();
+if ($phone_icon && isset($phone_icon['value'])) {
+    if (is_array($phone_icon['value']) && isset($phone_icon['value']['url']) && $phone_icon['value']['url']) {
+        $icon_phone   .=  '<span><img src="'.$phone_icon['value']['url'].'" alt="svg-icon" data-uk-svg /></span>';
+    } elseif (is_string($phone_icon['value']) && $phone_icon['value']) {
+        $icon_phone   .=  '<span><i class="' . $phone_icon['value'] . '" aria-hidden="true"></i></span>';
     }
 }
+
 $image_appear   =   ( isset( $instance['image_appear'] ) && $instance['image_appear'] ) ? $instance['image_appear'] : '';
 
 //Card Style
@@ -82,9 +86,9 @@ $user_role   = ( isset( $instance['user_role'] ) && $instance['user_role'] ) ? $
 if(!empty($user_role)){
     $users = get_users( [ 'role__in' => $user_role, 'number' =>$limit, 'orderby' =>$user_orderby, 'order' => $user_order] );
 }
-$product_label_txt = '';
+$product_label_txt = $address = $email = $number ='';
 if(!empty($users)){
-    echo '<div class="ap-dealer-users uk-child-width-1-'.$large_desktop_columns.'@xl uk-child-width-1-'.$desktop_columns.'@l uk-child-width-1-'.$laptop_columns.'@m uk-child-width-1-'.$tablet_columns.'@s uk-child-width-1-'. $mobile_columns . $column_grid_gap.'" data-uk-grid>';
+    echo '<div class="uk-grid ap-dealer-users uk-child-width-1-'.$large_desktop_columns.'@xl uk-child-width-1-'.$desktop_columns.'@l uk-child-width-1-'.$laptop_columns.'@m uk-child-width-1-'.$tablet_columns.'@s uk-child-width-1-'. $mobile_columns . $column_grid_gap.'" data-uk-grid>';
     foreach ($users as $user){
         $pageid         = (int)get_option('options_dealership_dealer_page_id',0);
         $pageid         = !empty($pageid)?$pageid:get_the_ID();
@@ -100,14 +104,23 @@ if(!empty($users)){
         if($user_product_number != ''){
             $user_product_number     =  '<'.$product_number_tag.' class="ui-product-number '.$product_number_style.'">'.count_user_posts( $user->ID , "ap_product"  ). ' '.$product_label_txt.'</'.$product_number_tag.'>';
         }
-        if($address !=''){
+        if($show_address =='yes'){
             $map_location   = get_field('_dls_map_location', 'user_'.$user -> ID);
             if(!empty($map_location)){
                 $address = '<div class="ui-address">'.$icon_address.$map_location.'</div>';
             }
         }
-        if($email !=''){
+        if($show_email =='yes'){
             $email     =  '<'.$email_tag.' class="ui-email '.$email_style.'">'.$icon_mail.$user->user_email.'</'.$email_tag.'>';
+        }
+        if($show_number =='yes'){
+            $phone_number   = get_field('phone', 'user_'.$user -> ID);
+            if($phone_number){
+                $number     =  '<div class="ui-phone">'.$icon_phone.$phone_number.'</div>';
+            }else{
+                $number = '';
+            }
+
         }
         $output     ='<div class="ap-dealership-user">';
         $output     .=   '<div class="ui-card uk-card'. $card_style . $card_size . $general_styles['container_cls'] .'"' . $general_styles['animation'] . '>';
@@ -118,13 +131,13 @@ if(!empty($users)){
         }
         $output     .=  '<div class="uk-card-body' . $general_styles['content_cls'] . '">';
         if ($name_position == 'before') {
-            $output         .=  $name.$address.$email.$user_product_number;
+            $output         .=  $name.$address.$email.$number.$user_product_number;
         }
         if ($image_appear == 'inside') {
             $output     .=  $media ? '<div class="ui-media"><div class="uk-inline-clip uk-transition-toggle" tabindex="0">'.$media.'</div></div>' : '';
         }
         if ($name_position == 'after') {
-            $output         .=  $name.$address.$email.$user_product_number;
+            $output         .=  $name.$address.$email.$number.$user_product_number;
         }
         $output     .=  '<div class="ui-card-text">'.$text.'</div>';
 
