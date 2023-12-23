@@ -19,3 +19,10 @@
 .ui-slideshow-wrapper .ui-slideshow .ui-media img{
     max-width:none;
 }
+.ui-slideshow-wrapper img[data-uk-cover], .ui-slideshow-wrapper video[data-uk-cover]{
+    width:100%;
+    height:100%;
+}
+.ui-content-wrap{
+    z-index:10;
+}

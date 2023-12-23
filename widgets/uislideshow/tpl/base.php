@@ -443,7 +443,7 @@ $output .= '<div class="ui-slideshow"' . $attrs_slideshow . '>';
 
 $output .= ( $slidenav_on_hover ) ? '<div class="uk-position-relative uk-visible-toggle" tabindex="-1">' : '<div class="uk-position-relative">';
 
-$output .= '<ul class="uk-slideshow-items uk-overflow-hidden' . $box_shadow . '"' . $height_cls . '>';
+$output .= '<ul class="uk-slideshow-items uk-cover-container uk-overflow-hidden' . $box_shadow . '"' . $height_cls . '>';
 if ( isset( $instance['uislideshow_items'] ) && count( (array) $instance['uislideshow_items'] ) ) {
 	foreach ( $instance['uislideshow_items'] as $key => $value ) {
 		$media_type = ( isset( $value['media_type'] ) && $value['media_type'] ) ? $value['media_type'] : '';
@@ -488,8 +488,8 @@ if ( isset( $instance['uislideshow_items'] ) && count( (array) $instance['uislid
 
 		$render_linkscroll = ( empty( $check_target ) && isset($button_link['url']) && strpos( $button_link['url'], '#' ) === 0 ) ? ' uk-scroll' : '';
         $number = intval($key + 1);
-		$output .= '<li class="el-item uk-margin-remove item-' . $key . '"' . $media_background . ' data-number="'.$number.'">';
-		$output .= ( $kenburns_transition ) ? '<div class="ui-media uk-position-cover uk-animation-kenburns uk-animation-reverse' . $kenburns_transition . '"' . $kenburns_duration . '>' : '';
+		$output .= '<li class="el-item ui-media uk-margin-remove item-' . $key . '"' . $media_background . ' data-number="'.$number.'">';
+		$output .= ( $kenburns_transition ) ? '<div class=" uk-position-cover uk-animation-kenburns uk-animation-reverse' . $kenburns_transition . '"' . $kenburns_duration . '>' : '';
 
 		if ($media_type == 'video') {
 			$video_parse = parse_url( $video );
@@ -629,7 +629,6 @@ if ( $navigation_control == 'dotnav' ) {
 			$image_src  = isset( $media_item['url'] ) ? $media_item['url'] : '';
 
 			$nav_image     = ( isset( $value['thumbnail'] ) && $value['thumbnail'] ) ? $value['thumbnail'] : '';
-            var_dump($nav_image);
 			if($nav_image !=''){
                 $nav_image_src = isset( $nav_image['url'] ) ? $nav_image['url'] : '';
             }else{
