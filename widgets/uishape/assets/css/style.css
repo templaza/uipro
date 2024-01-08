@@ -1,0 +1,26 @@
+.elementor-widget-uipro-uishape {
+  overflow: hidden;
+}
+
+.shape-wrap .truck {
+  transform: skew(40deg);
+  -webkit-transform: skew(40deg);
+  -moz-transform: skew(40deg);
+  position: relative;
+  height: 40px;
+  background: #333;
+}
+.shape-wrap .truck:before {
+  content: "";
+  width: 40%;
+  height: 100%;
+  left: -20%;
+  background: #333;
+  position: absolute;
+}
+.shape-wrap.right .truck:before {
+  left: auto;
+  right: -20%;
+}
+
+/*# sourceMappingURL=style.css.map */
