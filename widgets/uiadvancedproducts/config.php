@@ -1179,6 +1179,34 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     ],
 
                 ),
+                array(
+                    'label' => esc_html__( 'Dot Navigation Color', 'uipro' ),
+                    'name'  => 'dotnav_color',
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-advanced-products .uk-dotnav li > * ' => 'border-color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
+                            ['name' => 'enable_dotnav', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'label' => esc_html__( 'Dot Navigation Active Color', 'uipro' ),
+                    'name'  => 'dotnav_active_color',
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-advanced-products .uk-dotnav > .uk-active > *, {{WRAPPER}} .ui-advanced-products .uk-dotnav li:hover > * ' => 'background-color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
+                            ['name' => 'enable_dotnav', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
 				array(
 					'type'          => Controls_Manager::SWITCHER,
 					'id'            => 'center_slider',
