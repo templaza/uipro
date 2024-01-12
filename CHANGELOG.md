@@ -1,5 +1,28 @@
 # Changelogs:
 
+## Version 1.0.7 - 12/01/2024
+
+**Fix bugs:**
+
+- Fix cover center for image slideshow
+
+**Improvement:**
+
+- Update optimize code
+- Update language file
+- Update custom style button
+
+**Changed**
+
+- Auto change Woo filter button in small device
+
+**Added:**
+
+- Add default cs uishape element
+- Add image hover effect for uipost
+- Add options for dealership user element
+- Add color setting for advanced product element
+
 ## Version 1.0.6 - 11/10/2023
 
 **Fix bugs:**
