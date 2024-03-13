@@ -16,9 +16,11 @@ $button_style   = isset($instance['button_style']) && $instance['button_style'] 
 $button_shape   = isset($instance['button_shape']) && $instance['button_shape'] ? ' uk-border-'. $instance['button_shape'] : ' uk-border-rounded';
 $button_size    = isset($instance['button_size']) && $instance['button_size'] ? ' uk-button-'. $instance['button_size'] : '';
 $button_margin  = isset($instance['button_margin']) && $instance['button_margin'] ? ($instance['button_margin'] == 'default' ? ' uk-margin' : ' uk-margin-'. $instance['button_margin']) : '';
+$button_position = isset($instance['button_position']) && $instance['button_position'] ? $instance['button_position'] : '';
 $meta_position = isset($instance['meta_position']) && $instance['meta_position'] ? $instance['meta_position'] : 'after';
 $meta           = isset($instance['meta_title']) && $instance['meta_title'] ? $instance['meta_title'] : '';
 $image_content  = isset($instance['image_content']) && $instance['image_content'] ? $instance['image_content'] : '';
+$image_transition  = isset($instance['media_transition']) && $instance['media_transition'] ? $instance['media_transition'] : '';
 //Layout Type
 $layout_type    = isset($instance['layout_type']) ? $instance['layout_type'] : 'icon';
 $icon_arrow    = isset($instance['icon_arrow']) ? $instance['icon_arrow'] : '';
@@ -41,7 +43,21 @@ if ($layout_type == 'icon') {
 	}
 } else {
 	$image          =   ( isset( $instance['image'] ) && $instance['image']['url'] ) ? $instance['image']['url'] : '';
-	$media          .=  $image ? '<img src="'.$image.'" alt="'.$title.'" />' : '';
+	$media          .=  $image ? '<img class="uk-transition-opaque uk-transition-'.$image_transition.'" src="'.$image.'" alt="'.$title.'" />' : '';
+}
+$media_class = '';
+if($image_transition !=''){
+    $media_class = ' uk-transition-toggle';
+}
+$icon_on_media = '';
+$icon_media    = ( isset( $instance['icon_media'] ) && $instance['icon_media'] ) ? $instance['icon_media'] : array();
+if (is_array($icon_media['value']) && isset($icon_media['value']['url']) && $icon_media['value']['url']) {
+    $icon_on_media   .=  '<div class="ui_icon_on_media uk-position-top-center"><img src="'.$icon_media['value']['url'].'" alt="'.$title.'" data-uk-svg /></div>';
+} elseif (is_string($icon_media['value']) && $icon_media['value']) {
+    $icon_on_media   .=  '<div class="ui_icon_on_media uk-position-top-center"><i class="' . $icon_media['value'] .'" aria-hidden="true"></i></div>';
+}
+if($instance['button_size'] =='full'){
+    $button_size .=' uk-width-1-1';
 }
 $image_appear   =   ( isset( $instance['image_appear'] ) && $instance['image_appear'] ) ? $instance['image_appear'] : '';
 
@@ -93,7 +109,7 @@ if ($title) {
 	} else {
 		$title     =  '<'.$title_tag.' class="uk-card-title'.$title_style.'">'.$title.'</'.$title_tag.'>';
 	}
-	$output     =   '<div class="ui-card uk-card'. $card_style .' '.$icon_arrow.' '. $card_size . $general_styles['container_cls'] .'"' . $general_styles['animation'] . '>';
+	$output     =   '<div class="ui-card '.$media_class.' uk-card'. $card_style .' '.$icon_arrow.' '. $card_size . $general_styles['container_cls'] .'"' . $general_styles['animation'] . '>';
 	if ($media && $layout_type == 'image' && ($image_appear == 'top'|| $image_appear == 'thumbnail')) {
         if ($url && ($url_appear=='button_media' || $url_appear == 'all')) {
             $output     .=  $media ? '<div class="uk-card-media-top ui-media'.$media_margin.'"><a href="'.$url.'"'.$attribs.'>'.$media.'</a></div>' : '';
@@ -128,11 +144,16 @@ if ($title) {
         }
 	}
     $output     .=  '<div class="ui-card-text">'.$text.'</div>';
-	$output     .=  $button_text || $btn_icon ? '<div class="ui-button'.$button_margin.'"><a class="uk-button'.$button_style.$button_shape.$button_size.'" href="'.$url.'"'.$attribs.'>'.$btn_icon_left . $button_text . $btn_icon_right.'</a></div>' : '';
-	$output     .=  '</div>';
+    if($button_position == '') {
+        $output .= $button_text || $btn_icon ? '<div class="ui-button' . $button_margin . '"><a class="uk-button' . $button_style . $button_shape . $button_size . '" href="' . $url . '"' . $attribs . '>' . $btn_icon_left . $button_text . $btn_icon_right . '</a></div>' : '';
+    }
+    $output     .=  '</div>';
 	if ($media && $layout_type == 'image' && $image_appear == 'bottom') {
-		$output .=  '<div class="uk-card-media-top ui-media'.$media_margin.'">'.$media.'</div>';
+		$output .=  '<div class="uk-card-media-top uk-position-relative ui-media'.$media_margin.'">'.$media.$icon_on_media.'</div>';
 	}
+    if($button_position == 'after_media'){
+        $output     .=  $button_text || $btn_icon ? '<div class="ui-button'.$button_margin.'"><a class="uk-button'.$button_style.$button_shape.$button_size.'" href="'.$url.'"'.$attribs.'>'.$btn_icon_left . $button_text . $btn_icon_right.'</a></div>' : '';
+    }
 	$output     .=  '</div>';
 	echo ent2ncr($output);
 }

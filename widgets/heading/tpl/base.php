@@ -11,6 +11,8 @@ $general           .= ( isset( $instance['visibility'] ) && $instance['visibilit
 $title_style        = ( isset( $instance['title_heading_style'] ) && $instance['title_heading_style'] != '' ) ?' uk-'.$instance['title_heading_style']: '';
 $title_style       .= ( isset($instance['title_heading_margin'] ) && $instance['title_heading_margin']) ? ' uk-margin-' . $instance['title_heading_margin'] : ' uk-margin';
 
+$nowrap_title    = ( isset( $instance['nowrap_title'] ) && $instance['nowrap_title'] != '' ) ?$instance['nowrap_title']: '';
+
 $max_width_cfg      = ( isset( $instance['addon_max_width'] ) && $instance['addon_max_width'] ) ? ' uk-width-' . $instance['addon_max_width'] : '';
 
 $addon_max_width_breakpoint = ( $max_width_cfg ) ? ( ( isset($instance['addon_max_width_breakpoint']) && $instance['addon_max_width_breakpoint'] ) ? '@' . $instance['addon_max_width_breakpoint'] : '' ) : '';
@@ -171,9 +173,12 @@ switch ($heading_style){
         $heading_style  = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 150" preserveAspectRatio="none"><path d="M3,75h493.5"></path></svg>';
         break;
 }
-
+$nowrap_cls=' ';
+if($nowrap_title){
+    $nowrap_cls=' text-nowrap';
+}
 if(!empty($instance['title'])) {
-    $html .= '<div class="sc_heading uk-flex uk-flex-column uk-position-relative' . $text_alignment . $clone_title . $general_styles['container_cls'] . $general_styles['content_cls'] . '"' . $general_styles['animation'] . '>';
+    $html .= '<div class="sc_heading uk-flex uk-flex-column uk-position-relative' . $text_alignment . $nowrap_cls . $clone_title . $general_styles['container_cls'] . $general_styles['content_cls'] . '"' . $general_styles['animation'] . '>';
     if($instance['sub_heading_position']=='before_title'){
         $html .= $sub_heading;
     }

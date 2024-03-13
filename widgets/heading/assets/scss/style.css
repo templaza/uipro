@@ -118,5 +118,8 @@
 .sc_heading .sub-heading:after {
   content: "";
 }
+.sc_heading.text-nowrap .title {
+  text-wrap: nowrap;
+}
 
 /*# sourceMappingURL=style.css.map */
