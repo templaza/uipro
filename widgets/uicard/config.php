@@ -569,10 +569,179 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 						'medium'    => esc_html__('Medium', 'uipro'),
 						'large'     => esc_html__('Large', 'uipro'),
 						'xlarge'    => esc_html__('X-Large', 'uipro'),
+						'custom'    => esc_html__('Custom', 'uipro'),
 						'remove'    => esc_html__('None', 'uipro'),
 					),
 					'default'       => '',
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'media_custom_margin',
+                    'label'         => esc_html__( 'Media custom margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px'],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-media' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'media_margin', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::SELECT,
+                    'id'            => 'media_transition',
+                    'label'         => esc_html__( 'Media Transition', 'uipro' ),
+                    'description'   => esc_html__( 'Select the image\'s transition style.', 'uipro' ),
+                    'options'       => array(
+                        '' => __('None', 'uipro'),
+                        'scale-up' => __('Scales Up', 'uipro'),
+                        'scale-down' => __('Scales Down', 'uipro'),
+                    ),
+                    'default'       => '',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'image[url]', 'operator' => '!==', 'value' => ''],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::ICONS,
+                    'name'          => 'icon_media',
+                    'label'         => esc_html__('Icon on media:', 'uipro'),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout_type', 'operator' => '===', 'value' => 'image'],
+                            ['name' => 'image', 'operator' => '!==', 'value' => ''],
+                        ],
+                    ],
+                ),
+
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'icon_media_color',
+                    'label'         => esc_html__('Icon Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ui_icon_on_media' => 'color: {{VALUE}}',
+                        '{{WRAPPER}} .ui_icon_on_media svg' => 'fill: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'icon_media', 'operator' => '!==', 'value' => ''],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'icon_media_bg_color',
+                    'label'         => esc_html__('Icon Background Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ui_icon_on_media' => 'background-color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'icon_media', 'operator' => '!==', 'value' => ''],
+                        ],
+                    ],
+                ),
+                array(
+                    'name'          => 'icon_media_size',
+                    'label' => __( 'Icon Size', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 400,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 64,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-media' => 'font-size: {{SIZE}}{{UNIT}};',
+                        '{{WRAPPER}} .ui-media svg' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'icon_media', 'operator' => '!==', 'value' => ''],
+                        ],
+                    ],
+                ),
+                array(
+                    'name'          => 'icon_media_box_size',
+                    'label' => esc_html__( 'Icon Box Size', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'responsive'    =>  true,
+                    'size_units' => [ 'px','%' ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ui_icon_on_media' => 'width: {{SIZE}}{{UNIT}};height: {{SIZE}}{{UNIT}};display:flex; align-items:center;justify-content:center;',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'icon_media', 'operator' => '!==', 'value' => ''],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'icon_media_padding',
+                    'label'         => esc_html__( 'Icon Box Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui_icon_on_media' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'icon_media', 'operator' => '!==', 'value' => ''],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'icon_media_custom_margin',
+                    'label'         => esc_html__( 'Icon box custom margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px'],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui_icon_on_media' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'icon_media', 'operator' => '!==', 'value' => ''],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          =>  \Elementor\Group_Control_Box_Shadow::get_type(),
+                    'name'          => 'icon_media_box_shadow',
+                    'label'         => esc_html__('Icon Box Shadow', 'uipro'),
+                    'selector' => '{{WRAPPER}} .ui_icon_on_media',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'icon_media', 'operator' => '!==', 'value' => ''],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'icon_media_radius',
+                    'label'         => esc_html__( 'Icon Border radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui_icon_on_media' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'icon_media', 'operator' => '!==', 'value' => ''],
+                        ],
+                    ],
+                ),
 
 				//Link Settings
 				array(
@@ -1017,6 +1186,7 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 						'' => esc_html__('Default', 'uipro'),
 						'small' => esc_html__('Small', 'uipro'),
 						'large' => esc_html__('Large', 'uipro'),
+						'full' => esc_html__('Full', 'uipro'),
 					),
 					'default'           => '',
 				),
@@ -1049,6 +1219,16 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                     'condition'     => array(
                         'button_margin'    => 'custom'
                     ),
+                ),
+                array(
+                    'type'          =>  Controls_Manager::SELECT,
+                    'name'          => 'button_position',
+                    'label'         => esc_html__('Button Position', 'uipro'),
+                    'options'       => array(
+                        ''          => esc_html__('After Content', 'uipro'),
+                        'after_media'   => esc_html__('After Media', 'uipro'),
+                    ),
+                    'default'       => '',
                 ),
 			);
             $options    = array_merge($options, $this->get_general_options());

@@ -145,6 +145,13 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                     ),
                 ),
                 array(
+                    'type'          => Controls_Manager::SWITCHER,
+                    'name'          => 'nowrap_title',
+                    'default'       => false,
+                    'label'         => esc_html__( 'Nowrap Title', 'uipro' ),
+                    'description'   => esc_html__( 'Do not new line when more text.', 'uipro' ),
+                ),
+                array(
                     'type'          => Controls_Manager::DIMENSIONS,
                     'name'          =>  'title_heading_margin_custom',
                     'label'         => esc_html__( 'Title custom margin', 'uipro' ),
