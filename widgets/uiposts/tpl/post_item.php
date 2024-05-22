@@ -17,6 +17,7 @@ $title_margin   = (isset($instance[$pre_val.'title_margin']) && $instance[$pre_v
 $title_maxwidth   = (isset($instance[$pre_val.'title_maxwidth']) && $instance[$pre_val.'title_maxwidth']) ?$instance[$pre_val.'title_maxwidth']: false;
 
 //Image
+$post_link = (isset($instance['post_link']) && $instance['post_link']) ? intval($instance['post_link']) : 0;
 $hide_thumbnail = (isset($instance[$pre_val.'hide_thumbnail']) && $instance[$pre_val.'hide_thumbnail']) ? intval($instance[$pre_val.'hide_thumbnail']) : 0;
 $thumbnail_size = (isset($instance[$pre_val.'thumbnail_size']) && $instance[$pre_val.'thumbnail_size']) ? $instance[$pre_val.'thumbnail_size'] : 'full';
 $thumbnail_hover= (isset($instance[$pre_val.'thumbnail_hover']) && $instance[$pre_val.'thumbnail_hover']) ? intval($instance[$pre_val.'thumbnail_hover']) : 0;
@@ -43,7 +44,6 @@ $image_border   = (isset($instance[$pre_val.'image_border']) && $instance[$pre_v
 $cover_image    = (isset($instance[$pre_val.'cover_image']) && $instance[$pre_val.'cover_image']) ? intval($instance[$pre_val.'cover_image']) : 0;
 $image_margin   = ( isset( $instance[$pre_val.'image_margin'] ) && $instance[$pre_val.'image_margin'] ) ? ' uk-margin-'. $instance[$pre_val.'image_margin'] : ' uk-margin';
 $cover_image    = $cover_image ? ' tz-image-cover uk-cover-container' : '';
-
 //Intro
 $show_intro 	= (isset($instance[$pre_val.'show_introtext']) && $instance[$pre_val.'show_introtext']) ? intval($instance[$pre_val.'show_introtext']) : 0;
 $introtext_number   = (isset($instance[$pre_val.'introtext_number']) && $instance[$pre_val.'introtext_number']) ? intval($instance[$pre_val.'introtext_number']) : 0;
@@ -66,11 +66,20 @@ $item->post_excerpt = preg_replace('/<a class="more-link".*?<\/a>/i', '', $item-
 $flash_effect   =   isset($instance['flash_effect']) ? intval($instance['flash_effect']) : 0;
 $imgclass         =  $flash_effect ? ' ui-image-flash-effect uk-position-relative uk-overflow-hidden' : '';
 $image_transition   = ( isset( $instance['image_transition'] ) && $instance['image_transition'] ) ? ' uk-transition-' . $instance['image_transition'] . ' uk-transition-opaque' : '';
-$tran_toggle = ' ';
+$ripple_effect = (isset($instance['image_transition']) && $instance['image_transition']) ? ($instance['image_transition']) : '';
+$tran_toggle = $ripple_html = $flash_cl = $ripple_wrap = $ripple_cl = ' ';
+if($ripple_effect =='ripple'){
+    $ripple_html = '<div class="templaza-ripple-circles uk-position-center uk-transition-fade">
+                        <div class="circle1"></div>
+                        <div class="circle2"></div>
+                        <div class="circle3"></div>
+                    </div>';
+    $ripple_cl = ' templaza-thumb-ripple ';
+    $ripple_wrap = ' uk-position-relative ';
+}
 if($image_transition){
     $tran_toggle = ' uk-transition-toggle ';
 }
-$flash_cl = '';
 if($flash_effect){
     $flash_cl = ' flash-effect';
 }
@@ -117,7 +126,13 @@ if ($categories && count($categories)) {
         if( is_wp_error( $term_link ) )
             continue;
         $cat_slugs[]    =   $term->slug;
-        $cats[]         =   '<a href="'.esc_url($term_link).'">'.esc_attr($term->name).'</a>';
+        if($post_link){
+            $cats[]         =   '<span >'.esc_attr($term->name).'</span>';
+        }else{
+            $cats[]         =   '<a href="'.esc_url($term_link).'">'.esc_attr($term->name).'</a>';
+        }
+
+
     }
     $cat_content        =   implode(', ', $cats);
 }
@@ -140,7 +155,7 @@ $meta_bottom_margin     =   ( isset( $instance[$pre_val.'meta_bottom_margin'] ) 
 $meta_footer_margin     =   ( isset( $instance[$pre_val.'meta_footer_margin'] ) && $instance[$pre_val.'meta_footer_margin'] ) ? ' uk-margin-'. $instance[$pre_val.'meta_footer_margin'] : ' uk-margin';
 
 $output .=  '<article data-tag="'.esc_attr(implode(' ', $tag_slugs)).'" data-cat="'.esc_attr(implode(' ', $cat_slugs)).'" data-date="'.esc_attr(get_the_date('Y-m-d', $item)).'" data-hits="'.esc_attr(get_post_meta($item->ID, 'post_views_count', true)).'">';
-$output .= '<div class="uk-article uk-card'.esc_attr($card_style.$tran_toggle.$card_size_cls.( $thumbnail_hover ? ' uk-transition-toggle uk-overflow-hidden' : '' ).(!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'left' || $image_position == 'right') ? ' uk-grid-collapse' : '')).'"'.(!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'left' || $image_position == 'right') ? ' data-uk-grid' : '').'>';
+$output .= '<div class="uk-article uk-card'.esc_attr($ripple_cl.$card_style.$tran_toggle.$card_size_cls.( $thumbnail_hover ? ' uk-transition-toggle uk-overflow-hidden' : '' ).(!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'left' || $image_position == 'right') ? ' uk-grid-collapse' : '')).'"'.(!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'left' || $image_position == 'right') ? ' data-uk-grid' : '').'>';
 if (!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'top' || $image_position == 'left' || $image_position == 'right') ) :
     if ($image_position == 'left' || $image_position == 'right') {
         $output .=  '<div class="uk-card-media-'.$image_position.' uk-cover-container'.($image_position == 'right' ? ' uk-flex-last@m' : '').$image_width_xl.$image_width_l.$image_width_m.$image_width_s.$image_width.'">';
@@ -154,22 +169,40 @@ if (!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == '
             $uk_cover = $tran_cl;
         }
     }
-    $output .=  '<a class="'.$imgclass.' ui-post-thumbnail uk-display-block uk-card-media-top'
-        .esc_attr($cover_image.$image_border).'" href="'. get_permalink( $item->ID ) .'">'
-        . UIPro_UIPosts_Helper::get_post_thumbnail($item, $thumbnail_size, $uk_cover) .'</a>';
+    if($post_link){
+        $output .=  '<a class="'.$imgclass.$ripple_wrap.' uk-height-1-1 ui-post-thumbnail uk-display-block uk-card-media-top'
+            .esc_attr($cover_image.$image_border).'" href="javascript:">'
+            . UIPro_UIPosts_Helper::get_post_thumbnail($item, $thumbnail_size, $uk_cover) .$ripple_html.'</a>';
+    }else{
+        $output .=  '<a class="'.$imgclass.$ripple_wrap.' uk-height-1-1 ui-post-thumbnail uk-display-block uk-card-media-top'
+            .esc_attr($cover_image.$image_border).'" href="'. get_permalink( $item->ID ) .'">'
+            . UIPro_UIPosts_Helper::get_post_thumbnail($item, $thumbnail_size, $uk_cover) .$ripple_html.'</a>';
+    }
+
+
     if ($image_position == 'left' || $image_position == 'right') {
         $output .=  '<canvas width="600" height="400"></canvas>';
         $output .=  '</div>';
     }
 endif;
 if ($layout == 'thumbnail') {
-    $output .= '<a class="ui-post-thumb-box '.$flash_cl.'" href="'. get_permalink( $item->ID ) .'"><div class="uk-position-cover uk-overlay uk-overlay-primary'.esc_attr( $thumbnail_hover ? ' uk-transition-fade' : '' ).'"></div></a>';
+    if($post_link){
+        $output .= '<div class="ui-post-thumb-box '.$flash_cl.'" ><div class="uk-position-cover uk-overlay uk-overlay-primary'.esc_attr( $thumbnail_hover ? ' uk-transition-fade' : '' ).'"></div></div>';
+    }else{
+        $output .= '<a class="ui-post-thumb-box '.$flash_cl.'" href="'. get_permalink( $item->ID ) .'"><div class="uk-position-cover uk-overlay uk-overlay-primary'.esc_attr( $thumbnail_hover ? ' uk-transition-fade' : '' ).'"></div></a>';
+    }
 }
 
 $output .= '<div class="ui-post-info-wrap'.esc_attr(($layout == 'thumbnail' ? ' uk-position-bottom uk-light' : '').( $thumbnail_hover && $thumbnail_hover_transition ? $thumbnail_hover_transition : '' ).(!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'left' || $image_position == 'right') ? $expand_width : '')).'">';
 $output .= '<div class="'.esc_attr($uk_card_body).'">';
 if (!$hide_thumbnail && has_post_thumbnail( $item->ID ) && $image_position == 'inside' ):
-    $output .=  '<a class="ui-post-thumbnail uk-display-block'.esc_attr($cover_image.$image_border.$image_margin).'" href="'. get_permalink( $item->ID ) .'">'. UIPro_UIPosts_Helper::get_post_thumbnail($item, $thumbnail_size) .'</a>';
+    if($post_link){
+        $output .=  '<div class="ui-post-thumbnail uk-display-block'.esc_attr($ripple_wrap.$cover_image.$image_border.$image_margin).'" >'. UIPro_UIPosts_Helper::get_post_thumbnail($item, $thumbnail_size) .$ripple_html.'</div>';
+    }else{
+        $output .=  '<a class="ui-post-thumbnail uk-display-block'.esc_attr($ripple_wrap.$cover_image.$image_border.$image_margin).'" href="'. get_permalink( $item->ID ) .'">'. UIPro_UIPosts_Helper::get_post_thumbnail($item, $thumbnail_size) .$ripple_html.'</a>';
+    }
+
+
 endif;
 if(count($meta_top_position)) {
     $output .= '<div class="ui-post-meta-top uk-article-meta'.esc_attr($meta_top_margin).'" data-uk-margin>';
@@ -181,8 +214,14 @@ $_title_class   = '';
 if(!empty($title_maxwidth) && !empty($title_maxwidth['size'])){
     $_title_class   .= ' uk-flex uk-flex-center';
 }
-$output .= '<'.$heading_selector.' class="ui-title uk-margin-remove-top'.$title_heading_style.$title_margin.$_title_class
-    .'"><a href="'. get_permalink( $item->ID ) .'">' . $item->post_title . '</a></'.$heading_selector.'>';
+if($post_link){
+    $output .= '<'.$heading_selector.' class="ui-title uk-margin-remove-top'.$title_heading_style.$title_margin.$_title_class
+        .'">' . $item->post_title . '</'.$heading_selector.'>';
+}else{
+    $output .= '<'.$heading_selector.' class="ui-title uk-margin-remove-top'.$title_heading_style.$title_margin.$_title_class
+        .'"><a href="'. get_permalink( $item->ID ) .'">' . $item->post_title . '</a></'.$heading_selector.'>';
+}
+
 
 if(count($meta_middle_position)) {
     $output .= '<div class="ui-post-meta-middle uk-article-meta'.esc_attr($meta_middle_margin).'" data-uk-margin>';
@@ -225,7 +264,7 @@ if(count($meta_footer_position)) {
 $output .= '</div>'; //.ui-post-article-info-wrap
 
 if (!$hide_thumbnail && has_post_thumbnail( $item->ID ) && $image_position == 'bottom' ):
-    $output .=  '<a class="ui-post-thumbnail uk-display-block uk-card-media-bottom'.esc_attr($cover_image.$image_border).'" href="'. get_permalink( $item->ID ) .'">'. UIPro_UIPosts_Helper::get_post_thumbnail($item, $thumbnail_size) .'</a>';
+    $output .=  '<a class="ui-post-thumbnail uk-display-block uk-card-media-bottom'.esc_attr($ripple_wrap.$cover_image.$image_border).'" href="'. get_permalink( $item->ID ) .'">'. UIPro_UIPosts_Helper::get_post_thumbnail($item, $thumbnail_size) .$ripple_html.'</a>';
 endif;
 
 $output .=  '</div>';

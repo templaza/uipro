@@ -195,6 +195,23 @@ if ( ! empty( $overlay_horizontal ) || ! empty( $overlay_vertical ) || ! empty( 
 	$overlay_parallax_cls .= ' data-uk-slideshow-parallax="' . $overlay_horizontal . $overlay_vertical . $overlay_scale . $overlay_rotate . $overlay_opacity . '"';
 }
 
+$image_transition   = ( isset( $instance['image_transition'] ) && $instance['image_transition'] ) ? ' uk-transition-' . $instance['image_transition'] . ' uk-transition-opaque' : '';
+$ripple_effect = (isset($instance['image_transition']) && $instance['image_transition']) ? ($instance['image_transition']) : '';
+$image_open = (isset($instance['image_open']) && $instance['image_open']) ? ($instance['image_open']) : '';
+$ripple_cl = $ripple_html = $img_tran_cl = ' ';
+if($ripple_effect =='ripple'){
+    $ripple_html = '<div class="templaza-ripple-circles uk-position-center uk-transition-fade">
+                        <div class="circle1"></div>
+                        <div class="circle2"></div>
+                        <div class="circle3"></div>
+                    </div>';
+    $ripple_cl = ' templaza-thumb-ripple ';
+}
+if($image_transition){
+    $img_tran_cl =' uk-transition-toggle '.$ripple_cl.' ';
+}
+$gallery_id   = isset($instance['element_id'])?$instance['element_id']:uniqid();
+
 // Title Parallax.
 $title_horizontal_start = ( isset( $instance['title_horizontal_start'] ) && isset( $instance['title_horizontal_start']['size'] ) && $instance['title_horizontal_start']['size'] ) ? $instance['title_horizontal_start']['size'] : '0';
 $title_horizontal_end   = ( isset( $instance['title_horizontal_end'] ) && isset( $instance['title_horizontal_end']['size'] ) && $instance['title_horizontal_end']['size'] ) ? $instance['title_horizontal_end']['size'] : '0';
@@ -495,7 +512,11 @@ if ( isset( $instance['uisliders_items'] ) && count( (array) $instance['uislider
 		$render_linkscroll = ( empty( $check_target ) && isset($button_link['url']) && strpos( $button_link['url'], '#' ) === 0 ) ? ' uk-scroll' : '';
 
 		$output .= '<li class="el-item uk-margin-remove item-' . $key . '"' . $media_background . '>';
+		$output .= '<div class="el-item-inner '.$img_tran_cl.' ">';
 		$output .= ( $kenburns_transition ) ? '<div class="ui-media uk-position-cover uk-animation-kenburns uk-animation-reverse' . $kenburns_transition . '"' . $kenburns_duration . '>' : '';
+        if($image_open=='light_box'){
+            $output .='<a class="uk-position-z-index uk-transition-toggle uk-position-cover" href="' . esc_url($image_src) . '" data-elementor-open-lightbox="yes" data-elementor-lightbox-slideshow="'.$gallery_id.'"></a>';
+        }
         if($image_cover){
             $output .='<div class="uk-cover-container tz-image-cover">';
         }
@@ -528,6 +549,7 @@ if ( isset( $instance['uisliders_items'] ) && count( (array) $instance['uislider
 			}
 		} else {
 			$output .= '<img class="ui-image" src="' . esc_url($image_src) . '" ' . $image_alt_init .' '. $image_cover .'>';
+			$output .= $ripple_html;
 		}
         $output .='<div class="uk-overlay-default uk-transition-toggle uk-position-cover"></div>';
         if($image_cover){
@@ -585,6 +607,7 @@ if ( isset( $instance['uisliders_items'] ) && count( (array) $instance['uislider
 
 		$output .= '</div>';
 
+		$output .= '</div>';
 		$output .= '</div>';
 
 		$output .= '</li>';

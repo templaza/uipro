@@ -60,6 +60,7 @@ class UIPro{
     }
     public function ui_load_plugin_textdomain() {
         load_plugin_textdomain( 'uipro', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+        wp_enqueue_style( 'uipro-style', plugins_url( '/assets/css/style.css', __FILE__ ));
     }
 
     /**

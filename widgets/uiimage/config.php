@@ -143,15 +143,7 @@ if ( ! class_exists( 'UIPro_Config_UIImage' ) ) {
                         ],
                     ],
                 ),
-                array(
-                    'type'          => Controls_Manager::SWITCHER,
-                    'id'            => 'flash_effect',
-                    'label'         => esc_html__('Flash Effect', 'uipro'),
-                    'label_on'      => esc_html__( 'Yes', 'uipro' ),
-                    'label_off'     => esc_html__( 'No', 'uipro' ),
-                    'return_value'  => '1',
-                    'default'       => '0'
-                ),
+
 				array(
 					'type'          => Controls_Manager::SWITCHER,
 					'id'            => 'image_panel',
@@ -214,23 +206,6 @@ if ( ! class_exists( 'UIPro_Config_UIImage' ) ) {
 				),
 				array(
 					'type'          => Controls_Manager::SELECT,
-					'id'            => 'image_transition',
-					'label'         => esc_html__( 'Transition', 'uipro' ),
-					'description'   => esc_html__( 'Select the image\'s transition style.', 'uipro' ),
-					'options'       => array(
-						'' => __('None', 'uipro'),
-						'scale-up' => __('Scales Up', 'uipro'),
-						'scale-down' => __('Scales Down', 'uipro'),
-					),
-					'default'       => '',
-					'conditions' => [
-						'terms' => [
-							['name' => 'image[url]', 'operator' => '!==', 'value' => ''],
-						],
-					],
-				),
-				array(
-					'type'          => Controls_Manager::SELECT,
 					'id'            => 'link_type',
 					'label'         => esc_html__( 'Link Type', 'uipro' ),
 					'options'       => array(
@@ -259,17 +234,117 @@ if ( ! class_exists( 'UIPro_Config_UIImage' ) ) {
 					'conditions' => [
 						'terms' => [
 							['name' => 'image[url]', 'operator' => '!==', 'value' => ''],
-							['name' => 'link_type', 'operator' => '!==', 'value' => ''],
+							['name' => 'link_type', 'operator' => '===', 'value' => 'use_link'],
 						],
 					],
 				),
+                array(
+                    'type'          => Controls_Manager::SWITCHER,
+                    'id'            => 'flash_effect',
+                    'label'         => esc_html__('Flash Effect', 'uipro'),
+                    'label_on'      => esc_html__( 'Yes', 'uipro' ),
+                    'label_off'     => esc_html__( 'No', 'uipro' ),
+                    'return_value'  => '1',
+                    'default'       => '0',
+                    'start_section' => 'image_settings',
+                    'section_name'  => esc_html__('Image Settings', 'uipro')
+                ),
+                array(
+                    'type'          => Controls_Manager::SELECT,
+                    'id'            => 'image_transition',
+                    'label'         => esc_html__( 'Transition', 'uipro' ),
+                    'description'   => esc_html__( 'Select the image\'s transition style.', 'uipro' ),
+                    'options'       => array(
+                        '' => __('None', 'uipro'),
+                        'scale-up' => __('Scales Up', 'uipro'),
+                        'scale-down' => __('Scales Down', 'uipro'),
+                        'ripple' => __('Ripple', 'uipro'),
+                    ),
+                    'default'       => '',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'image[url]', 'operator' => '!==', 'value' => ''],
+                        ],
+                    ],
+                ),
+                array(
+                    'id'            => 'ripple_width',
+                    'label'         => __( 'Ripple Width', 'uipro' ),
+                    'type'          => Controls_Manager::SLIDER,
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px','%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 2000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 200,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 200,
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'image_transition', 'operator' => '===', 'value' => 'ripple'],
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .templaza-ripple-circles' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'id'            => 'ripple_height',
+                    'label'         => __( 'Ripple Height', 'uipro' ),
+                    'type'          => Controls_Manager::SLIDER,
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 2000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 200,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 200,
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'image_transition', 'operator' => '===', 'value' => 'ripple'],
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .templaza-ripple-circles' => 'height: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'label' => esc_html__( 'Ripple background color', 'uipro' ),
+                    'name'  => 'ripple_bg',
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .templaza-ripple-circles > div' => 'background-color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'image_transition', 'operator' => '===', 'value' => 'ripple'],
+                        ],
+                    ],
+                ),
                 array(
                     'type'          => \Elementor\Group_Control_Border::get_type(),
                     'name'          => 'border',
                     'label'         => esc_html__( 'Border', 'uipro' ),
                     'selector'      => '{{WRAPPER}} .ui-image-detail',
-                    'start_section' => 'image_settings',
-                    'section_name'  => esc_html__('Image Settings', 'uipro')
                 ),
                 array(
                     'type'          => \Elementor\Group_Control_Box_Shadow::get_type(),

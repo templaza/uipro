@@ -32,7 +32,9 @@ class UIPro_UIPosts_Helper extends UIPro_Helper {
         $comment_uikit_icon =   ( isset( $instance['comment_uikit_icon'] ) && $instance['comment_uikit_icon'] ) ? $instance['comment_uikit_icon'] : '';
         $view_icon       =   ( isset( $instance['view_icon'] ) && $instance['view_icon'] ) ? $instance['view_icon'] : array();
         $view_uikit_icon =   ( isset( $instance['view_uikit_icon'] ) && $instance['view_uikit_icon'] ) ? $instance['view_uikit_icon'] : '';
+        $post_link = (isset($instance['post_link']) && $instance['post_link']) ? intval($instance['post_link']) : 0;
         $meta_arr       =   array();
+
         $resource       = ( isset( $instance['resource'] ) && $instance['resource'] ) ? $instance['resource'] : 'post';
 
         if (in_array('date', $meta_type)) {
@@ -89,7 +91,16 @@ class UIPro_UIPosts_Helper extends UIPro_Helper {
                 }
             }
             if ($resource == 'post') {
-                $meta_arr[]     = '<span class="ui-post-meta-category">' .$media. get_the_category_list(', ', '', $item->ID) . '</span>';
+                if($post_link){
+                    $category_detail=get_the_category($item->ID); // $post->ID
+                    foreach($category_detail as $cat_item){
+                        $meta_arr[]     = '<span class="ui-post-meta-category">' .$media.$cat_item->cat_name . '</span>';
+                    }
+                }else{
+                    $meta_arr[]     = '<span class="ui-post-meta-category">' .$media. get_the_category_list(', ', '', $item->ID) . '</span>';
+
+                }
+
             } elseif ( isset($args['cat_content']) && $args['cat_content'] ) {
                 $meta_arr[]     .=  '<span class="ui-post-meta-category">' . $media .$args['cat_content'] . '</span>';
             }

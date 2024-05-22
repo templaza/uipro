@@ -9,6 +9,7 @@ $ordering   = ( isset( $instance['ordering'] ) && $instance['ordering'] ) ? $ins
 $branch     = ( isset( $instance[$resource.'_branch'] ) && $instance[$resource.'_branch'] ) ? $instance[$resource.'_branch'] : array('0');
 $image_size   = ( isset( $instance['image_size'] ) && $instance['image_size'] ) ? $instance['image_size'] : 'full';
 $category   = ( isset( $instance['ap_product_category'] ) && $instance['ap_product_category'] ) ? $instance['ap_product_category'] : '';
+$image_layout = (isset($instance['image_layout']) && $instance['image_layout']) ? ($instance['image_layout']) : 'thumbnail';
 
 $card_style    = ( isset( $instance['card_style'] ) && $instance['card_style'] ) ? $instance['card_style'] : '';
 $card_size    = ( isset( $instance['card_size'] ) && $instance['card_size'] ) ? $instance['card_size'] : '';
@@ -20,7 +21,8 @@ $tablet_columns     = ( isset( $instance['tablet_columns'] ) && $instance['table
 $mobile_columns     = ( isset( $instance['mobile_columns'] ) && $instance['mobile_columns'] ) ? $instance['mobile_columns'] : '1';
 $column_grid_gap    = ( isset( $instance['column_grid_gap'] ) && $instance['column_grid_gap'] ) ? ' uk-grid-'. $instance['column_grid_gap'] : '';
 $show_product_count = (isset($instance['show_product_count']) && $instance['show_product_count']) ? intval($instance['show_product_count']) : 0;
-$title_overlay = (isset($instance['title_overlay']) && $instance['title_overlay']) ? intval($instance['title_overlay']) : 1;
+$title_overlay = (isset($instance['title_overlay']) && $instance['title_overlay']) ? intval($instance['title_overlay']) : 0;
+$count_display = (isset($instance['count_display']) && $instance['count_display']) ? ($instance['count_display']) : '';
 
 $title_position      = !empty( $instance['title_position'] ) ? $instance['title_position'] : 'uk-position-bottom-left';
 $product_single_label      = !empty( $instance['product_single_label'] ) ? $instance['product_single_label'] : '';
@@ -36,6 +38,16 @@ $cover_image    = $cover_image ? ' tz-image-cover uk-cover-container' : '';
 $image_transition   = ( isset( $instance['image_transition'] ) && $instance['image_transition'] ) ? ' uk-transition-' . $instance['image_transition'] . ' uk-transition-opaque' : '';
 $flash_effect   =   isset($instance['flash_effect']) ? intval($instance['flash_effect']) : 0;
 $imgclass         =  $flash_effect ? ' ui-image-flash-effect uk-position-relative uk-overflow-hidden' : '';
+$ripple_effect = (isset($instance['image_transition']) && $instance['image_transition']) ? ($instance['image_transition']) : '';
+$ripple_cl = $ripple_html =' ';
+if($ripple_effect =='ripple'){
+    $ripple_html = '<div class="templaza-ripple-circles uk-position-center uk-transition-fade">
+                        <div class="circle1"></div>
+                        <div class="circle2"></div>
+                        <div class="circle3"></div>
+                    </div>';
+    $ripple_cl = ' templaza-thumb-ripple ';
+}
 if($source == 'ap_category'){
     if(empty($category) || $category == ''){
         $get_terms_attributes = array (
@@ -97,45 +109,51 @@ if($cat_results){
                     $att_id = (get_field('image','term_'.$cat->term_id));
                     ?>
                     <li>
-                        <div class="uk-card uk-transition-toggle <?php echo esc_attr('uk-card-'.$card_style.' uk-card-'.$card_size.' '.$imgclass);?>">
+                        <div class="uk-card uk-transition-toggle <?php echo esc_attr('uk-card-'.$card_style.' uk-card-'.$card_size.' '.$imgclass.$ripple_cl);?>">
                             <div class="uk-card-media-top ">
                                 <?php
                                 if($att_id){
                                     ?>
-                                    <div class=" ap-category-image ">
+                                    <div class="uk-position-relative ap-category-image ">
                                         <?php if($cover_image){ ?>
                                         <a class="uk-position-relative uk-display-block  <?php echo esc_attr($cover_image);?>" href="<?php echo esc_url(get_term_link($cat->term_id));?>">
                                             <canvas width="440" height="440"></canvas>
                                             <?php
                                             echo wp_get_attachment_image($att_id,$image_size,'',array( "data-uk-cover" => "", "class" => " $image_transition" ) );
+                                            echo $ripple_html;
                                             ?>
                                         </a>
                                         <?php }else{ ?>
                                             <a href="<?php echo esc_url(get_term_link($cat->term_id));?>">
                                                 <?php
                                                 echo wp_get_attachment_image($att_id,$image_size,'','' );
+                                                echo $ripple_html;
                                                 ?>
                                             </a>
                                         <?php } ?>
+                                        <?php
+                                        if($title_overlay){
+                                            ?>
+                                            <a class="uk-flex uk-overlay-primary uk-position-cover" href="<?php echo esc_url(get_term_link($cat->term_id));?>"></a>
+                                            <?php
+                                        }
+                                        ?>
                                     </div>
                                     <?php
                                 }
                                 ?>
                             </div>
-                            <?php
-                            if($title_overlay){
-                                ?>
-                                <a class="uk-flex uk-overlay-primary uk-position-cover" href="<?php echo esc_url(get_term_link($cat->term_id));?>"></a>
-                                <?php
-                            }
-                            ?>
 
                             <div class="uk-card-body ap-title-wrap <?php echo esc_attr($title_cls);?>">
                                 <?php
                                 if($show_product_count){
-                                    ?>
-                                    <span class="ap-product-count">
-                                    <?php echo sprintf(__("%s ", 'uipro'), $cat->count);
+                                    if($count_display=='before'){
+                                        ?>
+                                        <span class="ap-product-count uk-display-block">
+                                    <span>
+                                        <?php echo $cat->count; ?>
+                                    </span>
+                                    <?php
                                     if($cat->count == 1 && $product_single_label !=''){
                                         echo esc_html($product_single_label);
                                     }else{
@@ -143,14 +161,46 @@ if($cat_results){
                                     }
                                     ?>
                                 </span>
-                                    <?php
+                                        <?php
+                                    }
                                 }
                                 ?>
                                 <h3 class="ap-title">
                                     <a href="<?php echo esc_url(get_term_link($cat->term_id));?>">
                                         <?php echo esc_html($cat->name);?>
                                     </a>
+                                    <?php
+                                    if($show_product_count){
+                                        if($count_display==''){
+                                            ?>
+                                            <span class="ap-product-count">
+                                        <?php echo sprintf(__("(%s)", 'uipro'), $cat->count);?>
+                                    </span>
+                                            <?php
+                                        }
+                                    }
+                                    ?>
                                 </h3>
+                                <?php
+                                if($show_product_count){
+                                    if($count_display=='after'){
+                                        ?>
+                                        <span class="ap-product-count uk-display-block">
+                                    <span>
+                                        <?php echo $cat->count; ?>
+                                    </span>
+                                    <?php
+                                    if($cat->count == 1 && $product_single_label !=''){
+                                        echo esc_html($product_single_label);
+                                    }else{
+                                        echo esc_html($product_label);
+                                    }
+                                    ?>
+                                </span>
+                                        <?php
+                                    }
+                                }
+                                ?>
                             </div>
                         </div>
                     </li>

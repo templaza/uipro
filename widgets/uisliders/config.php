@@ -638,6 +638,114 @@ if ( ! class_exists( 'UIPro_Config_UISliders' ) ) {
                         '{{WRAPPER}} .el-item:hover .uk-overlay-default, {{WRAPPER}} .uk-overlay-default' => 'transition: all {{SIZE}}s linear',
                     ],
                 ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'image_border_radius',
+                    'label'         => esc_html__( 'Image border radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .el-item-inner' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::SELECT,
+                    'id'            => 'image_transition',
+                    'label'         => esc_html__( 'Transition', 'uipro' ),
+                    'description'   => esc_html__( 'Select the image\'s transition style.', 'uipro' ),
+                    'options'       => array(
+                        '' => __('None', 'uipro'),
+                        'scale-up' => __('Scales Up', 'uipro'),
+                        'scale-down' => __('Scales Down', 'uipro'),
+                        'ripple' => __('Ripple', 'uipro'),
+                    ),
+                    'default'       => '',
+
+                ),
+                array(
+                    'id'            => 'ripple_width',
+                    'label'         => __( 'Ripple Width', 'uipro' ),
+                    'type'          => Controls_Manager::SLIDER,
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px','%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 2000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 200,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 200,
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'image_transition', 'operator' => '===', 'value' => 'ripple'],
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .templaza-ripple-circles' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'id'            => 'ripple_height',
+                    'label'         => __( 'Ripple Height', 'uipro' ),
+                    'type'          => Controls_Manager::SLIDER,
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 2000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 200,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 200,
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'image_transition', 'operator' => '===', 'value' => 'ripple'],
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .templaza-ripple-circles' => 'height: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'label' => esc_html__( 'Ripple background color', 'uipro' ),
+                    'name'  => 'ripple_bg',
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .templaza-ripple-circles > div' => 'background-color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'image_transition', 'operator' => '===', 'value' => 'ripple'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::SELECT,
+                    'id'            => 'image_open',
+                    'label'         => esc_html__( 'Open Image', 'uipro' ),
+                    'options'       => array(
+                        '' => __('None', 'uipro'),
+                        'light_box' => __('Light box', 'uipro'),
+                    ),
+                    'default'       => '',
+
+                ),
 				array(
 					'name' => 'velocity',
 					'type'          => Controls_Manager::SLIDER,
@@ -1329,7 +1437,59 @@ if ( ! class_exists( 'UIPro_Config_UISliders' ) ) {
                     'type'=>Controls_Manager::COLOR,
                     'label'=>__( 'Color Hover', 'uipro' ),
                     'selectors' => [
-                        '{{WRAPPER}} .ui-slidenav' => 'color: {{VALUE}}',
+                        '{{WRAPPER}} .ui-slidenav:hover' => 'color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'slidenav_position', 'operator' => '!==', 'value' => ''],
+                        ],
+                    ],
+                ),
+                array(
+                    'name' => 'slidenav_bg_color',
+                    'type'=>Controls_Manager::COLOR,
+                    'label'=>__( 'Background Color', 'uipro' ),
+                    'selectors' => [
+                        '{{WRAPPER}} .uk-slider .uk-slidenav' => 'background-color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'slidenav_position', 'operator' => '!==', 'value' => ''],
+                        ],
+                    ],
+                ),
+                array(
+                    'name' => 'slidenav_bg_hover_color',
+                    'type'=>Controls_Manager::COLOR,
+                    'label'=>__( 'Background Hover Color', 'uipro' ),
+                    'selectors' => [
+                        '{{WRAPPER}} .uk-slider .uk-slidenav:hover' => 'background-color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'slidenav_position', 'operator' => '!==', 'value' => ''],
+                        ],
+                    ],
+                ),
+                array(
+                    'name' => 'slidenav_border_color',
+                    'type'=>Controls_Manager::COLOR,
+                    'label'=>__( 'Border Color', 'uipro' ),
+                    'selectors' => [
+                        '{{WRAPPER}} .uk-slider .uk-slidenav' => 'border-color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'slidenav_position', 'operator' => '!==', 'value' => ''],
+                        ],
+                    ],
+                ),
+                array(
+                    'name' => 'slidenav_border_hover_color',
+                    'type'=>Controls_Manager::COLOR,
+                    'label'=>__( 'Border Hover Color', 'uipro' ),
+                    'selectors' => [
+                        '{{WRAPPER}} .uk-slider .uk-slidenav:hover' => 'border-color: {{VALUE}}',
                     ],
                     'conditions' => [
                         'terms' => [

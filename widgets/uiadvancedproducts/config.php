@@ -1020,6 +1020,22 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 				),
                 array(
                     'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'navigation_margin_custom',
+                    'label'         => esc_html__( 'Navigation Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-nav-wrap' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
+                            ['name' => 'enable_navigation', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
                     'name'          => 'navigation_pos_margin',
                     'label'         => esc_html__( 'Next Margin', 'uipro' ),
                     'responsive'    =>  true,
@@ -1036,12 +1052,12 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                 ),
                 array(
                     'type'          => Controls_Manager::DIMENSIONS,
-                    'name'          => 'navigation_margin_custom',
-                    'label'         => esc_html__( 'Navigation Margin', 'uipro' ),
+                    'name'          => 'navigation_previous _margin',
+                    'label'         => esc_html__( 'Previous Margin', 'uipro' ),
                     'responsive'    =>  true,
                     'size_units'    => [ 'px', 'em', '%' ],
                     'selectors'     => [
-                        '{{WRAPPER}} .uk-nav-wrap' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                        '{{WRAPPER}} .uk-slidenav-previous' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
                     ],
                     'conditions' => [
                         'terms' => [

@@ -8,12 +8,16 @@ $class          =   isset($instance['image_border']) && $instance['image_border'
 $class          .=  $flash_effect ? ' ui-image-flash-effect' : '';
 $general_styles = \UIPro_Elementor_Helper::get_general_styles($instance);
 $output         = '';
+$ripple_effect      = (isset($instance['image_transition']) && $instance['image_transition']) ? ($instance['image_transition']) : '';
+if($ripple_effect =='ripple'){
+    $ripple_cl = ' templaza-thumb-ripple ';
+}
 if ($image && isset($image['url']) && $image['url']) {
 	$output     =   '<div class="ui-image'. $general_styles['container_cls'] . $general_styles['content_cls'] .'"' . $general_styles['animation']  .'>';
 	if ($caption) {
 		$output .=  '<figure class="wp-caption">';
 	}
-	$output     .=  '<div class="uk-inline uk-overflow-hidden ui-image-detail'.$class.'">'. \UIPro_Elementor_Helper::get_attachment_image_html( $instance ).'</div>';
+	$output     .=  '<div class="uk-inline uk-overflow-hidden ui-image-detail'.$class.$ripple_cl.'">'. \UIPro_Elementor_Helper::get_attachment_image_html( $instance ).'</div>';
 	if ($caption) {
 		$output .=  '<figcaption class="widget-image-caption wp-caption-text">'.$caption.'</figcaption>';
 		$output .=  '</figure>';

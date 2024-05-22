@@ -4,6 +4,15 @@
     height: 100%;
   }
 }
+.uilightbox{
+  &.rotate{
+    position:relative;
+    display:inline-block;
+    .uilightbox-inner{
+      border-radius:50%;
+    }
+  }
+}
 .templaza-widget-uilightbox{
   .ui-lightbox{
     -webkit-transition: all 0.3s linear;
@@ -20,7 +29,13 @@
     }
   }
 }
-.ui-lightbox-ripple {
+.ui-lightbox-ripple-hover{
+  transition: all .4s ease;
+  &:before, &:after {
+    transition: all .4s ease;
+  }
+}
+.ui-lightbox-ripple, .ui-lightbox-ripple-hover:hover {
   position: relative;
   &:before, &:after {
     content: "";

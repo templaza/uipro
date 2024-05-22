@@ -234,14 +234,21 @@ class UIPro_Elementor_Helper{
 		$image_class        .=  isset($settings['hover_box_shadow']) && $settings['hover_box_shadow'] ? ' '. $settings['hover_box_shadow'] : '';
 		$image_transition   = ( isset( $settings['image_transition'] ) && $settings['image_transition'] ) ? ' uk-transition-' . $settings['image_transition'] . ' uk-transition-opaque' : '';
 		$image_panel        =   isset($settings['image_panel']) ? intval($settings['image_panel']) : 0;
+        $ripple_effect      = (isset($settings['image_transition']) && $settings['image_transition']) ? ($settings['image_transition']) : '';
 		$media_background   = ( $image_panel ) ? ( ( isset( $settings['blend_bg_color'] ) && $settings['blend_bg_color'] ) ? $settings['blend_bg_color'] : '' ) : '';
 		$image_class        .= ( $image_panel && $media_background ) ? ( ( isset( $settings['image_blend_modes'] ) && $settings['image_blend_modes'] ) ? ' ' . $settings['image_blend_modes'] : '' ) : '';
 		$image_class        .=  $image_transition;
 		$html = '';
-
+        if($ripple_effect =='ripple'){
+            $ripple_html = '<div class="templaza-ripple-circles uk-position-center uk-transition-fade">
+                        <div class="circle1"></div>
+                        <div class="circle2"></div>
+                        <div class="circle3"></div>
+                    </div>';
+            $ripple_cl = ' templaza-thumb-ripple ';
+        }
 		// If is the new version - with image size.
 		$image_sizes = get_intermediate_image_sizes();
-
 		$image_sizes[] = 'full';
 
 		if ( ! empty( $image['id'] ) && ! wp_attachment_is_image( $image['id'] ) ) {
@@ -259,7 +266,14 @@ class UIPro_Elementor_Helper{
             if(isset($settings['link_type']) && $settings['link_type'] == 'use_link'){
                 $html .='<a href='.$settings['link']['url'].'>';
             }
+            if(isset($settings['link_type']) && $settings['link_type'] == 'use_modal'){
+                $html .='<a href="'. esc_url($image['url']) .'" data-elementor-open-lightbox="yes" >';
+            }
 			$html .= wp_get_attachment_image( $image['id'], $size, false, $image_attr );
+            $html .= $ripple_html;
+            if(isset($settings['link_type']) && $settings['link_type'] == 'use_modal'){
+                $html .='</a>';
+            }
             if(isset($settings['link_type']) && $settings['link_type'] == 'use_link'){
                 $html .='</a>';
             }

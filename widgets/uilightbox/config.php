@@ -103,6 +103,15 @@ if ( ! class_exists( 'UIPro_Config_UILightbox' ) ) {
                     'default'       => '1'
                 ),
                 array(
+                    'type'          => Controls_Manager::SWITCHER,
+                    'id'            => 'ripple_effect_hover',
+                    'label'         => esc_html__('Ripple Effect on Hover', 'uipro'),
+                    'label_on'      => esc_html__( 'Yes', 'uipro' ),
+                    'label_off'     => esc_html__( 'No', 'uipro' ),
+                    'return_value'  => '1',
+                    'default'       => '0'
+                ),
+                array(
                     'name'          => 'width',
                     'label'         => esc_html__( 'Button Width', 'uipro' ),
                     'type'          => Controls_Manager::SLIDER,
@@ -241,12 +250,115 @@ if ( ! class_exists( 'UIPro_Config_UILightbox' ) ) {
                     'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Title Font', 'uipro'),
                     'description'   => esc_html__('Select a font family.', 'uipro'),
-                    'selector'      => '{{WRAPPER}} .ui-title-lightbox',
+                    'selector'      => '{{WRAPPER}} .ui-title-lightbox, {{WRAPPER}} .circletext textPath',
                     'start_section' => 'title-style-settings',
                     'section_name'  => esc_html__('Title Settings', 'uipro'),
                     'condition'     => array(
                         'title!'    => ''
                     ),
+                ),
+                array(
+                    'type'          => Controls_Manager::SWITCHER,
+                    'id'            => 'title_circle',
+                    'label'         => esc_html__('Circle text', 'uipro'),
+                    'label_on'      => esc_html__( 'Yes', 'uipro' ),
+                    'label_off'     => esc_html__( 'No', 'uipro' ),
+                    'return_value'  => '1',
+                    'default'       => '0'
+                ),
+                array(
+                    'type'          => Controls_Manager::SLIDER,
+                    'name'            => 'text_width',
+                    'label'         => esc_html__( 'Width', 'uipro' ),
+                    'responsive'    => true,
+                    'size_units'    => ['px', '%'],
+                    'range'         => [
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                        ],
+                        'px' => [
+                            'min' => 0,
+                            'max' => 1000,
+                        ],
+                    ],
+                    'default'   => [
+                        'unit' => 'px',
+                        'size' => 150,
+                    ],
+                    'selectors'  => ['{{WRAPPER}} svg.circletext' => 'max-width: {{SIZE}}{{UNIT}};'],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'title_circle', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'      => Controls_Manager::SWITCHER,
+                    'name'      => 'text_hover_rotate',
+                    'label'     => esc_html__( 'Rotate when hover', 'uipro' ),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'title_circle', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'      => Controls_Manager::SWITCHER,
+                    'name'      => 'auto_rotate',
+                    'label'     => esc_html__( 'Auto rotate', 'uipro' ),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'title_circle', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::SLIDER,
+                    'name'            => 'text_hover_duration',
+                    'label'         => esc_html__( 'Duration', 'uipro' ),
+                    'description'   => esc_html__( 'Duration (s)', 'uipro' ),
+                    'responsive'    => true,
+                    'size_units'    => ['s'],
+                    'range'         => [
+                        's' => [
+                            'min' => 0,
+                            'max' => 10,
+                        ],
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'text_hover_rotate', 'operator' => '===', 'value' => 'yes'],
+                            ['name' => 'title_circle', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                    'selectors'  => ['{{WRAPPER}} svg.circletext' => 'animation-duration: {{SIZE}}s;']
+                ),
+                array(
+                    'type'          => \Elementor\Group_Control_Border::get_type(),
+                    'name'          => 'circle_border',
+                    'label'         => esc_html__( 'Circle Border', 'uipro' ),
+                    'selector'      => '{{WRAPPER}} .rotate .uilightbox-inner ',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'title_circle', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'circle_padding',
+                    'label'         => esc_html__( 'Circle padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .rotate .uilightbox-inner' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'title_circle', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
                 ),
                 array(
                     'id'            => 'title-color',
@@ -255,6 +367,7 @@ if ( ! class_exists( 'UIPro_Config_UILightbox' ) ) {
                     'description'   => esc_html__( 'Choose title color', 'uipro' ),
                     'selectors' => [
                         '{{WRAPPER}} .ui-title-lightbox' => 'color: {{VALUE}}',
+                        '{{WRAPPER}} .circletext textPath' => 'color: {{VALUE}}',
                     ],
                     'separator'     => 'before',
                     'start_section' => 'color-style-settings',
@@ -262,7 +375,6 @@ if ( ! class_exists( 'UIPro_Config_UILightbox' ) ) {
                     'condition'     => array(
                         'title!'    => ''
                     ),
-
                 ),
                 array(
                     'id'            => 'color',
@@ -319,6 +431,7 @@ if ( ! class_exists( 'UIPro_Config_UILightbox' ) ) {
                     'label'         => esc_html__('Title Color Hover', 'uipro'),
                     'selectors' => [
                         '{{WRAPPER}} .ui-title-lightbox:hover' => 'color: {{VALUE}}',
+                        '{{WRAPPER}} .rotate:hover textPath' => 'color: {{VALUE}}',
                     ],
                     'separator'     => 'before',
                     'condition'     => array(

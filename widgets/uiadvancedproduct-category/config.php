@@ -384,6 +384,92 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                 ),
                 // image settings
                 array(
+                    'type'          => Controls_Manager::SWITCHER,
+                    'id'            => 'image_show',
+                    'label'         => esc_html__('Show Image', 'uipro'),
+                    'label_on'      => esc_html__( 'Yes', 'uipro' ),
+                    'label_off'     => esc_html__( 'No', 'uipro' ),
+                    'return_value'  => '1',
+                    'default'       => '1',
+                    'start_section' => 'ap-image',
+                    'section_name'      => esc_html__('Image Settings', 'uipro')
+                ),
+                array(
+                    'type'          => Controls_Manager::SELECT,
+                    'id'            => 'image_layout',
+                    'label' => esc_html__( 'Layout', 'uipro' ),
+                    'default' => '',
+                    'options' => [
+                        '' => esc_html__('Default', 'uipro'),
+                        'thumbnail' => esc_html__('Thumbnail', 'uipro')
+                    ],
+                    'conditions'    => [
+                        'terms' => [
+                            ['name' => 'image_show', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+
+                ),
+                array(
+                    'type'          => \Elementor\Group_Control_Background::get_type(),
+                    'name'          => 'image_background_overlay',
+                    'label'         => __( 'Image Overlay Background', 'uipro' ),
+                    'default'       => '',
+                    'types'         => [ 'classic', 'gradient' ],
+                    'selector'      => '{{WRAPPER}} .ap-category-image .uk-overlay',
+                    'conditions'    => [
+                        'terms' => [
+                            ['name' => 'image_layout', 'operator' => '===', 'value' => 'thumbnail'],
+                            ['name' => 'image_show', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::SWITCHER,
+                    'id'            => 'thumbnail_hover',
+                    'label'         => esc_html__('Content display on hover', 'uipro'),
+                    'description'   => esc_html__( 'Whether to enable on hover content article with thumbnail.', 'uipro' ),
+                    'label_on'      => esc_html__( 'Yes', 'uipro' ),
+                    'label_off'     => esc_html__( 'No', 'uipro' ),
+                    'return_value'  => '1',
+                    'default'       => '0',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout', 'operator' => '===', 'value' => 'thumbnail'],
+                            ['name' => 'image_show', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::SELECT,
+                    'id'            => 'thumbnail_hover_transition',
+                    'label' => esc_html__( 'Hover Transition', 'uipro' ),
+                    'default' => 'fade',
+                    'options' => [
+                        'fade' => esc_html__('Fade', 'uipro'),
+                        'scale-up' => esc_html__('Scale Up', 'uipro'),
+                        'scale-down' => esc_html__('Scale Down', 'uipro'),
+                        'slide-top' => esc_html__('Slide Top', 'uipro'),
+                        'slide-bottom' => esc_html__('Slide Bottom', 'uipro'),
+                        'slide-left' => esc_html__('Slide Left', 'uipro'),
+                        'slide-right' => esc_html__('Slide Right', 'uipro'),
+                        'slide-top-small' => esc_html__('Slide Top Small', 'uipro'),
+                        'slide-bottom-small' => esc_html__('Slide Bottom Small', 'uipro'),
+                        'slide-left-small' => esc_html__('Slide Left Small', 'uipro'),
+                        'slide-right-small' => esc_html__('Slide Right Small', 'uipro'),
+                        'slide-top-medium' => esc_html__('Slide Top Medium', 'uipro'),
+                        'slide-bottom-medium' => esc_html__('Slide Bottom Medium', 'uipro'),
+                        'slide-left-medium' => esc_html__('Slide Left Medium', 'uipro'),
+                        'slide-right-medium' => esc_html__('Slide Right Medium', 'uipro'),
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'thumbnail_hover', 'operator' => '===', 'value' => '1'],
+                            ['name' => 'image_show', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
                     'type'          => Controls_Manager::SELECT,
                     'id'            => 'image_position',
                     'label' => esc_html__( 'Image Position', 'uipro' ),
@@ -393,9 +479,15 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                         'uk-card-media-bottom' => esc_html__('Bottom', 'uipro'),
                         'uk-card-media-left' => esc_html__('Left', 'uipro'),
                         'uk-card-media-right' => esc_html__('Right', 'uipro'),
+                        'inside' => esc_html__('Inside', 'uipro'),
                     ],
-                    'start_section' => 'ap-image',
-                    'section_name'      => esc_html__('Image Settings', 'uipro')
+                    'conditions'    => [
+                        'terms' => [
+                            ['name' => 'image_layout', 'operator' => '!=', 'value' => 'thumbnail'],
+                            ['name' => 'image_show', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+
                 ),
                 array(
                     'type'          => Controls_Manager::SELECT,
@@ -403,6 +495,11 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                     'label'         => esc_html__( 'Select Image Size', 'uipro' ),
                     'options'       => $arr_thumbnails,
                     'multiple'      => true,
+                    'conditions'    => [
+                        'terms' => [
+                            ['name' => 'image_show', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
 
                 ),
                 array(
@@ -468,6 +565,11 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                     'label_off' => esc_html__( 'No', 'uipro' ),
                     'return_value' => '1',
                     'default' => '0',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'image_show', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
                 ),
                 array(
                     'name'          => 'cover_height',
@@ -503,6 +605,11 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                     'selectors'     => [
                         '{{WRAPPER}} .tz-ap-category .ap-category-image' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
                     ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'image_show', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
                 ),
                 array(
                     'type'          => Controls_Manager::DIMENSIONS,
@@ -512,6 +619,11 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                     'size_units'    => [ 'px', 'em', '%' ],
                     'selectors'     => [
                         '{{WRAPPER}} .uk-card:hover img' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'image_show', 'operator' => '===', 'value' => '1'],
+                        ],
                     ],
                 ),
                 array(
@@ -529,6 +641,11 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                     'selectors' => [
                         '{{WRAPPER}} .ap-category-image img' => 'transition: all {{SIZE}}s ease-in-out;',
                     ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'image_show', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
                 ),
 
                 array(
@@ -538,7 +655,12 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                     'label_on'      => esc_html__( 'Yes', 'uipro' ),
                     'label_off'     => esc_html__( 'No', 'uipro' ),
                     'return_value'  => '1',
-                    'default'       => '0'
+                    'default'       => '0',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'image_show', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
                 ),
                 array(
                     'type'          => Controls_Manager::SELECT,
@@ -549,8 +671,87 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                         '' => __('None', 'uipro'),
                         'scale-up' => __('Scales Up', 'uipro'),
                         'scale-down' => __('Scales Down', 'uipro'),
+                        'ripple' => __('Ripple', 'uipro'),
                     ),
                     'default'       => '',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'image_show', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'id'            => 'ripple_width',
+                    'label'         => __( 'Ripple Width', 'uipro' ),
+                    'type'          => Controls_Manager::SLIDER,
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px','%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 2000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 200,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 200,
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'image_transition', 'operator' => '===', 'value' => 'ripple'],
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .templaza-ripple-circles' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'id'            => 'ripple_height',
+                    'label'         => __( 'Ripple Height', 'uipro' ),
+                    'type'          => Controls_Manager::SLIDER,
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 2000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 200,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 200,
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'image_transition', 'operator' => '===', 'value' => 'ripple'],
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .templaza-ripple-circles' => 'height: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'label' => esc_html__( 'Ripple background color', 'uipro' ),
+                    'name'  => 'ripple_bg',
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .templaza-ripple-circles > div' => 'background-color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'image_transition', 'operator' => '===', 'value' => 'ripple'],
+                        ],
+                    ],
                 ),
 
                 array(
@@ -659,6 +860,22 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                         ],
                     ],
                 ),
+                array(
+                    'type'      => Controls_Manager::SELECT,
+                    'name'      => 'count_display',
+                    'label'     => esc_html__( 'Product Count Display', 'uipro' ),
+                    'options'       => array(
+                        '' => esc_html__('Inline', 'uipro'),
+                        'before' => esc_html__('Before title', 'uipro'),
+                        'after' => esc_html__('After title', 'uipro'),
+                    ),
+                    'default'       => '',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'show_product_count', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
 
                 array(
                     'type'          => Group_Control_Typography::get_type(),
@@ -667,6 +884,11 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                     'label'         => esc_html__('Product Count Font', 'uipro'),
                     'description'   => esc_html__('Select a font family.', 'uipro'),
                     'selector'      => '{{WRAPPER}} .ap-product-count',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'show_product_count', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
                 ),
                 array(
                     'type'          =>  Controls_Manager::COLOR,
@@ -674,6 +896,11 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                     'label'         => esc_html__('Product Count Color', 'uipro'),
                     'selectors' => [
                         '{{WRAPPER}} .ap-product-count' => 'color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'show_product_count', 'operator' => '===', 'value' => '1'],
+                        ],
                     ],
                 ),
                 array(
