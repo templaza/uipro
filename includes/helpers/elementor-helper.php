@@ -238,7 +238,7 @@ class UIPro_Elementor_Helper{
 		$media_background   = ( $image_panel ) ? ( ( isset( $settings['blend_bg_color'] ) && $settings['blend_bg_color'] ) ? $settings['blend_bg_color'] : '' ) : '';
 		$image_class        .= ( $image_panel && $media_background ) ? ( ( isset( $settings['image_blend_modes'] ) && $settings['image_blend_modes'] ) ? ' ' . $settings['image_blend_modes'] : '' ) : '';
 		$image_class        .=  $image_transition;
-		$html = '';
+		$html = $ripple_html = '';
         if($ripple_effect =='ripple'){
             $ripple_html = '<div class="templaza-ripple-circles uk-position-center uk-transition-fade">
                         <div class="circle1"></div>

@@ -9,6 +9,7 @@ $class          .=  $flash_effect ? ' ui-image-flash-effect' : '';
 $general_styles = \UIPro_Elementor_Helper::get_general_styles($instance);
 $output         = '';
 $ripple_effect      = (isset($instance['image_transition']) && $instance['image_transition']) ? ($instance['image_transition']) : '';
+$ripple_cl = '';
 if($ripple_effect =='ripple'){
     $ripple_cl = ' templaza-thumb-ripple ';
 }

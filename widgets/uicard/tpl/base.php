@@ -51,11 +51,14 @@ if($image_transition !=''){
 }
 $icon_on_media = '';
 $icon_media    = ( isset( $instance['icon_media'] ) && $instance['icon_media'] ) ? $instance['icon_media'] : array();
-if (is_array($icon_media['value']) && isset($icon_media['value']['url']) && $icon_media['value']['url']) {
-    $icon_on_media   .=  '<div class="ui_icon_on_media uk-position-top-center"><img src="'.$icon_media['value']['url'].'" alt="'.$title.'" data-uk-svg /></div>';
-} elseif (is_string($icon_media['value']) && $icon_media['value']) {
-    $icon_on_media   .=  '<div class="ui_icon_on_media uk-position-top-center"><i class="' . $icon_media['value'] .'" aria-hidden="true"></i></div>';
+if(isset($icon_media['value'])){
+    if (is_array($icon_media['value']) && isset($icon_media['value']['url']) && $icon_media['value']['url']) {
+        $icon_on_media   .=  '<div class="ui_icon_on_media uk-position-top-center"><img src="'.$icon_media['value']['url'].'" alt="'.$title.'" data-uk-svg /></div>';
+    } elseif (is_string($icon_media['value']) && $icon_media['value']) {
+        $icon_on_media   .=  '<div class="ui_icon_on_media uk-position-top-center"><i class="' . $icon_media['value'] .'" aria-hidden="true"></i></div>';
+    }
 }
+
 if($instance['button_size'] =='full'){
     $button_size .=' uk-width-1-1';
 }
