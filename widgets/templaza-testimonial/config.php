@@ -876,6 +876,7 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     'default'       => 'left',
                     'conditions' => [
                         'terms' => [
+                            ['name' => 'testimonial_slider_dot', 'operator' => '===', 'value' => 'yes'],
                             ['name' => 'testimonial_slider_dot_position', 'operator' => '===', 'value' => 'absolute'],
                             ['name' => 'layout', 'operator' => 'in', 'value' => ['style2','base']],
                         ],
@@ -960,6 +961,7 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     'default'       => 'bottom',
                     'conditions' => [
                         'terms' => [
+                            ['name' => 'testimonial_slider_dot', 'operator' => '===', 'value' => 'yes'],
                             ['name' => 'testimonial_slider_dot_position', 'operator' => '===', 'value' => 'absolute'],
                             ['name' => 'layout', 'operator' => 'in', 'value' => ['style2','base']],
                         ],

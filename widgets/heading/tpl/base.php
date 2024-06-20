@@ -93,11 +93,6 @@ $general       .= $text_breakpoint . $text_alignment_fallback . $max_width_cfg;
 $templaza_animation = $sub_heading = $sub_heading_css = $html = $css = $color_clone
     = $clone_css = $line = $clone_title = $line_css = '';
 
-if ( $instance['textcolor'] ) {
-	$css            .= 'color:' . $instance['textcolor'] . ';';
-    $clone_css      = 'color:' . $instance['textcolor'] . ';';
-//	$color_clone = 'style="color:' . $instance['textcolor'] . ';"';
-}
 
 $clone_css  .= isset($instance['clone_opacity']) && $instance['clone_opacity']?'opacity: '.$instance['opacity']:'';
 
@@ -126,9 +121,6 @@ if ( $instance['line'] && $instance['line'] <> '' ) {
 $clone_title = ! empty( $instance['clone_title'] ) ? 'clone_title' : '';
 
 $text_align = '';
-if ( $instance['text_align'] && $instance['text_align'] <> '' ) {
-	$text_align = $instance['text_align'];
-}
 
 if ( $css ) {
     $id = '';
