@@ -106,7 +106,7 @@ if ( $instance['sub_heading'] && $instance['sub_heading'] <> '' ) {
 }
 
 if ( $instance['line'] && $instance['line'] <> '' ) {
-	if ( $instance['bg_line'] ) {
+	if ( isset($instance['bg_line']) ) {
 		$line_css = ' style="background-color:' . $instance['bg_line'] . '"';
 	}
 	if($instance['line_style'] == 'line_style1'){
