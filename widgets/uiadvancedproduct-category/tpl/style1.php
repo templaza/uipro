@@ -34,6 +34,7 @@ $slider_nav = (isset($instance['show_nav']) && $instance['show_nav']) ? intval($
 $slider_dots = (isset($instance['show_dots']) && $instance['show_dots']) ? intval($instance['show_dots']) : 0;
 $cover_image    = (isset($instance['image_cover']) && $instance['image_cover']) ? intval($instance['image_cover']) : 0;
 $cover_image    = $cover_image ? ' tz-image-cover uk-cover-container' : '';
+$hide_empty = (isset($instance['hide_empty']) && $instance['hide_empty']) ? ($instance['hide_empty']) : false;
 
 $image_transition   = ( isset( $instance['image_transition'] ) && $instance['image_transition'] ) ? ' uk-transition-' . $instance['image_transition'] . ' uk-transition-opaque' : '';
 $flash_effect   =   isset($instance['flash_effect']) ? intval($instance['flash_effect']) : 0;
@@ -54,7 +55,7 @@ if($source == 'ap_category'){
             'taxonomy' => 'ap_category', //empty string(''), false, 0 don't work, and return empty array
             'orderby' => 'name',
             'order' => 'ASC',
-            'hide_empty' => true, //can be 1, '1' too
+            'hide_empty' => $hide_empty, //can be 1, '1' too
         );
         $cat_results = get_terms($get_terms_attributes);
     } else{
@@ -68,15 +69,13 @@ if($source == 'ap_category'){
         );
         $cat_results = get_terms($get_terms_attributes);
     }
-}else{
-    $custom_tax = ( isset( $instance['ap_product_'.$source.''] ) && $instance['ap_product_'.$source.''] ) ? $instance['ap_product_'.$source.''] : '';
-    if(empty($custom_tax) || $custom_tax == ''){
+}elseif($source == 'ap_branch'){
+    if(empty($branch) || $branch == ''){
         $get_terms_attributes = array (
-            'taxonomy' => $source, //empty string(''), false, 0 don't work, and return empty array
+            'taxonomy' => 'ap_branch', //empty string(''), false, 0 don't work, and return empty array
             'orderby' => 'name',
             'order' => 'ASC',
-            'hide_empty' => true, //can be 1, '1' too
-            'number' => 0, //can be 1, '1' too
+            'hide_empty' => $hide_empty, //can be 1, '1' too
         );
         $cat_results = get_terms($get_terms_attributes);
     } else{
@@ -84,8 +83,29 @@ if($source == 'ap_category'){
             'taxonomy' => $source, //empty string(''), false, 0 don't work, and return empty array
             'orderby' => 'name',
             'order' => 'ASC',
-            'term_ids'       => $custom_tax,
-            'hide_empty' => false, //can be 1, '1' too
+            'term_taxonomy_id'       => $branch,
+            'hide_empty' => $hide_empty, //can be 1, '1' too
+
+        );
+        $cat_results = get_terms($get_terms_attributes);
+    }
+}else{
+    $custom_tax = ( isset( $instance['ap_product_'.$source.''] ) && $instance['ap_product_'.$source.''] ) ? $instance['ap_product_'.$source.''] : '';
+    if(empty($custom_tax) || $custom_tax == ''){
+        $get_terms_attributes = array (
+            'taxonomy' => $source, //empty string(''), false, 0 don't work, and return empty array
+            'orderby' => 'name',
+            'order' => 'ASC',
+            'hide_empty' => $hide_empty,
+        );
+        $cat_results = get_terms($get_terms_attributes);
+    } else{
+        $get_terms_attributes = array (
+            'taxonomy' => $source, //empty string(''), false, 0 don't work, and return empty array
+            'orderby' => 'name',
+            'order' => 'ASC',
+            'term_taxonomy_id'       => $custom_tax,
+            'hide_empty' => $hide_empty,
 
         );
         $cat_results = get_terms($get_terms_attributes);

@@ -66,6 +66,26 @@ if($source == 'ap_category'){
         );
         $cat_results = get_terms($get_terms_attributes);
     }
+}elseif($source == 'ap_branch'){
+    if(empty($branch) || $branch == ''){
+        $get_terms_attributes = array (
+            'taxonomy' => 'ap_branch', //empty string(''), false, 0 don't work, and return empty array
+            'orderby' => 'name',
+            'order' => 'ASC',
+            'hide_empty' => $hide_empty, //can be 1, '1' too
+        );
+        $cat_results = get_terms($get_terms_attributes);
+    } else{
+        $get_terms_attributes = array (
+            'taxonomy' => $source, //empty string(''), false, 0 don't work, and return empty array
+            'orderby' => 'name',
+            'order' => 'ASC',
+            'term_taxonomy_id'       => $branch,
+            'hide_empty' => $hide_empty, //can be 1, '1' too
+
+        );
+        $cat_results = get_terms($get_terms_attributes);
+    }
 }else{
     $custom_tax = ( isset( $instance['ap_product_'.$source.''] ) && $instance['ap_product_'.$source.''] ) ? $instance['ap_product_'.$source.''] : '';
     if(empty($custom_tax) || $custom_tax == ''){

@@ -19,7 +19,7 @@ $laptop_columns     = ( isset( $instance['laptop_columns'] ) && $instance['lapto
 $tablet_columns     = ( isset( $instance['tablet_columns'] ) && $instance['tablet_columns'] ) ? $instance['tablet_columns'] : '2';
 $mobile_columns     = ( isset( $instance['mobile_columns'] ) && $instance['mobile_columns'] ) ? $instance['mobile_columns'] : '1';
 $column_grid_gap    = ( isset( $instance['column_grid_gap'] ) && $instance['column_grid_gap'] ) ? ' uk-grid-'. $instance['column_grid_gap'] : '';
-
+$hide_empty = (isset($instance['hide_empty']) && $instance['hide_empty']) ? ($instance['hide_empty']) : false;
 $slider_nav = (isset($instance['show_nav']) && $instance['show_nav']) ? intval($instance['show_nav']) : 0;
 $slider_dots = (isset($instance['show_dots']) && $instance['show_dots']) ? intval($instance['show_dots']) : 0;
 $image_cover = (isset($instance['image_cover']) && $instance['image_cover']) ? intval($instance['image_cover']) : 0;
@@ -38,6 +38,26 @@ if($source == 'ap_category'){
             'orderby' => 'name',
             'order' => 'ASC',
             'term_taxonomy_id'       => $category,
+            'hide_empty' => $hide_empty, //can be 1, '1' too
+
+        );
+        $cat_results = get_terms($get_terms_attributes);
+    }
+}elseif($source == 'ap_branch'){
+    if(empty($branch) || $branch == ''){
+        $get_terms_attributes = array (
+            'taxonomy' => 'ap_branch', //empty string(''), false, 0 don't work, and return empty array
+            'orderby' => 'name',
+            'order' => 'ASC',
+            'hide_empty' => $hide_empty, //can be 1, '1' too
+        );
+        $cat_results = get_terms($get_terms_attributes);
+    } else{
+        $get_terms_attributes = array (
+            'taxonomy' => $source, //empty string(''), false, 0 don't work, and return empty array
+            'orderby' => 'name',
+            'order' => 'ASC',
+            'term_taxonomy_id'       => $branch,
             'hide_empty' => $hide_empty, //can be 1, '1' too
 
         );
