@@ -120,6 +120,7 @@ if($cat_results){
      uk-child-width-1-<?php echo esc_attr($laptop_columns);?>@m uk-child-width-1-<?php echo esc_attr($desktop_columns);?>@l uk-child-width-1-<?php echo esc_attr($large_desktop_columns);?>@xl uk-grid" data-uk-grid>
         <?php
         foreach ($cat_results as $cat){
+            if(is_object($cat)){
             $att_id = (get_field('image','term_'.$cat->term_id));
             ?>
             <div>
@@ -248,6 +249,7 @@ if($cat_results){
                 </div>
             </div>
             <?php
+            }
         }
         ?>
     </div>
