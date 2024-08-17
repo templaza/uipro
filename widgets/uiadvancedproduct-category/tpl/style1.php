@@ -126,6 +126,12 @@ if($cat_results){
              uk-child-width-1-<?php echo esc_attr($laptop_columns);?>@m uk-child-width-1-<?php echo esc_attr($desktop_columns);?>@l uk-child-width-1-<?php echo esc_attr($large_desktop_columns);?>@xl uk-grid">
                 <?php
                 foreach ($cat_results as $cat){
+                    $pd_label = '';
+                    if($cat->count == 1 && $product_single_label !=''){
+                        $pd_label = $product_single_label;
+                    }else{
+                        $pd_label =  $product_label;
+                    }
                     if(is_object($cat)){
                     $att_id = (get_field('image','term_'.$cat->term_id));
                     ?>
@@ -170,18 +176,11 @@ if($cat_results){
                                 if($show_product_count){
                                     if($count_display=='before'){
                                         ?>
-                                        <span class="ap-product-count uk-display-block">
-                                    <span>
-                                        <?php echo $cat->count; ?>
-                                    </span>
-                                    <?php
-                                    if($cat->count == 1 && $product_single_label !=''){
-                                        echo esc_html($product_single_label);
-                                    }else{
-                                        echo esc_html($product_label);
-                                    }
-                                    ?>
-                                </span>
+                                        <span class="ap-product-count uk-display-block ap-product-count-before">
+                                            <span>
+                                                <?php echo $cat->count.' '. $pd_label;?>
+                                            </span>
+                                        </span>
                                         <?php
                                     }
                                 }
@@ -195,8 +194,8 @@ if($cat_results){
                                         if($count_display==''){
                                             ?>
                                             <span class="ap-product-count">
-                                        <?php echo sprintf(__("(%s)", 'uipro'), $cat->count);?>
-                                    </span>
+                                                <?php echo sprintf(__("(%s %s)", 'uipro'), $cat->count, $pd_label);?>
+                                            </span>
                                             <?php
                                         }
                                     }
@@ -206,18 +205,11 @@ if($cat_results){
                                 if($show_product_count){
                                     if($count_display=='after'){
                                         ?>
-                                        <span class="ap-product-count uk-display-block">
-                                    <span>
-                                        <?php echo $cat->count; ?>
-                                    </span>
-                                    <?php
-                                    if($cat->count == 1 && $product_single_label !=''){
-                                        echo esc_html($product_single_label);
-                                    }else{
-                                        echo esc_html($product_label);
-                                    }
-                                    ?>
-                                </span>
+                                        <span class="ap-product-count uk-display-block ap-product-count-after">
+                                            <span>
+                                                <?php echo $cat->count.' '. $pd_label;?>
+                                            </span>
+                                        </span>
                                         <?php
                                     }
                                 }

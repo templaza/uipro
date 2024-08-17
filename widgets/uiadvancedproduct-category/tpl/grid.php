@@ -122,6 +122,12 @@ if($cat_results){
         foreach ($cat_results as $cat){
             if(is_object($cat)){
             $att_id = (get_field('image','term_'.$cat->term_id));
+            $pd_label = '';
+            if($cat->count == 1 && $product_single_label !=''){
+                $pd_label = $product_single_label;
+            }else{
+                $pd_label =  $product_label;
+            }
             ?>
             <div>
                 <div class="uk-card uk-transition-toggle <?php echo esc_attr($image_gap. $imgclass.$ripple_cl);  echo esc_attr('uk-card-'.$card_style.' uk-card-'.$card_size);?>" <?php if($image_position =='uk-card-media-left'){ echo 'data-uk-grid';}?>>
@@ -173,6 +179,19 @@ if($cat_results){
                     ?>
 
                     <div class="uk-card-body <?php echo esc_attr($image_thumb); if($image_position =='uk-card-media-left'){ echo 'uk-width-expand';}?>">
+                        <?php
+                        if($show_product_count){
+                            if($count_display=='before'){
+                                ?>
+                                <span class="ap-product-count uk-display-block ap-product-count-before">
+                                    <span>
+                                        <?php echo $cat->count.' '. $pd_label;?>
+                                    </span>
+                                </span>
+                                <?php
+                            }
+                        }
+                        ?>
                         <h3 class="ap-title">
                             <a href="<?php echo esc_url(get_term_link($cat->term_id));?>">
                                 <?php echo esc_html($cat->name);?>
@@ -182,7 +201,7 @@ if($cat_results){
                                 if($count_display==''){
                                     ?>
                                     <span class="ap-product-count">
-                                        <?php echo sprintf(__("(%s)", 'uipro'), $cat->count);?>
+                                        <?php echo sprintf(__("(%s %s)", 'uipro'), $cat->count, $pd_label);?>
                                     </span>
                                     <?php
                                 }
@@ -191,19 +210,12 @@ if($cat_results){
                         </h3>
                         <?php
                         if($show_product_count){
-                            if($count_display=='block'){
+                            if($count_display=='after'){
                                 ?>
-                                <span class="ap-product-count uk-display-block">
+                                <span class="ap-product-count uk-display-block ap-product-count-after">
                                     <span>
-                                        <?php echo $cat->count; ?>
+                                        <?php echo $cat->count.' '. $pd_label;?>
                                     </span>
-                                    <?php
-                                    if($cat->count == 1 && $product_single_label !=''){
-                                        echo esc_html($product_single_label);
-                                    }else{
-                                        echo esc_html($product_label);
-                                    }
-                                    ?>
                                 </span>
                                 <?php
                             }
