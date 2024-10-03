@@ -4,7 +4,7 @@ Plugin Name: UIPro
 Plugin URI: https://github.com/templaza/uipro
 Description: This plugin help you manage products.
 Author: Templaza
-Version: 1.0.7
+Version: 1.0.8
 Text Domain: uipro
 Author URI: http://templaza.com
 Forum: https://www.templaza.com/Forums.html
