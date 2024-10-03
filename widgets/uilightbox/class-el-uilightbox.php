@@ -42,6 +42,16 @@ if ( ! class_exists( 'UIPro_El_UILightbox' ) ) {
 
 		    return $settings;
         }
+        public function get_template_name() {
+            $template_name  = parent::get_template_name();
+
+            $settings       = $this -> get_settings_for_display();
+            if(!$template_name) {
+                $template_name = (isset($settings['layout']) && $settings['layout'] != '') ? $settings['layout'] : 'base';
+            }
+
+            return $template_name;
+        }
 
     }
 }

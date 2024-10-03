@@ -29,8 +29,8 @@ if ( ! class_exists( 'UIPro_Config_UILightbox' ) ) {
 		public function __construct() {
 			// info
 			self::$base = 'uilightbox';
-			self::$name = esc_html__( 'TemPlaza: UI Lightbox', 'uipro' );
-			self::$desc = esc_html__( 'Add UI Lightbox.', 'uipro' );
+			self::$name = esc_html__( 'TemPlaza: UI Video', 'uipro' );
+			self::$desc = esc_html__( 'Add UI Video.', 'uipro' );
 			self::$icon = 'eicon-click';
 			parent::__construct();
 
@@ -57,6 +57,16 @@ if ( ! class_exists( 'UIPro_Config_UILightbox' ) ) {
 
 			// options
 			$options = array(
+                array(
+                    'id'        => 'layout',
+                    'label'     => esc_html__( 'Layout', 'uipro' ),
+                    'type'      => Controls_Manager::SELECT,
+                    'options'   => array(
+                        'base'      => esc_html__('Default', 'uipro'),
+                        'cover'    => esc_html__('Video Background', 'uipro'),
+                    ),
+                    'default'   => 'base',
+                ),
                 array(
                     'type'          => Controls_Manager::TEXT,
                     'name'          => 'title',
@@ -470,8 +480,5 @@ if ( ! class_exists( 'UIPro_Config_UILightbox' ) ) {
 			return $options;
 		}
 
-		public function get_template_name() {
-			return 'base';
-		}
 	}
 }

@@ -144,6 +144,18 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
                     'label_block'   => true,
                 ),
                 array(
+                    'type'          => Controls_Manager::SELECT,
+                    'name'          => 'uiap_taxonomy_display',
+                    'label'         => esc_html__( 'Taxonomy display type', 'uipro' ),
+                    'options'       => array(
+                        'select'    => 'Select',
+                        'checkbox'  => 'Checkbox',
+                        'radio'     => 'Radio',
+
+                    ),
+                    'default'       => 'select',
+                ),
+                array(
                     'type'          => Controls_Manager::SWITCHER,
                     'id'            => 'uiap_enable_keyword',
                     'label'         => esc_html__( 'Filter By Keyword', 'uipro' ),

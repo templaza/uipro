@@ -682,6 +682,45 @@ if ( ! class_exists( 'UIPro_Abstract_Config' ) ) {
 
             $options = array(
                 array(
+                    'type'      => Controls_Manager::MEDIA,
+                    'name'      => 'templaza_parallax_image',
+                    'label'     => esc_html__( 'Parallax Image', 'uipro' ),
+                    'start_section' => 'general',
+                    'section_name'      => esc_html__('General Settings', 'uipro')
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'templaza_parallax_padding',
+                    'label'         => esc_html__( 'Parallax padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .templaza-parallax' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'templaza_parallax_overlay',
+                    'label'         => esc_html__('Parallax Overlay', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .templaza-parallax-overlay' => 'background-color: {{VALUE}}',
+                    ],
+
+                ),
+                array(
+                    'type'      => Controls_Manager::TEXT,
+                    'name'      => 'templaza_parallax_y',
+                    'label'     => esc_html__( 'Animate background Y position', 'uipro' ),
+                    'condition'     => array('templaza_parallax_image!' => ''),
+                ),
+                array(
+                    'type'      => Controls_Manager::TEXT,
+                    'name'      => 'templaza_parallax_x',
+                    'label'     => esc_html__( 'Animate background X position', 'uipro' ),
+                    'condition'     => array('templaza_parallax_image!' => ''),
+                ),
+
+                array(
                     'type'          => Controls_Manager::SELECT,
                     'name'          => 'addon_margin_top',
                     'label'         => esc_html__('Margin Top', 'uipro'),
@@ -693,11 +732,11 @@ if ( ! class_exists( 'UIPro_Abstract_Config' ) ) {
                         'medium' => __('Medium', 'uipro'),
                         'large' => __('Large', 'uipro'),
                         'xlarge' => __('X-Large', 'uipro'),
+                        'xlarge2' => __('X-Large2', 'uipro'),
                         'remove' => __('None', 'uipro'),
                     ),
                     'default'           => '',
-                    'start_section' => 'general',
-                    'section_name'      => esc_html__('General Settings', 'uipro')
+
                 ),
                 array(
                     'type'          => Controls_Manager::SELECT,

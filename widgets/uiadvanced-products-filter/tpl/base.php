@@ -25,7 +25,7 @@ $title_display  =   isset($instance['title_display']) ? $instance['title_display
 $submit_text    =   isset($instance['uiap_submit_text']) ? $instance['uiap_submit_text'] : esc_html__('Search', 'uipro');
 $submit_icon    =   isset($instance['uiap_submit_icon']) ? $instance['uiap_submit_icon'] : '';
 $submit_icon_pos=   isset($instance['uiap_submit_icon_position']) ? $instance['uiap_submit_icon_position'] : 'before';
-
+$taxonomy_display=   isset($instance['uiap_taxonomy_display']) ? $instance['uiap_taxonomy_display'] : 'select';
 $shortcode  = '[advanced-product-form';
 if(!empty($fields_include) && count($fields_include)) {
     $shortcode .= ' include="'.implode(',', $fields_include).'"';
@@ -45,11 +45,13 @@ if(!empty($submit_icon)){
 if(!empty($submit_icon_pos)){
     $shortcode  .= ' submit_icon_position="'.$submit_icon_pos.'"';
 }
+$shortcode .= ' taxonomy_display="'.$taxonomy_display.'"';
 $shortcode .= ' show_label="'.($enable_label?1:0).'"';
 $shortcode .= ' enable_ajax="'.($enable_ajax?1:0).'"';
 $shortcode .= ' instant="'.($enable_ajax_no_button?1:0).'"';
 $shortcode .= ' update_url="'.($enable_ajax_update_url?1:0).'"';
 $shortcode .= ' enable_keyword="'.($enable_keyword?1:0).'"]';
+
 ?>
 <div class=" <?php echo esc_attr($general_styles['container_cls'] . $general_styles['content_cls']);?>" <?php echo wp_kses($general_styles['animation'],'post');?>>
     <?php

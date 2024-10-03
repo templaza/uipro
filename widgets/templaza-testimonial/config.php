@@ -385,6 +385,16 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     ],
                 ),
                 array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'star_margin',
+                    'label'         => esc_html__( 'Star Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .templaza_quote_author_rating' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+                array(
                     'type'          => Controls_Manager::ICONS,
                     'id'            => 'quote_icon',
                     'label'         => esc_html__( 'Quote Icon', 'uipro' ),
@@ -714,6 +724,17 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     ],
                 ),
                 array(
+                    'type'          =>  \Elementor\Group_Control_Box_Shadow::get_type(),
+                    'name'          => 'nav_shadow',
+                    'label'         => esc_html__('Nav Shadow', 'uipro'),
+                    'selector' => '{{WRAPPER}} .uk-slidenav',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'testimonial_slider_navigation', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+                ),
+                array(
                     'type'          => Controls_Manager::DIMENSIONS,
                     'name'          =>  'nav_radius',
                     'label'         => esc_html__( 'Nav radius', 'uipro' ),
@@ -874,13 +895,9 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                         ],
                     ],
                     'default'       => 'left',
-                    'conditions' => [
-                        'terms' => [
-                            ['name' => 'testimonial_slider_dot', 'operator' => '===', 'value' => 'yes'],
-                            ['name' => 'testimonial_slider_dot_position', 'operator' => '===', 'value' => 'absolute'],
-                            ['name' => 'layout', 'operator' => 'in', 'value' => ['style2','base']],
-                        ],
-                    ],
+                    'condition'     => array(
+                        'testimonial_slider_dot_position'    => 'absolute'
+                    ),
                 ),
                 array(
                     'name'          => 'testimonial_slider_dot_offsetx',
@@ -906,7 +923,7 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     'conditions' => [
                         'terms' => [
                             ['name' => 'testimonial_slider_dot_position_x', 'operator' => '===', 'value' => 'left'],
-                            ['name' => 'layout', 'operator' => 'in', 'value' => ['style2','base']],
+                            ['name' => 'testimonial_slider_dot_position', 'operator' => '===', 'value' => 'absolute'],
                         ],
                     ],
                     'selectors' => [
@@ -937,7 +954,7 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     'conditions' => [
                         'terms' => [
                             ['name' => 'testimonial_slider_dot_position_x', 'operator' => '===', 'value' => 'right'],
-                            ['name' => 'layout', 'operator' => 'in', 'value' => ['style2','base']],
+                            ['name' => 'testimonial_slider_dot_position', 'operator' => '===', 'value' => 'absolute'],
                         ],
                     ],
                     'selectors' => [
@@ -959,13 +976,9 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                         ],
                     ],
                     'default'       => 'bottom',
-                    'conditions' => [
-                        'terms' => [
-                            ['name' => 'testimonial_slider_dot', 'operator' => '===', 'value' => 'yes'],
-                            ['name' => 'testimonial_slider_dot_position', 'operator' => '===', 'value' => 'absolute'],
-                            ['name' => 'layout', 'operator' => 'in', 'value' => ['style2','base']],
-                        ],
-                    ],
+                    'condition'     => array(
+                        'testimonial_slider_dot_position'    => 'absolute'
+                    ),
                 ),
                 array(
                     'name'          => 'testimonial_slider_dot_offsety',
@@ -991,7 +1004,7 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     'conditions' => [
                         'terms' => [
                             ['name' => 'testimonial_slider_dot_position_y', 'operator' => '===', 'value' => 'top'],
-                            ['name' => 'layout', 'operator' => 'in', 'value' => ['style2','base']],
+                            ['name' => 'testimonial_slider_dot_position', 'operator' => '===', 'value' => 'absolute'],
                         ],
                     ],
                     'selectors' => [
@@ -1022,7 +1035,7 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     'conditions' => [
                         'terms' => [
                             ['name' => 'testimonial_slider_dot_position_y', 'operator' => '===', 'value' => 'bottom'],
-                            ['name' => 'layout', 'operator' => 'in', 'value' => ['style2','base']],
+                            ['name' => 'testimonial_slider_dot_position', 'operator' => '===', 'value' => 'absolute'],
                         ],
                     ],
                     'selectors' => [

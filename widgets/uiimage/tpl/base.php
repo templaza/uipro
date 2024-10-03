@@ -8,10 +8,13 @@ $class          =   isset($instance['image_border']) && $instance['image_border'
 $class          .=  $flash_effect ? ' ui-image-flash-effect' : '';
 $general_styles = \UIPro_Elementor_Helper::get_general_styles($instance);
 $output         = '';
-$ripple_effect      = (isset($instance['image_transition']) && $instance['image_transition']) ? ($instance['image_transition']) : '';
+$img_effect      = (isset($instance['image_transition']) && $instance['image_transition']) ? ($instance['image_transition']) : '';
 $ripple_cl = '';
-if($ripple_effect =='ripple'){
+if($img_effect =='ripple'){
     $ripple_cl = ' templaza-thumb-ripple ';
+}
+if($img_effect =='zoomin-roof'){
+    $ripple_cl = ' uk-cover-container zoomin-roof ';
 }
 if ($image && isset($image['url']) && $image['url']) {
 	$output     =   '<div class="ui-image'. $general_styles['container_cls'] . $general_styles['content_cls'] .'"' . $general_styles['animation']  .'>';

@@ -259,6 +259,7 @@ if ( ! class_exists( 'UIPro_Config_UIImage' ) ) {
                         'scale-up' => __('Scales Up', 'uipro'),
                         'scale-down' => __('Scales Down', 'uipro'),
                         'ripple' => __('Ripple', 'uipro'),
+                        'zoomin-roof' => __('Zoom in roof', 'uipro'),
                     ),
                     'default'       => '',
                     'conditions' => [
@@ -337,6 +338,147 @@ if ( ! class_exists( 'UIPro_Config_UIImage' ) ) {
                     'conditions' => [
                         'terms' => [
                             ['name' => 'image_transition', 'operator' => '===', 'value' => 'ripple'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'roof_border_color',
+                    'label'         => esc_html__('Roof Border Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .zoomin-roof a::before' => 'border-right-color: {{VALUE}}',
+                        '{{WRAPPER}} .zoomin-roof a::after' => 'border-left-color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'image_transition', 'operator' => '===', 'value' => 'zoomin-roof'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'roof_border_hover_color',
+                    'label'         => esc_html__('Roof Border Hover Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .zoomin-roof:hover a::before' => 'border-right-color: {{VALUE}}',
+                        '{{WRAPPER}} .zoomin-roof:hover a::after' => 'border-left-color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'image_transition', 'operator' => '===', 'value' => 'zoomin-roof'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'roof_left_hover_radius',
+                    'label'         => esc_html__( 'Roof left hover Border radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .zoomin-roof:hover a::before' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'image_transition', 'operator' => '===', 'value' => 'zoomin-roof'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'roof_right_hover_radius',
+                    'label'         => esc_html__( 'Roof right hover Border radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .zoomin-roof:hover a::after' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'image_transition', 'operator' => '===', 'value' => 'zoomin-roof'],
+                        ],
+                    ],
+                ),
+                array(
+                    'name'          => 'roof_hover-rotate',
+                    'label' => __( 'Roof Hover rotate', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'deg' ],
+                    'responsive'    =>  true,
+                    'range' => [
+                        'px' => [
+                            'min' => -360,
+                            'max' => 360,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'deg',
+                        'size' => 50,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .zoomin-roof:hover a::before' => 'transform: rotate({{SIZE}}{{UNIT}});',
+                        '{{WRAPPER}} .zoomin-roof:hover a::after' => 'transform: rotate(-{{SIZE}}{{UNIT}});',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'image_transition', 'operator' => '===', 'value' => 'zoomin-roof'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::TEXT,
+                    'name'          => 'roof_transform_left_hover',
+                    'label'         => esc_html__( 'Roof left transform hover', 'uipro' ),
+                    'description'   => esc_html__( 'Example: [translateX(-100%)] Read more: https://www.w3schools.com/cssref/css3_pr_transform.php ', 'uipro' ),
+                    'selectors' => [
+                        '{{WRAPPER}} .zoomin-roof:hover a::before' => 'transform: {{VALUE}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'image_transition', 'operator' => '===', 'value' => 'zoomin-roof'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::TEXT,
+                    'name'          => 'roof_transform_right_hover',
+                    'label'         => esc_html__( 'Roof right transform hover', 'uipro' ),
+                    'description'   => esc_html__( 'Example: [translateX(100%)] Read more: https://www.w3schools.com/cssref/css3_pr_transform.php ', 'uipro' ),
+                    'selectors' => [
+                        '{{WRAPPER}} .zoomin-roof:hover a::after' => 'transform: {{VALUE}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'image_transition', 'operator' => '===', 'value' => 'zoomin-roof'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::TEXT,
+                    'name'          => 'roof_left_transform',
+                    'label'         => esc_html__( 'Roof left transform', 'uipro' ),
+                    'description'   => esc_html__( 'Example: [top right] Read more: https://www.w3schools.com/cssref/css3_pr_transform-origin.php', 'uipro' ),
+                    'selectors' => [
+                        '{{WRAPPER}} .zoomin-roof a::before' => 'transform-origin: {{VALUE}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'image_transition', 'operator' => '===', 'value' => 'zoomin-roof'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::TEXT,
+                    'name'          => 'roof_right_transform',
+                    'label'         => esc_html__( 'Roof right transform', 'uipro' ),
+                    'description'   => esc_html__( 'Example: [top left] Read more: https://www.w3schools.com/cssref/css3_pr_transform-origin.php', 'uipro' ),
+                    'selectors' => [
+                        '{{WRAPPER}} .zoomin-roof a::after' => 'transform-origin: {{VALUE}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'image_transition', 'operator' => '===', 'value' => 'zoomin-roof'],
                         ],
                     ],
                 ),

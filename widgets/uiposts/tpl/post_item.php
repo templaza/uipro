@@ -15,6 +15,7 @@ $heading_selector = (isset($instance[$pre_val.'title_tag']) && $instance[$pre_va
 $title_heading_style    = (isset($instance[$pre_val.'title_heading_style']) && $instance[$pre_val.'title_heading_style']) ? ' uk-'. $instance[$pre_val.'title_heading_style'] : '';
 $title_margin   = (isset($instance[$pre_val.'title_margin']) && $instance[$pre_val.'title_margin']) ? ' uk-margin-'. $instance[$pre_val.'title_margin'] .'-bottom' : ' uk-margin-bottom';
 $title_maxwidth   = (isset($instance[$pre_val.'title_maxwidth']) && $instance[$pre_val.'title_maxwidth']) ?$instance[$pre_val.'title_maxwidth']: false;
+$title_gradient   = (isset($instance[$pre_val.'custom_title_color_gradient']) && $instance[$pre_val.'custom_title_color_gradient']) ?$instance[$pre_val.'custom_title_color_gradient']: false;
 
 //Image
 $post_link = (isset($instance['post_link']) && $instance['post_link']) ? intval($instance['post_link']) : 0;
@@ -66,16 +67,20 @@ $item->post_excerpt = preg_replace('/<a class="more-link".*?<\/a>/i', '', $item-
 $flash_effect   =   isset($instance['flash_effect']) ? intval($instance['flash_effect']) : 0;
 $imgclass         =  $flash_effect ? ' ui-image-flash-effect uk-position-relative uk-overflow-hidden' : '';
 $image_transition   = ( isset( $instance['image_transition'] ) && $instance['image_transition'] ) ? ' uk-transition-' . $instance['image_transition'] . ' uk-transition-opaque' : '';
-$ripple_effect = (isset($instance['image_transition']) && $instance['image_transition']) ? ($instance['image_transition']) : '';
-$tran_toggle = $ripple_html = $flash_cl = $ripple_wrap = $ripple_cl = ' ';
-if($ripple_effect =='ripple'){
+$thumb_effect = (isset($instance['image_transition']) && $instance['image_transition']) ? ($instance['image_transition']) : '';
+$tran_toggle = $ripple_html = $flash_cl = $ripple_wrap = $thumb_cl = ' ';
+if($thumb_effect =='ripple'){
     $ripple_html = '<div class="templaza-ripple-circles uk-position-center uk-transition-fade">
                         <div class="circle1"></div>
                         <div class="circle2"></div>
                         <div class="circle3"></div>
                     </div>';
-    $ripple_cl = ' templaza-thumb-ripple ';
+    $thumb_cl = ' templaza-thumb-ripple ';
     $ripple_wrap = ' uk-position-relative ';
+}
+
+if($thumb_effect =='zoomin-roof'){
+    $thumb_cl = ' templaza-thumb-roof ';
 }
 if($image_transition){
     $tran_toggle = ' uk-transition-toggle ';
@@ -154,8 +159,9 @@ $meta_middle_margin     =   ( isset( $instance[$pre_val.'meta_middle_margin'] ) 
 $meta_bottom_margin     =   ( isset( $instance[$pre_val.'meta_bottom_margin'] ) && $instance[$pre_val.'meta_bottom_margin'] ) ? ' uk-margin-'. $instance[$pre_val.'meta_bottom_margin'] .'-top' : ' uk-margin-top';
 $meta_footer_margin     =   ( isset( $instance[$pre_val.'meta_footer_margin'] ) && $instance[$pre_val.'meta_footer_margin'] ) ? ' uk-margin-'. $instance[$pre_val.'meta_footer_margin'] : ' uk-margin';
 
+
 $output .=  '<article data-tag="'.esc_attr(implode(' ', $tag_slugs)).'" data-cat="'.esc_attr(implode(' ', $cat_slugs)).'" data-date="'.esc_attr(get_the_date('Y-m-d', $item)).'" data-hits="'.esc_attr(get_post_meta($item->ID, 'post_views_count', true)).'">';
-$output .= '<div class="uk-article uk-card'.esc_attr($ripple_cl.$card_style.$tran_toggle.$card_size_cls.( $thumbnail_hover ? ' uk-transition-toggle uk-overflow-hidden' : '' ).(!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'left' || $image_position == 'right') ? ' uk-grid-collapse' : '')).'"'.(!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'left' || $image_position == 'right') ? ' data-uk-grid' : '').'>';
+$output .= '<div class="uk-article uk-card'.esc_attr($thumb_cl.$card_style.$tran_toggle.$card_size_cls.( $thumbnail_hover ? ' uk-transition-toggle uk-overflow-hidden' : '' ).(!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'left' || $image_position == 'right') ? ' uk-grid-collapse' : '')).'"'.(!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'left' || $image_position == 'right') ? ' data-uk-grid' : '').'>';
 if (!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'top' || $image_position == 'left' || $image_position == 'right') ) :
     if ($image_position == 'left' || $image_position == 'right') {
         $output .=  '<div class="uk-card-media-'.$image_position.' uk-cover-container'.($image_position == 'right' ? ' uk-flex-last@m' : '').$image_width_xl.$image_width_l.$image_width_m.$image_width_s.$image_width.'">';
@@ -169,19 +175,26 @@ if (!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == '
             $uk_cover = $tran_cl;
         }
     }
+    if($thumb_effect =='zoomin-roof'){
+        $output .='<div class="ui-post-roof-effect uk-cover-container">';
+    }
     if($post_link){
-        $output .=  '<a class="'.$imgclass.$ripple_wrap.' uk-height-1-1 ui-post-thumbnail uk-display-block uk-card-media-top'
+        $output .=  '<a class="tz-img '.$imgclass.$ripple_wrap.' uk-height-1-1 ui-post-thumbnail uk-display-block uk-card-media-top'
             .esc_attr($cover_image.$image_border).'" href="javascript:">'
             . UIPro_UIPosts_Helper::get_post_thumbnail($item, $thumbnail_size, $uk_cover) .$ripple_html.'</a>';
     }else{
-        $output .=  '<a class="'.$imgclass.$ripple_wrap.' uk-height-1-1 ui-post-thumbnail uk-display-block uk-card-media-top'
+        $output .=  '<a class="tz-img '.$imgclass.$ripple_wrap.' uk-height-1-1 ui-post-thumbnail uk-display-block uk-card-media-top'
             .esc_attr($cover_image.$image_border).'" href="'. get_permalink( $item->ID ) .'">'
             . UIPro_UIPosts_Helper::get_post_thumbnail($item, $thumbnail_size, $uk_cover) .$ripple_html.'</a>';
     }
-
+    if($thumb_effect =='zoomin-roof'){
+        $output .='</div>';
+    }
 
     if ($image_position == 'left' || $image_position == 'right') {
-        $output .=  '<canvas width="600" height="400"></canvas>';
+        if($thumb_effect !='zoomin-roof'){
+            $output .=  '<canvas width="600" height="400"></canvas>';
+        }
         $output .=  '</div>';
     }
 endif;
@@ -189,7 +202,7 @@ if ($layout == 'thumbnail') {
     if($post_link){
         $output .= '<div class="ui-post-thumb-box '.$flash_cl.'" ><div class="uk-position-cover uk-overlay uk-overlay-primary'.esc_attr( $thumbnail_hover ? ' uk-transition-fade' : '' ).'"></div></div>';
     }else{
-        $output .= '<a class="ui-post-thumb-box '.$flash_cl.'" href="'. get_permalink( $item->ID ) .'"><div class="uk-position-cover uk-overlay uk-overlay-primary'.esc_attr( $thumbnail_hover ? ' uk-transition-fade' : '' ).'"></div></a>';
+        $output .= '<a class="tz-img ui-post-thumb-box '.$flash_cl.'" href="'. get_permalink( $item->ID ) .'"><div class="uk-position-cover uk-overlay uk-overlay-primary'.esc_attr( $thumbnail_hover ? ' uk-transition-fade' : '' ).'"></div></a>';
     }
 }
 
@@ -199,7 +212,7 @@ if (!$hide_thumbnail && has_post_thumbnail( $item->ID ) && $image_position == 'i
     if($post_link){
         $output .=  '<div class="ui-post-thumbnail uk-display-block'.esc_attr($ripple_wrap.$cover_image.$image_border.$image_margin).'" >'. UIPro_UIPosts_Helper::get_post_thumbnail($item, $thumbnail_size) .$ripple_html.'</div>';
     }else{
-        $output .=  '<a class="ui-post-thumbnail uk-display-block'.esc_attr($ripple_wrap.$cover_image.$image_border.$image_margin).'" href="'. get_permalink( $item->ID ) .'">'. UIPro_UIPosts_Helper::get_post_thumbnail($item, $thumbnail_size) .$ripple_html.'</a>';
+        $output .=  '<a class="tz-img ui-post-thumbnail uk-display-block'.esc_attr($ripple_wrap.$cover_image.$image_border.$image_margin).'" href="'. get_permalink( $item->ID ) .'">'. UIPro_UIPosts_Helper::get_post_thumbnail($item, $thumbnail_size) .$ripple_html.'</a>';
     }
 
 
@@ -209,8 +222,11 @@ if(count($meta_top_position)) {
     $output .= wp_kses(implode('', $meta_top_position), wp_kses_allowed_html('post'));
     $output .= '</div>';
 }
-
 $_title_class   = '';
+if($title_gradient){
+    $_title_class   .= ' tz-title-gradient';
+}
+
 if(!empty($title_maxwidth) && !empty($title_maxwidth['size'])){
     $_title_class   .= ' uk-flex uk-flex-center';
 }
@@ -264,11 +280,11 @@ if(count($meta_footer_position)) {
 $output .= '</div>'; //.ui-post-article-info-wrap
 
 if (!$hide_thumbnail && has_post_thumbnail( $item->ID ) && $image_position == 'bottom' ):
-    $output .=  '<a class="ui-post-thumbnail uk-display-block uk-card-media-bottom'.esc_attr($ripple_wrap.$cover_image.$image_border).'" href="'. get_permalink( $item->ID ) .'">'. UIPro_UIPosts_Helper::get_post_thumbnail($item, $thumbnail_size) .$ripple_html.'</a>';
+    $output .=  '<a class="tz-img ui-post-thumbnail uk-display-block uk-card-media-bottom'.esc_attr($ripple_wrap.$cover_image.$image_border).'" href="'. get_permalink( $item->ID ) .'">'. UIPro_UIPosts_Helper::get_post_thumbnail($item, $thumbnail_size) .$ripple_html.'</a>';
 endif;
 
 $output .=  '</div>';
-$output .= apply_filters( 'templaza-elements-builder/uipost-post-after-content', $item);
+$output .= apply_filters( 'templaza-elements-builder/uipost-post-after-content', '',$item->ID);
 $output .=  '</article>';
 
 echo ent2ncr($output);

@@ -155,7 +155,7 @@ if($ap_posts && $ap_posts -> have_posts()) {
     $general_styles = \UIPro_Elementor_Helper::get_general_styles($instance);
     $output = '';
     ?>
-    <div class="ui-advanced-products <?php echo esc_attr($general_styles['container_cls']) .' '.$general_styles['animation'].' ui-'.$slider_visible;?>">
+    <div  class="ui-advanced-products <?php echo esc_attr($general_styles['container_cls']) .' '.$general_styles['animation'].' ui-'.$slider_visible;?>">
     <?php
     if ($use_slider) {
         ?>
@@ -192,7 +192,7 @@ if($ap_posts && $ap_posts -> have_posts()) {
         }
     }
     ?>
-    <div class="ui-post-items templaza-ap-archive ap-product-container uk-position-relative <?php echo esc_attr($module_id);?> uk-child-width-1-<?php echo $large_desktop_columns;?>@xl
+    <div data-grid-second class="ui-post-items templaza-ap-archive ap-product-container uk-position-relative <?php echo esc_attr($module_id);?> uk-child-width-1-<?php echo $large_desktop_columns;?>@xl
     uk-child-width-1-<?php echo $desktop_columns;?>@l
     uk-child-width-1-<?php echo $laptop_columns;?>@m
     uk-child-width-1-<?php echo $tablet_columns;?>@s

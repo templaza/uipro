@@ -264,10 +264,10 @@ class UIPro_Elementor_Helper{
 				'class' => trim( $image_class ),
 			];
             if(isset($settings['link_type']) && $settings['link_type'] == 'use_link'){
-                $html .='<a href='.$settings['link']['url'].'>';
+                $html .='<a class="uk-display-block tz-img" href='.$settings['link']['url'].'>';
             }
             if(isset($settings['link_type']) && $settings['link_type'] == 'use_modal'){
-                $html .='<a href="'. esc_url($image['url']) .'" data-elementor-open-lightbox="yes" >';
+                $html .='<a class="uk-display-block tz-img" href="'. esc_url($image['url']) .'" data-elementor-open-lightbox="yes" >';
             }
 			$html .= wp_get_attachment_image( $image['id'], $size, false, $image_attr );
             $html .= $ripple_html;

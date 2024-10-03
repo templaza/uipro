@@ -23,11 +23,13 @@ $image_margin   = ( isset( $instance['image_margin'] ) && $instance['image_margi
 $cover_image    = $cover_image ? ' tz-image-cover' : '';
 
 //Intro
+$show_title 	= (isset($instance['title_display']) && $instance['title_display']) ? intval($instance['title_display']) : 0;
 $show_intro 	= (isset($instance['show_introtext']) && $instance['show_introtext']) ? intval($instance['show_introtext']) : 0;
 $dropcap        = (isset($instance['content_dropcap']) && $instance['content_dropcap']) ? ' uk-dropcap' : '';
 
 $image          =   get_post($item['id']);
-
+$img_effect      = (isset($instance['image_transition']) && $instance['image_transition']) ? ($instance['image_transition']) : '';
+$image_transition   = ( isset( $instance['image_transition'] ) && $instance['image_transition'] ) ? ' uk-transition-' . $instance['image_transition'] . ' uk-transition-opaque' : '';
 //Get Item Tags
 $tag_slugs      =   array();
 $tags = get_post_meta( $item['id'], '_wp_attachment_image_alt', true );
@@ -45,20 +47,32 @@ $caption_position           =   ( isset( $instance['caption_position'] ) ) ? $in
 $caption_margin             =   ( isset( $instance['caption_top_margin'] ) && $instance['caption_top_margin'] ) ? ' uk-margin-'. $instance['caption_top_margin'].'-top' : ' uk-margin-top';
 $caption_margin             .=  ( isset( $instance['caption_bottom_margin'] ) && $instance['caption_bottom_margin'] ) ? ' uk-margin-'. $instance['caption_bottom_margin'].'-bottom' : ' uk-margin-bottom';
 $use_lightbox               = (isset($instance['lightbox']) && $instance['lightbox']) ? intval($instance['lightbox']) : 0;
-
+$ripple_cl = '';
+if($img_effect =='zoomin-roof'){
+    $ripple_cl = ' uk-cover-container zoomin-roof ';
+}
 $output .= '<article data-tag="'.esc_attr(implode(' ', $tag_slugs)).'">';
-$output .= '<div class="uk-article uk-card uk-overflow-hidden'.esc_attr($card_size_cls.$image_border.( $thumbnail_hover ? ' uk-transition-toggle' : '' )).'">';
-$output .= '<div class="ui-gallery-thumbnail uk-display-block uk-card-media-top'.esc_attr($cover_image).'">'. wp_get_attachment_image( $item['id'], $thumbnail_size, false ) .'</div>';
+$output .= '<div class="uk-article uk-card uk-overflow-hidden'.esc_attr($card_size_cls.$ripple_cl.$image_border.( $thumbnail_hover ? ' uk-transition-toggle' : '' )).'">';
+if($img_effect =='zoomin-roof'){
+    $output .= '<div class="ui-gallery-thumbnail uk-display-block uk-card-media-top'.esc_attr($cover_image).'"><a href="" class="tz-img uk-display-block uk-height-1-1">'. wp_get_attachment_image( $item['id'], $thumbnail_size, false,array("class"=>$image_transition, "data-uk-cover"=>'') ) .'</a></div>';
+}else{
+    $output .= '<div class="ui-gallery-thumbnail uk-display-block uk-card-media-top'.esc_attr($cover_image). $ripple_cl.'">'. wp_get_attachment_image( $item['id'], $thumbnail_size, false,array("class"=>$image_transition) ) .'</div>';
+}
+
 $output .= '<div class="uk-position-cover uk-overlay uk-overlay-primary'.esc_attr( $thumbnail_hover ? ' uk-transition-fade' : '' ).'"></div>';
 
 $output .= '<div class="ui-gallery-info-wrap  uk-position-bottom uk-light'.esc_attr(( $thumbnail_hover && $thumbnail_hover_transition ? $thumbnail_hover_transition : '' )).'">';
 $output .= '<div class="'.esc_attr($uk_card_body).'">';
+
 if($caption_position == 'before_title') {
     $output .= '<div class="ui-gallery-item-caption uk-article-meta'.esc_attr($caption_margin).'">';
     $output .= wp_kses($image->post_excerpt, wp_kses_allowed_html('post'));
     $output .= '</div>';
 }
-$output .= '<'.$heading_selector.' class="ui-title uk-margin-remove-top'.$title_heading_style.$title_margin.'">' . esc_html($image->post_title) . '</'.$heading_selector.'>';
+if($show_title){
+    $output .= '<'.$heading_selector.' class="ui-title uk-margin-remove-top'.$title_heading_style.$title_margin.'">' . esc_html($image->post_title) . '</'.$heading_selector.'>';
+}
+
 
 if($caption_position == 'after_title') {
     $output .= '<div class="ui-gallery-item-caption uk-article-meta'.esc_attr($caption_margin).'">';

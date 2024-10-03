@@ -48,6 +48,16 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 
 			// options
 			$options = array(
+                array(
+                    'id'          => 'layout',
+                    'label' => esc_html__( 'Layout', 'uipro' ),
+                    'type' => Controls_Manager::SELECT,
+                    'options'       => array(
+                        'base'    => esc_html__('Default', 'uipro'),
+                        'list'    => esc_html__('List', 'uipro'),
+                    ),
+                    'default'   => 'base',
+                ),
 				array(
 					'type'          => Controls_Manager::TEXTAREA,
 					'name'          => 'title',
@@ -599,6 +609,7 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                         '' => __('None', 'uipro'),
                         'scale-up' => __('Scales Up', 'uipro'),
                         'scale-down' => __('Scales Down', 'uipro'),
+                        'zoomin-roof' => __('Zoom in roof', 'uipro'),
                     ),
                     'default'       => '',
                     'conditions' => [
@@ -607,6 +618,164 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                         ],
                     ],
                 ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'roof_border_color',
+                    'label'         => esc_html__('Roof Border Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .zoomin-roof a::before' => 'border-right-color: {{VALUE}}',
+                        '{{WRAPPER}} .zoomin-roof a::after' => 'border-left-color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'media_transition', 'operator' => '===', 'value' => 'zoomin-roof'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'roof_border_hover_color',
+                    'label'         => esc_html__('Roof Border Hover Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .zoomin-roof:hover a::before' => 'border-right-color: {{VALUE}}',
+                        '{{WRAPPER}} .zoomin-roof:hover a::after' => 'border-left-color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'media_transition', 'operator' => '===', 'value' => 'zoomin-roof'],
+                        ],
+                    ],
+                ),
+                array(
+                    'name'          => 'roof_hover-rotate',
+                    'label' => __( 'Roof Hover rotate', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'deg' ],
+                    'responsive'    =>  true,
+                    'range' => [
+                        'px' => [
+                            'min' => -360,
+                            'max' => 360,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'deg',
+                        'size' => 50,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .zoomin-roof:hover a::before' => 'transform: rotate({{SIZE}}{{UNIT}});',
+                        '{{WRAPPER}} .zoomin-roof:hover a::after' => 'transform: rotate(-{{SIZE}}{{UNIT}});',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'media_transition', 'operator' => '===', 'value' => 'zoomin-roof'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::TEXT,
+                    'name'          => 'roof_transform_left_hover',
+                    'label'         => esc_html__( 'Roof left transform hover', 'uipro' ),
+                    'description'   => esc_html__( 'Example: [translateX(-100%)] Read more: https://www.w3schools.com/cssref/css3_pr_transform.php ', 'uipro' ),
+                    'selectors' => [
+                        '{{WRAPPER}} .zoomin-roof:hover a::before' => 'transform: {{VALUE}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'media_transition', 'operator' => '===', 'value' => 'zoomin-roof'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::TEXT,
+                    'name'          => 'roof_transform_right_hover',
+                    'label'         => esc_html__( 'Roof right transform hover', 'uipro' ),
+                    'description'   => esc_html__( 'Example: [translateX(100%)] Read more: https://www.w3schools.com/cssref/css3_pr_transform.php ', 'uipro' ),
+                    'selectors' => [
+                        '{{WRAPPER}} .zoomin-roof:hover a::after' => 'transform: {{VALUE}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'media_transition', 'operator' => '===', 'value' => 'zoomin-roof'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'roof_left_hover-radius',
+                    'label'         => esc_html__( 'Roof left hover radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .zoomin-roof:hover a.tz-img::before' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'media_transition', 'operator' => '===', 'value' => 'zoomin-roof'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'roof_right_hover-radius',
+                    'label'         => esc_html__( 'Roof right hover radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .zoomin-roof:hover a.tz-img::after' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'media_transition', 'operator' => '===', 'value' => 'zoomin-roof'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::TEXTAREA,
+                    'name'          => 'roof_transform_hover',
+                    'label'         => esc_html__( 'Roof transform hover', 'uipro' ),
+                    'description'   => esc_html__( 'Example: transform: rotate(20deg) Read more: https://www.w3schools.com/cssref/css3_pr_transform.php ', 'uipro' ),
+                    'selectors' => [
+                        '{{WRAPPER}} .zoomin-roof:hover a::before' => 'transform: rotate({{SIZE}}{{UNIT}});',
+                        '{{WRAPPER}} .zoomin-roof:hover a::after' => 'transform: rotate(-{{SIZE}}{{UNIT}});',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'media_transition', 'operator' => '===', 'value' => 'zoomin-roof'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::TEXT,
+                    'name'          => 'roof_left_transform',
+                    'label'         => esc_html__( 'Roof left transform', 'uipro' ),
+                    'description'   => esc_html__( 'Example: [top right] Read more: https://www.w3schools.com/cssref/css3_pr_transform-origin.php', 'uipro' ),
+                    'selectors' => [
+                        '{{WRAPPER}} .zoomin-roof a::before' => 'transform-origin: {{VALUE}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'media_transition', 'operator' => '===', 'value' => 'zoomin-roof'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::TEXT,
+                    'name'          => 'roof_right_transform',
+                    'label'         => esc_html__( 'Roof right transform', 'uipro' ),
+                    'description'   => esc_html__( 'Example: [top left] Read more: https://www.w3schools.com/cssref/css3_pr_transform-origin.php', 'uipro' ),
+                    'selectors' => [
+                        '{{WRAPPER}} .zoomin-roof a::after' => 'transform-origin: {{VALUE}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'media_transition', 'operator' => '===', 'value' => 'zoomin-roof'],
+                        ],
+                    ],
+                ),
+
+
                 array(
                     'type'          => Controls_Manager::ICONS,
                     'name'          => 'icon_media',
@@ -951,7 +1120,236 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 						],
 					],
 				),
-
+                array(
+                    'id'          => 'list_align_items',
+                    'label' => esc_html__( 'List align items', 'uipro' ),
+                    'type' => Controls_Manager::CHOOSE,
+                    'default' => '',
+                    'options' => [
+                        'flex-start' => [
+                            'title' => esc_html__( 'Start', 'elementor' ),
+                            'icon' => 'eicon-flex eicon-align-start-v',
+                        ],
+                        'center' => [
+                            'title' => esc_html__( 'Center', 'elementor' ),
+                            'icon' => 'eicon-flex eicon-align-center-v',
+                        ],
+                        'flex-end' => [
+                            'title' => esc_html__( 'End', 'elementor' ),
+                            'icon' => 'eicon-flex eicon-align-end-v',
+                        ],
+                        'stretch' => [
+                            'title' => esc_html__( 'Stretch', 'elementor' ),
+                            'icon' => 'eicon-flex eicon-align-stretch-v',
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .uk-card-list' => 'align-items: {{VALUE}};',
+                    ],
+                    'responsive' => true,
+                    'separator'     => 'before',
+                    'start_section' => 'list',
+                    'section_name'      => esc_html__('List Settings', 'uipro'),
+                    'condition'     => array(
+                        'layout'    => 'list'
+                    ),
+                ),
+                array(
+                    'id'          => 'meta_desktop_width',
+                    'label' => esc_html__( 'Meta Title Width', 'uipro' ),
+                    'type' => Controls_Manager::SELECT,
+                    'options'       => array(
+                        'uk-width-1-1'    => esc_html__('1/1', 'uipro'),
+                        'uk-width-1-2'    => esc_html__('1/2', 'uipro'),
+                        'uk-width-1-3'    => esc_html__('1/3', 'uipro'),
+                        'uk-width-1-4'    => esc_html__('1/4', 'uipro'),
+                        'uk-width-1-5'    => esc_html__('1/5', 'uipro'),
+                        'uk-width-1-6'    => esc_html__('1/6', 'uipro'),
+                        'uk-width-auto'    => esc_html__('auto', 'uipro'),
+                        'uk-width-expand'    => esc_html__('expand', 'uipro'),
+                    ),
+                    'default'   => 'uk-width-1-6',
+                    'separator'     => 'before',
+                    'start_section' => 'list',
+                    'section_name'      => esc_html__('List Settings', 'uipro'),
+                    'condition'     => array(
+                        'layout'    => 'list'
+                    ),
+                ),
+                array(
+                    'type'         => Controls_Manager::CHOOSE,
+                    'label'         => esc_html__( 'Meta alignment', 'uipro' ),
+                    'name'          => 'meta_list_align',
+                    'responsive'    => true, /* this will be add in responsive layout */
+                    'options'       => [
+                        'left'      => [
+                            'title' => esc_html__( 'Left', 'uipro' ),
+                            'icon'  => 'eicon-text-align-left',
+                        ],
+                        'center'    => [
+                            'title' => esc_html__( 'Center', 'uipro' ),
+                            'icon'  => 'eicon-text-align-center',
+                        ],
+                        'right'     => [
+                            'title' => esc_html__( 'Right', 'uipro' ),
+                            'icon'  => 'eicon-text-align-right',
+                        ],
+                        'justify'   => [
+                            'title' => esc_html__( 'Justified', 'uipro' ),
+                            'icon'  => 'eicon-text-align-justify',
+                        ],
+                    ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-card-meta'   => 'text-align: {{VALUE}}; align-items: {{VALUE}};',
+                    ],
+                ),
+                array(
+                    'id'          => 'title_desktop_width',
+                    'label' => esc_html__( 'Title Width', 'uipro' ),
+                    'type' => Controls_Manager::SELECT,
+                    'options'       => array(
+                        'uk-width-1-1'    => esc_html__('1/1', 'uipro'),
+                        'uk-width-1-2'    => esc_html__('1/2', 'uipro'),
+                        'uk-width-1-3'    => esc_html__('1/3', 'uipro'),
+                        'uk-width-1-4'    => esc_html__('1/4', 'uipro'),
+                        'uk-width-1-5'    => esc_html__('1/5', 'uipro'),
+                        'uk-width-1-6'    => esc_html__('1/6', 'uipro'),
+                        'uk-width-auto'    => esc_html__('auto', 'uipro'),
+                        'uk-width-expand'    => esc_html__('expand', 'uipro'),
+                    ),
+                    'default'   => 'uk-width-1-4',
+                    'separator'     => 'before',
+                    'start_section' => 'list',
+                    'section_name'      => esc_html__('List Settings', 'uipro'),
+                    'condition'     => array(
+                        'layout'    => 'list'
+                    ),
+                ),
+                array(
+                    'type'         => Controls_Manager::CHOOSE,
+                    'label'         => esc_html__( 'Title alignment', 'uipro' ),
+                    'name'          => 'title_list_align',
+                    'responsive'    => true, /* this will be add in responsive layout */
+                    'options'       => [
+                        'left'      => [
+                            'title' => esc_html__( 'Left', 'uipro' ),
+                            'icon'  => 'eicon-text-align-left',
+                        ],
+                        'center'    => [
+                            'title' => esc_html__( 'Center', 'uipro' ),
+                            'icon'  => 'eicon-text-align-center',
+                        ],
+                        'right'     => [
+                            'title' => esc_html__( 'Right', 'uipro' ),
+                            'icon'  => 'eicon-text-align-right',
+                        ],
+                        'justify'   => [
+                            'title' => esc_html__( 'Justified', 'uipro' ),
+                            'icon'  => 'eicon-text-align-justify',
+                        ],
+                    ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-card-title'   => 'text-align: {{VALUE}}; align-items: {{VALUE}};',
+                    ],
+                ),
+                array(
+                    'id'          => 'content_desktop_width',
+                    'label' => esc_html__( 'Content Width', 'uipro' ),
+                    'type' => Controls_Manager::SELECT,
+                    'options'       => array(
+                        'uk-width-1-1'    => esc_html__('1/1', 'uipro'),
+                        'uk-width-1-2'    => esc_html__('1/2', 'uipro'),
+                        'uk-width-1-3'    => esc_html__('1/3', 'uipro'),
+                        'uk-width-1-4'    => esc_html__('1/4', 'uipro'),
+                        'uk-width-1-5'    => esc_html__('1/5', 'uipro'),
+                        'uk-width-1-6'    => esc_html__('1/6', 'uipro'),
+                        'uk-width-auto'    => esc_html__('auto', 'uipro'),
+                        'uk-width-expand'    => esc_html__('expand', 'uipro'),
+                    ),
+                    'default'   => 'uk-width-1-2',
+                    'separator'     => 'before',
+                    'start_section' => 'list',
+                    'section_name'      => esc_html__('List Settings', 'uipro'),
+                    'condition'     => array(
+                        'layout'    => 'list'
+                    ),
+                ),
+                array(
+                    'type'         => Controls_Manager::CHOOSE,
+                    'label'         => esc_html__( 'Content alignment', 'uipro' ),
+                    'name'          => 'content_list_align',
+                    'responsive'    => true, /* this will be add in responsive layout */
+                    'options'       => [
+                        'left'      => [
+                            'title' => esc_html__( 'Left', 'uipro' ),
+                            'icon'  => 'eicon-text-align-left',
+                        ],
+                        'center'    => [
+                            'title' => esc_html__( 'Center', 'uipro' ),
+                            'icon'  => 'eicon-text-align-center',
+                        ],
+                        'right'     => [
+                            'title' => esc_html__( 'Right', 'uipro' ),
+                            'icon'  => 'eicon-text-align-right',
+                        ],
+                        'justify'   => [
+                            'title' => esc_html__( 'Justified', 'uipro' ),
+                            'icon'  => 'eicon-text-align-justify',
+                        ],
+                    ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-card-text'   => 'text-align: {{VALUE}}; align-items: {{VALUE}};',
+                    ],
+                ),
+                array(
+                    'id'          => 'button_desktop_width',
+                    'label' => esc_html__( 'Button Width', 'uipro' ),
+                    'type' => Controls_Manager::SELECT,
+                    'options'       => array(
+                        'uk-width-1-1'    => esc_html__('1/1', 'uipro'),
+                        'uk-width-1-2'    => esc_html__('1/2', 'uipro'),
+                        'uk-width-1-3'    => esc_html__('1/3', 'uipro'),
+                        'uk-width-1-4'    => esc_html__('1/4', 'uipro'),
+                        'uk-width-1-5'    => esc_html__('1/5', 'uipro'),
+                        'uk-width-1-6'    => esc_html__('1/6', 'uipro'),
+                        'uk-width-auto'    => esc_html__('auto', 'uipro'),
+                        'uk-width-expand'    => esc_html__('expand', 'uipro'),
+                    ),
+                    'default'   => 'uk-width-1-6',
+                    'separator'     => 'before',
+                    'start_section' => 'list',
+                    'section_name'      => esc_html__('List Settings', 'uipro'),
+                    'condition'     => array(
+                        'layout'    => 'list'
+                    ),
+                ),
+                array(
+                    'type'         => Controls_Manager::CHOOSE,
+                    'label'         => esc_html__( 'Button alignment', 'uipro' ),
+                    'name'          => 'button_list_align',
+                    'responsive'    => true, /* this will be add in responsive layout */
+                    'options'       => [
+                        'left'      => [
+                            'title' => esc_html__( 'Left', 'uipro' ),
+                            'icon'  => 'eicon-text-align-left',
+                        ],
+                        'center'    => [
+                            'title' => esc_html__( 'Center', 'uipro' ),
+                            'icon'  => 'eicon-text-align-center',
+                        ],
+                        'right'     => [
+                            'title' => esc_html__( 'Right', 'uipro' ),
+                            'icon'  => 'eicon-text-align-right',
+                        ],
+                        'justify'   => [
+                            'title' => esc_html__( 'Justified', 'uipro' ),
+                            'icon'  => 'eicon-text-align-justify',
+                        ],
+                    ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-button'   => 'text-align: {{VALUE}}; align-items: {{VALUE}};',
+                    ],
+                ),
 				//Button Settings
 				array(
 					'type'          => Controls_Manager::TEXTAREA,
@@ -1237,8 +1635,5 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
             static::$cache[$store_id]   = $options;
 		}
 
-		public function get_template_name() {
-			return 'base';
-		}
 	}
 }

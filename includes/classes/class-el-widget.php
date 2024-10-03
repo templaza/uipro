@@ -449,8 +449,14 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
             $margin_bottom = ( isset( $settings['addon_margin_bottom'] ) && $settings['addon_margin_bottom'] ) ? $settings['addon_margin_bottom'] : '';
             $margin_bottom = ( $margin_bottom ) ? ' uk-margin' . ( ( $margin_bottom == 'default' ) ? '-bottom' : '-' . $margin_bottom .'-bottom' ) : '';
 
+            $parallax  =   isset($settings['templaza_parallax_image']) && $settings['templaza_parallax_image'] ? $settings['templaza_parallax_image'] : '';
+            if($parallax["url"]){
+                echo '<div class="uk-cover-container uk-position-cover"><div data-uk-scrollspy="" data-uk-parallax="bgy: 100; bgx:0;" class="uk-cover-container uk-background-cover uk-position-cover" style="background-image:url('.esc_url($parallax["url"]).')">
+            </div><div class="uk-overlay uk-position-cover templaza-parallax-overlay"></div></div>';
+            }
+
             $base_file = $this->get_template_name() ? $this->get_template_name() : $this->get_base();
-            echo '<div class="templaza-widget-' . $this->get_base() . ' template-' . $base_file . $container . $margin_top . $margin_bottom . '">';
+            echo '<div class="templaza-parallax templaza-widget-' . $this->get_base() . ' template-' . $base_file . $container . $margin_top . $margin_bottom . '">';
 
             \UIPro_Elementor_Helper::get_widget_template( $base_file,
                 array( $params => $settings, 'args' => $args, 'el' => $this ), $settings['template_path'] );

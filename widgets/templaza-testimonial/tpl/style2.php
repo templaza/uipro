@@ -11,6 +11,10 @@ $testimonial_quote_size    = isset( $instance['testimonial_quote_size'] ) && $in
 $avatar_border    = isset( $instance['avatar_border'] ) && $instance['avatar_border'] ? ' '. $instance['avatar_border'] : '';
 $testimonials_visible      = !empty( $instance['testimonial_slider_wrap'] ) ? $instance['testimonial_slider_wrap'] : '';
 $quote_icon = ( isset( $instance['quote_icon'] ) && $instance['quote_icon'] ) ? $instance['quote_icon'] : array();
+$gap = ( isset( $instance['gap'] ) && $instance['gap'] ) ? $instance['gap'] : 'collapse';
+if($gap =='default'){
+    $gap = ' uk-grid';
+}
 $slider_options = '';
 if($testimonial_slider_autoplay=='yes'){
     $slider_options .= 'autoplay: true; ';
@@ -34,7 +38,7 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
             <?php if($testimonials_visible ==''){ ?>
             <div class="uk-slider-container">
                 <?php } ?>
-                <ul class="uk-slider-items uk-child-width-1-1 uk-child-width-1-1@s uk-child-width-1-<?php echo esc_attr($testimonial_slider_number);?>@m">
+                <ul class="uk-slider-items uk-child-width-1-1 uk-child-width-1-1@s uk-child-width-1-<?php echo esc_attr($testimonial_slider_number);?>@m uk-grid-<?php echo esc_attr($gap);?>">
 					<?php
 					foreach ($templaza_testimonials as $item){
 					    $image  =   isset( $item['author_image'] ) && $item['author_image'] ? $item['author_image'] : array();
