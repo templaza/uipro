@@ -284,7 +284,7 @@ if (!$hide_thumbnail && has_post_thumbnail( $item->ID ) && $image_position == 'b
 endif;
 
 $output .=  '</div>';
-$output .= apply_filters( 'templaza-elements-builder/uipost-post-after-content', '',$item->ID);
+$output .= apply_filters( 'templaza-elements-builder/uipost-post-after-content', '',$item);
 $output .=  '</article>';
 
 echo ent2ncr($output);
