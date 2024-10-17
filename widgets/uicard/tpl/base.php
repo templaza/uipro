@@ -45,6 +45,8 @@ if ($layout_type == 'icon') {
 	$image          =   ( isset( $instance['image'] ) && $instance['image']['url'] ) ? $instance['image']['url'] : '';
 	$media          .=  $image ? '<img class="uk-transition-opaque uk-transition-'.$image_transition.'" src="'.$image.'" alt="'.$title.'" />' : '';
 }
+$image_appear   =   ( isset( $instance['image_appear'] ) && $instance['image_appear'] ) ? $instance['image_appear'] : '';
+
 $media_class = '';
 if($image_transition !=''){
     $media_class = ' uk-transition-toggle';
@@ -53,7 +55,10 @@ $link_class = $media_class_wrap = '';
 if($image_transition =='zoomin-roof'){
     $media_class_wrap = ' uk-cover-container zoomin-roof';
     $link_class = 'uk-display-block';
-    $image_transition = 'zoomin-roof-wrap';
+    if($image_appear != 'thumbnail'){
+        $image_transition = 'zoomin-roof-wrap';
+    }
+
 }
 $icon_on_media = '';
 $icon_media    = ( isset( $instance['icon_media'] ) && $instance['icon_media'] ) ? $instance['icon_media'] : array();
@@ -68,7 +73,6 @@ if(isset($icon_media['value'])){
 if($instance['button_size'] =='full'){
     $button_size .=' uk-width-1-1';
 }
-$image_appear   =   ( isset( $instance['image_appear'] ) && $instance['image_appear'] ) ? $instance['image_appear'] : '';
 
 //Card Style
 $card_style     = isset($instance['card_style']) && $instance['card_style'] ? ' uk-card-'. $instance['card_style'] : '';

@@ -503,6 +503,47 @@ if ( ! class_exists( 'UIPro_Config_UIImage' ) ) {
                     'responsive'    => true,
                 ),
                 array(
+                    'type'          => Controls_Manager::SWITCHER,
+                    'id'            => 'image_custom_height',
+                    'label'         => esc_html__('Image Custom Height', 'uipro'),
+                    'label_on'      => esc_html__( 'Yes', 'uipro' ),
+                    'label_off'     => esc_html__( 'No', 'uipro' ),
+                    'return_value'  => '1',
+                    'default'       => '0',
+                ),
+                array(
+                    'name'            => 'image_height',
+                    'label'         => esc_html__( 'Image Height', 'uipro' ),
+                    'type'          => Controls_Manager::SLIDER,
+                    'responsive'    => true,
+                    'range' => [
+                        'px' => [
+                            'min' => 1,
+                            'max' => 1000
+                        ],
+                    ],
+                    'desktop_default' => [
+                        'size' => 450,
+                        'unit' => 'px',
+                    ],
+                    'tablet_default' => [
+                        'size' => 300,
+                        'unit' => 'px',
+                    ],
+                    'mobile_default' => [
+                        'size' => 220,
+                        'unit' => 'px',
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-image img' => 'height: {{SIZE}}{{UNIT}}; object-fit:cover;',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'image_custom_height', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
                     'type'          => \Elementor\Group_Control_Border::get_type(),
                     'name'          => 'border_hover',
                     'label'         => esc_html__( 'Border Hover', 'uipro' ),

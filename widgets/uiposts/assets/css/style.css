@@ -82,6 +82,10 @@
 .ui-posts.style1 .uk-article {
   overflow: hidden;
 }
+.ui-posts.style1 .templaza-thumb-roof .ui-post-info-wrap {
+  position: relative;
+  z-index: 2;
+}
 .ui-posts .ui-post-thumb-box {
   position: absolute;
   top: 0;

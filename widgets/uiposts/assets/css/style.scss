@@ -94,6 +94,12 @@
     .uk-article{
       overflow: hidden;
     }
+    .templaza-thumb-roof{
+      .ui-post-info-wrap{
+        position:relative;
+        z-index:2;
+      }
+    }
   }
   .ui-post-thumb-box{
     position:absolute;

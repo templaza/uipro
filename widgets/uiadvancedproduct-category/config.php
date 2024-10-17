@@ -282,9 +282,34 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                         'medium' => esc_html__('Medium', 'uipro'),
                         'large' => esc_html__('Large', 'uipro'),
                         'collapse' => esc_html__('Collapse', 'uipro'),
+                        'custom' => esc_html__('Custom', 'uipro'),
                     ),
                     'default'           => '',
                 ),
+                array(
+                    'name'          => 'column_grid_gap_custom',
+                    'label' => __( 'Custom Gap', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px'],
+                    'responsive'    =>  true,
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 2000,
+                            'step' => 1,
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .uk-slider-items > li' => 'padding-left: {{SIZE}}{{UNIT}};',
+                        '{{WRAPPER}} .uk-slider-items' => 'margin-left: -{{SIZE}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'column_grid_gap', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+                ),
+
                 //Card Settings
                 array(
                     'type'          => Controls_Manager::SELECT,
@@ -302,6 +327,7 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                     'start_section' => 'card_settings',
                     'section_name'      => esc_html__('Card Settings', 'uipro')
                 ),
+
                 array(
                     'type'          =>  Controls_Manager::COLOR,
                     'name'          => 'card_background',

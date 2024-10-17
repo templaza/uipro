@@ -1,0 +1,15 @@
+.templaza-widget-uiadvanced-products-filter{
+  .advanced-product-search-form {
+    .ap-search-item {
+      ul{
+        padding:0;
+        list-style:none;
+      }
+      input{
+        &.checkbox{
+          margin-left:0;
+        }
+      }
+    }
+  }
+}

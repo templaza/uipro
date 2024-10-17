@@ -40,6 +40,13 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
             add_action( 'elementor/editor/before_enqueue_styles', array($this, 'editor_enqueue_styles') );
             add_action( 'elementor/preview/enqueue_scripts', array($this, 'editor_enqueue_scripts') );
 		}
+        public function get_styles() {
+            return array(
+                'uiadvanced-products-filter-style' => array(
+                    'src'   =>  'style.css'
+                )
+            );
+        }
 
 		/**
 		 * @return array
@@ -358,7 +365,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
                         'size' => 50,
                     ],
                     'selectors' => array(
-                        '{{WRAPPER}} .advanced-product-search-form .ap-search-item input, {{WRAPPER}} .advanced-product-search-form .ap-search-item select' => 'height: {{SIZE}}{{UNIT}};',
+                        '{{WRAPPER}} .advanced-product-search-form .ap-search-item input[type="text"], {{WRAPPER}} .advanced-product-search-form .ap-search-item select' => 'height: {{SIZE}}{{UNIT}};',
                     )
                 ),
                 array(

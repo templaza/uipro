@@ -125,7 +125,7 @@ if ($title) {
         }
 	}
 	$output     .=  '<div class="uk-card-body '.$image_content. $general_styles['content_cls'] . '">';
-    $output .= '<div class="uk-grid uk-card-list" data-uk-grid >';
+    $output .= '<div class="uk-grid uk-card-list as-image-hover-menu" data-uk-grid >';
 	if ($title_position == 'before') {
         if($meta_position == 'before'){
             $output     .=  '<div class="uk-card-meta uk-width-1-2 '.$meta_desktop_width.'@s">'.$meta.'</div>';
