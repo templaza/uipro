@@ -350,6 +350,16 @@ if ( ! class_exists( 'UIPro_Config_UITimeline' ) ) {
                     ),
                 ),
                 array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'image_custom_radius',
+                    'label'         => esc_html__( 'Image Border radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-timeline .timeline-img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+                array(
                     'name'          => 'image_box_space',
                     'label' => esc_html__( 'Image Space', 'uipro' ),
                     'type' => Controls_Manager::SLIDER,

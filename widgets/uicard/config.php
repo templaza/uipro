@@ -553,6 +553,21 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 						],
 					],
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'image_border-radius',
+                    'label'         => esc_html__( 'Image border radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}}  .ui-card .ui-media' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout_type', 'operator' => '===', 'value' => 'image'],
+                        ],
+                    ],
+                ),
 				array(
 					'type'          => \Elementor\Group_Control_Background::get_type(),
 					'name'          => 'image_content_bg',

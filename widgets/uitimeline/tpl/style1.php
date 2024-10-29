@@ -56,7 +56,7 @@ if (count($timeline)) {
             $time_cl = 'uk-flex-right uk-flex-center';
         }
         $content .=  '<div class="line-box '.$line_cl.' uk-flex uk-flex-middle uk-position-relative "><div class="line  '.$circle_cl.'"></div></div>';
-        $content .=  '<div class="image-box uk-width-expand"> <div class="uitimeline-img">';
+        $content .=  '<div class="image-box uk-width-expand"> <div class="uitimeline-img  uk-cover-container">';
         if($timeframe_ontitle){
             $content .=  '<div class="ui-timeline-date uk-inline">'.esc_attr($item['date']).'</div>';
         }else{
@@ -76,7 +76,7 @@ if (count($timeline)) {
         $content .=  '</div></div>';
         $content .=  '<div class="uk-flex tz-timeline-date-box '.$mobile_cl.' uk-width-1-4 uk-width-1-2@s  uk-flex-middle '.$time_cl.' ">';
         if($timeframe_ontitle){
-            $content .=  '<div class="image-only-box uk-flex uk-flex-between"><div class="uk-width-expand">';
+            $content .=  '<div class="image-only-box uk-flex uk-flex-between"><div class="uk-width-expand timeline-img uk-cover-container">';
             $content .=  wp_get_attachment_image( $item['image']['id'], $image_size, false, array('class' => trim( $image_class )) ). '';
             $content .=  '</div>';
             $content .=  '<div class="image-space"></div>';

@@ -125,9 +125,9 @@ if ($title) {
 	$output     =   '<div class="ui-card '.$media_class.' '.$image_transition.' uk-card'. $card_style .' '.$icon_arrow.' '. $card_size . $general_styles['container_cls'] .'"' . $general_styles['animation'] . '>';
 	if ($media && $layout_type == 'image' && ($image_appear == 'top'|| $image_appear == 'thumbnail')) {
         if ($url && ($url_appear=='button_media' || $url_appear == 'all')) {
-            $output     .=  $media ? '<div class="uk-card-media-top ui-media'.$media_margin.' '.$media_class_wrap.'"><a class="tz-img '.$link_class.'" href="'.$url.'"'.$attribs.'>'.$media.'</a></div>' : '';
+            $output     .=  $media ? '<div class="uk-card-media-top uk-cover-container ui-media'.$media_margin.' '.$media_class_wrap.'"><a class="tz-img '.$link_class.'" href="'.$url.'"'.$attribs.'>'.$media.'</a></div>' : '';
         } else {
-            $output     .=  $media ? '<div class="uk-card-media-top ui-media'.$media_margin.' '.$media_class_wrap.'">'.$media.'</div>' : '';
+            $output     .=  $media ? '<div class="uk-card-media-top uk-cover-container ui-media'.$media_margin.' '.$media_class_wrap.'">'.$media.'</div>' : '';
         }
 	}
 	$output     .=  '<div class="uk-card-body '.$image_content. $general_styles['content_cls'] . '">';
@@ -142,9 +142,9 @@ if ($title) {
 	}
 	if ($layout_type == 'icon' || ($layout_type == 'image' && $image_appear == 'inside')) {
 		if ($url && ($url_appear=='button_media' || $url_appear == 'all')) {
-			$output     .=  $media ? '<div class="ui-media'.$media_margin.' '.$media_class_wrap.'"><a class="tz-img '.$link_class.'" href="'.$url.'"'.$attribs.'>'.$media.'</a></div>' : '';
+			$output     .=  $media ? '<div class="uk-cover-container ui-media'.$media_margin.' '.$media_class_wrap.'"><a class="tz-img '.$link_class.'" href="'.$url.'"'.$attribs.'>'.$media.'</a></div>' : '';
 		} else {
-			$output     .=  $media ? '<div class="ui-media'.$media_margin.' '.$media_class_wrap.'">'.$media.'</div>' : '';
+			$output     .=  $media ? '<div class="uk-cover-container ui-media'.$media_margin.' '.$media_class_wrap.'">'.$media.'</div>' : '';
 		}
 	}
 	if ($title_position == 'after') {
@@ -162,7 +162,7 @@ if ($title) {
     }
     $output     .=  '</div>';
 	if ($media && $layout_type == 'image' && $image_appear == 'bottom') {
-		$output .=  '<div class="uk-card-media-top uk-position-relative ui-media'.$media_margin.'">'.$media.$icon_on_media.'</div>';
+		$output .=  '<div class="uk-card-media-top uk-cover-container ui-media'.$media_margin.'">'.$media.$icon_on_media.'</div>';
 	}
     if($button_position == 'after_media'){
         $output     .=  $button_text || $btn_icon ? '<div class="ui-button'.$button_margin.'"><a class="uk-button'.$button_style.$button_shape.$button_size.'" href="'.$url.'"'.$attribs.'>'.$btn_icon_left . $button_text . $btn_icon_right.'</a></div>' : '';
