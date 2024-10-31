@@ -62,7 +62,6 @@ if($source == 'ap_category'){
         $cat_results = get_terms($get_terms_attributes);
     }
 }elseif($source == 'ap_branch'){
-    var_dump($branch);
     if(empty($branch) || $branch == ''){
         $get_terms_attributes = array (
             'taxonomy' => 'ap_branch', //empty string(''), false, 0 don't work, and return empty array
