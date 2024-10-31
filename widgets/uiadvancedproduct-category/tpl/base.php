@@ -6,7 +6,7 @@ $limit      = ( isset( $instance['limit'] ) && $instance['limit'] ) ? $instance[
 $resource   = 'ap_product';
 $source   = ( isset( $instance['source'] ) && $instance['source'] ) ? $instance['source'] : '';
 $ordering   = ( isset( $instance['ordering'] ) && $instance['ordering'] ) ? $instance['ordering'] : 'latest';
-$branch     = ( isset( $instance[$resource.'_branch'] ) && $instance[$resource.'_branch'] ) ? $instance[$resource.'_branch'] : array('0');
+$branch     = ( isset( $instance[$resource.'_branch'] ) && $instance[$resource.'_branch'] ) ? $instance[$resource.'_branch'] : '';
 $image_size   = ( isset( $instance['image_size'] ) && $instance['image_size'] ) ? $instance['image_size'] : 'full';
 $category   = ( isset( $instance['ap_product_category'] ) && $instance['ap_product_category'] ) ? $instance['ap_product_category'] : '';
 
@@ -62,6 +62,7 @@ if($source == 'ap_category'){
         $cat_results = get_terms($get_terms_attributes);
     }
 }elseif($source == 'ap_branch'){
+    var_dump($branch);
     if(empty($branch) || $branch == ''){
         $get_terms_attributes = array (
             'taxonomy' => 'ap_branch', //empty string(''), false, 0 don't work, and return empty array
