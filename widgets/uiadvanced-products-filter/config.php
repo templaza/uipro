@@ -365,7 +365,8 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
                         'size' => 50,
                     ],
                     'selectors' => array(
-                        '{{WRAPPER}} .advanced-product-search-form .ap-search-item input[type="text"], {{WRAPPER}} .advanced-product-search-form .ap-search-item select' => 'height: {{SIZE}}{{UNIT}};',
+                        '{{WRAPPER}} .advanced-product-search-form .ap-search-item input[type="text"],{{WRAPPER}} .advanced-product-search-form .ap-search-item input[type="search"],
+                         {{WRAPPER}} .advanced-product-search-form .ap-search-item select' => 'height: {{SIZE}}{{UNIT}};',
                     )
                 ),
                 array(
