@@ -449,8 +449,8 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
             $margin_bottom = ( isset( $settings['addon_margin_bottom'] ) && $settings['addon_margin_bottom'] ) ? $settings['addon_margin_bottom'] : '';
             $margin_bottom = ( $margin_bottom ) ? ' uk-margin' . ( ( $margin_bottom == 'default' ) ? '-bottom' : '-' . $margin_bottom .'-bottom' ) : '';
 
-            $parallax  =   isset($settings['templaza_parallax_image']) && $settings['templaza_parallax_image'] ? $settings['templaza_parallax_image'] : '';
-            if($parallax["url"]){
+            $parallax  =   isset($settings['templaza_parallax_image']) && $settings['templaza_parallax_image'] ? $settings['templaza_parallax_image'] : array();
+            if(isset($parallax) && isset($parallax["url"])){
                 echo '<div class="uk-cover-container uk-position-cover"><div data-uk-scrollspy="" data-uk-parallax="bgy: 100; bgx:0;" class="uk-cover-container uk-background-cover uk-position-cover" style="background-image:url('.esc_url($parallax["url"]).')">
             </div><div class="uk-overlay uk-position-cover templaza-parallax-overlay"></div></div>';
             }
