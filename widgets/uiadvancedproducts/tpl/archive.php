@@ -9,6 +9,7 @@ $category   = ( isset( $instance['ap_product_category'] ) && $instance['ap_produ
 $product_type   = ( isset( $instance['uiap_product_type'] ) && $instance['uiap_product_type'] ) ? $instance['uiap_product_type'] : '';
 $ordering   = ( isset( $instance['ordering'] ) && $instance['ordering'] ) ? $instance['ordering'] : 'latest';
 $pagination_type    = (isset($instance['pagination_type']) && $instance['pagination_type']) ? $instance['pagination_type'] : 'none';
+$main_layout    = (isset($instance['main_layout']) && $instance['main_layout']) ? $instance['main_layout'] : '';
 
 $query_args = array(
     'post_type'         => 'ap_product',
@@ -108,6 +109,9 @@ if ($pagination_type == 'default') {
 }
 $ap_posts = new WP_Query($query_args);
 $module_id = uniqid('templaza_');
+if($main_layout){
+    $args['product_loop'] = $main_layout;
+}
 if($ap_posts && $ap_posts -> have_posts()) {
 
 //responsive width
@@ -196,7 +200,7 @@ if($ap_posts && $ap_posts -> have_posts()) {
     uk-child-width-1-<?php echo $desktop_columns;?>@l
     uk-child-width-1-<?php echo $laptop_columns;?>@m
     uk-child-width-1-<?php echo $tablet_columns;?>@s
-    uk-child-width-1-<?php echo $mobile_columns . $column_grid_gap . ($use_slider ? ' uk-slider-items': '');?>" data-uk-grid="<?php echo $masonry ? 'masonry:true;' : '';?>">
+    uk-child-width-1-<?php echo $mobile_columns . $column_grid_gap . ($use_slider ? ' uk-slider-items': '');?>" data-uk-grid="<?php echo $masonry ? 'masonry:true;' : '';?>" >
         <?php
         while ($ap_posts -> have_posts()) {
             $ap_posts -> the_post();

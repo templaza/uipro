@@ -108,9 +108,14 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'show_label'    => true,
                     'label'         => esc_html__( 'Main Layout', 'uipro' ),
                     'options'       => array(
-                        'base'      => esc_html__( 'Default', 'uipro' ),
                         'archive'   => esc_html__( 'Inherit Archive', 'uipro' ),
                         'style1'   => esc_html__( 'Style 1', 'uipro' ),
+                        'style2'   => esc_html__( 'Style 2', 'uipro' ),
+                        'style3'   => esc_html__( 'Style 3', 'uipro' ),
+                        'style4'   => esc_html__( 'Style 4', 'uipro' ),
+                        'style5'   => esc_html__( 'Style 5', 'uipro' ),
+                        'style6'   => esc_html__( 'Style 6', 'uipro' ),
+                        'style7'   => esc_html__( 'Style 7', 'uipro' ),
                     ),
                     'default'       => 'archive',
                 ),
@@ -2311,8 +2316,5 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 			return $options;
 		}
 
-		public function get_template_name() {
-			return 'archive';
-		}
 	}
 }
