@@ -43,6 +43,18 @@ switch ($ordering) {
         $query_args['order'] = 'ASC';
         $query_args['meta_key'] = 'ap_price';
         break;
+    case 'price_rental':
+    case 'price_rental_low':
+        $query_args['order']      = 'ASC';
+        $query_args['orderby']   = 'meta_value_num';
+        $query_args['meta_key'] = 'ap_rental_price';
+        break;
+    case 'rprice_rental':
+    case 'price_rental_high':
+        $query_args['order']      = 'DESC';
+        $query_args['orderby']   = 'meta_value_num';
+        $query_args['meta_key'] = 'ap_rental_price';
+        break;
 }
 $tax_query  = array();
 if(isset($branch) && !empty($branch)){
