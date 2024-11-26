@@ -210,6 +210,8 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 						'random'    => esc_html__('Random', 'uipro'),
 						'price'    => esc_html__('Price ASC', 'uipro'),
 						'price_low'    => esc_html__('Price DESC', 'uipro'),
+						'price_rental_low'    => esc_html__('Price Rental: High To Low', 'uipro'),
+						'price_rental_high'    => esc_html__('Price Rental: Low To High', 'uipro'),
 					),
 					'default'       => 'latest',
 					'description'   => esc_html__( 'Select products ordering from the list.', 'uipro' ),
