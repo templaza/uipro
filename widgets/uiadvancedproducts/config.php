@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
+
 
 require_once __DIR__.'/helper.php';
 
@@ -91,6 +91,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
             $options_filter = array();
             $product_type = array();
             $product_types_name  = UIPro_UIAdvancedProducts_Helper::get_product_type_options();
+            var_dump($product_types_name);
             if($product_types_name->post_name){
                 $product_types  = get_field_object($product_types_name->post_name);
                 if(isset($product_types['choices']) && is_array($product_types['choices'])){
@@ -818,7 +819,6 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                 array(
                     'name'            => 'filter_font_family',
                     'type'          => Group_Control_Typography::get_type(),
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Filter Font', 'uipro'),
                     'description'   => esc_html__('Select a font family, font size for the addon Filter.', 'uipro'),
                     'selector'      => '{{WRAPPER}} .ap-filter a',
@@ -1331,7 +1331,6 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 				array(
 					'name'            => 'title_font_family',
 					'type'          => Group_Control_Typography::get_type(),
-					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'         => esc_html__('Title Font', 'uipro'),
 					'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
 					'selector'      => '{{WRAPPER}} .ui-title, {{WRAPPER}} .ap-title',
@@ -1412,7 +1411,6 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                 array(
                     'name'            => 'author_font_family',
                     'type'          => Group_Control_Typography::get_type(),
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Author Font', 'uipro'),
                     'description'   => esc_html__('Select a font family, font size for Author name.', 'uipro'),
                     'selector'      => '{{WRAPPER}} .ap-author-name',
@@ -1747,7 +1745,6 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 				array(
 					'name'          => 'content_font_family',
 					'type'          => Group_Control_Typography::get_type(),
-					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'         => esc_html__('Content Font', 'uipro'),
 					'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
 					'selector'      => '{{WRAPPER}} .ui-post-introtext',
@@ -1859,7 +1856,6 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                 array(
                     'name'          => 'meta_top_font_family',
                     'type'          => Group_Control_Typography::get_type(),
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Before Title Font', 'uipro'),
                     'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
                     'selector'      => '{{WRAPPER}} .ui-post-meta-top',
@@ -1919,7 +1915,6 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                 array(
                     'name'          => 'meta_middle_font_family',
                     'type'          => Group_Control_Typography::get_type(),
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('After Title Font', 'uipro'),
                     'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
                     'selector'      => '{{WRAPPER}} .ui-post-meta-middle',
@@ -1979,7 +1974,6 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                 array(
                     'name'          => 'meta_bottom_font_family',
                     'type'          => Group_Control_Typography::get_type(),
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('After Description Font', 'uipro'),
                     'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
                     'selector'      => '{{WRAPPER}} .ui-post-meta-bottom',
@@ -2039,7 +2033,6 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                 array(
                     'name'          => 'meta_footer_font_family',
                     'type'          => Group_Control_Typography::get_type(),
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Footer Font', 'uipro'),
                     'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
                     'selector'      => '{{WRAPPER}} .ui-post-meta-footer',
@@ -2167,7 +2160,6 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 				array(
 					'name'          => 'button_font_family',
 					'type'          => Group_Control_Typography::get_type(),
-					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'         => esc_html__('Button Font', 'uipro'),
 					'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
 					'selector'      => '{{WRAPPER}} .ui-post-button',

@@ -14,7 +14,7 @@
 defined( 'ABSPATH' ) || exit;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
+
 require_once plugin_dir_path( __DIR__ ).'uiadvancedproducts/helper.php';
 if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Slideshow' ) ) {
 	/**
@@ -345,7 +345,6 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Slideshow' ) ) {
                 array(
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'title_typography',
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Title Font', 'uipro'),
                     'description'   => esc_html__('Select a font family, font size for the addon title.', 'uipro'),
                     'selector'      => '{{WRAPPER}} .ap-slideshow-title',
@@ -391,7 +390,6 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Slideshow' ) ) {
                 array(
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'field_label_typography',
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Field Label Font', 'uipro'),
                     'selector'      => '{{WRAPPER}} .ap-field-label',
                 ),
@@ -406,7 +404,6 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Slideshow' ) ) {
                 array(
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'field_value_typography',
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Field Value Font', 'uipro'),
                     'selector'      => '{{WRAPPER}} .ap-field-value',
                 ),
@@ -421,7 +418,6 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Slideshow' ) ) {
                 array(
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'desc_typography',
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Description Font', 'uipro'),
                     'selector'      => '{{WRAPPER}} .ap-single-desc',
                     'start_section' => 'ap-desc',
@@ -438,7 +434,6 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Slideshow' ) ) {
                 array(
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'custom_meta_desc_typography',
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Custom Meta Description Font', 'uipro'),
                     'selector'      => '{{WRAPPER}} .ap-custom-meta',
                     'start_section' => 'ap-desc-custom',
@@ -455,7 +450,6 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Slideshow' ) ) {
                 array(
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'custom_desc_typography',
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Custom Description Font', 'uipro'),
                     'selector'      => '{{WRAPPER}} .ap-custom-desc',
                 ),
@@ -491,7 +485,6 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Slideshow' ) ) {
                 array(
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'button_typography',
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Button Font', 'uipro'),
                     'selector'      => '{{WRAPPER}} .ui-button',
                 ),

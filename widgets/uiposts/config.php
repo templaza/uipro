@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
+
 use TemPlazaFramework\Functions as TemplazaFramework_Functions;
 
 require_once __DIR__.'/helper.php';
@@ -1072,7 +1072,6 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 				array(
 					'name'            => 'title_font_family',
 					'type'          => Group_Control_Typography::get_type(),
-					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'         => esc_html__('Title Font', 'uipro'),
 					'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
 					'selector'      => '{{WRAPPER}} .ui-posts.style1 .ui-title,{{WRAPPER}} .ui-posts-intro-item .ui-title',
@@ -1836,7 +1835,6 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 				array(
 					'name'          => 'content_font_family',
 					'type'          => Group_Control_Typography::get_type(),
-					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'         => esc_html__('Content Font', 'uipro'),
 					'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
 					'selector'      => '{{WRAPPER}} .ui-posts.style1 .ui-post-introtext'
@@ -2309,7 +2307,6 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                 array(
                     'name'          => 'meta_top_font_family',
                     'type'          => Group_Control_Typography::get_type(),
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Before Title Font', 'uipro'),
                     'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
                     'selector'      => '{{WRAPPER}} .ui-posts.style1 .ui-post-meta-top'
@@ -2403,7 +2400,6 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                 array(
                     'name'          => 'meta_middle_font_family',
                     'type'          => Group_Control_Typography::get_type(),
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('After Title Font', 'uipro'),
                     'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
                     'selector'      => '{{WRAPPER}} .ui-posts.style1 .ui-post-meta-middle'
@@ -2497,7 +2493,6 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                 array(
                     'name'          => 'meta_bottom_font_family',
                     'type'          => Group_Control_Typography::get_type(),
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('After Description Font', 'uipro'),
                     'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
                     'selector'      => '{{WRAPPER}} .ui-posts.style1 .ui-post-meta-bottom, {{WRAPPER}} .ui-posts-intro-item .ui-post-meta-bottom',
@@ -2573,7 +2568,6 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                 array(
                     'name'          => 'meta_footer_font_family',
                     'type'          => Group_Control_Typography::get_type(),
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Footer Font', 'uipro'),
                     'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
                     'selector'      => '{{WRAPPER}} .ui-posts.style1 .ui-post-meta-footer, {{WRAPPER}} .ui-posts-intro-item .ui-post-meta-footer',
@@ -2698,7 +2692,6 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 				array(
 					'name'          => 'button_font_family',
 					'type'          => Group_Control_Typography::get_type(),
-					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'         => esc_html__('Button Font', 'uipro'),
 					'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
 					'selector'      => '{{WRAPPER}} .ui-posts.style1 .ui-post-button, {{WRAPPER}} .ui-posts-intro-item .ui-post-button',

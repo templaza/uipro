@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
+
 
 if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 	/**
@@ -1204,7 +1204,6 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
                 array(
                     'name' => 'slidenav_text_typography',
                     'type'          => Group_Control_Typography::get_type(),
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'=>__( 'Font Family', 'uipro' ),
                     'selector'      => '{{WRAPPER}} .ui-slidenav',
                 ),
@@ -1773,7 +1772,6 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 				array(
 					'name' => 'title_font_family',
 					'type'          => Group_Control_Typography::get_type(),
-					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'=>__( 'Font Family', 'uipro' ),
 					'selector'      => '{{WRAPPER}} .ui-title',
 				),
@@ -2065,7 +2063,6 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 				array(
 					'name' => 'meta_font_family',
 					'type'          => Group_Control_Typography::get_type(),
-					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'=>__( 'Font Family', 'uipro' ),
 					'selector'      => '{{WRAPPER}} .ui-meta',
 					'start_section' => 'separator_meta_style_options',
@@ -2381,7 +2378,6 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 				array(
 					'name' => 'content_font_family',
 					'type'          => Group_Control_Typography::get_type(),
-					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'=>__( 'Font Family', 'uipro' ),
 					'selector'      => '{{WRAPPER}} .ui-content',
 					'start_section' => 'separator_content_style_options',
@@ -2671,7 +2667,6 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 				array(
 					'name' => 'button_font_family',
 					'type'          => Group_Control_Typography::get_type(),
-					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'     => esc_html__( 'Font Family', 'uipro' ),
 					'conditions' => [
 						'terms' => [

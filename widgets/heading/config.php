@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
+
 
 if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
 	/**
@@ -959,7 +959,6 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                 array(
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'typography',
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'selector'      => '{{WRAPPER}} .heading-highlighted-wrapper',
                     'start_section' => 'style',
                     'section_tab'   => Controls_Manager::TAB_STYLE,
@@ -969,7 +968,6 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                 array(
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'sub_heading_typography',
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Sub Heading Typography', 'uipro'),
                     'selector'      => '{{WRAPPER}} .sub-heading',
                     'section_name'  => esc_html__( self::$name, 'uipro' ),

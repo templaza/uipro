@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
+
 
 if ( ! class_exists( 'UIPro_Config_UiCountDown' ) ) {
 	/**
@@ -178,7 +178,6 @@ if ( ! class_exists( 'UIPro_Config_UiCountDown' ) ) {
                 array(
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'countdown_number_typography',
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Countdown Number Font', 'uipro'),
                     'description'   => esc_html__('Select a font family', 'uipro'),
                     'selector'      => '{{WRAPPER}} .uk-countdown-number',
@@ -235,7 +234,6 @@ if ( ! class_exists( 'UIPro_Config_UiCountDown' ) ) {
                 array(
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'countdown_label_typography',
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Countdown Label Font', 'uipro'),
                     'description'   => esc_html__('Select a font family', 'uipro'),
                     'selector'      => '{{WRAPPER}} .uk-countdown-label',
@@ -254,7 +252,6 @@ if ( ! class_exists( 'UIPro_Config_UiCountDown' ) ) {
                 array(
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'countdown_separator_typography',
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Separator Font', 'uipro'),
                     'description'   => esc_html__('Select a font family', 'uipro'),
                     'selector'      => '{{WRAPPER}} .uk-countdown-separator',
@@ -276,7 +273,6 @@ if ( ! class_exists( 'UIPro_Config_UiCountDown' ) ) {
                 array(
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'countdown_title_typography',
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Title Font', 'uipro'),
                     'description'   => esc_html__('Select a font family', 'uipro'),
                     'selector'      => '{{WRAPPER}} .countdowwn-title',

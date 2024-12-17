@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
+
 
 if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
 	/**
@@ -1426,7 +1426,6 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                 array(
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'quote_title_typography',
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Title Font', 'uipro'),
                     'selector'      => '{{WRAPPER}} .templaza_quote_title',
                     'separator'     => 'before',
@@ -1443,7 +1442,6 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                 array(
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'quote_content_typography',
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Content Font', 'uipro'),
                     'selector'      => '{{WRAPPER}} .templaza_quote_content',
                     'separator'     => 'before',
@@ -1476,7 +1474,6 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                 array(
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'quote_author_typography',
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Author Font', 'uipro'),
                     'selector'      => '{{WRAPPER}} .templaza_quote_author',
 
@@ -1492,7 +1489,6 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
 				array(
 					'type'          => Group_Control_Typography::get_type(),
 					'name'          => 'quote_designation_typography',
-					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'         => esc_html__('Designation Font', 'uipro'),
 					'selector'      => '{{WRAPPER}} .templaza_quote_author_position',
 

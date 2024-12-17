@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
+
 
 if ( ! class_exists( 'UIPro_Config_UIGallery' ) ) {
 	/**
@@ -621,7 +621,6 @@ if ( ! class_exists( 'UIPro_Config_UIGallery' ) ) {
 				array(
 					'name'            => 'title_font_family',
 					'type'          => Group_Control_Typography::get_type(),
-					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'         => esc_html__('Title Font', 'uipro'),
 					'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
 					'selector'      => '{{WRAPPER}} .ui-title',
@@ -1001,7 +1000,6 @@ if ( ! class_exists( 'UIPro_Config_UIGallery' ) ) {
 				array(
 					'name'          => 'content_font_family',
 					'type'          => Group_Control_Typography::get_type(),
-					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'         => esc_html__('Content Font', 'uipro'),
 					'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
 					'selector'      => '{{WRAPPER}} .ui-gallery-introtext',
@@ -1043,7 +1041,6 @@ if ( ! class_exists( 'UIPro_Config_UIGallery' ) ) {
                 array(
                     'name'          => 'caption_font_family',
                     'type'          => Group_Control_Typography::get_type(),
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Before Title Font', 'uipro'),
                     'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
                     'selector'      => '{{WRAPPER}} .ui-gallery-item-caption',

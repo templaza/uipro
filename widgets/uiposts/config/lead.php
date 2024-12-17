@@ -3,7 +3,7 @@
 defined( 'UIPRO' ) || exit;
 
 use Elementor\Controls_Manager;
-use Elementor\Core\Schemes\Typography;
+
 use Elementor\Group_Control_Box_Shadow;
 use Elementor\Group_Control_Typography;
 
@@ -1231,7 +1231,6 @@ return array(
     array(
         'name'            => 'lead_title_font_family',
         'type'          => Group_Control_Typography::get_type(),
-        'scheme'        => Typography::TYPOGRAPHY_1,
         'label'         => esc_html__('Title Font', 'uipro'),
         'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
         'selector'      => '{{WRAPPER}} .ui-posts-lead-item .ui-title',
@@ -1375,7 +1374,6 @@ return array(
     array(
         'name'          => 'lead_content_font_family',
         'type'          => Group_Control_Typography::get_type(),
-        'scheme'        => Typography::TYPOGRAPHY_1,
         'label'         => esc_html__('Content Font', 'uipro'),
         'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
         'selector'      => '{{WRAPPER}} .ui-posts-lead-item .ui-post-introtext',
@@ -1791,7 +1789,6 @@ return array(
     array(
         'name'          => 'lead_meta_top_font_family',
         'type'          => Group_Control_Typography::get_type(),
-        'scheme'        => Typography::TYPOGRAPHY_1,
         'label'         => esc_html__('Before Title Font', 'uipro'),
         'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
         'selector'      => '{{WRAPPER}} .ui-posts-lead-item .ui-post-meta-top',
@@ -1880,7 +1877,6 @@ return array(
     array(
         'name'          => 'lead_meta_middle_font_family',
         'type'          => Group_Control_Typography::get_type(),
-        'scheme'        => Typography::TYPOGRAPHY_1,
         'label'         => esc_html__('After Title Font', 'uipro'),
         'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
         'selector'      => '{{WRAPPER}} .ui-posts-lead-item .ui-post-meta-middle',
@@ -1969,7 +1965,6 @@ return array(
     array(
         'name'          => 'lead_meta_bottom_font_family',
         'type'          => Group_Control_Typography::get_type(),
-        'scheme'        => Typography::TYPOGRAPHY_1,
         'label'         => esc_html__('After Description Font', 'uipro'),
         'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
         'selector'      => '{{WRAPPER}} .ui-posts-lead-item .ui-post-meta-bottom',
@@ -2042,7 +2037,6 @@ return array(
     array(
         'name'          => 'lead_meta_footer_font_family',
         'type'          => Group_Control_Typography::get_type(),
-        'scheme'        => Typography::TYPOGRAPHY_1,
         'label'         => esc_html__('Footer Font', 'uipro'),
         'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
         'selector'      => '{{WRAPPER}} .ui-posts-lead-item .ui-post-meta-footer',
@@ -2153,7 +2147,6 @@ return array(
     array(
         'name'          => 'lead_button_font_family',
         'type'          => Group_Control_Typography::get_type(),
-        'scheme'        => Typography::TYPOGRAPHY_1,
         'label'         => esc_html__('Button Font', 'uipro'),
         'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
         'selector'      => '{{WRAPPER}} .ui-posts-lead-item .ui-post-button',

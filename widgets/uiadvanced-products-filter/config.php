@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
+
 
 //require_once __DIR__.'/helper.php';
 
@@ -449,7 +449,6 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
                 array(
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'title_typography',
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Title Font', 'uipro'),
                     'description'   => esc_html__('Select a font family, font size for the addon title.', 'uipro'),
                     'selector'      => '{{WRAPPER}} .inventory-title-search',
@@ -463,7 +462,6 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
                 array(
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'label_typography',
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Label Font', 'uipro'),
                     'description'   => esc_html__('Select a font family for label.', 'uipro'),
                     'selector'      => '{{WRAPPER}} .advanced-product-search-form .search-label',

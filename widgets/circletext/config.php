@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
+
 
 if ( ! class_exists( 'UIPro_Config_CircleText' ) ) {
 	/**
@@ -66,7 +66,6 @@ if ( ! class_exists( 'UIPro_Config_CircleText' ) ) {
 				array(
 					'type'          => Group_Control_Typography::get_type(),
 					'name'          => 'text_typography',
-					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'         => esc_html__('Content Font', 'uipro'),
 					'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
 					'selector'      => '{{WRAPPER}} .circletext textPath',

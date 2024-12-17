@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
+
 
 if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 	/**
@@ -247,7 +247,6 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 				array(
 					'type'          => Group_Control_Typography::get_type(),
 					'name'          => 'label_font_family',
-					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'         => esc_html__('Label Font', 'uipro'),
 					'description'   => esc_html__('Select a font family, font size for the addon label.', 'uipro'),
 					'selector'      => '{{WRAPPER}} .tz-price-table_featured-inner',
@@ -383,7 +382,6 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 				array(
 					'type'          => Group_Control_Typography::get_type(),
 					'name'          => 'card_font_family',
-					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'         => esc_html__('Card Font', 'uipro'),
 					'description'   => esc_html__('Select a font family, font size for the addon.', 'uipro'),
 					'selector'      => '{{WRAPPER}} .ui-pricing',
@@ -414,7 +412,6 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 				array(
 					'type'          => Group_Control_Typography::get_type(),
 					'name'          => 'title_typography',
-					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'         => esc_html__('Title Font', 'uipro'),
 					'description'   => esc_html__('Select a font family, font size for the addon title.', 'uipro'),
 					'selector'      => '{{WRAPPER}} .ui-pricing .uk-card-title',
@@ -470,7 +467,6 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 				array(
 					'type'          => Group_Control_Typography::get_type(),
 					'name'          => 'meta_typography',
-					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'         => esc_html__('Meta Font', 'uipro'),
 					'description'   => esc_html__('Select a font family, font size for the addon title.', 'uipro'),
 					'selector'      => '{{WRAPPER}} .ui-pricing .plan-period',
@@ -558,7 +554,6 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 				array(
 					'type'          => Group_Control_Typography::get_type(),
 					'name'          => 'description_typography',
-					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'         => esc_html__('Content Font', 'uipro'),
 					'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
 					'selector'      => '{{WRAPPER}} .ui-pricing .plan-description',
@@ -595,7 +590,6 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 				array(
 					'type'          => Group_Control_Typography::get_type(),
 					'name'          => 'price_typography',
-					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'         => esc_html__('Price Font', 'uipro'),
 					'description'   => esc_html__('Select a font family, font size for the addon price.', 'uipro'),
 					'selector'      => '{{WRAPPER}} .ui-pricing .pricing-amount',
@@ -655,7 +649,6 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 				array(
 					'type'          => Group_Control_Typography::get_type(),
 					'name'          => 'symbol_typography',
-					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'         => esc_html__('Symbol Font', 'uipro'),
 					'description'   => esc_html__('Select a font family, font size for the addon symbol.', 'uipro'),
 					'selector'      => '{{WRAPPER}} .pricing-symbol',
@@ -723,7 +716,6 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 				array(
 					'type'          => Group_Control_Typography::get_type(),
 					'name'          => 'button_typography',
-					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'         => esc_html__('Content Font', 'uipro'),
 					'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
 					'selector'      => '{{WRAPPER}} .ui-button .uk-button',

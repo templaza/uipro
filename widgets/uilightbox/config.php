@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
+
 
 if ( ! class_exists( 'UIPro_Config_UILightbox' ) ) {
 	/**
@@ -257,7 +257,6 @@ if ( ! class_exists( 'UIPro_Config_UILightbox' ) ) {
                 array(
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'title_typography',
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Title Font', 'uipro'),
                     'description'   => esc_html__('Select a font family.', 'uipro'),
                     'selector'      => '{{WRAPPER}} .ui-title-lightbox, {{WRAPPER}} .circletext textPath',

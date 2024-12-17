@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
+
 
 require_once __DIR__.'/helper.php';
 if ( ! class_exists( 'UIPro_Config_UIPosts_Scroller' ) ) {
@@ -292,7 +292,6 @@ if ( ! class_exists( 'UIPro_Config_UIPosts_Scroller' ) ) {
                 array(
                     'name'            => 'title_font',
                     'type'          => Group_Control_Typography::get_type(),
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Heading/Date Font', 'uipro'),
                     'description'   => esc_html__('Set Heading/Date font here.', 'uipro'),
                     'selector'      => '{{WRAPPER}} .ticker-heading',
@@ -371,7 +370,6 @@ if ( ! class_exists( 'UIPro_Config_UIPosts_Scroller' ) ) {
 				array(
                     'name'            => 'overlap_text_font',
                     'type'          => Group_Control_Typography::get_type(),
-                    'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'         => esc_html__( 'Right Side Title Font', 'uipro' ),
                     'condition'     => [
                         'layout_mode!'  => ['ticker','carousel'],
@@ -436,7 +434,6 @@ if ( ! class_exists( 'UIPro_Config_UIPosts_Scroller' ) ) {
                 array(
                     'name'            => 'content_title_font',
                     'type'          => Group_Control_Typography::get_type(),
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__( 'Title Font', 'uipro' ),
 //                    'condition'     => [
 //                        'layout_mode!'  => 'carousel',
@@ -446,14 +443,12 @@ if ( ! class_exists( 'UIPro_Config_UIPosts_Scroller' ) ) {
                 array(
                     'name'          => 'content_font',
                     'type'          => Group_Control_Typography::get_type(),
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__( 'Content Font', 'uipro' ),
                     'selector' => '{{WRAPPER}} .slider-item .ticker-introtext',
                 ),
                 array(
                     'name'          => 'content_date_font',
                     'type'          => Group_Control_Typography::get_type(),
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__( 'Content Date Font', 'uipro' ),
                     'selector' => '{{WRAPPER}} .slider-item .ticker-date-meta',
                 ),
