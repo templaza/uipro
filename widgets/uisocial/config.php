@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) || exit;
 use Elementor\Repeater;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
+
 
 if ( ! class_exists( 'UIPro_Config_UISocial' ) ) {
 	/**

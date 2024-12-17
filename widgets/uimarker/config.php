@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
+
 
 if ( ! class_exists( 'UIPro_Config_UIMarker' ) ) {
 	/**
@@ -659,7 +659,6 @@ if ( ! class_exists( 'UIPro_Config_UIMarker' ) ) {
 				array(
 					'name'            => 'title_font_family',
 					'type'          => Group_Control_Typography::get_type(),
-					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'         => esc_html__('Title Font', 'uipro'),
 					'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
 					'selector'      => '{{WRAPPER}} .ui-title',
@@ -797,7 +796,6 @@ if ( ! class_exists( 'UIPro_Config_UIMarker' ) ) {
 				array(
 					'name'            => 'meta_font_family',
 					'type'          => Group_Control_Typography::get_type(),
-					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'         => esc_html__('Meta Font', 'uipro'),
 					'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
 					'selector'      => '{{WRAPPER}} .ui-meta',
@@ -909,7 +907,6 @@ if ( ! class_exists( 'UIPro_Config_UIMarker' ) ) {
 				array(
 					'name'          => 'content_font_family',
 					'type'          => Group_Control_Typography::get_type(),
-					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'         => esc_html__('Content Font', 'uipro'),
 					'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
 					'selector'      => '{{WRAPPER}} .ui-content',
@@ -1015,7 +1012,6 @@ if ( ! class_exists( 'UIPro_Config_UIMarker' ) ) {
 				array(
 					'name'          => 'button_font_family',
 					'type'          => Group_Control_Typography::get_type(),
-					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'         => esc_html__('Button Font', 'uipro'),
 					'description'   => esc_html__('Select a font family.', 'uipro'),
 					'selector'      => '{{WRAPPER}} .uk-button',

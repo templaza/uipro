@@ -4,7 +4,7 @@ Plugin Name: UIPro
 Plugin URI: https://github.com/templaza/uipro
 Description: This plugin help you manage products.
 Author: Templaza
-Version: 1.1.0
+Version: 1.1.1
 Text Domain: uipro
 Author URI: http://templaza.com
 Forum: https://www.templaza.com/Forums.html
@@ -109,7 +109,6 @@ class UIPro{
         if(isset($this -> cache[$store_id])){
             return $this -> cache[$store_id];
         }
-
         foreach ( $elements as $plugin => $group ) {
             for ($i=0;$i<count( $group);$i++) {
                 $element    = $group[$i];

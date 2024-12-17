@@ -16,7 +16,7 @@ defined( 'ABSPATH' ) || exit;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
 use Elementor\Group_Control_Border;
-use Elementor\Core\Schemes\Typography;
+
 
 if ( ! class_exists( 'UIPro_Config_UIDealership_User' ) ) {
 	/**
@@ -426,7 +426,6 @@ if ( ! class_exists( 'UIPro_Config_UIDealership_User' ) ) {
 				array(
 					'type'          => Group_Control_Typography::get_type(),
 					'name'          => 'name_typography',
-					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'         => esc_html__('Name Font', 'uipro'),
 					'description'   => esc_html__('Select a font family, font size for the addon name.', 'uipro'),
 					'selector'      => '{{WRAPPER}} .ui-name',
@@ -494,7 +493,6 @@ if ( ! class_exists( 'UIPro_Config_UIDealership_User' ) ) {
 				array(
 					'type'          => Group_Control_Typography::get_type(),
 					'name'          => 'address_typography',
-					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'         => esc_html__('Address Font', 'uipro'),
 					'selector'      => '{{WRAPPER}} .ui-address',
                     'start_section' => 'address_settings',
@@ -645,7 +643,6 @@ if ( ! class_exists( 'UIPro_Config_UIDealership_User' ) ) {
 				array(
 					'type'          => Group_Control_Typography::get_type(),
 					'name'          => 'product_number_typography',
-					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'         => esc_html__('Product Number Font', 'uipro'),
 					'description'   => esc_html__('Select a font family', 'uipro'),
 					'selector'      => '{{WRAPPER}} .ui-product-number',
@@ -718,7 +715,6 @@ if ( ! class_exists( 'UIPro_Config_UIDealership_User' ) ) {
 				array(
 					'type'          => Group_Control_Typography::get_type(),
 					'name'          => 'email_typography',
-					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'         => esc_html__('Email Font', 'uipro'),
 					'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
 					'selector'      => '{{WRAPPER}} .ui-email',
@@ -821,7 +817,6 @@ if ( ! class_exists( 'UIPro_Config_UIDealership_User' ) ) {
 				array(
 					'type'          => Group_Control_Typography::get_type(),
 					'name'          => 'phone_typography',
-					'scheme'        => Typography::TYPOGRAPHY_1,
 					'label'         => esc_html__('Phone Font', 'uipro'),
 					'selector'      => '{{WRAPPER}} .ui-phone',
                     'conditions' => [

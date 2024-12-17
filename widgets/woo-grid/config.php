@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 use TemPlaza_Woo_El\TemPlaza_Woo_El_Helper;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
+
 
 if ( ! class_exists( 'UIPro_Config_Woo_Grid' ) ) {
 	/**
@@ -423,7 +423,6 @@ if ( ! class_exists( 'UIPro_Config_Woo_Grid' ) ) {
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'heading_typography',
                     'label'         => esc_html__('Title Typography'),
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'start_section' => 'style',
                     'section_tab'   => Controls_Manager::TAB_STYLE,
                     'section_name'  => esc_html__( self::$name, 'uipro' ),
@@ -433,7 +432,6 @@ if ( ! class_exists( 'UIPro_Config_Woo_Grid' ) ) {
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'category_typography',
                     'label'         => esc_html__('Category Typography'),
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'section_name'  => esc_html__( self::$name, 'uipro' ),
                     'selector'      => '{{WRAPPER}} .meta-cat',
                 ),
@@ -441,7 +439,6 @@ if ( ! class_exists( 'UIPro_Config_Woo_Grid' ) ) {
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'price_typography',
                     'label'         => esc_html__('Price Typography'),
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'section_name'  => esc_html__( self::$name, 'uipro' ),
                     'selector'      => '{{WRAPPER}} .price ins, {{WRAPPER}} .price bdi',
                 ),

@@ -14,8 +14,8 @@
 defined( 'ABSPATH' ) || exit;
 
 use Elementor\Controls_Manager;
-use Elementor\Core\Schemes\Typography;
 use Elementor\Group_Control_Typography;
+
 
 if ( ! class_exists( 'UIPro_Config_List_Post' ) ) {
 	/**
@@ -394,7 +394,6 @@ if ( ! class_exists( 'UIPro_Config_List_Post' ) ) {
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'typography',
                     'label'         => esc_html__('Typography'),
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'start_section' => 'style',
                     'section_tab'   => Controls_Manager::TAB_STYLE,
                     'section_name'  => esc_html__( self::$name, 'uipro' ),
@@ -404,7 +403,6 @@ if ( ! class_exists( 'UIPro_Config_List_Post' ) ) {
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'meta_typography',
                     'label'         => esc_html__('Post Count Typography'),
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'section_name'  => esc_html__( self::$name, 'uipro' ),
                     'selector'      => '{{WRAPPER}} .number-posts',
                 ),
@@ -412,7 +410,6 @@ if ( ! class_exists( 'UIPro_Config_List_Post' ) ) {
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'post_title_typography',
                     'label'         => esc_html__('Post Title Typography'),
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'section_name'  => esc_html__( self::$name, 'uipro' ),
                     'selector'      => '{{WRAPPER}} .article-heading',
                 ),
@@ -420,7 +417,6 @@ if ( ! class_exists( 'UIPro_Config_List_Post' ) ) {
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'link_all_typography',
                     'label'         => esc_html__('Link All Typography'),
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'section_name'  => esc_html__( self::$name, 'uipro' ),
                     'selector'      => '{{WRAPPER}} .read-more',
                 ),

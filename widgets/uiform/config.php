@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) || exit;
 
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
+
 
 if ( ! class_exists( 'UIPro_Config_UIForm' ) ) {
 	/**
@@ -208,7 +208,6 @@ if ( ! class_exists( 'UIPro_Config_UIForm' ) ) {
                 array(
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'input_typography',
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Input Font', 'uipro'),
                     'description'   => esc_html__('Select a font family', 'uipro'),
                     'selector'      => '{{WRAPPER}} form input, {{WRAPPER}} form select, {{WRAPPER}} form textarea ',
@@ -219,7 +218,6 @@ if ( ! class_exists( 'UIPro_Config_UIForm' ) ) {
                 array(
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'button_typography',
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Button Font', 'uipro'),
                     'description'   => esc_html__('Select a font family', 'uipro'),
                     'selector'      => '{{WRAPPER}} form button, {{WRAPPER}} form input[type="button"], {{WRAPPER}} form input[type="submit"]',
@@ -227,7 +225,6 @@ if ( ! class_exists( 'UIPro_Config_UIForm' ) ) {
                 array(
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'label_typography',
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Label Font', 'uipro'),
                     'selector'      => '{{WRAPPER}} form .wpforms-field .wpforms-field-label',
                 ),

@@ -14,7 +14,7 @@
 defined( 'ABSPATH' ) || exit;
 use Elementor\Controls_Manager;
 use Elementor\Group_Control_Typography;
-use Elementor\Core\Schemes\Typography;
+
 require_once plugin_dir_path( __DIR__ ).'uiadvancedproducts/helper.php';
 if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
 	/**
@@ -783,7 +783,6 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                 array(
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'title_typography',
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Title Font', 'uipro'),
                     'description'   => esc_html__('Select a font family, font size for the addon title.', 'uipro'),
                     'selector'      => '{{WRAPPER}} .ap-title',
@@ -906,7 +905,6 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Category' ) ) {
                 array(
                     'type'          => Group_Control_Typography::get_type(),
                     'name'          => 'count_typography',
-                    'scheme'        => Typography::TYPOGRAPHY_1,
                     'label'         => esc_html__('Product Count Font', 'uipro'),
                     'description'   => esc_html__('Select a font family.', 'uipro'),
                     'selector'      => '{{WRAPPER}} .ap-product-count',
