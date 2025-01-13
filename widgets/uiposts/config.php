@@ -1527,6 +1527,21 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                         'image_border'    => 'custom'
                     ),
                 ),
+	            array(
+		            'label' => esc_html__( 'Image background color', 'uipro' ),
+		            'name'  => 'image_bg',
+		            'type' => \Elementor\Controls_Manager::COLOR,
+		            'selectors' => [
+			            '{{WRAPPER}} .tz-img' => 'background-color: {{VALUE}}',
+		            ],
+		            'conditions' => [
+			            'terms' => [
+				            ['name' => 'image_border', 'operator' => '!=', 'value' => ''],
+				            ['name' => 'layout', 'operator' => '!=', 'value' => 'thumbnail'],
+			            ],
+		            ],
+	            ),
+
                 array(
                     'type'          => Controls_Manager::SWITCHER,
                     'id'            => 'flash_effect',

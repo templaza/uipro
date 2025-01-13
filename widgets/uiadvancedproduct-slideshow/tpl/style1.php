@@ -1,6 +1,7 @@
 <?php
 //Get posts
 use Advanced_Product\Helper\AP_Custom_Field_Helper;
+use Advanced_Product\AP_Templates;
 $general_styles = \UIPro_Elementor_Helper::get_general_styles($instance);
 $limit      = ( isset( $instance['limit'] ) && $instance['limit'] ) ? $instance['limit'] : 4;
 //$resource       = ( isset( $instance['resource'] ) && $instance['resource'] ) ? $instance['resource'] : 'post';
@@ -9,7 +10,12 @@ $ap_product_source   = ( isset( $instance['ap_product_source'] ) && $instance['a
 $ordering   = ( isset( $instance['ordering'] ) && $instance['ordering'] ) ? $instance['ordering'] : 'latest';
 $branch     = ( isset( $instance[$resource.'_branch'] ) && $instance[$resource.'_branch'] ) ? $instance[$resource.'_branch'] : array('0');
 $category   = ( isset( $instance[$resource.'_category'] ) && $instance[$resource.'_category'] ) ? $instance[$resource.'_category'] : array('0');
-
+$show_price    = isset($instance['show_price'])?filter_var($instance['show_price'], FILTER_VALIDATE_BOOLEAN):true;
+$show_dots    = isset($instance['show_dots'])?filter_var($instance['show_dots'], FILTER_VALIDATE_BOOLEAN):true;
+$group_nav_dot    = isset($instance['group_nav_dot'])?filter_var($instance['group_nav_dot'], FILTER_VALIDATE_BOOLEAN):false;
+$nav_dot_container  = isset($instance['group_nav_dot_container']) ? $instance['group_nav_dot_container'] : '';
+$nav_dot_position  = isset($instance['group_nav_dot_position']) ? $instance['group_nav_dot_position'] : '';
+$nav_dot_position_mobile  = isset($instance['group_nav_dot_position_mobile']) ? $instance['group_nav_dot_position_mobile'] : '';
 if($ap_product_source !='custom') {
     $query_args = array(
         'post_type' => $resource,
@@ -128,14 +134,154 @@ if($ap_product_source !='custom') {
 }
 $slide_option = '';
 if($instance['slideshow_transition']){
-    $slide_option .='animation: '.$instance['slideshow_transition'].'';
+    $slide_option .='animation: '.$instance['slideshow_transition'].'; ';
 }
 $custom_fields   = isset($instance['custom_fields']) ? $instance['custom_fields'] : array();
-$custom_fields_bottom   = isset($instance['custom_fields_bottom']) ? $instance['custom_fields_bottom'] : array();
-$ap_container   = isset($instance['ap_style1_container']) ? $instance['ap_style1_container'] : 'boxed';
+$ap_container   = isset($instance['ap_style1_container']) ? $instance['ap_style1_container'] : '';
+$ap_ratio   = isset($instance['slideshow_ratio']) ? $instance['slideshow_ratio'] : '16:9';
+$ap_min_height   = isset($instance['slideshow_min_height']) ? $instance['slideshow_min_height'] : '';
+$ap_max_height   = isset($instance['slideshow_max_height']) ? $instance['slideshow_max_height'] : '';
+$dots_positions = ( isset( $instance['dots_positions'] ) && $instance['dots_positions'] ) ? $instance['dots_positions'] : '';
+
+$overlay_positions = ( isset( $instance['overlay_positions'] ) && $instance['overlay_positions'] ) ? $instance['overlay_positions'] : '';
+$overlay_pos_int   = ( $overlay_positions == 'top' || $overlay_positions == 'bottom' ) ? ' uk-flex-1' : '';
+if ( ( $overlay_positions == 'top' ) || ( $overlay_positions == 'left' ) || ( $overlay_positions == 'bottom' ) || ( $overlay_positions == 'right' ) ) {
+	$overlay_positions = ' uk-flex-' . $overlay_positions;
+} elseif ( $overlay_positions == 'top-left' ) {
+	$overlay_positions = ' uk-flex-top uk-flex-left';
+} elseif ( $overlay_positions == 'top-right' ) {
+	$overlay_positions = ' uk-flex-top uk-flex-right';
+} elseif ( $overlay_positions == 'top-center' ) {
+	$overlay_positions = ' uk-flex-top uk-flex-center';
+} elseif ( $overlay_positions == 'center-left' ) {
+	$overlay_positions = ' uk-flex-left uk-flex-middle';
+} elseif ( $overlay_positions == 'center-right' ) {
+	$overlay_positions = ' uk-flex-right uk-flex-middle';
+} elseif ( $overlay_positions == 'center' ) {
+	$overlay_positions = ' uk-flex-center uk-flex-middle';
+} elseif ( $overlay_positions == 'bottom-left' ) {
+	$overlay_positions = ' uk-flex-bottom uk-flex-left';
+} elseif ( $overlay_positions == 'bottom-center' ) {
+	$overlay_positions = ' uk-flex-bottom uk-flex-center';
+} elseif ( $overlay_positions == 'bottom-right' ) {
+	$overlay_positions = ' uk-flex-bottom uk-flex-right';
+}
+$group_positions = '';
+if($nav_dot_position == 'uk-position-top-left'){
+	$group_positions = ' uk-flex uk-flex-middle uk-flex-left@s';
+}elseif($nav_dot_position == 'uk-position-top-right'){
+	$group_positions = ' uk-flex uk-flex-middle uk-flex-right@s';
+}elseif($nav_dot_position == 'uk-position-center-left'){
+	$group_positions = ' uk-flex uk-flex-middle uk-flex-left@s';
+}elseif($nav_dot_position == 'uk-position-center-right'){
+	$group_positions = ' uk-flex uk-flex-middle uk-flex-right@s';
+}elseif($nav_dot_position == 'uk-position-bottom-right'){
+	$group_positions = ' uk-flex uk-flex-middle uk-flex-right@s';
+}elseif($nav_dot_position == 'uk-position-bottom-left'){
+	$group_positions = ' uk-flex uk-flex-middle uk-flex-left@s';
+}elseif($nav_dot_position == 'uk-position-bottom-center'){
+	$group_positions = ' uk-flex  uk-flex-middle uk-flex-center@s';
+}
+if($nav_dot_position_mobile == 'uk-position-top-left'){
+	$group_positions .= ' uk-flex-left';
+}elseif($nav_dot_position_mobile == 'uk-position-top-right'){
+	$group_positions .= ' uk-flex-right';
+}elseif($nav_dot_position_mobile == 'uk-position-center-left'){
+	$group_positions .= ' uk-flex-left';
+}elseif($nav_dot_position_mobile == 'uk-position-center-right'){
+	$group_positions .= ' uk-flex-right';
+}elseif($nav_dot_position_mobile == 'uk-position-bottom-right'){
+	$group_positions .= ' uk-flex-right';
+}elseif($nav_dot_position_mobile == 'uk-position-bottom-left'){
+	$group_positions .= ' uk-flex-left';
+}elseif($nav_dot_position_mobile == 'uk-position-bottom-center'){
+	$group_positions .= ' uk-flex-center';
+}
+if($ap_ratio){
+	$slide_option .='ratio: '.$ap_ratio.'; ';
+}
+if($ap_min_height){
+	$slide_option .='min-height: '.$ap_min_height.'; ';
+}
+if($ap_max_height){
+	$slide_option .='max-height: '.$ap_max_height.'; ';
+}
+$btn_icon = $btn_icon_left = $btn_icon_right = $btn2_icon = $btn2_icon_left = $btn2_icon_right ='';
+
+$button_icon   = ( isset( $instance['button_icon'] ) && $instance['button_icon'] ) ? $instance['button_icon'] : array();
+$button_icon_pos=   isset($instance['button_icon_position']) ? $instance['button_icon_position'] : 'before';
+if($button_icon_pos =='before'){
+	$ic_pos = 'uk-margin-small-right';
+}else{
+	$ic_pos = 'uk-margin-small-left';
+}
+if ($button_icon && isset($button_icon['value'])) {
+	if ( is_array( $button_icon['value'] ) && isset( $button_icon['value']['url'] ) && $button_icon['value']['url'] ) {
+		$btn_icon .= '<img src="' . $button_icon['value']['url'] . '" class="' . $ic_pos . '" alt="' . $instance['button_text'] . '" data-uk-svg />';
+	} elseif ( is_string( $button_icon['value'] ) && $button_icon['value'] ) {
+		$btn_icon .= '<i class="' . $button_icon['value'] . ' ' . $ic_pos . '" aria-hidden="true"></i>';
+	}
+}
+if ($btn_icon) {
+	if ($button_icon_pos == 'after') {
+		$btn_icon_right     =   $btn_icon;
+	} else {
+		$btn_icon_left      =   $btn_icon;
+	}
+}
+
+$button2_icon   = ( isset( $instance['button2_icon'] ) && $instance['button2_icon'] ) ? $instance['button2_icon'] : array();
+$button2_icon_pos=   isset($instance['button2_icon_position']) ? $instance['button2_icon_position'] : 'before';
+if($button2_icon_pos =='before'){
+	$ic2_pos = 'uk-margin-small-right';
+}else{
+	$ic2_pos = 'uk-margin-small-left';
+}
+if ($button2_icon && isset($button2_icon['value'])) {
+	if ( is_array( $button2_icon['value'] ) && isset( $button2_icon['value']['url'] ) && $button2_icon['value']['url'] ) {
+		$btn2_icon .= '<img src="' . $button2_icon['value']['url'] . '" class="' . $ic2_pos . '" alt="' . $instance['button2_text'] . '" data-uk-svg />';
+	} elseif ( is_string( $button2_icon['value'] ) && $button2_icon['value'] ) {
+		$btn2_icon .= '<i class="' . $button2_icon['value'] . ' ' . $ic2_pos . '" aria-hidden="true"></i>';
+	}
+}
+if ($btn2_icon) {
+	if ($button2_icon_pos == 'after') {
+		$btn2_icon_right     =   $btn2_icon;
+	} else {
+		$btn2_icon_left      =   $btn2_icon;
+	}
+}
+
+$output = '';
+
+$slidenav_position     = ( isset( $instance['slidenav_position'] ) && $instance['slidenav_position'] ) ? $instance['slidenav_position'] : '';
+$slidenav_position_cls = ( ! empty( $slidenav_position ) || ( $slidenav_position != 'default' ) ) ? ' uk-position-' . $slidenav_position . '' : '';
+
+if ( $slidenav_position == 'default' ) {
+	$output .= '<div class="tz-sidenav">';
+	$output .= '<a class="ui-slidenav  uk-position-center-left" href="#" data-uk-slidenav-previous data-uk-slideshow-item="previous"></a>';
+	$output .= '<a class="ui-slidenav  uk-position-center-right" href="#" data-uk-slidenav-next data-uk-slideshow-item="next"></a>';
+	$output .= '</div> ';
+} elseif ( $slidenav_position == 'outside' ) {
+	$output .='<div class="ui-sidenav-outside">';
+	$output .= '<a class="ui-slidenav uk-position-center-left-out" href="#" data-uk-slidenav-previous data-uk-slideshow-item="previous" data-uk-toggle="cls: uk-position-center-left-out uk-position-center-left; mode: media;"></a>';
+	$output .= '<a class="ui-slidenav uk-position-center-right-out" href="#" data-uk-slidenav-next data-uk-slideshow-item="next" data-uk-toggle="cls: uk-position-center-right-out uk-position-center-right; mode: media; "></a>';
+	$output .= '</div> ';
+} elseif ( $slidenav_position != '' ) {
+	$output .= '<div class="uk-slidenav-container' . $slidenav_position_cls .'">';
+	$output .= '<a class="ui-slidenav" href="#" data-uk-slidenav-previous data-uk-slideshow-item="previous"></a>';
+	$output .= '<a class="ui-slidenav" href="#" data-uk-slidenav-next data-uk-slideshow-item="next"></a>';
+	$output .= '</div>';
+}
+if($group_nav_dot){
+	$output .= '<div class="uk-slidenav-container">';
+	$output .= '<a class="ui-slidenav" href="#" data-uk-slidenav-previous data-uk-slideshow-item="previous"></a>';
+	$output .= '<a class="ui-slidenav" href="#" data-uk-slidenav-next data-uk-slideshow-item="next"></a>';
+	$output .= '</div>';
+}
 if($products){
     ?>
-    <div data-uk-slideshow class="ap_slideshow uk-slider <?php echo esc_attr($general_styles['container_cls'] . $general_styles['content_cls']);?>" <?php echo wp_kses($general_styles['animation'],'post');?>>
+    <div data-uk-slideshow=" <?php echo esc_attr($slide_option); ?>" class="ap_slideshow uk-slider <?php echo esc_attr($general_styles['container_cls'] . $general_styles['content_cls']);?>" <?php echo wp_kses($general_styles['animation'],'post');?>>
     <ul class="uk-slideshow-items">
         <?php
         foreach ($products as $item) {
@@ -144,25 +290,21 @@ if($products){
             }
             if( $product_id ) {
                 ?>
-                <li class="ap_slideshow-item">
-
-                    <div class="ap-slideshow-image">
-                        <?php
-                        if($item['image']['id'] ==''){
-                            echo get_the_post_thumbnail($product_id,'full','data-uk-cover');
-                        }else{
-                            ?>
-                            <img data-uk-cover src="<?php echo esc_url($item['image']['url']);?>" alt="<?php echo esc_attr(get_the_title($product_id)); ?>"/>
-                        <?php } ?>
-                    </div>
-                    <div class="elementor-section uk-height-1-1 elementor-section-<?php echo esc_attr($ap_container);?>">
-                        <div class="elementor-container elementor-column-gap-no ">
-                                <div class="uk-position-top-left">
-                                    <h3 class="ap-slideshow-title">
-                                        <?php echo esc_html(get_the_title($product_id)); ?>
-                                    </h3>
-                                </div>
-                            <div class="ap-slideshow-info uk-position-bottom-right">
+                <li class="ap_slideshow-item uk-margin-remove">
+	                <?php
+	                if($item['image']['id'] ==''){
+		                echo get_the_post_thumbnail($product_id,'full','data-uk-cover');
+	                }else{
+		                ?>
+                        <img data-uk-cover src="<?php echo esc_url($item['image']['url']);?>" alt="<?php echo esc_attr(get_the_title($product_id)); ?>"/>
+	                <?php } ?>
+                    <div class="uk-overlay uk-position-cover ap_slideshow_overlay"></div>
+                    <div class=" uk-container <?php echo esc_attr($ap_container);?> uk-position-cover uk-flex <?php echo esc_attr($overlay_positions);?>">
+                        <div class="ap_slider_content_inner">
+                            <h3 class="ap-slideshow-title">
+                                <?php echo esc_html(get_the_title($product_id)); ?>
+                            </h3>
+                            <div class="ap-slideshow-info">
                                 <div class="ap-single-desc ap-top-info">
                                     <?php
                                     if($item['ap_description']){
@@ -176,10 +318,10 @@ if($products){
                                         if($item['ap_text_meta']){
                                             ?>
                                             <span class="ap-custom-meta">
-                                                <?php
-                                                echo $item['ap_text_meta'];
-                                                ?>
-                                            </span>
+                                <?php
+                                echo $item['ap_text_meta'];
+                                ?>
+                            </span>
                                             <?php
                                         }
                                         ?>
@@ -194,12 +336,39 @@ if($products){
                                             <?php
                                         }
                                         ?>
-
                                     </div>
-
                                 </div>
+                                <?php
+                                if($show_price){
+                                    $args['product_id'] = $product_id;
+                                    AP_Templates::load_my_layout( 'archive.price',true,false, $args);
+                                }
+                                if($instance['button_text'] || $instance['button2_text']){
+                                    ?>
+                                    <div class="ap-slideshow-readmore uk-flex flex-align uk-flex-middle">
+                                        <?php
+                                        if($instance['button_text']){
+                                            ?>
+                                            <a class="ui-button templaza-btn" href="<?php echo esc_url(get_permalink($product_id));?>">
+		                                        <?php echo $btn_icon_left.esc_html($instance['button_text']). $btn_icon_right;?>
+                                            </a>
+                                            <?php
+                                        }
+                                        if($instance['button2_text']){
+	                                        ?>
+                                            <a class="ui-button2 templaza-btn" href="<?php echo esc_url(get_permalink($product_id));?>">
+		                                        <?php echo $btn2_icon_left.esc_html($instance['button2_text']). $btn2_icon_right;?>
+                                            </a>
+	                                        <?php
+                                        }
+                                        ?>
+                                    </div>
+                                    <?php
+                                }
+                                ?>
+
                                 <div class="ap-bottom-info">
-                                    <div class="ap-slideshow-bottom-fields">
+                                    <div class="ap-slideshow-bottom-fields ap-single-top-fields flex-align">
                                         <?php
                                         if($custom_fields){
                                             foreach ($custom_fields as $field_item){
@@ -242,12 +411,37 @@ if($products){
                             </div>
                         </div>
                     </div>
+
                 </li>
             <?php
             }
         }
         ?>
     </ul>
+    <?php
+    if($group_nav_dot){
+        ?>
+            <div class="ap_slideshow-nav_group uk-width-1-1 <?php echo esc_attr($nav_dot_position);?>">
+        <?php
+    }
+    ?>
+        <div class=" uk-container <?php echo esc_attr($nav_dot_container.' '. $group_positions);?>">
+            <?php
+            echo $output;
+            if($show_dots){
+                ?>
+                <ul class="uk-slideshow-nav uk-dotnav  uk-flex uk-flex-middle uk-position-<?php echo esc_attr($dots_positions);?>"></ul>
+                <?php
+            }
+            ?>
+        </div>
+    <?php
+    if($group_nav_dot){
+        ?>
+            </div>
+        <?php
+    }
+    ?>
 </div>
 <?php
 }

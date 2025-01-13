@@ -68,6 +68,7 @@ $flash_effect   =   isset($instance['flash_effect']) ? intval($instance['flash_e
 $imgclass         =  $flash_effect ? ' ui-image-flash-effect uk-position-relative uk-overflow-hidden' : '';
 $image_transition   = ( isset( $instance['image_transition'] ) && $instance['image_transition'] ) ? ' uk-transition-' . $instance['image_transition'] . ' uk-transition-opaque' : '';
 $thumb_effect = (isset($instance['image_transition']) && $instance['image_transition']) ? ($instance['image_transition']) : '';
+
 $tran_toggle = $ripple_html = $flash_cl = $ripple_wrap = $thumb_cl = ' ';
 if($thumb_effect =='ripple'){
     $ripple_html = '<div class="templaza-ripple-circles uk-position-center uk-transition-fade">
@@ -87,6 +88,9 @@ if($image_transition){
 }
 if($flash_effect){
     $flash_cl = ' flash-effect';
+}
+if($image_border !=''){
+	$thumb_cl .= ' img_radius';
 }
 $tags = wp_get_post_terms( $item->ID , $resource. '_tag' );
 $i = 1;

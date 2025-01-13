@@ -302,6 +302,46 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     ],
                 ),
                 array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'avata_padding',
+                    'label'         => esc_html__( 'Avatar Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-testimonial-avatar .uk-inline-clip' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+				array(
+					'name'          => 'next_prev_bottom',
+					'label' => esc_html__( 'Next, Preview bottom', 'uipro' ),
+					'type' => Controls_Manager::SLIDER,
+					'size_units' => [ 'px', '%' ],
+					'responsive'    =>  true,
+					'range' => [
+						'px' => [
+							'min' => -1000,
+							'max' => 1000,
+							'step' => 1,
+						],
+						'%' => [
+							'min' => -100,
+							'max' => 100,
+							'step' => 1,
+						],
+					],
+					'default' => [
+						'size' => 103,
+					],
+					'conditions' => [
+						'terms' => [
+							['name' => 'layout', 'operator' => '===', 'value' => 'style1'],
+						],
+					],
+					'selectors' => [
+						'{{WRAPPER}} .templaza-testimonial.style1 .slick-arrow' => 'bottom: {{SIZE}}{{UNIT}};',
+					],
+				),
+                array(
                     'type'      => Controls_Manager::SWITCHER,
                     'name'      => 'avatar_arrow',
                     'label'     => esc_html__( 'Show Avatar Arrow', 'uipro' ),
@@ -858,6 +898,17 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     'label'     => esc_html__( 'Number item', 'uipro' ),
                     'section_name'  => esc_html__( 'Slider options', 'uipro' ),
                 ),
+				array(
+					'type'          => Controls_Manager::DIMENSIONS,
+					'name'          => 'slider_padding',
+					'label'         => esc_html__( 'Slider Padding', 'uipro' ),
+					'responsive'    =>  true,
+					'size_units'    => [ 'px', 'em', '%' ],
+					'selectors'     => [
+						'{{WRAPPER}} .uk-slider-container' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					],
+
+				),
                 array(
                     'type'          => Controls_Manager::SELECT,
                     'id'            => 'testimonial_slider_dot_position',
@@ -1219,6 +1270,17 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     ],
                 ),
 				array(
+					'type'          => Controls_Manager::SELECT,
+					'id'            => 'testimonial_slider_author_position',
+					'label'         => esc_html__( 'Author Position', 'uipro' ),
+					'options'       => array(
+						''          => esc_html__('After content', 'uipro'),
+						'before'  => esc_html__('Before content', 'uipro'),
+						'top-center'  => esc_html__('Top Center', 'uipro'),
+					),
+					'default'       => '',
+				),
+				array(
 					'name'          => 'testimonial_quote_size',
 					'label' => esc_html__( 'Quote Size', 'uipro' ),
 					'description'   => esc_html__('Size of quote icon', 'uipro'),
@@ -1368,6 +1430,15 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                         ],
                     ],
                 ),
+				array(
+					'label' => esc_html__( 'Avatar Background Color', 'uipro' ),
+					'name'  => 'avatar_color',
+					'type' => \Elementor\Controls_Manager::COLOR,
+					'selectors' => [
+						'{{WRAPPER}} .ui-testimonial-avatar .uk-inline-clip' => 'background-color: {{VALUE}}',
+					],
+
+				),
 				array(
 					'type'          => Controls_Manager::SELECT,
 					'id'            => 'avatar_border',
