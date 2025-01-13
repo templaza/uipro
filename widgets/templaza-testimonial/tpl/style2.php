@@ -12,6 +12,7 @@ $avatar_border    = isset( $instance['avatar_border'] ) && $instance['avatar_bor
 $testimonials_visible      = !empty( $instance['testimonial_slider_wrap'] ) ? $instance['testimonial_slider_wrap'] : '';
 $quote_icon = ( isset( $instance['quote_icon'] ) && $instance['quote_icon'] ) ? $instance['quote_icon'] : array();
 $gap = ( isset( $instance['gap'] ) && $instance['gap'] ) ? $instance['gap'] : 'collapse';
+$testimonial_slider_author_position = ( isset( $instance['testimonial_slider_author_position'] ) && $instance['testimonial_slider_author_position'] ) ? $instance['testimonial_slider_author_position'] : '';
 if($gap =='default'){
     $gap = ' uk-grid';
 }
@@ -46,6 +47,17 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
                         <li>
                             <div class="uk-flex-middle" data-uk-grid>
                                 <div class="ui-testimonial-content uk-width-expand@m">
+                                    <?php
+                                    if($testimonial_slider_author_position == 'top-center'){
+	                                    if (isset( $image['url'] ) && $image['url'] ) : ?>
+                                            <div class="ui-testimonial-avatar uk-width-auto uk-position-top-center uk-position-z-index">
+                                                <div class="uk-inline-clip<?php echo $avatar_border; ?>">
+				                                    <?php echo \UIPro_Elementor_Helper::get_attachment_image_html( $item, 'author_image' ); ?>
+                                                </div>
+                                            </div>
+	                                    <?php endif;
+                                    }
+                                    ?>
                                     <div class="tz-testimonial-inner uk-inline">
 	                                <?php
                                     if($item['quote_title']){
@@ -72,17 +84,63 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
                                         </span>
                                         <?php
                                     }
-                                    if($item['author_rating']){
+
+                                    if($testimonial_slider_author_position == 'before'){
                                         ?>
-                                        <div class="templaza_quote_author_rating">
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
-                                            <i class="fas fa-star"></i>
+                                        <div class="uk-flex uk-flex-middle">
+		                                    <?php if (isset( $image['url'] ) && $image['url'] ) : ?>
+                                                <div class="ui-testimonial-avatar uk-width-auto">
+                                                    <div class="uk-inline-clip<?php echo $avatar_border; ?>">
+					                                    <?php echo \UIPro_Elementor_Helper::get_attachment_image_html( $item, 'author_image' ); ?>
+                                                    </div>
+                                                </div>
+		                                    <?php endif; ?>
+                                            <div class="">
+			                                    <?php
+			                                    if($item['author_rating']){
+				                                    ?>
+                                                    <div class="templaza_quote_author_rating">
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                        <i class="fas fa-star"></i>
+                                                    </div>
+				                                    <?php
+			                                    }
+			                                    if($item['quote_author']){
+				                                    ?>
+                                                    <div class="templaza_quote_author">
+					                                    <?php echo esc_html($item['quote_author']); ?>
+                                                    </div>
+				                                    <?php
+			                                    }
+			                                    if($item['author_position']){
+				                                    ?>
+                                                    <span class="templaza_quote_author_position">
+                                                        <?php echo esc_html($item['author_position']); ?>
+                                                    </span>
+				                                    <?php
+			                                    }
+			                                    ?>
+                                            </div>
                                         </div>
-                                        <?php
+                                        <?Php
                                     }
+                                    if($testimonial_slider_author_position == ''){
+	                                    if($item['author_rating']){
+		                                    ?>
+                                            <div class="templaza_quote_author_rating">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                            </div>
+		                                    <?php
+	                                    }
+                                    }
+
 	                                if($item['quote_content']){
 		                                ?>
                                         <div class="templaza_quote_content">
@@ -90,7 +148,10 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
                                         </div>
 		                                <?php
 	                                }
+
+						            if($testimonial_slider_author_position == ''){
 	                                ?>
+
                                     <div class="uk-flex uk-flex-middle">
                                         <?php if (isset( $image['url'] ) && $image['url'] ) : ?>
                                             <div class="ui-testimonial-avatar uk-width-auto">
@@ -111,13 +172,51 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
                                             if($item['author_position']){
                                                 ?>
                                                 <span class="templaza_quote_author_position">
-                                            <?php echo esc_html($item['author_position']); ?>
-                                        </span>
+                                                    <?php echo esc_html($item['author_position']); ?>
+                                                </span>
                                                 <?php
                                             }
                                             ?>
                                         </div>
                                     </div>
+							            <?php
+						            }
+
+						            if($testimonial_slider_author_position == 'top-center'){
+	                                ?>
+
+                                    <div class="ap-info-author-top-center">
+                                        <?php
+                                        if($item['author_rating']){
+                                            ?>
+                                            <div class="templaza_quote_author_rating">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                            </div>
+                                            <?php
+                                        }
+                                        if($item['quote_author']){
+                                            ?>
+                                            <div class="templaza_quote_author">
+                                                <?php echo esc_html($item['quote_author']); ?>
+                                            </div>
+                                            <?php
+                                        }
+                                        if($item['author_position']){
+                                            ?>
+                                            <span class="templaza_quote_author_position">
+                                                <?php echo esc_html($item['author_position']); ?>
+                                            </span>
+                                            <?php
+                                        }
+                                        ?>
+                                    </div>
+							            <?php
+						            }
+	                                ?>
                                     </div>
                                 </div>
                             </div>

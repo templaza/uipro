@@ -110,6 +110,9 @@
   -webkit-animation: slide 1.3s;
   animation: slide 1.3s;
 }
+.ui-posts .img_radius .ui-post-roof-effect {
+  background: none;
+}
 
 @keyframes slide {
   0% {

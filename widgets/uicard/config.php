@@ -139,20 +139,7 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 						'title!'    => ''
 					),
 				),
-				array(
-					'type'          =>  Controls_Manager::SELECT,
-					'name'          => 'title_position',
-					'label'         => esc_html__('Icon/Image Position', 'uipro'),
-					'description'   => esc_html__('Set the icon/image position.', 'uipro'),
-					'options'       => array(
-						'after'     => esc_html__('Before Title', 'uipro'),
-						'before'    => esc_html__('After Title', 'uipro'),
-					),
-					'default'       => 'after',
-					'condition'     => array(
-						'title!'    => ''
-					),
-				),
+
 				array(
 					'type'          =>  Controls_Manager::SELECT,
 					'name'          => 'title_heading_margin',
@@ -287,6 +274,21 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 					),
 					'default'       => 'icon',
 					'separator'     => 'before',
+				),
+				array(
+					'type'          =>  Controls_Manager::SELECT,
+					'name'          => 'title_position',
+					'label'         => esc_html__('Icon Position', 'uipro'),
+					'description'   => esc_html__('Set the icon position.', 'uipro'),
+					'options'       => array(
+						'after'     => esc_html__('Before Title', 'uipro'),
+						'before'    => esc_html__('After Title', 'uipro'),
+						'left'    => esc_html__('Left Title', 'uipro'),
+					),
+					'default'       => 'after',
+					'condition'     => array(
+						'title!'    => ''
+					),
 				),
 
 				//Icon Settings
@@ -551,6 +553,21 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 					],
 				),
 				array(
+					'type'          => Controls_Manager::DIMENSIONS,
+					'name'          =>  'image_border-radius',
+					'label'         => esc_html__( 'Image border radius', 'uipro' ),
+					'responsive'    =>  true,
+					'size_units'    => [ 'px', 'em', '%' ],
+					'selectors'     => [
+						'{{WRAPPER}} .ui-card .ui-media' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					],
+					'conditions' => [
+						'terms' => [
+							['name' => 'layout_type', 'operator' => '===', 'value' => 'image'],
+						],
+					],
+				),
+				array(
 					'type'          => \Elementor\Group_Control_Background::get_type(),
 					'name'          => 'image_content_bg',
 					'label' => __( 'Image Content Background', 'uipro' ),
@@ -796,6 +813,7 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                     'conditions' => [
                         'terms' => [
                             ['name' => 'icon_media', 'operator' => '!==', 'value' => ''],
+	                        ['name' => 'layout_type', 'operator' => '===', 'value' => 'image'],
                         ],
                     ],
                 ),
@@ -809,6 +827,7 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                     'conditions' => [
                         'terms' => [
                             ['name' => 'icon_media', 'operator' => '!==', 'value' => ''],
+	                        ['name' => 'layout_type', 'operator' => '===', 'value' => 'image'],
                         ],
                     ],
                 ),
@@ -835,6 +854,7 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                     'conditions' => [
                         'terms' => [
                             ['name' => 'icon_media', 'operator' => '!==', 'value' => ''],
+	                        ['name' => 'layout_type', 'operator' => '===', 'value' => 'image'],
                         ],
                     ],
                 ),
@@ -850,6 +870,7 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                     'conditions' => [
                         'terms' => [
                             ['name' => 'icon_media', 'operator' => '!==', 'value' => ''],
+	                        ['name' => 'layout_type', 'operator' => '===', 'value' => 'image'],
                         ],
                     ],
                 ),
@@ -865,6 +886,7 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                     'conditions' => [
                         'terms' => [
                             ['name' => 'icon_media', 'operator' => '!==', 'value' => ''],
+	                        ['name' => 'layout_type', 'operator' => '===', 'value' => 'image'],
                         ],
                     ],
                 ),
@@ -880,6 +902,7 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                     'conditions' => [
                         'terms' => [
                             ['name' => 'icon_media', 'operator' => '!==', 'value' => ''],
+	                        ['name' => 'layout_type', 'operator' => '===', 'value' => 'image'],
                         ],
                     ],
                 ),
@@ -891,6 +914,7 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                     'conditions' => [
                         'terms' => [
                             ['name' => 'icon_media', 'operator' => '!==', 'value' => ''],
+	                        ['name' => 'layout_type', 'operator' => '===', 'value' => 'image'],
                         ],
                     ],
                 ),
@@ -906,6 +930,7 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                     'conditions' => [
                         'terms' => [
                             ['name' => 'icon_media', 'operator' => '!==', 'value' => ''],
+	                        ['name' => 'layout_type', 'operator' => '===', 'value' => 'image'],
                         ],
                     ],
                 ),
