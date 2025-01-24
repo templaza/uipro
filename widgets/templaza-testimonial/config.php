@@ -855,6 +855,21 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                     'section_name'  => esc_html__( 'Slider options', 'uipro' ),
                 ),
                 array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'testimonial_slider_dot_margin',
+                    'label'         => esc_html__( 'Dots Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-dotnav' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'testimonial_slider_dot', 'operator' => '===', 'value' => 'yes'],
+                        ],
+                    ],
+                ),
+                array(
                     'label' => esc_html__( 'Dots Slider Color', 'uipro' ),
                     'name'  => 'quote_dots_color',
                     'type' => \Elementor\Controls_Manager::COLOR,
