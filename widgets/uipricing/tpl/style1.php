@@ -5,7 +5,6 @@ $title          = isset($instance['title']) ? $instance['title'] : '';
 $title_tag      = isset($instance['title_tag']) ? $instance['title_tag'] : 'h3';
 $title_style    = isset($instance['title_heading_style']) && $instance['title_heading_style'] ? ' uk-'. $instance['title_heading_style'] : '';
 $title_style    .=isset($instance['title_heading_margin']) && $instance['title_heading_margin'] ? ($instance['title_heading_margin'] == 'default' ? ' uk-margin' : ' uk-margin-'. $instance['title_heading_margin']) : '';
-$title_alignment = isset($instance['title_alignment']) && $instance['title_alignment'] ? $instance['title_alignment'] : '';
 $text           = isset($instance['text']) && $instance['text'] ? $instance['text'] : '';
 $link           = isset($instance['button_link']) && $instance['button_link'] ? $instance['button_link'] : array();
 $url            = isset($link['url']) && $link['url'] ? $link['url'] : '';
@@ -31,17 +30,6 @@ $meta_style .= ( isset( $instance['meta_margin'] ) && $instance['meta_margin'] )
 $price_meta        = ( isset( $instance['meta'] ) && $instance['meta'] ) ? $instance['meta'] : '';
 
 $meta_alignment = ( isset( $instance['meta_alignment'] ) && $instance['meta_alignment'] ) ? $instance['meta_alignment'] : '';
-
-$text_alignment          = ( isset( $instance['text_alignment'] ) && $instance['text_alignment'] ) ? ' uk-text-' . $instance['text_alignment'] : '';
-$text_breakpoint         = ( $text_alignment ) ? ( ( isset( $instance['text_alignment_breakpoint'] ) && $instance['text_alignment_breakpoint'] ) ? '@' . $instance['text_alignment_breakpoint'] : '' ) : '';
-$text_alignment_fallback = ( $text_alignment && $text_breakpoint ) ? ( ( isset( $instance['text_alignment_fallback'] ) && $instance['text_alignment_fallback'] ) ? ' uk-text-' . $instance['text_alignment_fallback'] : '' ) : '';
-$text_alignment          .=$text_breakpoint. $text_alignment_fallback;
-$icon_media    = ( isset( $instance['icon_price'] ) && $instance['icon_price'] ) ? $instance['icon_price'] : array();
-$icon_on_price = '';
-$align = '';
-if($text_alignment ==' uk-text-right'){
-    $align = ' uk-flex-last';
-}
 
 // Remove margin for heading element
 if ( $meta_element != 'div' || ( $meta_style_cls && $meta_style_cls != 'text-meta' ) ) {
@@ -69,47 +57,60 @@ $description_style .= ( isset( $instance['description_margin'] ) && $instance['d
 //Card Style
 $card_style     = isset($instance['card_style']) && $instance['card_style'] ? ' uk-card-'. $instance['card_style'] : '';
 $card_size      = isset($instance['card_size']) && $instance['card_size'] ? ' uk-card-'. $instance['card_size'] : '';
-
+$text_alignment          = ( isset( $instance['text_alignment'] ) && $instance['text_alignment'] ) ? ' uk-text-' . $instance['text_alignment'] : '';
+$text_breakpoint         = ( $text_alignment ) ? ( ( isset( $instance['text_alignment_breakpoint'] ) && $instance['text_alignment_breakpoint'] ) ? '@' . $instance['text_alignment_breakpoint'] : '' ) : '';
+$text_alignment_fallback = ( $text_alignment && $text_breakpoint ) ? ( ( isset( $instance['text_alignment_fallback'] ) && $instance['text_alignment_fallback'] ) ? ' uk-text-' . $instance['text_alignment_fallback'] : '' ) : '';
+$text_alignment          .=$text_breakpoint. $text_alignment_fallback;
+$icon_media    = ( isset( $instance['icon_price'] ) && $instance['icon_price'] ) ? $instance['icon_price'] : array();
+$icon_on_price = '';
+$align = '';
+if($text_alignment ==' uk-text-right'){
+    $align = ' uk-flex-last';
+}
+if(isset($icon_media['value'])){
+    if (is_array($icon_media['value']) && isset($icon_media['value']['url']) && $icon_media['value']['url']) {
+        $icon_on_price   .=  '<div class="ui_icon_on_price "><img src="'.$icon_media['value']['url'].'" alt="'.$title.'" data-uk-svg /></div>';
+    } elseif (is_string($icon_media['value']) && $icon_media['value']) {
+        $icon_on_price   .=  '<div class="ui_icon_on_price"><i class="' . $icon_media['value'] .'" aria-hidden="true"></i></div>';
+    }
+}
 $general_styles = \UIPro_Elementor_Helper::get_general_styles($instance);
 $output         = '';
 
 if ($title) {
-	$output     =   '<div class="ui-pricing uk-card'. $card_style . $card_size . $general_styles['container_cls'] .'"' . $general_styles['animation'] . '>';
+	$output     =   '<div class="ui-pricing ui-pricing-body ui-pricing-style1 uk-card'. $card_style . $card_size . $general_styles['container_cls'] .'"' . $general_styles['animation'] . '>';
 
-	$output     .=  '<div class="ui-pricing-body uk-margin-remove-first-child'.(isset($instance['card_size']) && $instance['card_size'] != 'none' ? ' uk-card-body' : '') . $general_styles['content_cls'] . '">';
+    if ( $title || $price_meta) {
+        $output .= '<div class="ui-pricing-header '.$text_alignment.'">';
+        if ( $meta_alignment == 'top' ) {
+            $output .= ( $price_meta ) ? '<span class="plan-period' . $meta_style . '">' . $price_meta . '</span>' : '';
+        }
+        $output .= '<'.$title_tag.' class="uk-card-title'.$title_style.'">'.$title.'</'.$title_tag.'>';
+        if ( $meta_alignment == 'inline' ) {
+            $output .= ( $price_meta ) ? '<span class="plan-period' . $meta_style . '">' . $price_meta . '</span>' : '';
+        }
+        if ( empty( $meta_alignment ) ) {
+            $output .= ( $price_meta ) ? '<span class="plan-period' . $meta_style . '">' . $price_meta . '</span>' : '';
+        }
+        $output .= '</div>';
+    }
 
-	if ( $title_alignment == 'top' && $title ) {
-		$output .= '<'.$title_tag.' class="uk-card-title'.$title_style.'">'.$title.'</'.$title_tag.'>';
-	}
+	$output     .=  '<div class=" uk-margin-remove-first-child'.(isset($instance['card_size']) && $instance['card_size'] != 'none' ? ' uk-card-body' : '') . $general_styles['content_cls'] . '">';
 
-	if ( $meta_alignment == 'top' ) {
-		$output .= ( $price_meta ) ? '<span class="plan-period' . $meta_style . '">' . $price_meta . '</span>' : '';
-	}
-
+    $output .= $icon_on_price;
 	$output .= '<div class="pricing-value' . $price_margin_top . '">';
     if($symbol_pos !='right'){
         $output .= ( $symbol ) ? '<span class="pricing-symbol' . $price_symbol_heading . '">' . $symbol . '</span>' : '';
     }
-
 	$output .= ( $price ) ? '<span class="pricing-amount' . $price_heading . '">' . $price . '</span>' : '';
     if($symbol_pos =='right'){
         $output .= ( $symbol ) ? '<span class="pricing-symbol' . $price_symbol_heading . '">' . $symbol . '</span>' : '';
     }
 	$output .= ( $label_text ) ? '<div class="tz-price-table_featured f-2"><div class="tz-price-table_featured-inner' . $label_styles . '">' . $label_text . '</div></div>' : '';
-
-	if ( $meta_alignment == 'inline' ) {
-		$output .= ( $price_meta ) ? '<span class="plan-period' . $meta_style . '">' . $price_meta . '</span>' : '';
-	}
-
 	$output .= '</div>';
-	if ( empty( $meta_alignment ) ) {
-		$output .= ( $price_meta ) ? '<span class="plan-period' . $meta_style . '">' . $price_meta . '</span>' : '';
-	}
+
 	$output .= ( $price_description ) ? '<div class="plan-description' . $description_style . '">' . $price_description . '</div>' : '';
 
-	if ( empty( $title_alignment ) && $title ) {
-		$output .= '<'.$title_tag.' class="uk-card-title'.$title_style.'">'.$title.'</'.$title_tag.'>';
-	}
 
 	if ( isset( $instance['price_items'] ) && count( (array) $instance['price_items'] ) ) {
 		$output .= '<div class="pricing-features' . $feature_margin_top . '">';

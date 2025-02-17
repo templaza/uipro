@@ -42,6 +42,15 @@ if ( ! class_exists( 'UIPro_El_UIPricing' ) ) {
 
 		    return $settings;
         }
+        public function get_template_name()
+        {
+            $temp       = parent::get_template_name();
+            $settings   = $this -> get_settings_for_display();
+
+            $temp   = (isset($settings['layout'])) && $settings['layout']?$settings['layout']:$temp;
+
+            return $temp;
+        }
 
     }
 }
