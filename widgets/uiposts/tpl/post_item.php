@@ -162,10 +162,23 @@ $meta_top_margin        =   ( isset( $instance[$pre_val.'meta_top_margin'] ) && 
 $meta_middle_margin     =   ( isset( $instance[$pre_val.'meta_middle_margin'] ) && $instance[$pre_val.'meta_middle_margin'] ) ? ' uk-margin-'. $instance[$pre_val.'meta_middle_margin'] : ' uk-margin';
 $meta_bottom_margin     =   ( isset( $instance[$pre_val.'meta_bottom_margin'] ) && $instance[$pre_val.'meta_bottom_margin'] ) ? ' uk-margin-'. $instance[$pre_val.'meta_bottom_margin'] .'-top' : ' uk-margin-top';
 $meta_footer_margin     =   ( isset( $instance[$pre_val.'meta_footer_margin'] ) && $instance[$pre_val.'meta_footer_margin'] ) ? ' uk-margin-'. $instance[$pre_val.'meta_footer_margin'] : ' uk-margin';
+$roof_top_class = '';
+if ($layout == 'thumbnail') {
 
+    if($thumb_effect =='zoomin-roof'){
+        $roof_top_class = ' ui-post-roof-effect ';
+    }else{
+        $roof_top_class = '';
+    }
+}
+if($thumb_effect =='zoomin-roof' && $layout != 'thumbnail'){
+    $roof_class = 'ui-post-roof-effect';
+}else{
+    $roof_class = '';
+}
 
 $output .=  '<article data-tag="'.esc_attr(implode(' ', $tag_slugs)).'" data-cat="'.esc_attr(implode(' ', $cat_slugs)).'" data-date="'.esc_attr(get_the_date('Y-m-d', $item)).'" data-hits="'.esc_attr(get_post_meta($item->ID, 'post_views_count', true)).'">';
-$output .= '<div class="uk-article uk-card'.esc_attr($thumb_cl.$card_style.$tran_toggle.$card_size_cls.( $thumbnail_hover ? ' uk-transition-toggle uk-overflow-hidden' : '' ).(!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'left' || $image_position == 'right') ? ' uk-grid-collapse' : '')).'"'.(!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'left' || $image_position == 'right') ? ' data-uk-grid' : '').'>';
+$output .= '<div class="uk-article uk-card '.esc_attr($layout.$thumb_cl.$roof_top_class.$card_style.$tran_toggle.$card_size_cls.( $thumbnail_hover ? ' uk-transition-toggle uk-overflow-hidden' : '' ).(!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'left' || $image_position == 'right') ? ' uk-grid-collapse' : '')).'"'.(!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'left' || $image_position == 'right') ? ' data-uk-grid' : '').'>';
 if (!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'top' || $image_position == 'left' || $image_position == 'right') ) :
     if ($image_position == 'left' || $image_position == 'right') {
         $output .=  '<div class="uk-card-media-'.$image_position.' uk-cover-container'.($image_position == 'right' ? ' uk-flex-last@m' : '').$image_width_xl.$image_width_l.$image_width_m.$image_width_s.$image_width.'">';
@@ -180,7 +193,7 @@ if (!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == '
         }
     }
     if($thumb_effect =='zoomin-roof'){
-        $output .='<div class="ui-post-roof-effect uk-cover-container">';
+        $output .='<div class="'.$roof_class.' uk-cover-container">';
     }
     if($post_link){
         $output .=  '<a class="tz-img '.$imgclass.$ripple_wrap.' uk-height-1-1 ui-post-thumbnail uk-display-block uk-card-media-top'
@@ -190,6 +203,13 @@ if (!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == '
         $output .=  '<a class="tz-img '.$imgclass.$ripple_wrap.' uk-height-1-1 ui-post-thumbnail uk-display-block uk-card-media-top'
             .esc_attr($cover_image.$image_border).'" href="'. get_permalink( $item->ID ) .'">'
             . UIPro_UIPosts_Helper::get_post_thumbnail($item, $thumbnail_size, $uk_cover) .$ripple_html.'</a>';
+    }
+    if ($layout == 'thumbnail' && $thumb_effect =='zoomin-roof') {
+        if($post_link){
+            $output .= '<div class="ui-post-thumb-box '.$flash_cl.'" ><div class="uk-position-cover uk-overlay uk-overlay-primary'.esc_attr( $thumbnail_hover ? ' uk-transition-fade' : '' ).'"></div></div>';
+        }else{
+            $output .= '<a class="tz-img uk-position-absolute ui-post-thumb-box '.$flash_cl.'" href="'. get_permalink( $item->ID ) .'"><div class="uk-position-cover uk-overlay uk-overlay-primary'.esc_attr( $thumbnail_hover ? ' uk-transition-fade' : '' ).'"></div></a>';
+        }
     }
     if($thumb_effect =='zoomin-roof'){
         $output .='</div>';
@@ -202,7 +222,7 @@ if (!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == '
         $output .=  '</div>';
     }
 endif;
-if ($layout == 'thumbnail') {
+if ($layout == 'thumbnail' && $thumb_effect !='zoomin-roof') {
     if($post_link){
         $output .= '<div class="ui-post-thumb-box '.$flash_cl.'" ><div class="uk-position-cover uk-overlay uk-overlay-primary'.esc_attr( $thumbnail_hover ? ' uk-transition-fade' : '' ).'"></div></div>';
     }else{
@@ -210,7 +230,7 @@ if ($layout == 'thumbnail') {
     }
 }
 
-$output .= '<div class="ui-post-info-wrap'.esc_attr(($layout == 'thumbnail' ? ' uk-position-bottom uk-light' : '').( $thumbnail_hover && $thumbnail_hover_transition ? $thumbnail_hover_transition : '' ).(!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'left' || $image_position == 'right') ? $expand_width : '')).'">';
+$output .= '<div class="ui-post-info-wrap '.esc_attr(($layout == 'thumbnail' ? ' uk-position-bottom uk-position-z-index uk-light' : '').( $thumbnail_hover && $thumbnail_hover_transition ? $thumbnail_hover_transition : '' ).(!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'left' || $image_position == 'right') ? $expand_width : '')).'">';
 $output .= '<div class="'.esc_attr($uk_card_body).'">';
 if (!$hide_thumbnail && has_post_thumbnail( $item->ID ) && $image_position == 'inside' ):
     if($post_link){
@@ -218,7 +238,6 @@ if (!$hide_thumbnail && has_post_thumbnail( $item->ID ) && $image_position == 'i
     }else{
         $output .=  '<a class="tz-img ui-post-thumbnail uk-display-block'.esc_attr($ripple_wrap.$cover_image.$image_border.$image_margin).'" href="'. get_permalink( $item->ID ) .'">'. UIPro_UIPosts_Helper::get_post_thumbnail($item, $thumbnail_size) .$ripple_html.'</a>';
     }
-
 
 endif;
 if(count($meta_top_position)) {

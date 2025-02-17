@@ -91,6 +91,7 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Slideshow' ) ) {
                 'options'       => array(
                     'base'      => esc_html__( 'Default', 'uipro' ),
                     'style1'   => esc_html__( 'Style 1', 'uipro' ),
+                    'style2'   => esc_html__( 'Style 2', 'uipro' ),
                 ),
                 'default'       => 'base',
             ),
@@ -181,6 +182,17 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Slideshow' ) ) {
                 [
                     'type'          =>  Controls_Manager::MEDIA,
                     'label'         => esc_html__('Select Image:', 'uipro'),
+                    'default' => [
+                        'url' => \Elementor\Utils::get_placeholder_image_src(),
+                    ],
+                ]
+            );
+            $repeater->add_control(
+                'video',
+                [
+                    'type'          =>  Controls_Manager::MEDIA,
+                    'label'         => esc_html__('Select Video:', 'uipro'),
+                    'media_types'   => ['video'],
                     'default' => [
                         'url' => \Elementor\Utils::get_placeholder_image_src(),
                     ],
@@ -280,9 +292,11 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Slideshow' ) ) {
 		            'label_off' => esc_html__( 'No', 'uipro' ),
 		            'return_value' => '1',
 		            'default' => '1',
-		            'condition'     => array(
-			            'layout'    => 'style1'
-		            ),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout', 'operator' => 'in', 'value' => ['style1','style2']],
+                        ],
+                    ],
 	            ),
                 array(
                     'type'          => Controls_Manager::SELECT2,
@@ -302,9 +316,11 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Slideshow' ) ) {
                     ),
                     'default'       => 'boxed',
                     'description'   => esc_html__( 'Select container content.', 'uipro' ),
-                    'condition'     => array(
-                        'layout'    => 'style1'
-                    ),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout', 'operator' => 'in', 'value' => ['style1','style2']],
+                        ],
+                    ],
                     'start_section' => 'ap-slideshow-box',
                     'section_name'      => esc_html__('Slideshow Box Settings', 'uipro')
                 ),
@@ -327,9 +343,11 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Slideshow' ) ) {
 		            'default'   => [
 			            'unit' => 'px',
 		            ],
-		            'condition'     => array(
-			            'layout'    => 'style1'
-		            ),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout', 'operator' => 'in', 'value' => ['style1','style2']],
+                        ],
+                    ],
 		            'selectors'  => ['{{WRAPPER}} .ap_slider_content_inner' => 'max-width: {{SIZE}}{{UNIT}};']
 	            ),
 	            array(
@@ -353,9 +371,11 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Slideshow' ) ) {
 			            'bottom-right' => esc_html__( 'Bottom Right', 'uipro' ),
 		            ),
 		            'default' => 'center-left',
-		            'condition'     => array(
-			            'layout'    => 'style1'
-		            ),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout', 'operator' => 'in', 'value' => ['style1','style2']],
+                        ],
+                    ],
 	            ),
 	            array(
 		            'type'          => \Elementor\Group_Control_Background::get_type(),
@@ -364,11 +384,11 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Slideshow' ) ) {
 		            'default' => '',
 		            'types' => [ 'classic', 'gradient' ],
 		            'selector' => '{{WRAPPER}} .ap_slideshow_overlay',
-		            'conditions' => [
-			            'terms' => [
-				            ['name' => 'layout', 'operator' => '===', 'value' => 'style1'],
-			            ],
-		            ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout', 'operator' => 'in', 'value' => ['style1','style2']],
+                        ],
+                    ],
 	            ),
 	            array(
 		            'type'         => Controls_Manager::CHOOSE,
@@ -397,9 +417,11 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Slideshow' ) ) {
 			            '{{WRAPPER}} .ap_slider_content_inner'   => 'text-align: {{VALUE}}; justify-content: {{VALUE}};',
 			            '{{WRAPPER}} .flex-align'   => 'text-align: {{VALUE}}; justify-content: {{VALUE}};',
 		            ],
-		            'condition'     => array(
-			            'layout'    => 'style1'
-		            ),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout', 'operator' => 'in', 'value' => ['style1','style2']],
+                        ],
+                    ],
 	            ),
 
                 array(
@@ -452,6 +474,21 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Slideshow' ) ) {
                     'label'         => esc_html__('Title Color', 'uipro'),
                     'selectors' => [
                         '{{WRAPPER}} .ap-slideshow-title' => 'color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'title_margin',
+                    'label'         => esc_html__( 'Title margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px'],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ap-slideshow-title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout', 'operator' => 'in', 'value' => ['style1','style2']],
+                        ],
                     ],
                 ),
                 array(
@@ -955,9 +992,11 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Slideshow' ) ) {
 		            'description'   => esc_html__( 'Set the min height slideshow.', 'uipro' ),
 		            'min' => 1,
 		            'step' => 1,
-		            'condition'     => array(
-			            'layout'    => 'style1'
-		            ),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout', 'operator' => 'in', 'value' => ['style1','style2']],
+                        ],
+                    ],
 	            ),
 	            array(
 		            'type'          => Controls_Manager::NUMBER,
@@ -966,9 +1005,11 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Slideshow' ) ) {
 		            'description'   => esc_html__( 'Set the max height slideshow.', 'uipro' ),
 		            'min' => 1,
 		            'step' => 1,
-		            'condition'     => array(
-			            'layout'    => 'style1'
-		            ),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout', 'operator' => 'in', 'value' => ['style1','style2']],
+                        ],
+                    ],
 	            ),
                 array(
                     'id' => 'group_nav_dot',

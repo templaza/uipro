@@ -113,6 +113,12 @@
 .ui-posts .img_radius .ui-post-roof-effect {
   background: none;
 }
+.ui-posts .img_radius.ui-post-roof-effect {
+  background: none;
+}
+.ui-posts .img_radius.ui-post-roof-effect {
+  background: none;
+}
 
 @keyframes slide {
   0% {

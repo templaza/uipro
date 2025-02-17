@@ -46,7 +46,7 @@ if($separator == 'string'){
         <div>
             <div class="uk-countdown-number uk-countdown-days"></div>
             <?php if($show_label=='yes'){ ?>
-            <div class="uk-countdown-label uk-margin-small uk-text-center uk-visible@s"><?php echo esc_html($day_label);?></div>
+            <div class="uk-countdown-label uk-margin-small uk-text-center "><?php echo esc_html($day_label);?></div>
             <?php } ?>
         </div>
         <?php if($countdown_separator == 'yes'){ ?>
@@ -55,7 +55,7 @@ if($separator == 'string'){
         <div>
             <div class="uk-countdown-number uk-countdown-hours"></div>
             <?php if($show_label=='yes'){ ?>
-                <div class="uk-countdown-label uk-margin-small uk-text-center uk-visible@s"><?php echo esc_html($hour_label);?></div>
+                <div class="uk-countdown-label uk-margin-small uk-text-center "><?php echo esc_html($hour_label);?></div>
             <?php } ?>
         </div>
         <?php if($countdown_separator == 'yes'){ ?>
@@ -64,7 +64,7 @@ if($separator == 'string'){
         <div>
             <div class="uk-countdown-number uk-countdown-minutes"></div>
             <?php if($show_label=='yes'){ ?>
-                <div class="uk-countdown-label uk-margin-small uk-text-center uk-visible@s"><?php echo esc_html($minute_label);?></div>
+                <div class="uk-countdown-label uk-margin-small uk-text-center "><?php echo esc_html($minute_label);?></div>
             <?php } ?>
         </div>
         <?php if($countdown_separator == 'yes'){ ?>
@@ -73,7 +73,7 @@ if($separator == 'string'){
         <div>
             <div class="uk-countdown-number uk-countdown-seconds"></div>
             <?php if($show_label=='yes'){ ?>
-                <div class="uk-countdown-label uk-margin-small uk-text-center uk-visible@s"><?php echo esc_html($second_label);?></div>
+                <div class="uk-countdown-label uk-margin-small uk-text-center "><?php echo esc_html($second_label);?></div>
             <?php } ?>
         </div>
     </div>

@@ -113,20 +113,21 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 					'options' => $this->get_font_uikit(),
 				]
 			);
-			$repeater->add_control(
-				'icon_color',
-				[
-					'type'          =>  Controls_Manager::COLOR,
-					'label'         => esc_html__('Icon Color', 'uipro'),
-					'description'   => esc_html__('Set the color of Icon.', 'uipro'),
-					'selectors' => [
-						'{{WRAPPER}} .pricing-icon{{CURRENT_ITEM}}' => 'color: {{VALUE}}',
-					],
-				]
-			);
 
 			// options
+
 			$options = array(
+                array(
+                    'type'          => Controls_Manager::SELECT,
+                    'name'          => 'layout',
+                    'show_label'    => true,
+                    'label'         => esc_html__( 'Pricing Layout Style', 'uipro' ),
+                    'options'       => array(
+                        'base'      => esc_html__( 'Default', 'uipro' ),
+                        'style1'   => esc_html__( 'Style 1', 'uipro' ),
+                    ),
+                    'default'       => 'base',
+                ),
 				array(
 					'type'          => Controls_Manager::TEXT,
 					'id'            => 'title',
@@ -270,6 +271,25 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 					],
 					'title_field' => __( 'Item', 'uipro' ),
 				),
+                array(
+                    'name'          => 'icon_size',
+                    'label' => __( 'Icon Size', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 400,
+                            'step' => 1,
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .pricing-icon' => 'font-size: {{SIZE}}{{UNIT}};',
+                        '{{WRAPPER}} .pricing-icon i' => 'font-size: {{SIZE}}{{UNIT}};',
+                        '{{WRAPPER}} .pricing-icon svg' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+
+                ),
 
 				//Link Settings
 				array(
@@ -387,6 +407,37 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 					'selector'      => '{{WRAPPER}} .ui-pricing',
 				),
 
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'item_padding',
+                    'label'         => esc_html__( 'Item Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-item' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'start_section' => 'item_settings',
+                    'section_name'      => esc_html__('Item Settings', 'uipro')
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'item_margin',
+                    'label'         => esc_html__( 'Item Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-item' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'start_section' => 'item_settings',
+                    'section_name'      => esc_html__('Item Settings', 'uipro')
+                ),
+                array(
+                    'name' => 'item_order',
+                    'type' => \Elementor\Group_Control_Border::get_type(),
+                    'label' => __( 'Item Border', 'uipro' ),
+                    'selector' => '{{WRAPPER}} .ui-item',
+                ),
+
 				array(
 					'type'          => Controls_Manager::SELECT,
 					'name'          => 'title_tag',
@@ -426,6 +477,35 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 					],
 				),
 				array(
+					'type'          =>  Controls_Manager::COLOR,
+					'name'          => 'title_bg_color',
+					'label'         => esc_html__('Title background', 'uipro'),
+					'description'   => esc_html__('Set background color of title.', 'uipro'),
+					'selectors' => [
+						'{{WRAPPER}} .ui-pricing .ui-pricing-header' => 'background-color: {{VALUE}}',
+					],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout', 'operator' => '===', 'value' => 'style1'],
+                        ],
+                    ],
+				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'title_padding',
+                    'label'         => esc_html__( 'Title Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-pricing .ui-pricing-header' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout', 'operator' => '===', 'value' => 'style1'],
+                        ],
+                    ],
+                ),
+				array(
 					'type'          => Controls_Manager::SELECT,
 					'name'          => 'title_heading_style',
 					'default'       => 'h3',
@@ -458,10 +538,26 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 						'medium'    => esc_html__('Medium', 'uipro'),
 						'large'     => esc_html__('Large', 'uipro'),
 						'xlarge'    => esc_html__('X-Large', 'uipro'),
+						'custom'    => esc_html__('Custom', 'uipro'),
 						'remove'    => esc_html__('None', 'uipro'),
 					),
 					'default'       => '',
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'title_margin_custom',
+                    'label'         => esc_html__( 'Custom margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'title_heading_margin', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-card-title' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
 
 				//Meta Settings
 				array(
@@ -541,10 +637,10 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 					'type'          =>  Controls_Manager::SELECT,
 					'name'          => 'meta_alignment',
 					'label'         => esc_html__('Alignment', 'uipro'),
-					'description'   => esc_html__('Align the meta text above or below the title.', 'uipro'),
+					'description'   => esc_html__('Align the meta text above or below.', 'uipro'),
 					'options'       => array(
-						'top' => __('Above Price', 'uipro'),
-						'' => __('Below Price', 'uipro'),
+						'top' => __('Above', 'uipro'),
+						'' => __('Below', 'uipro'),
 						'inline' => __('Inline', 'uipro'),
 					),
 					'default'       => '',
@@ -628,6 +724,74 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 						'text-lead'         => esc_html__('Text Lead', 'uipro'),
 					),
 				),
+                array(
+                    'type'          => Controls_Manager::ICONS,
+                    'name'          => 'icon_price',
+                    'label'         => esc_html__('Icon on price', 'uipro'),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout', 'operator' => '===', 'value' => 'style1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'name'          => 'icon_price_size',
+                    'label' => __( 'Icon Size', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 400,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 64,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ui_icon_on_price' => 'font-size: {{SIZE}}{{UNIT}};',
+                        '{{WRAPPER}} .ui_icon_on_price svg' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'icon_price', 'operator' => '!==', 'value' => ''],
+                            ['name' => 'layout', 'operator' => '===', 'value' => 'style1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'icon_media_color',
+                    'label'         => esc_html__('Icon Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ui_icon_on_price' => 'color: {{VALUE}}',
+                        '{{WRAPPER}} .ui_icon_on_price svg' => 'fill: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'icon_price', 'operator' => '!==', 'value' => ''],
+                            ['name' => 'layout', 'operator' => '===', 'value' => 'style1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'icon_margin',
+                    'label'         => esc_html__( 'Icon Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui_icon_on_price' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'icon_price', 'operator' => '!==', 'value' => ''],
+                            ['name' => 'layout', 'operator' => '===', 'value' => 'style1'],
+                        ],
+                    ],
+                ),
 				array(
 					'type'          =>  Controls_Manager::SELECT,
 					'name'          => 'price_margin',
@@ -664,6 +828,16 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 						'{{WRAPPER}} .pricing-symbol' => 'color: {{VALUE}}',
 					],
 				),
+                array(
+                    'type'          => Controls_Manager::SELECT,
+                    'name'          => 'symbol_pos',
+                    'default'       => 'h3',
+                    'label'         => esc_html__('Symbol Position', 'uipro'),
+                    'options'       => array(
+                        ''                  => esc_html__('Default', 'uipro'),
+                        'right'   => esc_html__('Right', 'uipro'),
+                    ),
+                ),
 				array(
 					'type'          => Controls_Manager::SELECT,
 					'name'          => 'symbol_style',
@@ -688,28 +862,14 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 					),
 				),
 				array(
-					'id'          => 'symbol_margin',
-					'label' => __( 'Currency Margin Top', 'plugin-domain' ),
-					'type' => Controls_Manager::SLIDER,
-					'size_units' => [ 'px', '%' ],
-					'range' => [
-						'px' => [
-							'min' => 0,
-							'max' => 400,
-							'step' => 1,
-						],
-						'%' => [
-							'min' => 0,
-							'max' => 100,
-						],
-					],
-					'default' => [
-						'unit' => 'px',
-						'size' => 0,
-					],
-					'selectors' => [
-						'{{WRAPPER}} .pricing-symbol' => 'margin-top: {{SIZE}}{{UNIT}};',
-					],
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'symbol_margin',
+                    'label'         => esc_html__( 'Currency margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .pricing-symbol' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
 				),
 
 				//Button Settings
@@ -749,6 +909,7 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 						'square' => __('Square', 'uipro' ),
 						'circle' => __('Circle', 'uipro' ),
 						'pill' => __('Pill', 'uipro' ),
+						'custom' => __('Custom', 'uipro' ),
 					],
 					'conditions' => [
 						'relation' => 'and',
@@ -781,13 +942,28 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 					),
 					'default'           => '',
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'button_custom_radius',
+                    'label'         => esc_html__( 'Button Border radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-button .uk-button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'button_style', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+                ),
 				array(
 					'id'          => 'background_color',
 					'label' => __( 'Background Color', 'uipro' ),
 					'type' => \Elementor\Controls_Manager::COLOR,
 					'separator'     => 'before',
 					'selectors' => [
-						'{{WRAPPER}} .ui-button' => 'background-color: {{VALUE}}',
+						'{{WRAPPER}} .ui-button .uk-button' => 'background-color: {{VALUE}}',
 					],
 					'conditions' => [
 						'terms' => [

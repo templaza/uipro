@@ -289,6 +289,17 @@ if ( ! class_exists( 'UIPro_Config_UIAccordion' ) ) {
 				),
 				array(
 					'type'          => Controls_Manager::DIMENSIONS,
+					'name'          =>  'card_item_margin',
+					'label'         => __( 'Item margin', 'uipro' ),
+					'responsive'    =>  true,
+					'size_units'    => [ 'px', 'em', '%' ],
+					'selectors'     => [
+						'{{WRAPPER}} .ui-accordion .tz-item:first-child' => 'margin-top:0;',
+						'{{WRAPPER}} .ui-accordion .tz-item' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+					],
+
+				),array(
+					'type'          => Controls_Manager::DIMENSIONS,
 					'name'          =>  'card_padding',
 					'label'         => __( 'Card Padding', 'uipro' ),
 					'responsive'    =>  true,
@@ -464,10 +475,27 @@ if ( ! class_exists( 'UIPro_Config_UIAccordion' ) ) {
 						'medium' => __('Medium', 'uipro'),
 						'large' => __('Large', 'uipro'),
 						'xlarge' => __('X-Large', 'uipro'),
+						'custom' => __('Custom', 'uipro'),
 						'remove' => __('None', 'uipro'),
 					),
 					'default' => '',
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'content_margin_custom',
+                    'label'         => __( 'Content Custom Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-content' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'content_margin_top', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+
+                ),
 
 				// Image Settings
 				array(
