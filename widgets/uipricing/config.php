@@ -783,7 +783,7 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
                     'responsive'    =>  true,
                     'size_units'    => [ 'px', 'em', '%' ],
                     'selectors'     => [
-                        '{{WRAPPER}} .ui_icon_on_price' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                        '{{WRAPPER}} .ui_icon_on_price' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
                     ],
                     'conditions' => [
                         'terms' => [
