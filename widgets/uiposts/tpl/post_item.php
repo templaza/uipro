@@ -192,6 +192,9 @@ if (!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == '
             $uk_cover = $tran_cl;
         }
     }
+    if($image_position == 'left' || $image_position == 'right'){
+        $cover_image = '  tz-image-cover ';
+    }
     if($thumb_effect =='zoomin-roof'){
         $output .='<div class="'.$roof_class.' uk-cover-container">';
     }
