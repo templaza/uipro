@@ -341,7 +341,7 @@ if ( ! class_exists( 'UIPro_Config_UISocial' ) ) {
                     'prefix_class' => 'e-grid-align%s-',
                     'default' => 'center',
                     'selectors' => [
-                        '{{WRAPPER}} .elementor-widget-container' => 'text-align: {{VALUE}}',
+                        '{{WRAPPER}} .ui-social' => 'text-align: {{VALUE}}',
                     ],
                 ),
                 array(
