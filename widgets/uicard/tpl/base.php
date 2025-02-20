@@ -119,7 +119,6 @@ $card_cl = '';
 if($title_position =='left'){
 	$card_cl = 'uk-flex uk-flex-top';
 }
-
 if ($title) {
 	if ($url && ($url_appear=='button_title' || $url_appear == 'all')) {
 		$title     =  '<'.$title_tag.' class="uk-card-title'.$title_style.'"><a href="'.$url.'"'.$attribs.'>'.$title.'</a></'.$title_tag.'>';
@@ -145,6 +144,13 @@ if ($title) {
 	}
 
 	$output     .=  '<div class="uk-card-body '.$image_content. $general_styles['content_cls'] . '">';
+    if ($media && $layout_type == 'image' && $image_appear == 'inside') {
+        if ($url && ($url_appear=='button_media' || $url_appear == 'all')) {
+            $output     .=  '<div class="uk-card-media-top ui-media'.$media_margin.' '.$media_class_wrap.'"><a class="tz-img '.$link_class.'" href="'.$url.'"'.$attribs.'>'.$media.'</a></div>';
+        } else {
+            $output     .=  '<div class="uk-card-media-top ui-media'.$media_margin.' '.$media_class_wrap.'">'.$media.'</div>';
+        }
+    }
 	if ($title_position == 'before' || $title_position == 'left') {
         if($meta_position == 'before'){
             $output     .=  '<div class="uk-card-meta">'.$meta.'</div>';

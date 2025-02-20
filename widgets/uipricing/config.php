@@ -372,6 +372,16 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
                     'label' => __( 'Card Border', 'uipro' ),
                     'selector' => '{{WRAPPER}} .ui-pricing-body',
                 ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'card_radius',
+                    'label'         => esc_html__( 'Card Border radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-pricing-body' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
+                    ],
+                ),
 				array(
 					'type'          => Controls_Manager::SELECT,
 					'name'          => 'card_size',
