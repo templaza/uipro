@@ -1,0 +1,23 @@
+marquee {
+    width: 100%;
+    display:block;
+}
+.main-runtext {
+    margin: 0 auto;
+    overflow: visible;
+    position: relative;
+}
+.runtext-container .holder {
+    position: relative;
+    overflow: visible;
+    display:inline;
+    float:left;
+}
+
+.runtext-container .holder .text-container {
+    display:inline;
+}
+.text-stroke{
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke-width: 2px;
+}

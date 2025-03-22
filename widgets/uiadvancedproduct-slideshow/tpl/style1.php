@@ -136,6 +136,15 @@ $slide_option = '';
 if($instance['slideshow_transition']){
     $slide_option .='animation: '.$instance['slideshow_transition'].'; ';
 }
+if($instance['autoplay'] == '1'){
+$slide_option .='autoplay: true; ';
+}
+if($instance['autoplay'] == '1' && $instance['pause'] == '1' ){
+$slide_option .='pause-on-hover: true; ';
+}
+if($instance['autoplay_interval'] ){
+$slide_option .='autoplay-interval: '.$instance['autoplay_interval']['size'].'; ';
+}
 $custom_fields   = isset($instance['custom_fields']) ? $instance['custom_fields'] : array();
 $ap_container   = isset($instance['ap_style1_container']) ? $instance['ap_style1_container'] : '';
 $ap_ratio   = isset($instance['slideshow_ratio']) ? $instance['slideshow_ratio'] : '16:9';
@@ -251,6 +260,12 @@ if ($btn2_icon) {
 		$btn2_icon_left      =   $btn2_icon;
 	}
 }
+$kenburns_transition = ( isset( $instance['kenburns_transition'] ) && $instance['kenburns_transition'] ) ? ' uk-transform-origin-' . $instance['kenburns_transition'] : '';
+
+$kenburns_duration = ( isset( $instance['kenburns_duration'] ) && isset( $instance['kenburns_duration']['size'] ) && $instance['kenburns_duration']['size'] ) ? $instance['kenburns_duration']['size'] : '';
+if ( $kenburns_duration ) {
+    $kenburns_duration = ' style="-webkit-animation-duration: ' . $kenburns_duration . 's; animation-duration: ' . $kenburns_duration . 's;"';
+}
 
 $output = '';
 
@@ -292,6 +307,9 @@ if($products){
                 ?>
                 <li class="ap_slideshow-item uk-margin-remove">
 	                <?php
+                    if($kenburns_transition){
+                        echo '<div class="uk-position-cover uk-animation-kenburns uk-animation-reverse' . $kenburns_transition . '"' . $kenburns_duration . '>';
+                    }
                     if($item['video']['id'] !=''){
                         ?>
                         <video src="<?php echo esc_url($item['video']['url']);?>" autoplay loop muted playsinline uk-cover></video>
@@ -303,6 +321,9 @@ if($products){
                             ?>
                             <img data-uk-cover src="<?php echo esc_url($item['image']['url']);?>" alt="<?php echo esc_attr(get_the_title($product_id)); ?>"/>
                         <?php }
+                    }
+                    if($kenburns_transition){
+                        echo '</div>';
                     }
 	                ?>
                     <div class="uk-overlay uk-position-cover ap_slideshow_overlay"></div>

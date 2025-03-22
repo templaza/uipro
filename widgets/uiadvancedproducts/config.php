@@ -366,11 +366,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					],
 					'start_section' => 'card_settings',
 					'section_name'      => esc_html__('Card Settings', 'uipro'),
-                    'conditions' => [
-                        'terms' => [
-                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
-                        ],
-                    ],
+
 				),
 				array(
 					'type'          =>  Controls_Manager::COLOR,
@@ -378,11 +374,10 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'label'         => esc_html__('Card Background', 'uipro'),
 					'description'   => esc_html__('Set the Background Color of Card.', 'uipro'),
 					'selectors' => [
-						'{{WRAPPER}} .uk-card' => 'background-color: {{VALUE}}',
+						'{{WRAPPER}} .ap-item .ap-inner' => 'background-color: {{VALUE}}',
 					],
 					'conditions' => [
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'card_style', 'operator' => '===', 'value' => 'custom'],
 						],
 					],
@@ -393,11 +388,10 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'label'         => esc_html__('Card Color', 'uipro'),
 					'description'   => esc_html__('Set the Color of Card.', 'uipro'),
 					'selectors' => [
-						'{{WRAPPER}} .uk-card' => 'color: {{VALUE}}',
+						'{{WRAPPER}} .ap-item .ap-inner' => 'color: {{VALUE}}',
 					],
 					'conditions' => [
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'card_style', 'operator' => '===', 'value' => 'custom'],
 						],
 					],
@@ -413,11 +407,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 						'large' => esc_html__('Large', 'uipro'),
 						'custom' => esc_html__('Custom', 'uipro'),
 					],
-                    'conditions' => [
-                        'terms' => [
-                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
-                        ],
-                    ],
+
 				),
 				array(
 					'type'          => Controls_Manager::DIMENSIONS,
@@ -431,7 +421,6 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					],
 					'conditions' => [
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'card_size', 'operator' => '===', 'value' => 'custom'],
 						],
 					],

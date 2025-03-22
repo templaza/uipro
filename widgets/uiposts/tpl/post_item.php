@@ -172,7 +172,7 @@ if ($layout == 'thumbnail') {
     }
 }
 if($thumb_effect =='zoomin-roof' && $layout != 'thumbnail'){
-    $roof_class = 'ui-post-roof-effect';
+    $roof_class = ' ui-post-roof-effect ';
 }else{
     $roof_class = '';
 }
@@ -181,7 +181,7 @@ $output .=  '<article data-tag="'.esc_attr(implode(' ', $tag_slugs)).'" data-cat
 $output .= '<div class="uk-article uk-card '.esc_attr($layout.$thumb_cl.$roof_top_class.$card_style.$tran_toggle.$card_size_cls.( $thumbnail_hover ? ' uk-transition-toggle uk-overflow-hidden' : '' ).(!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'left' || $image_position == 'right') ? ' uk-grid-collapse' : '')).'"'.(!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'left' || $image_position == 'right') ? ' data-uk-grid' : '').'>';
 if (!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'top' || $image_position == 'left' || $image_position == 'right') ) :
     if ($image_position == 'left' || $image_position == 'right') {
-        $output .=  '<div class="uk-card-media-'.$image_position.' uk-cover-container'.($image_position == 'right' ? ' uk-flex-last@m' : '').$image_width_xl.$image_width_l.$image_width_m.$image_width_s.$image_width.'">';
+        $output .=  '<div class="uk-card-media-'.$image_position.$roof_class.' uk-cover-container'.($image_position == 'right' ? ' uk-flex-last@s' : '').$image_width_xl.$image_width_l.$image_width_m.$image_width_s.$image_width.'">';
     }
     $uk_cover   = ($image_position == 'left' || $image_position == 'right' || !empty($cover_image)? array('data-uk-cover' => '') : '');
     if($image_transition){
@@ -195,7 +195,7 @@ if (!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == '
     if($image_position == 'left' || $image_position == 'right'){
         $cover_image = '  tz-image-cover ';
     }
-    if($thumb_effect =='zoomin-roof'){
+    if($thumb_effect =='zoomin-roof' && $image_position !='left'  && $image_position !='right' ){
         $output .='<div class="'.$roof_class.' uk-cover-container">';
     }
     if($post_link){
@@ -214,7 +214,7 @@ if (!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == '
             $output .= '<a class="tz-img uk-position-absolute ui-post-thumb-box '.$flash_cl.'" href="'. get_permalink( $item->ID ) .'"><div class="uk-position-cover uk-overlay uk-overlay-primary'.esc_attr( $thumbnail_hover ? ' uk-transition-fade' : '' ).'"></div></a>';
         }
     }
-    if($thumb_effect =='zoomin-roof'){
+    if($thumb_effect =='zoomin-roof' && $image_position !='left'  && $image_position !='right' ){
         $output .='</div>';
     }
 

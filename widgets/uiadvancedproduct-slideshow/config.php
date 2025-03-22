@@ -1012,6 +1012,96 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Slideshow' ) ) {
                     ],
 	            ),
                 array(
+                    'name' => 'velocity',
+                    'type'          => Controls_Manager::SLIDER,
+                    'label'     => esc_html__( 'Velocity', 'uipro' ),
+                    'description' => esc_html__( 'Set the velocity in pixels per milliseconds.', 'uipro' ),
+                    'size_units' => [ 'px' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 20,
+                            'max' => 300,
+                            'step'=> 1,
+                        ],
+                    ],
+                ),
+                array(
+                    'id' => 'autoplay',
+                    'type' => Controls_Manager::SWITCHER,
+                    'label'     => esc_html__( 'Autoplay', 'uipro' ),
+                    'label_on' => esc_html__( 'Yes', 'uipro' ),
+                    'label_off' => esc_html__( 'No', 'uipro' ),
+                    'return_value' => '1',
+                    'default' => '0',
+                ),
+                array(
+                    'id' => 'pause',
+                    'type' => Controls_Manager::SWITCHER,
+                    'label'     => esc_html__( 'Pause autoplay on hover', 'uipro' ),
+                    'label_on' => esc_html__( 'Yes', 'uipro' ),
+                    'label_off' => esc_html__( 'No', 'uipro' ),
+                    'return_value' => '1',
+                    'default' => 1,
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'autoplay', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'name' => 'autoplay_interval',
+                    'type'          => Controls_Manager::SLIDER,
+                    'label'     => esc_html__( 'Interval', 'uipro' ),
+                    'description' => esc_html__( 'Set the autoplay interval in seconds.', 'uipro' ),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'autoplay', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'id' => 'kenburns_transition',
+                    'type' => Controls_Manager::SELECT,
+                    'label'     => esc_html__( 'Ken Burns Effect', 'uipro' ),
+                    'description' => esc_html__( 'Select the transformation origin for the Ken Burns animation', 'uipro' ),
+                    'options'         => array(
+                        '' => esc_html__( 'None', 'uipro' ),
+                        'top-left' => esc_html__( 'Top Left', 'uipro' ),
+                        'top-center' => esc_html__( 'Top Center', 'uipro' ),
+                        'top-right' => esc_html__( 'Top Right', 'uipro' ),
+                        'center-left' => esc_html__( 'Center Left', 'uipro' ),
+                        'center-center' => esc_html__( 'Center Center', 'uipro' ),
+                        'center-right' => esc_html__( 'Center Right', 'uipro' ),
+                        'bottom-left' => esc_html__( 'Bottom Left', 'uipro' ),
+                        'bottom-center' => esc_html__( 'Bottom Center', 'uipro' ),
+                        'bottom-right' => esc_html__( 'Bottom Right', 'uipro' ),
+                    ),
+                    'default' => '',
+                ),
+                array(
+                    'name' => 'kenburns_duration',
+                    'type'          => Controls_Manager::SLIDER,
+                    'label'     => esc_html__( 'Duration', 'uipro' ),
+                    'size_units' => [ 'px' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 30,
+                            'step'=> 1,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 15,
+                    ],
+                    'description' => esc_html__( 'Set the duration for the Ken Burns effect in seconds.', 'uipro' ),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'kenburns_transition', 'operator' => '!==', 'value' => ''],
+                        ],
+                    ],
+                ),
+                array(
                     'id' => 'group_nav_dot',
                     'type' => Controls_Manager::SWITCHER,
                     'label'     => esc_html__( 'Nav & Dot in Group', 'uipro' ),

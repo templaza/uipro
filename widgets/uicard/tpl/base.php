@@ -43,7 +43,7 @@ if ($layout_type == 'icon') {
 	}
 } else {
 	$image          =   ( isset( $instance['image'] ) && $instance['image']['url'] ) ? $instance['image']['url'] : '';
-	$media          .=  $image ? '<img class="uk-transition-opaque uk-transition-'.$image_transition.'" src="'.$image.'" alt="'.$title.'" />' : '';
+	$media          .=  $image ? '<img  class="uk-transition-opaque uk-width-1-1 uk-transition-'.$image_transition.'" src="'.$image.'" alt="'.$title.'" />' : '';
 }
 $image_appear   =   ( isset( $instance['image_appear'] ) && $instance['image_appear'] ) ? $instance['image_appear'] : '';
 

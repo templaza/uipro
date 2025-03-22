@@ -61,6 +61,16 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 					'admin_label'   => true,
 				]
 			);
+            $repeater->add_control(
+                'text_color',
+                [
+                    'type'          => Controls_Manager::COLOR,
+                    'label'         => esc_html__('Text Color', 'uipro'),
+                    'selectors' => [
+                        '{{CURRENT_ITEM}} .el-content' => 'color: {{VALUE}}',
+                    ],
+                ]
+            );
 			$repeater->add_control(
 				'link',
 				[
@@ -111,6 +121,16 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 						],
 					],
 					'options' => $this->get_font_uikit(),
+				]
+			);
+			$repeater->add_control(
+				'icon_item_color',
+				[
+					'type'          => Controls_Manager::COLOR,
+					'label'         => esc_html__('Icon Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} {{CURRENT_ITEM}} ' => 'color: {{VALUE}}',
+                    ],
 				]
 			);
 
@@ -401,6 +421,7 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 					'responsive'    =>  true,
 					'size_units'    => [ 'px', 'em', '%' ],
 					'selectors'     => [
+						'{{WRAPPER}} .ui-pricing-body' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 						'{{WRAPPER}} .ui-pricing-body' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
 					],
 					'conditions' => [
@@ -814,10 +835,42 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 						'medium'    => esc_html__('Medium', 'uipro'),
 						'large'     => esc_html__('Large', 'uipro'),
 						'xlarge'    => esc_html__('X-Large', 'uipro'),
+						'custom'    => esc_html__('Custom', 'uipro'),
 						'remove'    => esc_html__('None', 'uipro'),
 					),
 					'default'       => '',
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'pricing_custom_margin',
+                    'label'         => esc_html__( 'Pricing Custom Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .pricing-value' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'price_margin', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'pricing_custom_padding',
+                    'label'         => esc_html__( 'Pricing Custom Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .pricing-value' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'name' => 'pricing_border',
+                    'type' => \Elementor\Group_Control_Border::get_type(),
+                    'label' => __( 'Pricing Border', 'uipro' ),
+                    'selector' => '{{WRAPPER}} .pricing-value',
+                ),
 
 				//Symbol Settings
 				array(
