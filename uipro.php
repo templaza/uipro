@@ -61,6 +61,11 @@ class UIPro{
     public function ui_load_plugin_textdomain() {
         load_plugin_textdomain( 'uipro', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
         wp_enqueue_style( 'uipro-style', plugins_url( '/assets/css/style.css', __FILE__ ));
+
+        wp_enqueue_script( 'three-js', plugins_url( '/assets/vendor/three/three.min.js', __FILE__ ), array(), false, true );
+
+        wp_enqueue_script( 'gsap-js', 'https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js', array(), false, true );
+        wp_enqueue_script( 'uiaccordionslider-js', plugins_url( '/assets/vendor/three/uiaccordionslider-script.js', __FILE__ ), array(), time(), true );
     }
 
     /**

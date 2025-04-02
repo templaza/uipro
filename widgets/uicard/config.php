@@ -1066,6 +1066,32 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 					],
 				),
 				array(
+					'type'          =>  Controls_Manager::COLOR,
+					'name'          => 'card_button_color_hover',
+					'label'         => esc_html__('Button Color Hover', 'uipro'),
+					'selectors' => [
+						'{{WRAPPER}} .ui-card:hover .uk-button' => 'color: {{VALUE}}',
+					],
+					'conditions' => [
+						'terms' => [
+							['name' => 'card_style', 'operator' => '===', 'value' => 'custom'],
+						],
+					],
+				),
+				array(
+					'type'          =>  Controls_Manager::COLOR,
+					'name'          => 'card_button_bgcolor_hover',
+					'label'         => esc_html__('Button Background Color Hover', 'uipro'),
+					'selectors' => [
+						'{{WRAPPER}} .ui-card:hover .uk-button' => 'background-color: {{VALUE}}',
+					],
+					'conditions' => [
+						'terms' => [
+							['name' => 'card_style', 'operator' => '===', 'value' => 'custom'],
+						],
+					],
+				),
+				array(
 					'type'          =>  \Elementor\Group_Control_Border::get_type(),
 					'name'          => 'card_border_hover',
 					'label'         => esc_html__('Card Border Hover', 'uipro'),
@@ -1090,6 +1116,21 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 					],
 				),
                 array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'card_hover_padding',
+                    'label'         => esc_html__( 'Card Hover Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-card:hover .uk-card-body' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'card_size', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+                ),
+                array(
                     'name'          => 'card_duration',
                     'label' => __( 'Transition duration', 'uipro' ),
                     'type' => Controls_Manager::SLIDER,
@@ -1101,7 +1142,7 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                         ],
                     ],
                     'selectors' => [
-                        '{{WRAPPER}} .ui-card, {{WRAPPER}} .ui-card:hover' => 'transition: all {{SIZE}}s linear;',
+                        '{{WRAPPER}} .ui-card, {{WRAPPER}} .uk-card-body, {{WRAPPER}} .ui-card:hover, {{WRAPPER}} .ui-card:hover .uk-card-body' => 'transition: all {{SIZE}}s linear;',
                     ],
                 ),
 				array(
