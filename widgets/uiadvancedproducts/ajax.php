@@ -58,8 +58,10 @@ if ( ! class_exists( 'UIPro_El_UIAdvancedProducts_Ajax' ) ) {
             $limit      = ( isset( $instance['limit'] ) && $instance['limit'] ) ? $instance['limit'] : 4;
             $show_author 	    = (isset($instance['show_author']) && $instance['show_author']) ? intval($instance['show_author']) : 0;
             $tmp_name   = isset($instance['main_layout'])?$instance['main_layout']:'archive';
+
             $args['show_author'] = $show_author;
             $args['ap_class'] = 'templazaFadeInUp';
+            $args['product_loop'] = $tmp_name;
             $query_args = array(
                 'post_type'         => 'ap_product',
                 'post_status'       => 'publish',
@@ -95,7 +97,6 @@ if ( ! class_exists( 'UIPro_El_UIAdvancedProducts_Ajax' ) ) {
                 );
             }
 
-            if($tmp_name == 'archive'){
                 $ap_posts = new WP_Query($query_args);
                 if($ap_posts -> have_posts()){
                     while ($ap_posts -> have_posts()) {
@@ -108,14 +109,7 @@ if ( ! class_exists( 'UIPro_El_UIAdvancedProducts_Ajax' ) ) {
                 }else{
                     echo '<div class="uk-text-center uk-width-1-1"> '.esc_html__('No products','uipro').'</div>';
                 }
-            }else {
-                $posts      =   get_posts($query_args);
-                foreach ($posts as $item) {
-                    include plugin_dir_path(__FILE__).'tpl/post_item.php';
-                }
-                echo $output;
-                wp_reset_postdata();
-            }
+
             die; // here we exit the script and even no wp_reset_query() required!
         }
 
