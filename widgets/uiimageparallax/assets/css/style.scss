@@ -1,0 +1,121 @@
+:root {
+  --base-duration: 500ms;
+  --base-ease: cubic-bezier(0.25, 0.46, 0.45, 0.84);
+}
+.uiimage-parallax {
+  --x: 0;
+  --y: 0;
+  --d: 50;
+  &:hover .uiimage-parallax-media {
+    transform:
+            scale(1.025)
+            translate(
+                            calc(var(--x) / var(--d) * 1px),
+                            calc(var(--y) / var(--d) * 1px)
+            );
+  }
+}
+
+.uiimage_image {
+  --d: 20;
+
+  transform:
+          translate(
+                          calc(var(--x) / var(--d) * 1px),
+                          calc(var(--y) / var(--d) * 1px)
+          );
+}
+
+.uiimage-parallax_content {
+  --d: 60;
+
+  transform:
+          translate(
+                          calc(var(--x) / var(--d) * -1px),
+                          calc(var(--y) / var(--d) * -1px)
+          );
+}
+
+
+.elementor-element .uiimage-parallax .uiimage_image{
+  max-width:none;
+  height:110%;
+}
+.uiimage-parallax {
+  align-items: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  text-align: center;
+  width: 100%;
+  z-index: 1;
+
+  &:after {
+    content: '';
+    display: block;
+    padding-bottom: 100%;
+  }
+}
+
+// ========================
+// Slide image wrapper
+// ========================
+
+.uiimage-parallax-media {
+  border-radius: 1%;
+  height: 100%;
+  left: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  transition: transform calc(var(--base-duration) / 4) var(--base-ease);
+  width: 100%;
+}
+
+// ========================
+// Slide image
+// ========================
+
+.uiimage_image {
+  --d: 20;
+
+  height: 110%;
+  left: -5%;
+  object-fit: cover;
+  pointer-events: none;
+  position: absolute;
+  top: -5%;
+  transition: transform var(--base-duration) var(--base-ease);
+  user-select: none;
+  width: 110%;
+}
+
+// ========================
+// Slide headline
+// ========================
+
+.uiimage-parallax-title {
+  position: relative;
+}
+
+// ========================
+// Slide content
+// ========================
+
+.uiimage-parallax_content {
+  --d: 60;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  padding: 4vmin;
+  position: absolute;
+  top: 0;
+  transition: transform var(--base-duration) var(--base-ease);
+  width: 100%;
+  z-index: 1;
+}

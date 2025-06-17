@@ -79,6 +79,7 @@ if ( ! class_exists( 'UIPro_Config_UIImageTransition' ) ) {
 					'type'          =>  Controls_Manager::MEDIA,
 					'id'          => 'image2',
 					'label'         => esc_html__('Image 2', 'uipro'),
+					'description'         => esc_html__('Choose image same scale image 1', 'uipro'),
 					'default' => [
 						'url' => \Elementor\Utils::get_placeholder_image_src(),
 					],
@@ -95,7 +96,7 @@ if ( ! class_exists( 'UIPro_Config_UIImageTransition' ) ) {
                             'max' => 2000
                         ],
                     ],
-                    'desktop_default' => [
+                    'default' => [
                         'size' => 450,
                         'unit' => 'px',
                     ],
@@ -118,7 +119,7 @@ if ( ! class_exists( 'UIPro_Config_UIImageTransition' ) ) {
                             'max' => 2000
                         ],
                     ],
-                    'desktop_default' => [
+                    'default' => [
                         'size' => 450,
                         'unit' => 'px',
                     ],

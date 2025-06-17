@@ -196,6 +196,7 @@ if ( ! class_exists( 'UIPro_Abstract_Config' ) ) {
                     $depends  = ( isset( $args['deps'] ) && is_array( $args['deps'] ) ) ? $args['deps'] : array();
                     $media    = ! empty( $args['media'] ) ? $args['media'] : 'all';
                     $deps_src = isset( $args['deps_src'] ) ? $args['deps_src'] : array();
+                    $ver = isset( $args['ver'] ) ? $args['ver'] : '';
 
                     if ( file_exists( $default_folder_css . $src ) ) {
                         // enqueue depends
@@ -214,6 +215,7 @@ if ( ! class_exists( 'UIPro_Abstract_Config' ) ) {
                             'url'      => $default_url_css . $src,
                             'deps'     => $depends,
                             'media'    => $media,
+                            'ver'      => $ver,
                             'deps_src' => $deps_src
                         );
                     }
@@ -231,6 +233,7 @@ if ( ! class_exists( 'UIPro_Abstract_Config' ) ) {
                     $depends   = ! empty( $args['deps'] ) ? $args['deps'] : array();
                     $in_footer = isset( $args['in_footer'] ) ? $args['in_footer'] : true;
                     $deps_src = isset( $args['deps_src'] ) ? $args['deps_src'] : array();
+                    $ver = isset( $args['ver'] ) ? $args['ver'] : '';
 
                     if ( file_exists( $default_folder_js . $src ) ) {
                         // enqueue depends
@@ -248,7 +251,8 @@ if ( ! class_exists( 'UIPro_Abstract_Config' ) ) {
                             'url'       => $default_url_js . $src,
                             'deps'      => $depends,
                             'in_footer' => $in_footer,
-                            'deps_src' => $deps_src
+                            'ver' => $ver,
+                            'deps_src' => $deps_src,
                         );
 
                         if ( self::$localize ) {
@@ -256,12 +260,6 @@ if ( ! class_exists( 'UIPro_Abstract_Config' ) ) {
                                 $queue_assets['scripts'][ $prefix . $handle ]['localize'][ $name ] = $data;
                             }
                         }
-//						if ( ! $localized && self::$localize ) {
-//							$localized = true;
-//							foreach ( self::$localize as $name => $data ) {
-//								wp_localize_script( $prefix . $handle, $name, $data );
-//							}
-//						}
                     }
                 }
             }
@@ -300,7 +298,7 @@ if ( ! class_exists( 'UIPro_Abstract_Config' ) ) {
                                 }
                             }
                             if (! wp_style_is($name, 'registered')) {
-                                wp_register_style($name, $args['url'], $args['deps'], '', $args['media']);
+                                wp_register_style($name, $args['url'], $args['deps'], $args['ver'], $args['media']);
                             }
                         }
                     } else if ( $key == 'scripts' ) {
@@ -313,7 +311,7 @@ if ( ! class_exists( 'UIPro_Abstract_Config' ) ) {
                                 }
                             }
                             if (! wp_script_is($name, 'registered')) {
-                                wp_register_script( $name, $args['url'], $args['deps'], '', $args['in_footer'] );
+                                wp_register_script( $name, $args['url'], $args['deps'],$args['ver'], $args['in_footer'] );
                                 // localize scripts
                                 if ( ! $localized && isset( $args['localize'] )  ) {
                                     foreach ( $args['localize'] as $index => $data ) {

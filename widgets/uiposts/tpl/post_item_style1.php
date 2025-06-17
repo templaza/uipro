@@ -186,7 +186,7 @@ if (!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == '
         .esc_attr($cover_image.$image_border).'" href="'. get_permalink( $item->ID ) .'">'
         . UIPro_UIPosts_Helper::get_post_thumbnail($item, $thumbnail_size, $uk_cover) .$ripple_html.'' ;
         if(!empty($cover_image)){
-            $output .=  '<canvas width="600" height="400"></canvas>';
+//            $output .=  '<canvas width="600" height="400"></canvas>';
         }
         if(count($meta_thumb_position)) {
             $output .= '<span class="ui-post-meta-thumb uk-article-meta uk-flex uk-flex-middle ' . $meta_on_thumb_pos . '">';
@@ -202,7 +202,7 @@ if (!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == '
 
     if ($image_position == 'left' || $image_position == 'right') {
         if($thumb_effect !='zoomin-roof'){
-            $output .=  '<canvas width="600" height="400"></canvas>';
+//            $output .=  '<canvas width="600" height="400"></canvas>';
         }
         $output .=  '</div>';
     }

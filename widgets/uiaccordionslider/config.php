@@ -38,11 +38,19 @@ if ( ! class_exists( 'UIPro_Config_UIAccordionSlider' ) ) {
         public function get_styles() {
             return array(
                 'uiaccordionslider' => array(
-                    'src'   =>  'style.css'
+                    'src'   =>  'style.css',
+                    'ver'   =>  time(),
                 )
             );
         }
-
+        public function get_scripts() {
+            return array(
+                'uiaccordionslider-script' => array(
+                    'src'   =>  'uiaccordionslider-script.js',
+                    'ver'   =>  time(),
+                )
+            );
+        }
 		/**
 		 * @return array
 		 */
@@ -108,21 +116,28 @@ if ( ! class_exists( 'UIPro_Config_UIAccordionSlider' ) ) {
 					'placeholder' => __( 'Type your description here', 'uipro' ),
 				]
 			);
-
-			$repeater->add_control(
-				'link',
-				[
-					'label' => __( 'Link', 'uipro' ),
-					'type' => \Elementor\Controls_Manager::URL,
-					'placeholder' => __( 'https://your-link.com', 'uipro' ),
-					'show_external' => true,
-					'default' => [
-						'url' => '',
-						'is_external' => false,
-						'nofollow' => false,
-					],
-				]
-			);
+            $repeater->add_control(
+                'button', [
+                    'label' => __( 'Button Text', 'uipro' ),
+                    'type' => \Elementor\Controls_Manager::TEXT,
+                    'default' => __( '' , 'uipro' ),
+                    'label_block' => true,
+                ]
+            );
+            $repeater->add_control(
+                'link',
+                [
+                    'label' => __( 'Button Link', 'uipro' ),
+                    'type' => \Elementor\Controls_Manager::URL,
+                    'placeholder' => __( 'https://your-link.com', 'uipro' ),
+                    'show_external' => true,
+                    'default' => [
+                        'url' => '',
+                        'is_external' => false,
+                        'nofollow' => false,
+                    ],
+                ]
+            );
 
 			// options
 			$options = array(
@@ -158,7 +173,7 @@ if ( ! class_exists( 'UIPro_Config_UIAccordionSlider' ) ) {
                     'type'          =>  Controls_Manager::COLOR,
                     'label'         => esc_html__('Icon Hover Color', 'uipro'),
                     'selectors' => [
-                        '{{WRAPPER}} .slide:hover .slider-icon' => 'color: {{VALUE}}',
+                        '{{WRAPPER}} .uiaccordion-slide:hover .slider-icon' => 'color: {{VALUE}}',
                     ],
                 ),
                 array(
@@ -173,56 +188,56 @@ if ( ! class_exists( 'UIPro_Config_UIAccordionSlider' ) ) {
 
                 ),
 				//Title configure
+
 				array(
 					'name'            => 'title_font_family',
 					'type'          => Group_Control_Typography::get_type(),
 					'label'         => esc_html__('Title Font', 'uipro'),
 					'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
-					'selector'      => '{{WRAPPER}} .tz-title',
+					'selector'      => '{{WRAPPER}} .slider-caption h2',
 					'start_section' => 'title_settings',
 					'section_name'      => esc_html__('Title Settings', 'uipro')
 				),
 				array(
-					'id'            => 'title_color',
-					'type'          => Controls_Manager::SELECT,
-					'label'         => __('Predefined Color', 'uipro'),
-					'description'   => __('Select the predefined title text color.', 'uipro'),
-					'options' => array(
-						'' => __('None', 'uipro'),
-						'muted' => __('Muted', 'uipro'),
-						'emphasis' => __('Emphasis', 'uipro'),
-						'primary' => __('Primary', 'uipro'),
-						'secondary' => __('Secondary', 'uipro'),
-						'success' => __('Success', 'uipro'),
-						'warning' => __('Warning', 'uipro'),
-						'danger' => __('Danger', 'uipro'),
-					),
-					'default' => '',
-				),
-				array(
 					'id'            => 'custom_title_color',
 					'type'          =>  Controls_Manager::COLOR,
-					'label'         => esc_html__('Custom Color', 'uipro'),
+					'label'         => esc_html__('Title Color', 'uipro'),
 					'selectors' => [
-						'{{WRAPPER}} .tz-title' => 'color: {{VALUE}}',
+						'{{WRAPPER}} .slider-caption h2' => 'color: {{VALUE}}',
 					],
-					'condition'     => array(
-						'title_color'    => ''
-					),
 				),
-				array(
-					'id'            => 'title_text_transform',
-					'type'          => Controls_Manager::SELECT,
-					'label' => __('Transform', 'uipro'),
-					'description' => __('The following options will transform text into uppercased, capitalized or lowercased characters.', 'uipro'),
-					'options' => array(
-						'' => __('Inherit', 'uipro'),
-						'uppercase' => __('Uppercase', 'uipro'),
-						'capitalize' => __('Capitalize', 'uipro'),
-						'lowercase' => __('Lowercase', 'uipro'),
-					),
-					'default' => '',
-				),
+                array(
+                    'name'            => 'wrap_content_width',
+                    'label'         => esc_html__( 'Wrap Title width', 'uipro' ),
+                    'type'          => Controls_Manager::SLIDER,
+                    'responsive'    => true,
+                    'size_units' => [ 'px','%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 1,
+                            'max' => 2000
+                        ],
+                    ],
+                    'desktop_default' => [
+                        'size' => 750,
+                        'unit' => 'px',
+                    ],
+
+                    'selectors' => [
+                        '{{WRAPPER}} .slider-caption' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'wrap_content_margin',
+                    'label'         => __( 'Wrap Title Custom Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .slider-caption' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+
+                ),
 
 				//Content style
 				array(
@@ -230,28 +245,16 @@ if ( ! class_exists( 'UIPro_Config_UIAccordionSlider' ) ) {
 					'type'          => Group_Control_Typography::get_type(),
 					'label'         => esc_html__('Content Font', 'uipro'),
 					'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
-					'selector'      => '{{WRAPPER}} .ui-content',
+					'selector'      => '{{WRAPPER}} .uiaccordion-slider-content',
 					'start_section' => 'content',
 					'section_name'      => esc_html__('Content Settings', 'uipro')
-				),
-				array(
-					'id'    => 'content_style',
-					'type' => Controls_Manager::SELECT,
-					'label' => __('Style', 'uipro'),
-					'description' => __('Select a predefined text style, including color, size and font-family.', 'uipro'),
-					'options' => array(
-						'' => __('None', 'uipro'),
-						'text-lead' => __('Lead', 'uipro'),
-						'text-meta' => __('Meta', 'uipro'),
-					),
-					'default' => '',
 				),
 				array(
 					'id'            => 'content_color',
 					'type'          =>  Controls_Manager::COLOR,
 					'label'         => esc_html__('Custom Color', 'uipro'),
 					'selectors' => [
-						'{{WRAPPER}} .ui-content' => 'color: {{VALUE}}',
+						'{{WRAPPER}} .uiaccordion-slider-content' => 'color: {{VALUE}}',
 					],
 				),
 
@@ -262,7 +265,7 @@ if ( ! class_exists( 'UIPro_Config_UIAccordionSlider' ) ) {
                     'responsive'    =>  true,
                     'size_units'    => [ 'px', 'em', '%' ],
                     'selectors'     => [
-                        '{{WRAPPER}} .ui-content' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                        '{{WRAPPER}} .uiaccordion-slider-content' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
                     ],
 
                 ),
@@ -283,6 +286,85 @@ if ( ! class_exists( 'UIPro_Config_UIAccordionSlider' ) ) {
 					'start_section' => 'Image',
 					'section_name'      => esc_html__('Image Settings', 'uipro')
 				),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'image_first_overlay',
+                    'label'         => esc_html__('Image active overlay', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .accordion-slider .uiaccordion-slide .overlay' => 'background-color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'button_margin',
+                    'label'         => __( 'Button Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-accordion-slider-btn' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                    ],
+                    'start_section' => 'Button',
+                    'section_name'      => esc_html__('Button Settings', 'uipro')
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'button_padding',
+                    'label'         => esc_html__( 'Button Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-accordion-slider-btn' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'type'          =>  \Elementor\Group_Control_Border::get_type(),
+                    'name'          => 'button_border',
+                    'label'         => esc_html__('Button Border', 'uipro'),
+                    'selector' => '{{WRAPPER}} .ui-accordion-slider-btn',
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'button_border-radius',
+                    'label'         => esc_html__( 'Button border radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-accordion-slider-btn' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'button_color',
+                    'label'         => esc_html__('Button Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-accordion-slider-btn' => 'color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'button_background',
+                    'label'         => esc_html__('Button Background', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-accordion-slider-btn' => 'background-color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'button_color_hover',
+                    'label'         => esc_html__('Button Hover', 'uipro'),
+                    'separator'     => 'before',
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-accordion-slider-btn:hover' => 'color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'button_background_hover',
+                    'label'         => esc_html__('Button Background Hover', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-accordion-slider-btn:hover' => 'background-color: {{VALUE}}',
+                    ],
+                ),
 
 			);
 			$options    = array_merge($options, $this->get_general_options());

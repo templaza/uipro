@@ -1,159 +1,156 @@
-jQuery(document).ready(function(){
+(function( $ ){
+    $(document).ready(function(){
 
-    function ajaxLoad(){
-        accordionSlider();
-    }
-
-    ajaxLoad();
-
-    /*----------------------------------------------------*/
-    /*	ACCORDION SLIDER
-    /*----------------------------------------------------*/
-
-    function accordionSlider(){
-
-        function accordionOrder(){
-
-
-            var slides = document.querySelectorAll('.accordion-slider .slide');
-
-            function slidePosition(){
-                if((jQuery(window).width()) > 1024){
-                    for (let i = 1; i < slides.length; i++) {
-                        var rightValue = 450 - (150 * i);
-                        slides[i].style.right = `jQuery{rightValue}px`;
-                    }
-                }
-
-                if (jQuery(window).width() < 1024 && jQuery(window).width() > 580) {
-                    for (let i = 1; i < slides.length; i++) {
-                        var rightValue = 300 - (100 * i);
-                        slides[i].style.right = `jQuery{rightValue}px`;
-                    }
-                }
-
-                if((jQuery(window).width()) < 580){
-                    for (let i = 1; i < slides.length; i++) {
-                        var rightValue = 100 - (50 * i);
-                        slides[i].style.right = `jQuery{rightValue}px`;
-                    }
-                }
-
-            }
-            slidePosition();
-            jQuery(window).on('resize', function() {
-                slidePosition();
-            });
-
+        function ajaxLoad(){
+            accordionSlider();
         }
 
-        accordionOrder();
+        ajaxLoad();
 
+        /*----------------------------------------------------*/
+        /*	ACCORDION SLIDER
+        /*----------------------------------------------------*/
 
-        gsap.set(jQuery('.accordion-slider .slide:not(.accordion-slider .slide:first)').find('.slider-caption h2, .slider-caption .category'), { autoAlpha:0 })
+        function accordionSlider(){
 
-        jQuery('.accordion-slider .slide').on('click', function(){
-            gsap.set(jQuery(this).find('a'), { 'display':'inline-block'})
-            gsap.set(jQuery('.accordion-slider .slide:not(.accordion-slider .slide:first)').find('.slider-caption h2, .slider-caption .category'), { autoAlpha:0 })
+            function accordionOrder(){
 
-            gsap.set(jQuery('.accordion-slider .slide'), { 'pointer-events': 'none' })
+                var slides = document.querySelectorAll('.accordion-slider .uiaccordion-slide');
 
-            jQuery('.accordion-slider').find('video').get(0).pause();
-            var video = jQuery(this).find('video').get(0);
-            if (video) {
-                video.play();
-            }
+                function slidePosition(){
+                    if(($(window).width()) > 1024){
+                        for (let i = 1; i < slides.length; i++) {
+                            var rightValue = 450 - (150 * i);
+                            slides[i].style.right = `${rightValue}px`;
+                        }
+                    }
 
-            gsap.set(jQuery(this), {'z-index': '2' })
+                    if ($(window).width() < 1200 && $(window).width() > 640) {
+                        for (let i = 1; i < slides.length; i++) {
+                            var rightValue = 300 - (100 * i);
+                            slides[i].style.right = `${rightValue}px`;
+                        }
+                    }
 
-            gsap.to( jQuery(this).prevAll().find('.category') , {delay:.8, clearProps: 'all'})
-            gsap.to( jQuery(this).prevAll().find('h2') , {delay:.8, clearProps: 'all'})
-            gsap.to( jQuery(this).prevAll().find('.letter') , {delay:.8, clearProps: 'all'})
+                    if(($(window).width()) < 640){
+                        for (let i = 1; i < slides.length; i++) {
+                            var rightValue = 100 - (50 * i);
+                            slides[i].style.right = `${rightValue}px`;
+                        }
+                    }
 
-            gsap.to(jQuery(this).find('.letter'), { autoAlpha:0 })
-            gsap.to(jQuery(this).find('.slider-caption .category'), { autoAlpha:1, x:0, delay:.3, duration:.8})
-            gsap.to(jQuery(this).find('.slider-caption h2'), { autoAlpha:1, x:0, delay:.5, duration:.8})
-
-            if((jQuery(window).width()) > 1024){
-                gsap.to(jQuery(this), {'width': 'calc(100vw - 450px)', left: 0 })
-            }
-            if (jQuery(window).width() < 1024 && jQuery(window).width() > 580) {
-                gsap.to(jQuery(this), {'width': 'calc(100vw - 300px)', left: 0 })
-            }
-            if((jQuery(window).width()) < 580){
-                gsap.to(jQuery(this), {'width': 'calc(100vw - 100px)', left: 0 })
-            }
-
-            jQuery(window).on('resize', function() {
-
-                if((jQuery(window).width()) > 1024){
-                    gsap.to(jQuery(this), {'width': 'calc(100vw - 450px)', left: 0 })
                 }
-                if (jQuery(window).width() < 1024 && jQuery(window).width() > 580) {
-                    gsap.to(jQuery(this), {'width': 'calc(100vw - 300px)', left: 0 })
+                slidePosition();
+                $(window).on('resize', function() {
+                    slidePosition();
+                });
+
+            }
+            if($('.accordion-slider .uiaccordion-slide:first-child .video-wrapper').length){
+                $('.accordion-slider').find('video').get(0).pause();
+                var video = $('.accordion-slider .uiaccordion-slide:first-child .video-wrapper').find('video').get(0);
+                if (video) {
+                    video.play();
                 }
-                if((jQuery(window).width()) < 580){
-                    gsap.to(jQuery(this), {'width': 'calc(100vw - 100px)', left: 0 })
+            }
+
+            accordionOrder();
+
+            gsap.set($('.accordion-slider .uiaccordion-slide:not(.accordion-slider .uiaccordion-slide:first)').find('.slider-caption h2, .slider-caption .category, .slider-caption .uiaccordion-slider-content, .slider-caption .templaza-btn'), { autoAlpha:0 })
+
+            $('.accordion-slider .uiaccordion-slide').on('click', function(){
+                gsap.set($(this).find('a'), { 'display':'inline-block'})
+                gsap.set($('.accordion-slider .uiaccordion-slide:not(.accordion-slider .uiaccordion-slide:first)').find('.slider-caption h2, .slider-caption .category, .slider-caption .uiaccordion-slider-content, .slider-caption .templaza-btn'), { autoAlpha:0 })
+
+                gsap.set($('.accordion-slider .uiaccordion-slide'), { 'pointer-events': 'none' })
+
+                if($('.video-wrapper').length){
+                    $('.accordion-slider').find('video').get(0).pause();
+                    var video = $(this).find('video').get(0);
+                    if (video) {
+                        video.play();
+                    }
                 }
-            });
 
-            gsap.set(jQuery(this).nextAll().find('a'), { 'display':'none'})
-            gsap.set(jQuery(this).nextAll().find('.overlay'), { clearProps: 'all'})
-            gsap.to(jQuery(this).find('.overlay'), {autoAlpha:0 })
+                gsap.set($(this), {'z-index': '2' })
 
-            if (jQuery(window).width() > 1024) {
-                transportAmount =  150;
-            }
-            if (jQuery(window).width() < 1024 && jQuery(window).width() > 580) {
-                transportAmount = 100;
-            }
-            if (jQuery(window).width() < 580) {
-                transportAmount =  50;
-            }
+                gsap.to( $(this).prevAll().find('.category') , {delay:.8, clearProps: 'all'})
+                gsap.to( $(this).prevAll().find('h2') , {delay:.8, clearProps: 'all'})
+                gsap.to( $(this).prevAll().find('.uiaccordion-slider-content') , {delay:.8, clearProps: 'all'})
+                gsap.to( $(this).prevAll().find('.letter, .slider-icon') , {delay:.8, clearProps: 'all'})
+                gsap.to( $(this).prevAll().find('.slider-caption .templaza-btn') , {delay:.8, clearProps: 'all'})
 
-            jQuery(window).on('resize', function() {
+                gsap.to($(this).find('.letter, .slider-icon'), { autoAlpha:0 })
+                gsap.to($(this).find('.slider-caption .category'), { autoAlpha:1, x:0, delay:.3, duration:.8})
+                gsap.to($(this).find('.slider-caption h2'), { autoAlpha:1, x:0, delay:.5, duration:.8})
+                gsap.to($(this).find('.uiaccordion-slider-content'), { autoAlpha:1, x:0, delay:.8, duration:.8})
+                gsap.to($(this).find('.slider-caption .templaza-btn'), { autoAlpha:1, x:0, delay:1, duration:.5})
 
-                if (jQuery(window).width() > 1024) {
+                if(($(window).width()) > 1024){
+                    gsap.to($(this), {'width': 'calc(100vw - 450px)', left: 0 })
+                }
+                if ($(window).width() < 1024 && $(window).width() > 580) {
+                    gsap.to($(this), {'width': 'calc(100vw - 300px)', left: 0 })
+                }
+                if(($(window).width()) < 580){
+                    gsap.to($(this), {'width': 'calc(100vw - 100px)', left: 0 })
+                }
+
+                $(window).on('resize', function() {
+
+                    if(($(window).width()) > 1024){
+                        gsap.to($(this), {'width': 'calc(100vw - 450px)', left: 0 })
+                    }
+                    if ($(window).width() < 1024 && $(window).width() > 580) {
+                        gsap.to($(this), {'width': 'calc(100vw - 300px)', left: 0 })
+                    }
+                    if(($(window).width()) < 580){
+                        gsap.to($(this), {'width': 'calc(100vw - 100px)', left: 0 })
+                    }
+                });
+
+                gsap.set($(this).nextAll().find('a'), { 'display':'none'})
+                gsap.set($(this).nextAll().find('.overlay'), { clearProps: 'all'})
+                gsap.to($(this).find('.overlay'), {autoAlpha:1 })
+
+                if ($(window).width() > 1024) {
                     transportAmount =  150;
                 }
-                if (jQuery(window).width() < 1024 && jQuery(window).width() > 580) {
+                if ($(window).width() < 1024 && $(window).width() > 580) {
                     transportAmount = 100;
                 }
-                if (jQuery(window).width() < 580) {
+                if ($(window).width() < 580) {
                     transportAmount =  50;
                 }
+
+                $(window).on('resize', function() {
+
+                    if ($(window).width() > 1024) {
+                        transportAmount =  150;
+                    }
+                    if ($(window).width() < 1024 && $(window).width() > 580) {
+                        transportAmount = 100;
+                    }
+                    if ($(window).width() < 580) {
+                        transportAmount =  50;
+                    }
+                });
+
+
+                gsap.to($(this).nextAll(), { right: '+=' +  $(this).index() * transportAmount + 'px' });
+
+
+                gsap.to($('.accordion-slider .uiaccordion-slide'), {delay:.8, clearProps: 'transform'})
+
+                setTimeout(() => {
+                    $(this).prevAll().removeAttr('style');
+                    $(this).prevAll().appendTo('.accordion-slider');
+                    accordionOrder();
+                    gsap.set($('.accordion-slider .uiaccordion-slide'), { 'pointer-events': 'all' })
+                }, 1000);
+
             });
+        }
 
-
-            gsap.to(jQuery(this).nextAll(), { right: '+=' +  jQuery(this).index() * transportAmount + 'px' });
-
-
-            gsap.to(jQuery('.accordion-slider .slide'), {delay:.8, clearProps: 'transform'})
-
-            setTimeout(() => {
-                jQuery(this).prevAll().removeAttr('style');
-                jQuery(this).prevAll().appendTo('.accordion-slider');
-                accordionOrder();
-                gsap.set(jQuery('.accordion-slider .slide'), { 'pointer-events': 'all' })
-            }, 1000);
-
-        });
-
-        var swiper = new Swiper(".client-slider", {
-            // Optional parameters
-            slidesPerView: 1.7,
-            spaceBetween: 0,
-            centeredSlides: true,
-            speed: 2500,
-            autoplay: {
-                delay: 0,
-            },
-            loop: true,
-            allowTouchMove: false,
-            disableOnInteraction: true,
-        });
-
-
-    }
-
-})
+    })
+})( jQuery );

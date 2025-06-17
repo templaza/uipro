@@ -8,10 +8,28 @@ $image_easing = isset($instance['image_easing']) && $instance['image_easing'] ? 
 $image_intensity = isset($instance['image_intensity']) && $instance['image_intensity'] ? $instance['image_intensity'] :array();
 $image_speedin = isset($instance['image_speedin']) && $instance['image_speedin'] ? $instance['image_speedin'] :array();
 $image_speedout = isset($instance['image_speedout']) && $instance['image_speedout'] ? $instance['image_speedout'] :array();
-
+$image_width = isset($instance['image_width']) && $instance['image_width'] ? $instance['image_width'] :array();
 $general_styles = \UIPro_Elementor_Helper::get_general_styles($instance);
 
-$img= plugins_url( '/uipro/widgets/uiimagetransition/assets/img/'.$image_transition.'.jpg');
+if($image_transition==4 || $image_transition==5){
+    $img= plugins_url( '/uipro/widgets/uiimagetransition/assets/img/'.$image_transition.'.png');
+}else{
+    $img= plugins_url( '/uipro/widgets/uiimagetransition/assets/img/'.$image_transition.'.jpg');
+}
+if($image1['id']){
+    $img_size = wp_get_attachment_image_src($image1['id'],'full');
+    $img_width = $img_size[1];
+    $img_height = $img_size[2];
+
+    $width_scal = ($image_width['size'])? $image_width['size']:1;
+
+    if($width_scal !=1){
+        $scale = $img_width/$image_width['size'];
+        $height_scal = $img_height/$scale;
+    }else{
+        $height_scal =1;
+    }
+
 ?>
 <svg class="hidden">
     <symbol id="icon-arrow" viewBox="0 0 24 24">
@@ -28,13 +46,12 @@ $img= plugins_url( '/uipro/widgets/uiimagetransition/assets/img/'.$image_transit
     </svg>
 </svg>
 
-    <div class="grid__item grid__item--bg theme-15">
+    <div class="grid__item grid__item--bg theme-15" >
         <div class="grid__item-img" data-easing="<?php echo esc_attr($image_easing);?>" data-displacement="<?php echo esc_url($img);?>" data-intensity="<?php echo esc_attr($image_intensity['size']);?>" data-speedIn="<?php echo esc_attr($image_speedin['size']);?>" data-speedOut="<?php echo esc_attr($image_speedout['size']);?>">
             <img src="<?php echo esc_url($image1['url']);?>" alt="Image"/>
             <img src="<?php echo esc_url($image2['url']);?>" alt="Image"/>
         </div>
     </div>
-
 <script>
     jQuery(document).ready(function(){
         Array.from(document.querySelectorAll('.grid__item-img')).forEach((el) => {
@@ -48,9 +65,13 @@ $img= plugins_url( '/uipro/widgets/uiimagetransition/assets/img/'.$image_transit
                 hover: el.dataset.hover || undefined,
                 image1: imgs[0].getAttribute('src'),
                 image2: imgs[1].getAttribute('src'),
+                imagesRatio: <?php echo $img_height;?> / <?php echo $img_width;?>,
                 displacementImage: el.dataset.displacement
             });
         });
     })
 
 </script>
+
+<?php
+}

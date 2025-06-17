@@ -4,6 +4,11 @@
     transform: scale3d(0.5, 0.5, 1);
   }
 }
+.my-div {
+  width: 50vw;
+  height: 256px;
+}
+
 /* Themes */
 .theme-1 {
   --item-bg: #4bb4e7;

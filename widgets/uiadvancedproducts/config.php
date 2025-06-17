@@ -92,10 +92,12 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
             $product_type = array();
             $product_types_name  = UIPro_UIAdvancedProducts_Helper::get_product_type_options();
             if($product_types_name->post_name){
-                $product_types  = get_field_object($product_types_name->post_name);
-                if(isset($product_types['choices']) && is_array($product_types['choices'])){
-                    foreach ($product_types['choices'] as $key => $value){
-                        $product_type[$key] = $value;
+                if(!class_exists('Advanced_Product\Helper\AP_Custom_Field_Helper')) {
+                    $product_types = get_field_object($product_types_name->post_name);
+                    if (isset($product_types['choices']) && is_array($product_types['choices'])) {
+                        foreach ($product_types['choices'] as $key => $value) {
+                            $product_type[$key] = $value;
+                        }
                     }
                 }
             }
@@ -1655,7 +1657,6 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'name'            => 'thumbnail_height',
 					'label'         => esc_html__( 'Thumbnail Height', 'uipro' ),
 					'type'          => Controls_Manager::SLIDER,
-					'devices'       => [ 'desktop', 'tablet', 'mobile' ],
 					'responsive'    => true,
 					'range' => [
 						'px' => [
@@ -1677,6 +1678,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					],
 					'selectors' => [
 						'{{WRAPPER}} .tz-image-cover' => 'height: {{SIZE}}{{UNIT}};',
+						'{{WRAPPER}} .uk-card-media-top .tz-img img' => 'height: {{SIZE}}{{UNIT}};',
 					],
 					'conditions' => [
 						'terms' => [

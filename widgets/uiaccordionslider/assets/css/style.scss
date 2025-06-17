@@ -1,6 +1,5 @@
 
 /* ACCORDION SLIDER */
-
 .accordion-slider{
   width: 100vw;
   height: 100vh;
@@ -8,7 +7,7 @@
   position: relative;
 }
 
-.accordion-slider .slide{
+.accordion-slider .uiaccordion-slide{
   float: left;
   width: 150px;
   height: 100vh;
@@ -17,36 +16,25 @@
   right: 0;
   cursor: pointer;
 }
-
-.accordion-slider .slide a{
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  z-index: 11;
-  pointer-events: all;
-}
-
-.accordion-slider .slide a:not(.accordion-slider .slide:first-child a){
+.accordion-slider .uiaccordion-slide a:not(.accordion-slider .uiaccordion-slide:first-child a){
   display: none;
 }
 
-.accordion-slider .slide .overlay{
+.accordion-slider .uiaccordion-slide .overlay{
   width: 100%;
   height: 100%;
   position: absolute;
   background: #000000be;
-  z-index: 10;
   z-index: 0;
   pointer-events: none;
   border: solid 1px #ffffff2a;
 }
 
-
-.accordion-slider .slide:first-child .overlay{
-  opacity: 0;
+.accordion-slider .uiaccordion-slide:first-child .overlay{
+  opacity: 1;
 }
 
-.accordion-slider .slide:first-child{
+.accordion-slider .uiaccordion-slide:first-child{
   width: calc(100vw - 450px);
   height: 100vh;
   z-index:0;
@@ -57,38 +45,39 @@
   -ms-transition: all ease .3s;
   -o-transition: all ease .3s;
 }
-.accordion-slider .slide:nth-child(2) {
+.accordion-slider .uiaccordion-slide:nth-child(2) {
   right:300px;
 }
-.accordion-slider .slide:nth-child(3) {
+.accordion-slider .uiaccordion-slide:nth-child(3) {
   right:150px;
 }
 
-.accordion-slider .slide .image{
+.accordion-slider .uiaccordion-slide .image{
   width: 100%;
   height: 100%;
   background-size: cover;
   background-position: center center;
 }
 
-.accordion-slider .slide .image .video-wrapper{
+.accordion-slider .uiaccordion-slide .image .video-wrapper{
   z-index: -1;
 }
 
-.accordion-slider .slide .slider-caption{
+.accordion-slider .uiaccordion-slide .slider-caption{
   position: absolute;
   top: 50%;
-  left: 7vw;
+  left: 50vw;
   z-index: 10;
   transform: translateY(-50%);
   -webkit-transform: translateY(-50%);
   -moz-transform: translateY(-50%);
   -ms-transform: translateY(-50%);
   -o-transform: translateY(-50%);
+  margin-left: -700px;
 }
 
 
-.accordion-slider .slide .letter{
+.accordion-slider .uiaccordion-slide .letter{
   position: absolute;
   top: 50%;
   color: #fff;
@@ -103,18 +92,25 @@
   z-index: 1;
 }
 
-.accordion-slider .slide .slider-caption .category{
+.accordion-slider .uiaccordion-slide .slider-caption .category{
   color: #fff;
   margin-bottom: 75px;
   display: block;
 }
 
-.accordion-slider .slide .slider-caption h2{
+.accordion-slider .uiaccordion-slide .slider-caption h2{
   color: #fff;
   font-size: 130px;
 }
 
-.accordion-slider .slide:not(.accordion-slider .slide:first-child) .slider-caption h2{
+.accordion-slider .uiaccordion-slide:not(.accordion-slider .uiaccordion-slide:first-child) .slider-caption h2{
+  transform: translateX(150px);
+  -webkit-transform: translateX(150px);
+  -moz-transform: translateX(150px);
+  -ms-transform: translateX(150px);
+  -o-transform: translateX(150px);
+}
+.accordion-slider .uiaccordion-slide:not(.accordion-slider .uiaccordion-slide:first-child) .slider-caption .uiaccordion-slider-content{
   transform: translateX(150px);
   -webkit-transform: translateX(150px);
   -moz-transform: translateX(150px);
@@ -123,7 +119,7 @@
 }
 
 
-.accordion-slider .slide:not(.accordion-slider .slide:first-child) .slider-caption .category{
+.accordion-slider .uiaccordion-slide:not(.accordion-slider .uiaccordion-slide:first-child) .slider-caption .category{
   transform: translateX(150px);
   -webkit-transform: translateX(150px);
   -moz-transform: translateX(150px);
@@ -144,40 +140,47 @@
   left: 7vw;
   width: 200px;
 }
-.accordion-slider .slide:first-child .letter,
-.accordion-slider .slide:first-child .slider-icon,
+.accordion-slider .uiaccordion-slide:first-child .letter,
+.accordion-slider .uiaccordion-slide:first-child .slider-icon,
 {
   opacity:0;
+  z-index: -1;
 }
 .slider-icon{
   z-index: 1;
 }
 
+@media screen and (max-width:1480px) {
+  .accordion-slider .uiaccordion-slide .slider-caption{
+    margin-left: -50vw;
+    padding-left: 40px;
+  }
+}
 @media screen and (max-width:1200px) {
 
-  .accordion-slider .slide:first-child{
+  .accordion-slider .uiaccordion-slide:first-child{
     width: calc(100vw - 300px) !important;
   }
 
-  .accordion-slider .slide {
+  .accordion-slider .uiaccordion-slide {
     width: 100px;
   }
-  .accordion-slider .slide:nth-child(2) {
+  .accordion-slider .uiaccordion-slide:nth-child(2) {
     right:200px;
   }
-  .accordion-slider .slide:nth-child(3) {
+  .accordion-slider .uiaccordion-slide:nth-child(3) {
     right:100px;
   }
-  .accordion-slider .slide .slider-caption h2 {
+  .accordion-slider .uiaccordion-slide .slider-caption h2 {
     font-size: 60px;
     line-height: 86px;
   }
 
-  .accordion-slider .slide .slider-caption .category {
+  .accordion-slider .uiaccordion-slide .slider-caption .category {
     margin-bottom: 60px;
   }
 
-  .accordion-slider .slide .letter {
+  .accordion-slider .uiaccordion-slide .letter {
     font-size: 65px;
   }
 
@@ -188,36 +191,40 @@
 }
 
 @media screen and (max-width:640px) {
+  .accordion-slider .uiaccordion-slide .slider-caption{
+    margin-left: -50vw;
+    padding-left: 20px;
+  }
 
-  .accordion-slider .slide:first-child{
+  .accordion-slider .uiaccordion-slide:first-child{
     width: calc(100vw - 100px) !important;
   }
 
-  .accordion-slider .slide {
+  .accordion-slider .uiaccordion-slide {
     width: 50px;
   }
-  .accordion-slider .slide:nth-child(2) {
+  .accordion-slider .uiaccordion-slide:nth-child(2) {
     right:100px;
   }
-  .accordion-slider .slide:nth-child(3) {
+  .accordion-slider .uiaccordion-slide:nth-child(3) {
     right:50px;
   }
 
-  .accordion-slider .slide .slider-caption h2{
+  .accordion-slider .uiaccordion-slide .slider-caption h2{
     font-size: 50px;
     line-height: 65px;
   }
 
-  .accordion-slider .slide .slider-caption .category {
+  .accordion-slider .uiaccordion-slide .slider-caption .category {
     margin-bottom: 26px;
     font-size: 15px;
   }
 
-  .accordion-slider .slide .letter {
+  .accordion-slider .uiaccordion-slide .letter {
     font-size: 40px;
   }
 
-  .accordion-slider .slide .letter::after {
+  .accordion-slider .uiaccordion-slide .letter::after {
     top: 120px;
   }
 
@@ -226,7 +233,7 @@
   }
 
 }
-.accordion-slider .slide .image .video-wrapper {
+.accordion-slider .uiaccordion-slide .image .video-wrapper {
   z-index: -1;
 }
 .video-wrapper {

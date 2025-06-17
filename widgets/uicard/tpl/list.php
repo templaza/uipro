@@ -22,6 +22,7 @@ $meta           = isset($instance['meta_title']) && $instance['meta_title'] ? $i
 $image_content  = isset($instance['image_content']) && $instance['image_content'] ? $instance['image_content'] : '';
 $image_transition  = isset($instance['media_transition']) && $instance['media_transition'] ? $instance['media_transition'] : '';
 $meta_desktop_width  = isset($instance['meta_desktop_width']) && $instance['meta_desktop_width'] ? $instance['meta_desktop_width'] : '';
+$image_desktop_width  = isset($instance['image_desktop_width']) && $instance['image_desktop_width'] ? $instance['image_desktop_width'] : '';
 $title_desktop_width  = isset($instance['title_desktop_width']) && $instance['title_desktop_width'] ? $instance['title_desktop_width'] : '';
 $content_desktop_width  = isset($instance['content_desktop_width']) && $instance['content_desktop_width'] ? $instance['content_desktop_width'] : '';
 $button_desktop_width  = isset($instance['button_desktop_width']) && $instance['button_desktop_width'] ? $instance['button_desktop_width'] : '';
@@ -112,9 +113,9 @@ if ($btn_icon) {
 
 if ($title) {
 	if ($url && ($url_appear=='button_title' || $url_appear == 'all')) {
-		$title     =  '<'.$title_tag.' class="uk-card-title'.$title_style.' uk-width-1-2 '. $title_desktop_width.'@s"><a href="'.$url.'"'.$attribs.'>'.$title.'</a></'.$title_tag.'>';
+		$title     =  '<'.$title_tag.' class="uk-card-title'.$title_style. ($title_desktop_width != 'custom' ? ' uk-width-1-2 '. $title_desktop_width.'@s' : '').' "><a href="'.$url.'"'.$attribs.'>'.$title.'</a></'.$title_tag.'>';
 	} else {
-		$title     =  '<'.$title_tag.' class="uk-card-title'.$title_style. ' uk-width-1-2 '. $title_desktop_width.'@s">'.$title.'</'.$title_tag.'>';
+		$title     =  '<'.$title_tag.' class="uk-card-title'.$title_style. ($title_desktop_width != 'custom' ? ' uk-width-1-2 '. $title_desktop_width.'@s' : '').' ">'.$title.'</'.$title_tag.'>';
 	}
 	$output     =   '<div class="ui-card '.$media_class.' uk-card'. $card_style .' '.$icon_arrow.' '. $card_size . $general_styles['container_cls'] .'"' . $general_styles['animation'] . '>';
 	if ($media && $layout_type == 'image' && ($image_appear == 'top'|| $image_appear == 'thumbnail')) {
@@ -126,41 +127,30 @@ if ($title) {
 	}
 	$output     .=  '<div class="uk-card-body '.$image_content. $general_styles['content_cls'] . '">';
     $output .= '<div class="uk-grid uk-card-list as-image-hover-menu" data-uk-grid >';
-	if ($title_position == 'before') {
-        if($meta_position == 'before'){
-            $output     .=  '<div class="uk-card-meta uk-width-1-2 '.$meta_desktop_width.'@s">'.$meta.'</div>';
-        }
-        $output         .=  $title;
-        if($meta_position == 'after'){
-            $output     .=  '<div class="uk-card-meta uk-width-1-2 '.$meta_desktop_width.'@s">'.$meta.'</div>';
-        }
-	}
+
+    if($meta){
+        $output     .=  '<div class="uk-card-meta '. ($meta_desktop_width != 'custom' ? ' uk-width-1-2 '. $meta_desktop_width.'@s' : '').'">'.$meta.'</div>';
+    }
+
 	if ($layout_type == 'icon' || ($layout_type == 'image' && $image_appear == 'inside')) {
 		if ($url && ($url_appear=='button_media' || $url_appear == 'all')) {
-			$output     .=  $media ? '<div class="ui-media'.$media_margin.'"><a href="'.$url.'"'.$attribs.'>'.$media.'</a></div>' : '';
+			$output     .=  $media ? '<div class="ui-media-wrap '.($image_desktop_width != 'custom' ? ' uk-width-1-2 '. $image_desktop_width.'@s' : '').'"><div class="ui-media uk-overflow-hidden"><a href="'.$url.'"'.$attribs.'>'.$media.'</a></div></div>' : '';
 		} else {
-			$output     .=  $media ? '<div class="ui-media'.$media_margin.'">'.$media.'</div>' : '';
+			$output     .=  $media ? '<div class="ui-media-wrap '.($image_desktop_width != 'custom' ? ' uk-width-1-2 '. $image_desktop_width.'@s' : '').'"><div class="ui-media uk-overflow-hidden">'.$media.'</div></div>' : '';
 		}
 	}
-	if ($title_position == 'after') {
-        if($meta_position == 'before'){
-            $output     .=  '<div class="uk-card-meta uk-width-1-2 '.$meta_desktop_width.'@s">'.$meta.'</div>';
-        }
-		$output         .=  $title;
-		if($meta_position == 'after'){
-            $output     .=  '<div class="uk-card-meta uk-width-1-2 '.$meta_desktop_width.'@s">'.$meta.'</div>';
-        }
-	}
-    $output     .=  '<div class="ui-card-text uk-width-1-1 '.$content_desktop_width.'@s">'.$text.'</div>';
+    $output         .=  $title;
+
+    $output     .=  '<div class="ui-card-text '.($content_desktop_width != 'custom' ? ' uk-width-1-1 '. $content_desktop_width.'@s' : '').'">'.$text.'</div>';
     if($button_position == '') {
-        $output .= $button_text || $btn_icon ? '<div class="ui-button' . $button_margin . ' '.$button_desktop_width.'@s"><a class="uk-button' . $button_style . $button_shape . $button_size . '" href="' . $url . '"' . $attribs . '>' . $btn_icon_left . $button_text . $btn_icon_right . '</a></div>' : '';
+        $output .= $button_text || $btn_icon ? '<div class="ui-button' . $button_margin . ($button_desktop_width != 'custom' ? ' '. $button_desktop_width.'@s' : '').'"><a class="uk-button' . $button_style . $button_shape . $button_size . '" href="' . $url . '"' . $attribs . '>' . $btn_icon_left . $button_text . $btn_icon_right . '</a></div>' : '';
     }
     $output     .=  '</div>';
 	if ($media && $layout_type == 'image' && $image_appear == 'bottom') {
 		$output .=  '<div class="uk-card-media-top uk-position-relative ui-media'.$media_margin.'">'.$media.$icon_on_media.'</div>';
 	}
     if($button_position == 'after_media'){
-        $output     .=  $button_text || $btn_icon ? '<div class="ui-button'.$button_margin.' '.$button_desktop_width.'@s"><a class="uk-button'.$button_style.$button_shape.$button_size.'" href="'.$url.'"'.$attribs.'>'.$btn_icon_left . $button_text . $btn_icon_right.'</a></div>' : '';
+        $output     .=  $button_text || $btn_icon ? '<div class="ui-button'.$button_margin.' '.($button_desktop_width != 'custom' ? ' '. $button_desktop_width.'@s' : '').'"><a class="uk-button'.$button_style.$button_shape.$button_size.'" href="'.$url.'"'.$attribs.'>'.$btn_icon_left . $button_text . $btn_icon_right.'</a></div>' : '';
     }
 	$output     .=  '</div>';
 	$output     .=  '</div>';

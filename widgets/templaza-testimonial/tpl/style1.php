@@ -3,29 +3,53 @@ $templaza_testimonials      = !empty( $instance['templaza-testimonial'] ) ? $ins
 $testimonial_slider_autoplay     = isset( $instance['testimonial_slider_autoplay'] ) ? $instance['testimonial_slider_autoplay'] : '';
 $testimonial_slider_center    = !empty( $instance['testimonial_slider_center'] ) ? $instance['testimonial_slider_center'] : '';
 $testimonial_slider_navigation    = !empty( $instance['testimonial_slider_navigation'] ) ? $instance['testimonial_slider_navigation'] : '';
-$testimonial_slider_navigation_outside    = !empty( $instance['testimonial_slider_navigation_outside'] ) ? $instance['testimonial_slider_navigation_outside'] : '';
-$testimonial_slider_navigation_position    = !empty( $instance['testimonial_slider_navigation_position'] ) ? ' '. $instance['testimonial_slider_navigation_position'] : '';
+$testimonial_slider_navigation_position    = !empty( $instance['testimonial_slider_style1_navigation_position'] ) ? $instance['testimonial_slider_style1_navigation_position'] : '';
 $testimonial_slider_dot    = !empty( $instance['testimonial_slider_dot'] ) ? $instance['testimonial_slider_dot'] : '';
 $testimonial_slider_number    = !empty( $instance['testimonial_slider_number'] ) ? $instance['testimonial_slider_number'] : 1;
 $testimonial_quote_size    = isset( $instance['testimonial_quote_size'] ) && $instance['testimonial_quote_size']['size'] ? $instance['testimonial_quote_size']['size'] : 32;
 $avatar_border    = isset( $instance['avatar_border'] ) && $instance['avatar_border'] ? ' '. $instance['avatar_border'] : '';
 $quote_icon = ( isset( $instance['quote_icon'] ) && $instance['quote_icon'] ) ? $instance['quote_icon'] : array();
+$prev_icon = ( isset( $instance['nav_preview_icon'] ) && $instance['nav_preview_icon'] ) ? $instance['nav_preview_icon'] : array();
+$next_icon = ( isset( $instance['nav_next_icon'] ) && $instance['nav_next_icon'] ) ? $instance['nav_next_icon'] : array();
+
 $slider_options = '';
+if($testimonial_slider_dot=='yes'){
+    $dot = 'true';
+}else{
+    $dot = 'false';
+}
+if($testimonial_slider_navigation=='yes'){
+    $nav = 'true';
+}else{
+    $nav = 'false';
+}
+$nav_left = $nav_right = '';
+if($testimonial_slider_navigation_position=='center'){
+    $nav_left = ' uk-position-center-left';
+    $nav_right = ' uk-position-center-right';
+}
 if($testimonial_slider_autoplay=='yes'){
     $slider_options .= 'autoplay: true; ';
 }
 if($testimonial_slider_center=='yes'){
     $slider_options.='center: true';
 }
-if($testimonial_slider_navigation_outside=='yes'){
-    $next = 'uk-position-center-right-out';
-    $preview = 'uk-position-center-left-out';
-}else{
-    $next = 'uk-position-center-right';
-    $preview = 'uk-position-center-left';
-}
+
 $btn_next = esc_html__('Next','uipro');
 $btn_prev = esc_html__('Prev','uipro');
+$pre_icon_html = '<span class="'. ($nav_left ? $nav_left : ' btn_prev').' slick-arrow"><i class="fas fa-arrow-left uk-margin-small-right"></i> '. $btn_prev.'</span>';
+$next_icon_html = '<span class=" '. ($nav_right ? $nav_right : ' btn_next').' slick-arrow">'. $btn_next.' <i class="fas fa-arrow-right uk-margin-small-left"></i></span>';
+if (is_array($next_icon['value']) && isset($next_icon['value']['url']) && $next_icon['value']['url']) {
+    $next_icon_html='<span class=" '. ($nav_right ? $nav_right : ' btn_next').' slick-arrow"><img class="uk-preserve" src="'.esc_attr($next_icon['value']['url']).'" alt="" data-uk-svg /></span>';
+} elseif (is_string($next_icon['value']) && $next_icon['value']) {
+    $next_icon_html='<span class=" '. ($nav_right ? $nav_right : ' btn_next').' slick-arrow"><i class="'. esc_attr($next_icon['value']).'" aria-hidden="true"></i></span>';
+}
+if (is_array($prev_icon['value']) && isset($prev_icon['value']['url']) && $prev_icon['value']['url']) {
+    $pre_icon_html='<span class="'. ($nav_left ? $nav_left : ' btn_prev').' slick-arrow"><img class="uk-preserve" src="'.esc_attr($prev_icon['value']['url']).'" alt="" data-uk-svg /></span>';
+} elseif (is_string($prev_icon['value']) && $prev_icon['value']) {
+    $pre_icon_html='<span class="'. ($nav_left ? $nav_left : ' btn_prev').' slick-arrow"><i class="'. esc_attr($prev_icon['value']).'" aria-hidden="true"></i></span>';
+}
+
 $module_id = uniqid('templaza_testimonial_');
 if ( !empty( $instance['templaza-testimonial'] ) ) {
 	$general_styles     =   \UIPro_Elementor_Helper::get_general_styles($instance);
@@ -105,6 +129,7 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
             <?php
         }
         ?>
+
     </div>
 </div>
     <script type="text/javascript">
@@ -117,11 +142,11 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
                     slidesToShow: 1,
                     autoplay:false,
                     autoplaySpeed:3000,
-                    arrows:true,
+                    arrows:<?php echo $nav; ?>,
                     fade: true,
-                    dots:false,
-                    nextArrow:'<span class="btn_next slick-arrow"><?php echo $btn_next;?> <i class="fas fa-arrow-right uk-margin-small-left"></i></span>',
-                    prevArrow:'<span class="btn_prev slick-arrow"><i class="fas fa-arrow-left uk-margin-small-right"></i> <?php echo $btn_prev;?></span>',
+                    dots:<?php echo $dot; ?>,
+                    nextArrow:'<?php echo $next_icon_html;?>',
+                    prevArrow:'<?php echo $pre_icon_html;?>',
                     infinite:true,
                     focusOnSelect: true,
                     adaptiveHeight: true,

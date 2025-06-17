@@ -171,7 +171,7 @@ if($ap_posts && $ap_posts -> have_posts()) {
     $general_styles = \UIPro_Elementor_Helper::get_general_styles($instance);
     $output = '';
     ?>
-    <div  class="ui-advanced-products <?php echo esc_attr($general_styles['container_cls']) .' '.$general_styles['animation'].' ui-'.$slider_visible;?>">
+    <div data-scroll class="ui-advanced-products <?php echo esc_attr($general_styles['container_cls']) .' '.$general_styles['animation'].' ui-'.$slider_visible;?>">
     <?php
     if ($use_slider) {
         ?>

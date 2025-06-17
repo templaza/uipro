@@ -1,4 +1,4 @@
-<?php
+    <?php
 
 $_is_elementor      = (isset($args['page_builder']) && $args['page_builder'] == 'elementor')?true:false;
 $heading_style      = isset($instance['heading_style'])?$instance['heading_style']:'';
@@ -170,7 +170,7 @@ if($nowrap_title){
     $nowrap_cls=' text-nowrap';
 }
 if(!empty($instance['title'])) {
-    $html .= '<div class="sc_heading uk-flex uk-flex-column uk-position-relative' . $text_alignment . $nowrap_cls . $clone_title . $general_styles['container_cls'] . $general_styles['content_cls'] . '"' . $general_styles['animation'] . '>';
+    $html .= '<div data-scroll  class="sc_heading uk-flex uk-flex-column uk-position-relative' . $text_alignment . $nowrap_cls . $clone_title . $general_styles['container_cls'] . $general_styles['content_cls'] . '"' . $general_styles['animation'] . '>';
     if($instance['sub_heading_position']=='before_title'){
         $html .= $sub_heading;
     }

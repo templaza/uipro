@@ -79,9 +79,40 @@ if ( ! class_exists( 'UIPro_Config_CircleText' ) ) {
 					'label'         => esc_html__('Text Color', 'uipro'),
 					'description'   => esc_html__('Set the color of content.', 'uipro'),
 					'selectors' => [
-						'{{WRAPPER}} .circletext textPath' => 'color: {{VALUE}}',
+						'{{WRAPPER}} svg.circletext textPath' => 'color: {{VALUE}}',
 					],
 				),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'text_bg_color',
+                    'label'         => esc_html__('Text Background Color', 'uipro'),
+                    'description'   => esc_html__('Set the background color of content.', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .circletext' => 'background-color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'text_radius',
+                    'label'         => esc_html__( 'Border radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} svg.circletext' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'text_padding',
+                    'label'         => esc_html__( 'Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} svg.circletext' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                    ],
+                ),
+
                 array(
                     'type'          => Controls_Manager::SLIDER,
                     'name'            => 'text_width',
@@ -101,12 +132,36 @@ if ( ! class_exists( 'UIPro_Config_CircleText' ) ) {
                     'default'   => [
                         'unit' => 'px',
                     ],
-                    'selectors'  => ['{{WRAPPER}} svg.circletext' => 'max-width: {{SIZE}}{{UNIT}};']
+                    'selectors'  => [
+                        '{{WRAPPER}} svg.circletext' => 'max-width: {{SIZE}}{{UNIT}};',
+                        '{{WRAPPER}} .circletext-icon' => 'max-width: {{SIZE}}{{UNIT}};'
+                    ]
+                ),
+                array(
+                    'type'          => Controls_Manager::ICONS,
+                    'name'          => 'icon',
+                    'label'         => esc_html__('Select Icon:', 'uipro'),
+                    'separator'     => 'before',
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'icon_color',
+                    'label'         => esc_html__('Icon Color', 'uipro'),
+                    'description'   => esc_html__('Set the color of icon.', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .circletext-icon i' => 'color: {{VALUE}}',
+                        '{{WRAPPER}} .circletext-icon svg' => 'fill: {{VALUE}}',
+                    ],
                 ),
                 array(
                     'type'      => Controls_Manager::SWITCHER,
                     'name'      => 'text_hover_rotate',
                     'label'     => esc_html__( 'Rotate when hover', 'uipro' ),
+                ),
+                array(
+                    'type'      => Controls_Manager::SWITCHER,
+                    'name'      => 'text_hover_rotate_automatic',
+                    'label'     => esc_html__( 'Auto Rotate', 'uipro' ),
                 ),
                 array(
                     'type'          => Controls_Manager::SLIDER,
@@ -139,5 +194,6 @@ if ( ! class_exists( 'UIPro_Config_CircleText' ) ) {
 		public function get_template_name() {
 			return 'base';
 		}
+
 	}
 }

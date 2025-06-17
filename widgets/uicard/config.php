@@ -279,16 +279,19 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 					'type'          =>  Controls_Manager::SELECT,
 					'name'          => 'title_position',
 					'label'         => esc_html__('Icon Position', 'uipro'),
-					'description'   => esc_html__('Set the icon position.', 'uipro'),
+					'description'   => esc_html__('Set the Icon position.', 'uipro'),
 					'options'       => array(
 						'after'     => esc_html__('Before Title', 'uipro'),
 						'before'    => esc_html__('After Title', 'uipro'),
 						'left'    => esc_html__('Left Title', 'uipro'),
 					),
 					'default'       => 'after',
-					'condition'     => array(
-						'title!'    => ''
-					),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout_type', 'operator' => '===', 'value' => 'icon'],
+                            ['name' => 'title', 'operator' => '!=', 'value' => ''],
+                        ],
+                    ],
 				),
 
 				//Icon Settings
@@ -552,6 +555,19 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 						],
 					],
 				),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'image_overlay',
+                    'label'         => esc_html__('Image Overlay Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .card-overlay' => 'background-color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout_type', 'operator' => '===', 'value' => 'image'],
+                        ],
+                    ],
+                ),
 				array(
 					'type'          => Controls_Manager::DIMENSIONS,
 					'name'          =>  'image_border-radius',
@@ -624,6 +640,7 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                         'scale-up' => __('Scales Up', 'uipro'),
                         'scale-down' => __('Scales Down', 'uipro'),
                         'zoomin-roof' => __('Zoom in roof', 'uipro'),
+                        'image-title-zoomin' => __('Image and Title Transition', 'uipro'),
                     ),
                     'default'       => '',
                     'conditions' => [
@@ -1057,7 +1074,47 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 					'label'         => esc_html__('Card Color Hover', 'uipro'),
 					'description'   => esc_html__('Set the Color of Card on mouse hover.', 'uipro'),
 					'selectors' => [
-						'{{WRAPPER}} .ui-card:hover, {{WRAPPER}} .ui-card:hover *' => 'color: {{VALUE}}',
+						'{{WRAPPER}} .ui-card:hover, {{WRAPPER}} .ui-card:hover .ui-card-text' => 'color: {{VALUE}}',
+					],
+					'conditions' => [
+						'terms' => [
+							['name' => 'card_style', 'operator' => '===', 'value' => 'custom'],
+						],
+					],
+				),
+				array(
+					'type'          =>  Controls_Manager::COLOR,
+					'name'          => 'card_meta_color_hover',
+					'label'         => esc_html__('Card Hover Meta Color', 'uipro'),
+					'selectors' => [
+						'{{WRAPPER}} .ui-card:hover .uk-card-meta' => 'color: {{VALUE}}',
+					],
+					'conditions' => [
+						'terms' => [
+							['name' => 'card_style', 'operator' => '===', 'value' => 'custom'],
+						],
+					],
+				),
+				array(
+					'type'          =>  Controls_Manager::COLOR,
+					'name'          => 'card_icon_color_hover',
+					'label'         => esc_html__('Card Hover Icon Color', 'uipro'),
+					'selectors' => [
+                        '{{WRAPPER}} .ui-card:hover .ui-media' => 'color: {{VALUE}}',
+                        '{{WRAPPER}} .ui-card:hover .ui-media svg' => 'fill: {{VALUE}}',
+					],
+					'conditions' => [
+						'terms' => [
+							['name' => 'card_style', 'operator' => '===', 'value' => 'custom'],
+						],
+					],
+				),
+				array(
+					'type'          =>  Controls_Manager::COLOR,
+					'name'          => 'card_title_color_hover',
+					'label'         => esc_html__('Card Hover Title Color', 'uipro'),
+					'selectors' => [
+						'{{WRAPPER}} .ui-card:hover .uk-card-title' => 'color: {{VALUE}}',
 					],
 					'conditions' => [
 						'terms' => [
@@ -1068,7 +1125,7 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 				array(
 					'type'          =>  Controls_Manager::COLOR,
 					'name'          => 'card_button_color_hover',
-					'label'         => esc_html__('Button Color Hover', 'uipro'),
+					'label'         => esc_html__('Card Hover Button Color', 'uipro'),
 					'selectors' => [
 						'{{WRAPPER}} .ui-card:hover .uk-button' => 'color: {{VALUE}}',
 					],
@@ -1081,9 +1138,22 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 				array(
 					'type'          =>  Controls_Manager::COLOR,
 					'name'          => 'card_button_bgcolor_hover',
-					'label'         => esc_html__('Button Background Color Hover', 'uipro'),
+					'label'         => esc_html__('Card Hover Button Background Color', 'uipro'),
 					'selectors' => [
 						'{{WRAPPER}} .ui-card:hover .uk-button' => 'background-color: {{VALUE}}',
+					],
+					'conditions' => [
+						'terms' => [
+							['name' => 'card_style', 'operator' => '===', 'value' => 'custom'],
+						],
+					],
+				),
+				array(
+					'type'          =>  Controls_Manager::COLOR,
+					'name'          => 'card_button_bordercolor_hover',
+					'label'         => esc_html__('Card Hover Button Border Color', 'uipro'),
+					'selectors' => [
+						'{{WRAPPER}} .ui-card:hover .uk-button' => 'border-color: {{VALUE}}',
 					],
 					'conditions' => [
 						'terms' => [
@@ -1230,6 +1300,7 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                         'uk-width-1-6'    => esc_html__('1/6', 'uipro'),
                         'uk-width-auto'    => esc_html__('auto', 'uipro'),
                         'uk-width-expand'    => esc_html__('expand', 'uipro'),
+                        'custom'    => esc_html__('Custom', 'uipro'),
                     ),
                     'default'   => 'uk-width-1-6',
                     'separator'     => 'before',
@@ -1240,9 +1311,120 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                     ),
                 ),
                 array(
+                    'id'          => 'meta_width_custom',
+                    'label' => __( 'Meta custom width', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px','%' ],
+                    'responsive'    =>  true,
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => '%',
+                        'size' => 10,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .uk-card-meta' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'meta_desktop_width', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+                ),
+                array(
                     'type'         => Controls_Manager::CHOOSE,
                     'label'         => esc_html__( 'Meta alignment', 'uipro' ),
                     'name'          => 'meta_list_align',
+                    'responsive'    => true, /* this will be add in responsive layout */
+                    'options'       => [
+                        'left'      => [
+                            'title' => esc_html__( 'Left', 'uipro' ),
+                            'icon'  => 'eicon-text-align-left',
+                        ],
+                        'center'    => [
+                            'title' => esc_html__( 'Center', 'uipro' ),
+                            'icon'  => 'eicon-text-align-center',
+                        ],
+                        'right'     => [
+                            'title' => esc_html__( 'Right', 'uipro' ),
+                            'icon'  => 'eicon-text-align-right',
+                        ],
+                        'justify'   => [
+                            'title' => esc_html__( 'Justified', 'uipro' ),
+                            'icon'  => 'eicon-text-align-justify',
+                        ],
+                    ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-card-meta'   => 'text-align: {{VALUE}}; align-items: {{VALUE}};',
+                    ],
+                ),array(
+                    'id'          => 'image_desktop_width',
+                    'label' => esc_html__( 'Image Width', 'uipro' ),
+                    'type' => Controls_Manager::SELECT,
+                    'options'       => array(
+                        'uk-width-1-1'    => esc_html__('1/1', 'uipro'),
+                        'uk-width-1-2'    => esc_html__('1/2', 'uipro'),
+                        'uk-width-1-3'    => esc_html__('1/3', 'uipro'),
+                        'uk-width-1-4'    => esc_html__('1/4', 'uipro'),
+                        'uk-width-1-5'    => esc_html__('1/5', 'uipro'),
+                        'uk-width-1-6'    => esc_html__('1/6', 'uipro'),
+                        'uk-width-auto'    => esc_html__('auto', 'uipro'),
+                        'uk-width-expand'    => esc_html__('expand', 'uipro'),
+                        'custom'    => esc_html__('Custom', 'uipro'),
+                    ),
+                    'default'   => 'uk-width-1-6',
+                    'separator'     => 'before',
+                    'start_section' => 'list',
+                    'section_name'      => esc_html__('List Settings', 'uipro'),
+                    'condition'     => array(
+                        'layout'    => 'list'
+                    ),
+                ),
+                array(
+                    'id'          => 'image_width_custom',
+                    'label' => __( 'Image custom width', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px','%' ],
+                    'responsive'    =>  true,
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => '%',
+                        'size' => 20,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-media-wrap' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'image_desktop_width', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'         => Controls_Manager::CHOOSE,
+                    'label'         => esc_html__( 'Image alignment', 'uipro' ),
+                    'name'          => 'image_list_align',
                     'responsive'    => true, /* this will be add in responsive layout */
                     'options'       => [
                         'left'      => [
@@ -1279,6 +1461,7 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                         'uk-width-1-6'    => esc_html__('1/6', 'uipro'),
                         'uk-width-auto'    => esc_html__('auto', 'uipro'),
                         'uk-width-expand'    => esc_html__('expand', 'uipro'),
+                        'custom'    => esc_html__('Custom', 'uipro'),
                     ),
                     'default'   => 'uk-width-1-4',
                     'separator'     => 'before',
@@ -1287,6 +1470,37 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                     'condition'     => array(
                         'layout'    => 'list'
                     ),
+                ),
+                array(
+                    'id'          => 'title_width_custom',
+                    'label' => __( 'Title custom width', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'responsive'    =>  true,
+                    'size_units' => [ 'px','%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => '%',
+                        'size' => 20,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .uk-card-title' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'title_desktop_width', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
                 ),
                 array(
                     'type'         => Controls_Manager::CHOOSE,
@@ -1328,6 +1542,7 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                         'uk-width-1-6'    => esc_html__('1/6', 'uipro'),
                         'uk-width-auto'    => esc_html__('auto', 'uipro'),
                         'uk-width-expand'    => esc_html__('expand', 'uipro'),
+                        'custom'    => esc_html__('Custom', 'uipro'),
                     ),
                     'default'   => 'uk-width-1-2',
                     'separator'     => 'before',
@@ -1336,6 +1551,37 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                     'condition'     => array(
                         'layout'    => 'list'
                     ),
+                ),
+                array(
+                    'id'          => 'content_width_custom',
+                    'label' => __( 'Content custom width', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px','%' ],
+                    'responsive'    =>  true,
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => '%',
+                        'size' => 40,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-card-text' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'content_desktop_width', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
                 ),
                 array(
                     'type'         => Controls_Manager::CHOOSE,
@@ -1377,6 +1623,7 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                         'uk-width-1-6'    => esc_html__('1/6', 'uipro'),
                         'uk-width-auto'    => esc_html__('auto', 'uipro'),
                         'uk-width-expand'    => esc_html__('expand', 'uipro'),
+                        'custom'    => esc_html__('Custom', 'uipro'),
                     ),
                     'default'   => 'uk-width-1-6',
                     'separator'     => 'before',
@@ -1385,6 +1632,37 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                     'condition'     => array(
                         'layout'    => 'list'
                     ),
+                ),
+                array(
+                    'id'          => 'button_width_custom',
+                    'label' => __( 'Button custom width', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px','%' ],
+                    'responsive'    =>  true,
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 1000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => '%',
+                        'size' => 10,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-button' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'button_desktop_width', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
                 ),
                 array(
                     'type'         => Controls_Manager::CHOOSE,
@@ -1470,6 +1748,17 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                         'button_text!'    => ''
                     ),
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'button_icon_margin',
+                    'label'         => esc_html__( 'Icon margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-button .uk-margin-small-left' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                    ],
+
+                ),
 
 				array(
 					'type'          => Group_Control_Typography::get_type(),
