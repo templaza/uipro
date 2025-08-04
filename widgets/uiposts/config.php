@@ -50,8 +50,9 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 		public function get_scripts() {
 			return array(
 				'ui-post-loadmore' => array(
-					'src'   =>  'script.min.js',
-					'deps'  =>  array('jquery')
+					'src'   =>  'script.js',
+					'deps'  =>  array('jquery'),
+                    'ver'   => time()
 				)
 			);
 		}
@@ -444,6 +445,36 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                     'name'          => 'card_divider_horizontal',
                     'label'         => esc_html__('Card Divider Horizontal', 'uipro'),
                 ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'card_restaurant_padding',
+                    'label'         => esc_html__( 'Restaurant Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-posts-intro-item .restaurant_source' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'resource', 'operator' => '===', 'value' => 'restaurant'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'card_restaurant_margin',
+                    'label'         => esc_html__( 'Restaurant Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-posts-intro-item .restaurant_source_wrap' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'resource', 'operator' => '===', 'value' => 'restaurant'],
+                        ],
+                    ],
+                ),
 
 				//Filter Settings
 				array(
@@ -684,12 +715,88 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 							['name' => 'filter_text_alignment_breakpoint', 'operator' => '!==', 'value' => ''],
 						],
 					],
-
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'filter_text_margin',
+                    'label'         => __( 'Filter Text Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-subnav li' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'filter_text_padding',
+                    'label'         => esc_html__( 'Filter Text Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-post-filter .uk-button-text' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'type'          =>  \Elementor\Group_Control_Border::get_type(),
+                    'name'          => 'filter_text_border',
+                    'label'         => esc_html__('Filter Text Border', 'uipro'),
+                    'selector' => '{{WRAPPER}} .ui-post-filter .uk-button-text',
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'filter_text_border-radius',
+                    'label'         => esc_html__( 'border radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-post-filter .uk-button-text' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'filter_text_color',
+                    'label'         => esc_html__('Filter Text Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-post-filter .uk-button-text' => 'color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'filter_text_background',
+                    'label'         => esc_html__('Filter Text Background', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-post-filter .uk-button-text' => 'background-color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'filter_text_color_hover',
+                    'label'         => esc_html__('Color Hover', 'uipro'),
+                    'separator'     => 'before',
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-post-filter .uk-button-text:hover' => 'color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'filter_text_background_hover',
+                    'label'         => esc_html__('Background Hover', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-post-filter .uk-button-text:hover' => 'background-color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'type'          =>  \Elementor\Group_Control_Border::get_type(),
+                    'name'          => 'filter_text_border_hover',
+                    'label'         => esc_html__('Filter Border Hover', 'uipro'),
+                    'selector' => '{{WRAPPER}} .ui-post-filter .uk-button-text:hover',
+                ),
+
 				array(
 					'type'          => Controls_Manager::SELECT,
 					'id'            => 'filter_animate',
 					'label'         => esc_html__( 'Filter Animate', 'uipro' ),
+                    'separator'     => 'before',
 					'options'       => array(
 						'slide'     => esc_html__('Slide', 'uipro'),
 						'fade'      => esc_html__('Fade', 'uipro'),
@@ -709,6 +816,7 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 						'large' => esc_html__('Large', 'uipro'),
 						'xlarge' => esc_html__('X-Large', 'uipro'),
 						'remove' => esc_html__('None', 'uipro'),
+						'custom' => esc_html__('Custom', 'uipro'),
 					),
 					'default'           => '',
 					'conditions' => [
@@ -717,6 +825,16 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 						],
 					],
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'filter_custom_margin',
+                    'label'         => __( 'Filter Box Custom Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-subnav' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                    ],
+                ),
 				array(
 					'type'          => Controls_Manager::SELECT,
 					'id'            => 'filter_visibility',
@@ -1300,6 +1418,52 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 					],
 				),
                     array(
+                        'type'          => Controls_Manager::SWITCHER,
+                        'id'            => 'image_left_right_custom',
+                        'label'         => esc_html__('Image Custom Width', 'uipro'),
+                        'label_on'      => esc_html__( 'Yes', 'uipro' ),
+                        'label_off'     => esc_html__( 'No', 'uipro' ),
+                        'return_value'  => '1',
+                        'default'       => '0',
+                        'conditions' => [
+                            'terms' => [
+                                ['name' => 'image_position', 'operator' => 'in', 'value' => ['left','right']],
+                            ],
+                        ],
+                    ),
+                    array(
+                        'name'            => 'image_left_custom_width',
+                        'label'         => esc_html__( 'Image Custom Width', 'uipro' ),
+                        'type'          => Controls_Manager::SLIDER,
+                        'responsive'    => true,
+                        'size_units'    => [ 'px','%' ],
+                        'range' => [
+                            'px' => [
+                                'min' => 0,
+                                'max' => 2000,
+                                'step' => 1,
+                            ],
+                            '%' => [
+                                'min' => 0,
+                                'max' => 200,
+                            ],
+                        ],
+                        'default' => [
+                            'unit' => 'px',
+                            'size' => 200,
+                        ],
+                        'selectors' => [
+                            '{{WRAPPER}} .ui-posts-intro-item .uk-card-media-left' => 'width: {{SIZE}}{{UNIT}};',
+                            '{{WRAPPER}} .ui-posts-intro-item .uk-card-media-right' => 'width: {{SIZE}}{{UNIT}};',
+                            '{{WRAPPER}} .uk-card-media-left' => 'width: {{SIZE}}{{UNIT}};',
+                        ],
+                        'conditions' => [
+                            'terms' => [
+                                ['name' => 'image_left_right_custom', 'operator' => '===', 'value' => '1'],
+                            ],
+                        ],
+                    ),
+                    array(
                         'id'          => 'image_width_xl',
                         'label' => esc_html__( 'Image Width Large Desktop', 'uipro' ),
                         'type' => Controls_Manager::SELECT,
@@ -1322,6 +1486,7 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                             'terms' =>[
                                 ['name' => 'hide_thumbnail', 'operator' => '!==', 'value' => '1'],
                                 ['name' => 'layout', 'operator' => '===', 'value' => ''],
+                                ['name' => 'image_left_right_custom', 'operator' => '!=', 'value' => '1'],
                                 ['name' => 'image_position', 'operator' => 'in', 'value' => ['left','right']],
                             ],
                         ],
@@ -1349,6 +1514,7 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                             'terms' =>[
                                 ['name' => 'hide_thumbnail', 'operator' => '!==', 'value' => '1'],
                                 ['name' => 'layout', 'operator' => '===', 'value' => ''],
+                                ['name' => 'image_left_right_custom', 'operator' => '!=', 'value' => '1'],
                                 ['name' => 'image_position', 'operator' => 'in', 'value' => ['left','right']],
                             ],
                         ],
@@ -1376,6 +1542,7 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                             'terms' =>[
                                 ['name' => 'hide_thumbnail', 'operator' => '!==', 'value' => '1'],
                                 ['name' => 'layout', 'operator' => '===', 'value' => ''],
+                                ['name' => 'image_left_right_custom', 'operator' => '!=', 'value' => '1'],
                                 ['name' => 'image_position', 'operator' => 'in', 'value' => ['left','right']],
                             ],
                         ],
@@ -1403,6 +1570,7 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                             'terms' =>[
                                 ['name' => 'hide_thumbnail', 'operator' => '!==', 'value' => '1'],
                                 ['name' => 'layout', 'operator' => '===', 'value' => ''],
+                                ['name' => 'image_left_right_custom', 'operator' => '!=', 'value' => '1'],
                                 ['name' => 'image_position', 'operator' => 'in', 'value' => ['left','right']],
                             ],
                         ],
@@ -1430,6 +1598,7 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                             'terms' =>[
                                 ['name' => 'hide_thumbnail', 'operator' => '!==', 'value' => '1'],
                                 ['name' => 'layout', 'operator' => '===', 'value' => ''],
+                                ['name' => 'image_left_right_custom', 'operator' => '!=', 'value' => '1'],
                                 ['name' => 'image_position', 'operator' => 'in', 'value' => ['left','right']],
                             ],
                         ],
@@ -1829,6 +1998,164 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                         '{{WRAPPER}} .ui-posts-intro-item .uk-card-body' => 'position: {{VALUE}}',
                     ],
                 ),
+                    array(
+                        'type'          => Controls_Manager::CHOOSE,
+                        'id'            => 'intro_position_position_x',
+                        'label'         => esc_html__( 'Nav Horizontal Orientation', 'uipro' ),
+                        'options' => [
+                            'left' => [
+                                'title' => esc_html__( 'Left', 'uipro' ),
+                                'icon' => 'eicon-h-align-left',
+                            ],
+                            'right' => [
+                                'title' => esc_html__( 'Right', 'uipro' ),
+                                'icon' => 'eicon-h-align-right',
+                            ],
+                        ],
+                        'default'       => 'left',
+                        'condition'     => array(
+                            'intro_position'    => 'absolute'
+                        ),
+                    ),
+                    array(
+                        'name'          => 'intro_position__offsetx',
+                        'label' => esc_html__( 'Offset', 'uipro' ),
+                        'type' => Controls_Manager::SLIDER,
+                        'size_units' => [ 'px', '%' ],
+                        'responsive'    =>  true,
+                        'range' => [
+                            'px' => [
+                                'min' => -2000,
+                                'max' => 2000,
+                                'step' => 1,
+                            ],
+                            '%' => [
+                                'min' => -200,
+                                'max' => 200,
+                                'step' => 1,
+                            ],
+                        ],
+                        'default' => [
+                            'size' => 0,
+                        ],
+                        'conditions' => [
+                            'terms' => [
+                                ['name' => 'intro_position_position_x', 'operator' => '===', 'value' => 'left'],
+                            ],
+                        ],
+                        'selectors' => [
+                            '{{WRAPPER}} .ui-posts.style1 .uk-card-body' => 'left: {{SIZE}}{{UNIT}};',
+                        ],
+                    ),
+                    array(
+                        'name'          => 'intro_position_offsetx_right',
+                        'label' => esc_html__( 'Offset', 'uipro' ),
+                        'type' => Controls_Manager::SLIDER,
+                        'responsive'    =>  true,
+                        'size_units' => [ 'px', '%' ],
+                        'range' => [
+                            'px' => [
+                                'min' => -2000,
+                                'max' => 2000,
+                                'step' => 1,
+                            ],
+                            '%' => [
+                                'min' => -200,
+                                'max' => 200,
+                                'step' => 1,
+                            ],
+                        ],
+                        'default' => [
+                            'size' => 0,
+                        ],
+                        'conditions' => [
+                            'terms' => [
+                                ['name' => 'intro_position_position_x', 'operator' => '===', 'value' => 'right'],
+                            ],
+                        ],
+                        'selectors' => [
+                            '{{WRAPPER}} .ui-posts.style1 .uk-card-body' => 'right: {{SIZE}}{{UNIT}}; left: auto;',
+                        ],
+                    ),
+                    array(
+                        'type'          => Controls_Manager::CHOOSE,
+                        'id'            => 'intro_position_position_y',
+                        'label'         => esc_html__( 'Nav Vertical Orientation', 'uipro' ),
+                        'options' => [
+                            'top' => [
+                                'title' => esc_html__( 'Top', 'uipro' ),
+                                'icon' => 'eicon-v-align-top',
+                            ],
+                            'bottom' => [
+                                'title' => esc_html__( 'Bottom', 'uipro' ),
+                                'icon' => 'eicon-v-align-bottom',
+                            ],
+                        ],
+                        'default'       => 'bottom',
+                        'condition'     => array(
+                            'intro_position'    => 'absolute'
+                        ),
+                    ),
+                    array(
+                        'name'          => 'intro_position_offsety',
+                        'label' => esc_html__( 'Offset', 'uipro' ),
+                        'type' => Controls_Manager::SLIDER,
+                        'responsive'    =>  true,
+                        'size_units' => [ 'px', '%' ],
+                        'range' => [
+                            'px' => [
+                                'min' => -2000,
+                                'max' => 2000,
+                                'step' => 1,
+                            ],
+                            '%' => [
+                                'min' => -200,
+                                'max' => 200,
+                                'step' => 1,
+                            ],
+                        ],
+                        'default' => [
+                            'size' => 0,
+                        ],
+                        'conditions' => [
+                            'terms' => [
+                                ['name' => 'intro_position_position_y', 'operator' => '===', 'value' => 'top'],
+                            ],
+                        ],
+                        'selectors' => [
+                            '{{WRAPPER}} .ui-posts.style1 .uk-card-body' => 'top: {{SIZE}}{{UNIT}};',
+                        ],
+                    ),
+                    array(
+                        'name'          => 'intro_position_offsety_bottom',
+                        'label' => esc_html__( 'Offset', 'uipro' ),
+                        'type' => Controls_Manager::SLIDER,
+                        'responsive'    =>  true,
+                        'size_units' => [ 'px', '%' ],
+                        'range' => [
+                            'px' => [
+                                'min' => -2000,
+                                'max' => 2000,
+                                'step' => 1,
+                            ],
+                            '%' => [
+                                'min' => -200,
+                                'max' => 200,
+                                'step' => 1,
+                            ],
+                        ],
+                        'default' => [
+                            'size' => 0,
+                        ],
+                        'conditions' => [
+                            'terms' => [
+                                ['name' => 'intro_position_position_y', 'operator' => '===', 'value' => 'bottom'],
+                            ],
+                        ],
+                        'selectors' => [
+                            '{{WRAPPER}} .ui-posts.style1 .uk-card-body' => 'bottom: {{SIZE}}{{UNIT}}; top:auto;',
+                        ],
+                    ),
                 array(
                     'type'          => Controls_Manager::SELECT,
                     'id'            => 'intro_block',
@@ -2413,6 +2740,32 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                     ],
                 ),
                 array(
+                    'name'          => 'price_font_family',
+                    'type'          => Group_Control_Typography::get_type(),
+                    'label'         => esc_html__('Price Font', 'uipro'),
+                    'description'   => esc_html__('Select a font family, font size for price.', 'uipro'),
+                    'selector'      => '{{WRAPPER}} .restaurant_price',
+                    'separator'     => 'before',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'resource', 'operator' => '===', 'value' => 'restaurant'],
+                        ],
+                    ],
+                ),
+                    array(
+                        'id'            => 'meta_price_color',
+                        'type'          =>  Controls_Manager::COLOR,
+                        'label'         => esc_html__('Price Color', 'uipro'),
+                        'selectors' => [
+                            '{{WRAPPER}} .restaurant_price' => 'color: {{VALUE}}',
+                        ],
+                        'conditions' => [
+                            'terms' => [
+                                ['name' => 'resource', 'operator' => '===', 'value' => 'restaurant'],
+                            ],
+                        ],
+                    ),
+                array(
                     'name'          => 'meta_middle_font_family',
                     'type'          => Group_Control_Typography::get_type(),
                     'label'         => esc_html__('After Title Font', 'uipro'),
@@ -2940,7 +3293,7 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                     'size_units'    => [ 'px', 'em', '%' ],
                     'selectors'     => [
                         '{{WRAPPER}} .ui-posts.style1 .ui-post-pagination' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
-                        '{{WRAPPER}} .ui-posts-intro-item .ui-post-pagination' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                        '{{WRAPPER}} .ui-posts .ui-post-pagination' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
                     ],
                     'condition' => array(
                         'pagination_type!'    => 'none'

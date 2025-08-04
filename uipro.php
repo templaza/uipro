@@ -4,7 +4,7 @@ Plugin Name: UIPro
 Plugin URI: https://github.com/templaza/uipro
 Description: This plugin help you manage products.
 Author: Templaza
-Version: 1.1.3
+Version: 1.1.4
 Text Domain: uipro
 Author URI: http://templaza.com
 Forum: https://www.templaza.com/Forums.html
@@ -57,10 +57,49 @@ class UIPro{
             add_action('admin_init', array($this, 'update_checker'));
         }
         add_action( 'init', array( $this, 'ui_load_plugin_textdomain' ) );
+        add_action( 'elementor/element/container/section_layout/after_section_end', array($this,'uipro_elementor'),10,2 );
+
     }
     public function ui_load_plugin_textdomain() {
         load_plugin_textdomain( 'uipro', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
         wp_enqueue_style( 'uipro-style', plugins_url( '/assets/css/style.css', __FILE__ ));
+        wp_enqueue_script( 'three-js', plugins_url( '/assets/vendor/three/three.min.js', __FILE__ ), array(), time(), true );
+        wp_enqueue_script( 'gsap-js', 'https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js', array(), false, true );
+    }
+    function uipro_elementor($element, $args){
+        $element->start_controls_section(
+            'custom_section_settings',
+            [
+                'label' => __('UiPro Section Setting', 'uipro'),
+                'tab' => \Elementor\Controls_Manager::TAB_ADVANCED,
+            ]
+        );
+
+        $element->add_control(
+            'custom_toggle_option',
+            [
+                'label' => __('Smooth Scroll', 'uipro'),
+                'type' => \Elementor\Controls_Manager::SWITCHER,
+                'label_on' => __('Enable', 'uipro'),
+                'label_off' => __('Disable', 'uipro'),
+                'return_value' => 'yes',
+                'default' => 'no',
+            ]
+        );
+
+        $element->add_control(
+            'custom_text_option',
+            [
+                'label' => __('Tiêu đề tùy chỉnh', 'text-domain'),
+                'type' => \Elementor\Controls_Manager::TEXT,
+                'default' => __('Nhập tiêu đề...', 'text-domain'),
+                'placeholder' => __('Nhập nội dung...', 'text-domain'),
+                'condition' => [
+                    'custom_toggle_option' => 'yes',
+                ],
+            ]
+        );
+        $element->end_controls_section();
     }
 
     /**

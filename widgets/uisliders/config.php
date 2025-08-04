@@ -465,6 +465,42 @@ if ( ! class_exists( 'UIPro_Config_UISliders' ) ) {
                     ],
                 ),
                 array(
+                    'id' => 'slider_custom_width',
+                    'type' => Controls_Manager::SWITCHER,
+                    'label'     => esc_html__( 'Custom width', 'uipro' ),
+                    'label_on' => esc_html__( 'Yes', 'uipro' ),
+                    'label_off' => esc_html__( 'No', 'uipro' ),
+                    'return_value' => '1',
+                    'default' => '0',
+                ),
+                array(
+                    'name' => 'slider_item_width',
+                    'type'          => Controls_Manager::SLIDER,
+                    'label'     => esc_html__( 'Item Width', 'uipro' ),
+                    'responsive'    => true,
+                    'size_units' => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 2000,
+                            'step'=> 1,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 1000,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .uk-slider-items .el-item' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+                    'description' => esc_html__( 'Set the maximum height', 'uipro' ),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'slider_custom_width', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
                     'id'          => 'large_desktop_columns',
                     'label' => esc_html__( 'Large Desktop Columns', 'uipro' ),
                     'type' => Controls_Manager::SELECT,
@@ -478,6 +514,11 @@ if ( ! class_exists( 'UIPro_Config_UISliders' ) ) {
                     ),
                     'default'   => '3',
                     'separator'     => 'before',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'slider_custom_width', 'operator' => '!=', 'value' => '1'],
+                        ],
+                    ],
                 ),
                 array(
                     'id'          => 'desktop_columns',
@@ -492,6 +533,11 @@ if ( ! class_exists( 'UIPro_Config_UISliders' ) ) {
                         '6'    => esc_html__('6 Columns', 'uipro'),
                     ),
                     'default'   => '3',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'slider_custom_width', 'operator' => '!=', 'value' => '1'],
+                        ],
+                    ],
                 ),
                 array(
                     'id'          => 'laptop_columns',
@@ -505,7 +551,12 @@ if ( ! class_exists( 'UIPro_Config_UISliders' ) ) {
                         '5'    => esc_html__('5 Columns', 'uipro'),
                         '6'    => esc_html__('6 Columns', 'uipro'),
                     ),
-                    'default'   => '3'
+                    'default'   => '3',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'slider_custom_width', 'operator' => '!=', 'value' => '1'],
+                        ],
+                    ],
                 ),
                 array(
                     'id'          => 'tablet_columns',
@@ -519,7 +570,12 @@ if ( ! class_exists( 'UIPro_Config_UISliders' ) ) {
                         '5'    => esc_html__('5 Columns', 'uipro'),
                         '6'    => esc_html__('6 Columns', 'uipro'),
                     ),
-                    'default'   => '2'
+                    'default'   => '2',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'slider_custom_width', 'operator' => '!=', 'value' => '1'],
+                        ],
+                    ],
                 ),
                 array(
                     'id'          => 'mobile_columns',
@@ -533,7 +589,12 @@ if ( ! class_exists( 'UIPro_Config_UISliders' ) ) {
                         '5'    => esc_html__('5 Columns', 'uipro'),
                         '6'    => esc_html__('6 Columns', 'uipro'),
                     ),
-                    'default'   => '1'
+                    'default'   => '1',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'slider_custom_width', 'operator' => '!=', 'value' => '1'],
+                        ],
+                    ],
                 ),
                 array(
                     'type'          => Controls_Manager::SELECT,
@@ -545,9 +606,37 @@ if ( ! class_exists( 'UIPro_Config_UISliders' ) ) {
                         'medium' => esc_html__('Medium', 'uipro'),
                         'large' => esc_html__('Large', 'uipro'),
                         'collapse' => esc_html__('Collapse', 'uipro'),
+                        'custom' => esc_html__('Custom', 'uipro'),
                     ),
                     'default'           => '',
                 ),
+                array(
+                    'name'            => 'column_grid_custom_gap',
+                    'label'         => esc_html__( 'Custom Gap', 'uipro' ),
+                    'type'          => Controls_Manager::SLIDER,
+                    'responsive'    => true,
+                    'size_units' => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 1,
+                            'max' => 1500
+                        ],
+                        '%' => [
+                            'min' => 1,
+                            'max' => 100
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .el-item' => 'padding-left: {{SIZE}}{{UNIT}};',
+                        '{{WRAPPER}} .uk-slider-items' => 'margin-left: -{{SIZE}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'column_grid_gap', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+                ),
+
                 array(
                     'id' => 'slider_set',
                     'type' => Controls_Manager::SWITCHER,
@@ -1115,7 +1204,8 @@ if ( ! class_exists( 'UIPro_Config_UISliders' ) ) {
 						'' => esc_html__( 'None', 'uipro' ),
 						'dotnav' => esc_html__( 'Dotnav', 'uipro' ),
 						'thumbnav' => esc_html__( 'Thumbnav', 'uipro' ),
-						'title' => esc_html__( 'Title', 'uipro' )
+						'title' => esc_html__( 'Title', 'uipro' ),
+						'number' => esc_html__( 'Number', 'uipro' )
 					),
 					'default' => 'dotnav',
 					'start_section' => 'separator_navigation_options',

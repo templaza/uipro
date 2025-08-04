@@ -19,3 +19,9 @@
 .ui-slideshow-wrapper .ui-slideshow .ui-media img{
     max-width:none;
 }
+.ui-nav-number li{
+    display:none;
+}
+.ui-nav-number li.uk-active{
+    display:block;
+}

@@ -1,0 +1,273 @@
+
+/* ACCORDION SLIDER */
+.accordion-slider{
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.accordion-slider .uiaccordion-slide{
+  float: left;
+  width: 150px;
+  height: 100vh;
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  cursor: pointer;
+}
+.accordion-slider .uiaccordion-slide a:not(.accordion-slider .uiaccordion-slide:first-child a){
+  display: none;
+}
+
+.accordion-slider .uiaccordion-slide .overlay{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: #000000be;
+  z-index: 0;
+  pointer-events: none;
+  border: solid 1px #ffffff2a;
+}
+
+.accordion-slider .uiaccordion-slide:first-child .overlay{
+  opacity: 1;
+}
+
+.accordion-slider .uiaccordion-slide:first-child{
+  width: calc(100vw - 450px);
+  height: 100vh;
+  z-index:0;
+  position: relative;
+  transition: all ease .3s;
+  -webkit-transition: all ease .3s;
+  -moz-transition: all ease .3s;
+  -ms-transition: all ease .3s;
+  -o-transition: all ease .3s;
+}
+.accordion-slider .uiaccordion-slide:nth-child(2) {
+  right:300px;
+}
+.accordion-slider .uiaccordion-slide:nth-child(3) {
+  right:150px;
+}
+
+.accordion-slider .uiaccordion-slide .image{
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center center;
+}
+
+.accordion-slider .uiaccordion-slide .image .video-wrapper{
+  z-index: -1;
+}
+
+.accordion-slider .uiaccordion-slide .slider-caption{
+  position: absolute;
+  top: 50%;
+  left: 50vw;
+  z-index: 10;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  margin-left: -700px;
+}
+
+
+.accordion-slider .uiaccordion-slide .letter{
+  position: absolute;
+  top: 50%;
+  color: #fff;
+  font-size: 80px;
+  width: 100%;
+  text-align: center;
+  transform: translateY(-70%);
+  -webkit-transform: translateY(-70%);
+  -moz-transform: translateY(-70%);
+  -ms-transform: translateY(-70%);
+  -o-transform: translateY(-70%);
+  z-index: 1;
+}
+
+.accordion-slider .uiaccordion-slide .slider-caption .category{
+  color: #fff;
+  margin-bottom: 75px;
+  display: block;
+}
+
+.accordion-slider .uiaccordion-slide .slider-caption h2{
+  color: #fff;
+  font-size: 130px;
+}
+
+.accordion-slider .uiaccordion-slide:not(.accordion-slider .uiaccordion-slide:first-child) .slider-caption h2{
+  transform: translateX(150px);
+  -webkit-transform: translateX(150px);
+  -moz-transform: translateX(150px);
+  -ms-transform: translateX(150px);
+  -o-transform: translateX(150px);
+}
+.accordion-slider .uiaccordion-slide:not(.accordion-slider .uiaccordion-slide:first-child) .slider-caption .uiaccordion-slider-content{
+  transform: translateX(150px);
+  -webkit-transform: translateX(150px);
+  -moz-transform: translateX(150px);
+  -ms-transform: translateX(150px);
+  -o-transform: translateX(150px);
+}
+
+
+.accordion-slider .uiaccordion-slide:not(.accordion-slider .uiaccordion-slide:first-child) .slider-caption .category{
+  transform: translateX(150px);
+  -webkit-transform: translateX(150px);
+  -moz-transform: translateX(150px);
+  -ms-transform: translateX(150px);
+  -o-transform: translateX(150px);
+}
+
+.accordion-holder{
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+
+.accordion-holder .scroll-to-explore{
+  z-index: 10;
+  position: absolute;
+  bottom: 60px;
+  left: 7vw;
+  width: 200px;
+}
+.accordion-slider .uiaccordion-slide:first-child .letter,
+.accordion-slider .uiaccordion-slide:first-child .slider-icon,
+{
+  opacity:0;
+  z-index: -1;
+}
+.slider-icon{
+  z-index: 1;
+}
+
+@media screen and (max-width:1480px) {
+  .accordion-slider .uiaccordion-slide .slider-caption{
+    margin-left: -50vw;
+    padding-left: 40px;
+  }
+}
+@media screen and (max-width:1200px) {
+
+  .accordion-slider .uiaccordion-slide:first-child{
+    width: calc(100vw - 300px) !important;
+  }
+
+  .accordion-slider .uiaccordion-slide {
+    width: 100px;
+  }
+  .accordion-slider .uiaccordion-slide:nth-child(2) {
+    right:200px;
+  }
+  .accordion-slider .uiaccordion-slide:nth-child(3) {
+    right:100px;
+  }
+  .accordion-slider .uiaccordion-slide .slider-caption h2 {
+    font-size: 60px;
+    line-height: 86px;
+  }
+
+  .accordion-slider .uiaccordion-slide .slider-caption .category {
+    margin-bottom: 60px;
+  }
+
+  .accordion-slider .uiaccordion-slide .letter {
+    font-size: 65px;
+  }
+
+  .accordion-holder .scroll-to-explore {
+    bottom: 40px;
+  }
+
+}
+
+@media screen and (max-width:640px) {
+  .accordion-slider .uiaccordion-slide .slider-caption{
+    margin-left: -50vw;
+    padding-left: 20px;
+  }
+
+  .accordion-slider .uiaccordion-slide:first-child{
+    width: calc(100vw - 100px) !important;
+  }
+
+  .accordion-slider .uiaccordion-slide {
+    width: 50px;
+  }
+  .accordion-slider .uiaccordion-slide:nth-child(2) {
+    right:100px;
+  }
+  .accordion-slider .uiaccordion-slide:nth-child(3) {
+    right:50px;
+  }
+
+  .accordion-slider .uiaccordion-slide .slider-caption h2{
+    font-size: 50px;
+    line-height: 65px;
+  }
+
+  .accordion-slider .uiaccordion-slide .slider-caption .category {
+    margin-bottom: 26px;
+    font-size: 15px;
+  }
+
+  .accordion-slider .uiaccordion-slide .letter {
+    font-size: 40px;
+  }
+
+  .accordion-slider .uiaccordion-slide .letter::after {
+    top: 120px;
+  }
+
+  .accordion-holder .scroll-to-explore {
+    bottom: 30px;
+  }
+
+}
+.accordion-slider .uiaccordion-slide .image .video-wrapper {
+  z-index: -1;
+}
+.video-wrapper {
+  top: 0; right: 0; bottom: 0; left: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+.video-wrapper.four-three{
+  padding-top: 66.66%
+}
+
+.video-wrapper video{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* 1. No object-fit support: */
+@media (min-aspect-ratio: 16/9) {
+  .video-wrapper > video { height: 300%; top: -100%; }
+}
+@media (max-aspect-ratio: 16/9) {
+  .video-wrapper > video { width: 300%; left: -100%; }
+}
+/* 2. If supporting object-fit, overriding (1): */
+@supports (object-fit: cover) {
+  .video-wrapper > video {
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+}

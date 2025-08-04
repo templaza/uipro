@@ -6,6 +6,7 @@ $general_styles     =   \UIPro_Elementor_Helper::get_general_styles($instance);
 
 //responsive width
 $large_desktop_columns    = ( isset( $instance['large_desktop_columns'] ) && $instance['large_desktop_columns'] ) ? $instance['large_desktop_columns'] : '4';
+$slider_custom_width    = ( isset( $instance['slider_custom_width'] ) && $instance['slider_custom_width'] ) ? $instance['slider_custom_width'] : '0';
 $desktop_columns    = ( isset( $instance['desktop_columns'] ) && $instance['desktop_columns'] ) ? $instance['desktop_columns'] : '4';
 $laptop_columns     = ( isset( $instance['laptop_columns'] ) && $instance['laptop_columns'] ) ? $instance['laptop_columns'] : '3';
 $tablet_columns     = ( isset( $instance['tablet_columns'] ) && $instance['tablet_columns'] ) ? $instance['tablet_columns'] : '2';
@@ -468,9 +469,14 @@ $output .= '<div class="ui-sliders-wrapper-inner' . esc_attr($general_styles['co
 $output .= '<div class="ui-sliders"' . $attrs_slideshow . '>';
 
 $output .= ( $slidenav_on_hover ) ? '<div class="uk-position-relative uk-visible-toggle" tabindex="-1">' : '<div class="uk-position-relative">';
+if($slider_custom_width=='1'){
+    $output .= '<ul class="uk-slider-items ' . $box_shadow . 'uk-grid ' . $column_grid_gap.' "' . $height_cls . '>';
+}else{
+    $output .= '<ul class="uk-slider-items ' . $box_shadow . 'uk-grid uk-child-width-1-'.$large_desktop_columns.'@xl uk-child-width-1-'.$desktop_columns.'@l uk-child-width-1-'.$laptop_columns.'@m uk-child-width-1-'.$tablet_columns.'@s uk-child-width-1-'. $mobile_columns . $column_grid_gap.' "' . $height_cls . '>';
+}
 
-$output .= '<ul class="uk-slider-items ' . $box_shadow . 'uk-grid uk-child-width-1-'.$large_desktop_columns.'@xl uk-child-width-1-'.$desktop_columns.'@l uk-child-width-1-'.$laptop_columns.'@m uk-child-width-1-'.$tablet_columns.'@s uk-child-width-1-'. $mobile_columns . $column_grid_gap.' "' . $height_cls . '>';
 if ( isset( $instance['uisliders_items'] ) && count( (array) $instance['uisliders_items'] ) ) {
+    $total = count($instance['uisliders_items']);
 	foreach ( $instance['uisliders_items'] as $key => $value ) {
 		$media_type = ( isset( $value['media_type'] ) && $value['media_type'] ) ? $value['media_type'] : '';
 		$video      = ( isset( $value['video'] ) && $value['video'] ) ? $value['video'] : '';
@@ -643,11 +649,11 @@ if ( $navigation_below ) {
 if ( $navigation_control == 'dotnav' ) {
 	if ( $navigation_below ) {
 		$output .= ( $navigation_below_color_cls ) ? '<div class="ui-nav-control' . $navigation_below_margin_cls . $navigation_breakpoint_cls . $navigation_below_color_cls . '">' : '';
-		$output .= ( $navigation_below_color_cls ) ? '<ul class="uk-slideshow-nav uk-dotnav' . $navigation_below_cls . '"></ul>' : '<ul class="uk-slideshow-nav uk-dotnav' . $navigation_below_cls . $navigation_below_margin_cls . $navigation_breakpoint_cls . '"></ul>';
+		$output .= ( $navigation_below_color_cls ) ? '<ul class="uk-slider-nav uk-dotnav' . $navigation_below_cls . '"></ul>' : '<ul class="uk-slideshow-nav uk-dotnav' . $navigation_below_cls . $navigation_below_margin_cls . $navigation_breakpoint_cls . '"></ul>';
 		$output .= ( $navigation_below_color_cls ) ? '</div>' : '';
 	} else {
 		$output .= '<div class="ui-nav-control' . $navigation_margin . $navigation . $navigation_breakpoint_cls . $item_color . '"> ';
-		$output .= '<ul class="uk-slideshow-nav uk-dotnav' . $navigation_vertical . $navigation_cls . '"></ul>';
+		$output .= '<ul class="uk-slider-nav uk-dotnav' . $navigation_vertical . $navigation_cls . '"></ul>';
 		$output .= '</div> ';
 	}
 } elseif ( $navigation_control == 'thumbnav' ) {
@@ -676,7 +682,7 @@ if ( $navigation_control == 'dotnav' ) {
 			$title_alt_text = ( isset( $value['title'] ) && $value['title'] ) ? $value['title'] : '';
 			$image_alt_init = ( empty( $image_alt ) ) ? 'alt="' . str_replace( '"', '', $title_alt_text ) . '"' : 'alt="' . str_replace( '"', '', $image_alt ) . '"';
 
-			$output .= '<li uk-slideshow-item="' . $key . '">';
+			$output .= '<li data-uk-slider-item="' . $key . '">';
 			if ( $nav_image_src ) {
 				$output .= '<a href="#"><img class="img-thumb' . $image_svg_color . '" src="' . $nav_image_src . '" ' . $thumbnail_width_cls . $thumbnail_height_cls . $image_alt . $image_svg_inline_cls . '></a>';
 			} else {
@@ -700,10 +706,24 @@ if ( $navigation_control == 'dotnav' ) {
 		foreach ( $instance['uisliders_items'] as $key => $value ) {
 			$image_title    = ( isset( $value['title'] ) && $value['title'] ) ? $value['title'] : '';
 			$output .= '<li>';
-			$output .= '<a data-uk-slideshow-item="' . $key . '" href="#" class="uk-padding-small"><div class="uk-grid-small" data-uk-grid><h2 class="ui-nav-title-num uk-width-auto@l uk-width-1-1">'.($key+1).'.</h2><'.$navigation_title_selector.' class="uk-width-expand">'.$image_title.'</'.$navigation_title_selector.'></div></a>';
+			$output .= '<a data-uk-slider-item="' . $key . '" href="#" class="uk-padding-small"><div class="uk-grid-small" data-uk-grid><h2 class="ui-nav-title-num uk-width-auto@l uk-width-1-1">'.($key+1).'.</h2><'.$navigation_title_selector.' class="uk-width-expand">'.$image_title.'</'.$navigation_title_selector.'></div></a>';
 			$output .= '</li>';
 		}
 		$output .= '</ul></div>';
+		$output .= '</div> ';
+	}
+} elseif ( $navigation_control == 'number' ) {
+	if ( isset( $instance['uisliders_items'] ) && count( (array) $instance['uisliders_items'] ) ) {
+		$output .= '<div class="ui-nav-control ui-nav-number uk-position-bottom-center' . $navigation_margin . $navigation_breakpoint_cls . '"> ';
+		$output .= '<div class="'.$overlay_container_cls.' uk-flex uk-flex-middle"><ul class=" uk-margin-remove uk-padding-remove uk-flex uk-flex-center">';
+		foreach ( $instance['uisliders_items'] as $key => $value ) {
+			$output .= '<li data-uk-slider-item="' . $key . '">';
+			$output .= '<a  href="#" class="">'.($key+1).' </a>';
+			$output .= '</li>';
+		}
+		$output .= '</ul>';
+		$output .= '<div class="total_slider"><span class="number-space">'.esc_html__('/','uipro').'</span>'.$total.'</div>';
+		$output .= '</div>';
 		$output .= '</div> ';
 	}
 }

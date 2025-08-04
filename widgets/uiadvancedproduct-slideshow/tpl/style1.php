@@ -136,6 +136,15 @@ $slide_option = '';
 if($instance['slideshow_transition']){
     $slide_option .='animation: '.$instance['slideshow_transition'].'; ';
 }
+if($instance['autoplay'] == '1'){
+$slide_option .='autoplay: true; ';
+}
+if($instance['autoplay'] == '1' && $instance['pause'] == '1' ){
+$slide_option .='pause-on-hover: true; ';
+}
+if($instance['autoplay_interval'] ){
+$slide_option .='autoplay-interval: '.$instance['autoplay_interval']['size'].'; ';
+}
 $custom_fields   = isset($instance['custom_fields']) ? $instance['custom_fields'] : array();
 $ap_container   = isset($instance['ap_style1_container']) ? $instance['ap_style1_container'] : '';
 $ap_ratio   = isset($instance['slideshow_ratio']) ? $instance['slideshow_ratio'] : '16:9';
@@ -251,6 +260,12 @@ if ($btn2_icon) {
 		$btn2_icon_left      =   $btn2_icon;
 	}
 }
+$kenburns_transition = ( isset( $instance['kenburns_transition'] ) && $instance['kenburns_transition'] ) ? ' uk-transform-origin-' . $instance['kenburns_transition'] : '';
+
+$kenburns_duration = ( isset( $instance['kenburns_duration'] ) && isset( $instance['kenburns_duration']['size'] ) && $instance['kenburns_duration']['size'] ) ? $instance['kenburns_duration']['size'] : '';
+if ( $kenburns_duration ) {
+    $kenburns_duration = ' style="-webkit-animation-duration: ' . $kenburns_duration . 's; animation-duration: ' . $kenburns_duration . 's;"';
+}
 
 $output = '';
 
@@ -284,6 +299,7 @@ if($products){
     <div data-uk-slideshow=" <?php echo esc_attr($slide_option); ?>" class="ap_slideshow uk-slider <?php echo esc_attr($general_styles['container_cls'] . $general_styles['content_cls']);?>" <?php echo wp_kses($general_styles['animation'],'post');?>>
     <ul class="uk-slideshow-items">
         <?php
+    if($ap_product_source =='custom'){
         foreach ($products as $item) {
             if ($post = get_page_by_path($item['ap_products'], OBJECT, 'ap_product')){
                 $product_id = $post->ID;
@@ -292,6 +308,9 @@ if($products){
                 ?>
                 <li class="ap_slideshow-item uk-margin-remove">
 	                <?php
+                    if($kenburns_transition){
+                        echo '<div class="uk-position-cover uk-animation-kenburns uk-animation-reverse' . $kenburns_transition . '"' . $kenburns_duration . '>';
+                    }
                     if($item['video']['id'] !=''){
                         ?>
                         <video src="<?php echo esc_url($item['video']['url']);?>" autoplay loop muted playsinline uk-cover></video>
@@ -303,6 +322,9 @@ if($products){
                             ?>
                             <img data-uk-cover src="<?php echo esc_url($item['image']['url']);?>" alt="<?php echo esc_attr(get_the_title($product_id)); ?>"/>
                         <?php }
+                    }
+                    if($kenburns_transition){
+                        echo '</div>';
                     }
 	                ?>
                     <div class="uk-overlay uk-position-cover ap_slideshow_overlay"></div>
@@ -422,6 +444,152 @@ if($products){
                 </li>
             <?php
             }
+        }
+    }else{
+        if ( $post_query->have_posts() ) {
+            while ( $post_query->have_posts() ) {
+                $post_query->the_post();
+                $product_id =  get_the_ID();
+        ?>
+        <li class="ap_slideshow-item uk-margin-remove">
+            <?php
+            if($kenburns_transition){
+                echo '<div class="uk-position-cover uk-animation-kenburns uk-animation-reverse' . $kenburns_transition . '"' . $kenburns_duration . '>';
+            }
+            if($item['video']['id'] !=''){
+                ?>
+                <video src="<?php echo esc_url($item['video']['url']);?>" autoplay loop muted playsinline uk-cover></video>
+                <?php
+            }else{
+                if($item['image']['id'] ==''){
+                    echo get_the_post_thumbnail($product_id,'full','data-uk-cover');
+                }else{
+                    ?>
+                    <img data-uk-cover src="<?php echo esc_url($item['image']['url']);?>" alt="<?php echo esc_attr(get_the_title($product_id)); ?>"/>
+                <?php }
+            }
+            if($kenburns_transition){
+                echo '</div>';
+            }
+            ?>
+            <div class="uk-overlay uk-position-cover ap_slideshow_overlay"></div>
+            <div class=" uk-container <?php echo esc_attr($ap_container);?> uk-position-cover uk-flex <?php echo esc_attr($overlay_positions);?>">
+                <div class="ap_slider_content_inner">
+                    <h3 class="ap-slideshow-title">
+                        <?php echo esc_html(get_the_title($product_id)); ?>
+                    </h3>
+                    <div class="ap-slideshow-info">
+                        <div class="ap-single-desc ap-top-info">
+                            <?php
+                            if($item['ap_description']){
+                                echo $item['ap_description'];
+                            }else{
+                                echo get_the_excerpt($product_id);
+                            }
+                            ?>
+                            <div class="ap-custom-text">
+                                <?php
+                                if($item['ap_text_meta']){
+                                    ?>
+                                    <span class="ap-custom-meta">
+                                <?php
+                                echo $item['ap_text_meta'];
+                                ?>
+                            </span>
+                                    <?php
+                                }
+                                ?>
+                                <?php
+                                if($item['ap_text_custom']){
+                                    ?>
+                                    <div class="ap-custom-desc">
+                                        <?php
+                                        echo $item['ap_text_custom'];
+                                        ?>
+                                    </div>
+                                    <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+                        <?php
+                        if($show_price){
+                            $args['product_id'] = $product_id;
+                            AP_Templates::load_my_layout( 'archive.price',true,false, $args);
+                        }
+                        if($instance['button_text'] || $instance['button2_text']){
+                            ?>
+                            <div class="ap-slideshow-readmore uk-flex flex-align uk-flex-middle">
+                                <?php
+                                if($instance['button_text']){
+                                    ?>
+                                    <a class="ui-button templaza-btn" href="<?php echo esc_url(get_permalink($product_id));?>">
+                                        <?php echo $btn_icon_left.esc_html($instance['button_text']). $btn_icon_right;?>
+                                    </a>
+                                    <?php
+                                }
+                                if($instance['button2_text']){
+                                    ?>
+                                    <a class="ui-button2 templaza-btn" href="<?php echo esc_url(get_permalink($product_id));?>">
+                                        <?php echo $btn2_icon_left.esc_html($instance['button2_text']). $btn2_icon_right;?>
+                                    </a>
+                                    <?php
+                                }
+                                ?>
+                            </div>
+                            <?php
+                        }
+                        ?>
+
+                        <div class="ap-bottom-info">
+                            <div class="ap-slideshow-bottom-fields ap-single-top-fields flex-align">
+                                <?php
+                                if($custom_fields){
+                                    foreach ($custom_fields as $field_item){
+                                        $ap_item = AP_Custom_Field_Helper::get_custom_field_option_by_field_name($field_item);
+                                        $f_value    = get_field($ap_item['name'], $product_id);
+                                        if(!empty($f_value)){
+                                            if($ap_item['type'] !='taxonomy'){
+                                                ?>
+                                                <div class="ap-custom-fields">
+                                                    <div class="ap-field-label"><?php echo esc_html($ap_item['label']); ?></div>
+                                                    <div class="ap-field-value">
+                                                        <?php
+                                                        if($ap_item['type'] == 'file'){
+                                                            $file_url   = '';
+                                                            if(is_array($f_value)){
+                                                                $file_url   = $f_value['url'];
+                                                            }elseif(is_numeric($f_value)){
+                                                                $file_url   = wp_get_attachment_url($f_value);
+                                                            }else{
+                                                                $file_url   = $f_value;
+                                                            }
+                                                            ?>
+                                                            <a href="<?php echo esc_url($file_url); ?>" download><?php
+                                                                echo esc_html__('Download', 'uipro')?></a>
+                                                            <?php
+                                                        }else{
+                                                            ?><?php echo esc_html(the_field($ap_item['name'], $product_id)); ?>
+                                                        <?php } ?>
+                                                    </div>
+                                                </div>
+                                                <?php
+                                            }
+                                        }
+                                    }
+                                }
+                                ?>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </li>
+            <?php
+            }
+        }
         }
         ?>
     </ul>

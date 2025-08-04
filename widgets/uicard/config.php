@@ -279,16 +279,19 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 					'type'          =>  Controls_Manager::SELECT,
 					'name'          => 'title_position',
 					'label'         => esc_html__('Icon Position', 'uipro'),
-					'description'   => esc_html__('Set the icon position.', 'uipro'),
+					'description'   => esc_html__('Set the Icon position.', 'uipro'),
 					'options'       => array(
 						'after'     => esc_html__('Before Title', 'uipro'),
 						'before'    => esc_html__('After Title', 'uipro'),
 						'left'    => esc_html__('Left Title', 'uipro'),
 					),
 					'default'       => 'after',
-					'condition'     => array(
-						'title!'    => ''
-					),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout_type', 'operator' => '===', 'value' => 'icon'],
+                            ['name' => 'title', 'operator' => '!=', 'value' => ''],
+                        ],
+                    ],
 				),
 
 				//Icon Settings
@@ -553,13 +556,11 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 					],
 				),
                 array(
-                    'type'          => Controls_Manager::DIMENSIONS,
-                    'name'          =>  'image_border-radius',
-                    'label'         => esc_html__( 'Image border radius', 'uipro' ),
-                    'responsive'    =>  true,
-                    'size_units'    => [ 'px', 'em', '%' ],
-                    'selectors'     => [
-                        '{{WRAPPER}}  .ui-card .ui-media' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'image_overlay',
+                    'label'         => esc_html__('Image Overlay Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .card-overlay' => 'background-color: {{VALUE}}',
                     ],
                     'conditions' => [
                         'terms' => [

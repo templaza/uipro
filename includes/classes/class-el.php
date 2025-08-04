@@ -55,6 +55,7 @@ if ( !class_exists( 'UIPro_El' ) ) {
             add_action( 'elementor/widgets/register', array( $this, 'load_widgets' ) );
 		}
 
+
 		/**
 		 * Add widget categories
 		 */

@@ -92,10 +92,12 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
             $product_type = array();
             $product_types_name  = UIPro_UIAdvancedProducts_Helper::get_product_type_options();
             if($product_types_name->post_name){
-                $product_types  = get_field_object($product_types_name->post_name);
-                if(isset($product_types['choices']) && is_array($product_types['choices'])){
-                    foreach ($product_types['choices'] as $key => $value){
-                        $product_type[$key] = $value;
+                if(!class_exists('Advanced_Product\Helper\AP_Custom_Field_Helper')) {
+                    $product_types = get_field_object($product_types_name->post_name);
+                    if (isset($product_types['choices']) && is_array($product_types['choices'])) {
+                        foreach ($product_types['choices'] as $key => $value) {
+                            $product_type[$key] = $value;
+                        }
                     }
                 }
             }
@@ -116,6 +118,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                         'style5'   => esc_html__( 'Style 5', 'uipro' ),
                         'style6'   => esc_html__( 'Style 6', 'uipro' ),
                         'style7'   => esc_html__( 'Style 7', 'uipro' ),
+                        'list'   => esc_html__( 'Style List', 'uipro' ),
                     ),
                     'default'       => 'archive',
                 ),
@@ -366,11 +369,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					],
 					'start_section' => 'card_settings',
 					'section_name'      => esc_html__('Card Settings', 'uipro'),
-                    'conditions' => [
-                        'terms' => [
-                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
-                        ],
-                    ],
+
 				),
 				array(
 					'type'          =>  Controls_Manager::COLOR,
@@ -378,11 +377,10 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'label'         => esc_html__('Card Background', 'uipro'),
 					'description'   => esc_html__('Set the Background Color of Card.', 'uipro'),
 					'selectors' => [
-						'{{WRAPPER}} .uk-card' => 'background-color: {{VALUE}}',
+						'{{WRAPPER}} .ap-item .ap-inner' => 'background-color: {{VALUE}}',
 					],
 					'conditions' => [
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'card_style', 'operator' => '===', 'value' => 'custom'],
 						],
 					],
@@ -393,11 +391,10 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'label'         => esc_html__('Card Color', 'uipro'),
 					'description'   => esc_html__('Set the Color of Card.', 'uipro'),
 					'selectors' => [
-						'{{WRAPPER}} .uk-card' => 'color: {{VALUE}}',
+						'{{WRAPPER}} .ap-item .ap-inner' => 'color: {{VALUE}}',
 					],
 					'conditions' => [
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'card_style', 'operator' => '===', 'value' => 'custom'],
 						],
 					],
@@ -413,11 +410,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 						'large' => esc_html__('Large', 'uipro'),
 						'custom' => esc_html__('Custom', 'uipro'),
 					],
-                    'conditions' => [
-                        'terms' => [
-                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
-                        ],
-                    ],
+
 				),
 				array(
 					'type'          => Controls_Manager::DIMENSIONS,
@@ -431,7 +424,6 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					],
 					'conditions' => [
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
 							['name' => 'card_size', 'operator' => '===', 'value' => 'custom'],
 						],
 					],
@@ -1147,6 +1139,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                     'selectors' => [
                         '{{WRAPPER}} .uk-slider .uk-slidenav:hover' => 'background-color: {{VALUE}}',
                     ],
+                    'separator'     => 'before',
                     'conditions' => [
                         'terms' => [
                             ['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
@@ -1168,6 +1161,18 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                         ],
                     ],
                 ),
+                array(
+                    'type'          =>  \Elementor\Group_Control_Border::get_type(),
+                    'name'          => 'nav_border_hover',
+                    'label'         => esc_html__('Nav Hover Border', 'uipro'),
+                    'selector' => '{{WRAPPER}} .uk-slider .uk-slidenav:hover',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
+                            ['name' => 'enable_navigation', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
 				array(
 					'type'          => Controls_Manager::SWITCHER,
 					'id'            => 'enable_dotnav',
@@ -1177,6 +1182,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'label_off'     => esc_html__( 'No', 'uipro' ),
 					'return_value'  => '1',
 					'default'       => '1',
+                    'separator'     => 'before',
 					'conditions' => [
 						'terms' => [
 							['name' => 'use_slider', 'operator' => '===', 'value' => '1'],
@@ -1332,7 +1338,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'type'          => Group_Control_Typography::get_type(),
 					'label'         => esc_html__('Title Font', 'uipro'),
 					'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
-					'selector'      => '{{WRAPPER}} .ui-title, {{WRAPPER}} .ap-title',
+					'selector'      => '{{WRAPPER}} .ui-title, {{WRAPPER}} .ap-title, .ap-item.ap-item-style5.ap-item-list .ap-inner .ap-title',
 				),
 				array(
 					'type'          => Controls_Manager::SELECT,
@@ -1591,7 +1597,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'default'       => 'top',
 					'conditions' => [
 						'terms' => [
-                            ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
+                            ['name' => 'main_layout', 'operator' => '!in', 'value' => ['archive','list']],
 							['name' => 'layout', 'operator' => '===', 'value' => ''],
 						],
 					],
@@ -1624,6 +1630,56 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                                 ],
                             ]
                         ]
+                    ],
+                ),
+                array(
+                    'name'            => 'image_custom_width',
+                    'label'         => esc_html__( 'Image Custom width', 'uipro' ),
+                    'type'          => Controls_Manager::SLIDER,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'responsive'    => true,
+                    'range' => [
+                        'px' => [
+                            'min' => 1,
+                            'max' => 2000
+                        ],
+                    ],
+                    'desktop_default' => [
+                        'size' => 50,
+                        'unit' => '%',
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ap-item.ap-item-style5.ap-item-list .ap-inner .ap-list-left' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'list'],
+                        ],
+                    ],
+                ),
+                array(
+                    'name'            => 'image_content_width',
+                    'label'         => esc_html__( 'Content Custom width', 'uipro' ),
+                    'type'          => Controls_Manager::SLIDER,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'responsive'    => true,
+                    'range' => [
+                        'px' => [
+                            'min' => 1,
+                            'max' => 2000
+                        ],
+                    ],
+                    'desktop_default' => [
+                        'size' => 50,
+                        'unit' => '%',
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ap-item.ap-item-style5.ap-item-list .ap-inner .ap-list-right' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'list'],
+                        ],
                     ],
                 ),
                 array(
@@ -1666,7 +1722,6 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'name'            => 'thumbnail_height',
 					'label'         => esc_html__( 'Thumbnail Height', 'uipro' ),
 					'type'          => Controls_Manager::SLIDER,
-					'devices'       => [ 'desktop', 'tablet', 'mobile' ],
 					'responsive'    => true,
 					'range' => [
 						'px' => [
@@ -1688,6 +1743,8 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					],
 					'selectors' => [
 						'{{WRAPPER}} .tz-image-cover' => 'height: {{SIZE}}{{UNIT}};',
+						'{{WRAPPER}} .uk-card-media-top .tz-img img' => 'height: {{SIZE}}{{UNIT}};',
+						'{{WRAPPER}} .ap-item.ap-item-style5.ap-item-list .ap-item-list-img' => 'height: {{SIZE}}{{UNIT}};',
 					],
 					'conditions' => [
 						'terms' => [
@@ -1741,6 +1798,21 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'section_name'  => esc_html__('Content Settings', 'uipro'),
 
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'content_wrap_padding',
+                    'label'         => esc_html__( 'Content Wrap Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ap-item.ap-item-style5.ap-item-list .ap-inner .ap-list-right' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'main_layout', 'operator' => '===', 'value' => 'list'],
+                        ],
+                    ],
+                ),
 				array(
 					'name'          => 'content_font_family',
 					'type'          => Group_Control_Typography::get_type(),
@@ -2156,14 +2228,29 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
                         ],
                     ],
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'button_padding',
+                    'label'         => esc_html__( 'Button Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .templaza-btn' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                        '{{WRAPPER}} .ap-item.ap-item-style5.ap-item-list .ap-info .ap-info-bottom .ap-readmore-box' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'button_style', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+                ),
 				array(
 					'name'          => 'button_font_family',
 					'type'          => Group_Control_Typography::get_type(),
 					'label'         => esc_html__('Button Font', 'uipro'),
 					'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
-					'selector'      => '{{WRAPPER}} .ui-post-button',
+					'selector'      => '{{WRAPPER}} .ui-post-button, {{WRAPPER}} .templaza-btn, {{WRAPPER}} .ap-item.ap-item-style5.ap-item-list .ap-info .ap-info-bottom .ap-readmore-box a',
 					'condition' => array(
-						'main_layout'     => 'base',
 						'button_style'    => 'custom'
 					),
 				),
@@ -2177,7 +2264,6 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'separator'     => 'before',
 					'default' => '#1e87f0',
 					'condition' => array(
-                        'main_layout'     => 'base',
 						'button_style'    => 'custom'
 					),
 				),
@@ -2189,7 +2275,6 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 						'{{WRAPPER}} .ui-post-button' => 'color: {{VALUE}}',
 					],
 					'condition' => array(
-                        'main_layout'     => 'base',
 						'button_style'    => 'custom'
 					),
 				),
@@ -2197,7 +2282,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'name'            => 'button_border',
 					'type'          =>  \Elementor\Group_Control_Border::get_type(),
 					'label' => esc_html__( 'Button Border', 'uipro' ),
-					'selector' => '{{WRAPPER}} .ui-post-button',
+					'selector' => '{{WRAPPER}} .ui-post-button, {{WRAPPER}} .ap-item.ap-item-style5.ap-item-list .ap-info .ap-info-bottom .ap-readmore-box',
 					'conditions' => [
 						'terms' => [
                             ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
@@ -2211,11 +2296,11 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'label'         => esc_html__('Hover Background Color', 'uipro'),
 					'selectors' => [
 						'{{WRAPPER}} .ui-post-button:hover' => 'background-color: {{VALUE}}',
+						'{{WRAPPER}} .ap-item.ap-item-style5.ap-item-list .ap-info .ap-info-bottom .ap-readmore-box:hover' => 'background-color: {{VALUE}}',
 					],
 					'default' => '#0f7ae5',
 					'separator'     => 'before',
 					'condition' => array(
-                        'main_layout'     => 'base',
 						'button_style'    => 'custom'
 					),
 				),
@@ -2225,9 +2310,9 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'label'         => esc_html__('Hover Button Color', 'uipro'),
 					'selectors' => [
 						'{{WRAPPER}} .ui-post-button:hover' => 'color: {{VALUE}}',
+						'{{WRAPPER}} .ap-item.ap-item-style5.ap-item-list .ap-info .ap-info-bottom .ap-readmore-box:hover' => 'color: {{VALUE}}',
 					],
 					'condition' => array(
-                        'main_layout'     => 'base',
 						'button_style'    => 'custom'
 					),
 				),
@@ -2235,7 +2320,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'name'            => 'button_border_hover',
 					'type'          =>  \Elementor\Group_Control_Border::get_type(),
 					'label' => esc_html__( 'Button Border', 'uipro' ),
-					'selector' => '{{WRAPPER}} .ui-post-button:hover',
+					'selector' => '{{WRAPPER}} .ui-post-button:hover, {{WRAPPER}} .ap-item.ap-item-style5.ap-item-list .ap-info .ap-info-bottom .ap-readmore-box:hover',
 					'conditions' => [
 						'terms' => [
                             ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],

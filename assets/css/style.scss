@@ -5,6 +5,7 @@ svg.circletext {
   width: 100%;
   animation-duration: 5s;
 }
+
 .rotate:hover svg.circletext{
   -webkit-animation-name: rotate;
   animation-name: rotate;
@@ -30,4 +31,14 @@ svg.circletext {
     transform: rotate(360deg);
     -webkit-filter: blur(0px);
   }
+}
+.img-position-r {
+  margin-left: auto;
+  margin-right: 10%;
+}
+.bg{
+  background-size:cover;
+}
+.img-size-2{
+  height:100vh;
 }

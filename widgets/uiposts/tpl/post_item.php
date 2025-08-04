@@ -24,6 +24,8 @@ $thumbnail_size = (isset($instance[$pre_val.'thumbnail_size']) && $instance[$pre
 $thumbnail_hover= (isset($instance[$pre_val.'thumbnail_hover']) && $instance[$pre_val.'thumbnail_hover']) ? intval($instance[$pre_val.'thumbnail_hover']) : 0;
 $thumbnail_hover_transition= (isset($instance[$pre_val.'thumbnail_hover_transition']) && $instance[$pre_val.'thumbnail_hover_transition']) ? ' uk-transition-'. $instance[$pre_val.'thumbnail_hover_transition'] : '';
 $image_position = (isset($instance[$pre_val.'image_position']) && $instance[$pre_val.'image_position']) ? $instance[$pre_val.'image_position'] : 'top';
+$image_custom_width = (isset($instance['image_left_right_custom']) && $instance['image_left_right_custom']) ? $instance['image_left_right_custom'] : '0';
+
 $image_width    = (isset($instance[$pre_val.'image_width']) && $instance[$pre_val.'image_width']) ? ' uk-width-'
     . $instance[$pre_val.'image_width'] : ' uk-width-1-2';
 $image_width_xl    = (isset($instance[$pre_val.'image_width_xl']) && $instance[$pre_val.'image_width_xl']) ? ' uk-width-'
@@ -34,6 +36,9 @@ $image_width_m    = (isset($instance[$pre_val.'image_width_m']) && $instance[$pr
     . $instance[$pre_val.'image_width_m'].'@m' : ' uk-width-1-2@m';
 $image_width_s    = (isset($instance[$pre_val.'image_width_s']) && $instance[$pre_val.'image_width_s']) ? ' uk-width-'
     . $instance[$pre_val.'image_width_s'].'@s' : ' uk-width-1-2@s';
+if($image_custom_width == '1'){
+    $image_width = $image_width_xl = $image_width_l = $image_width_m = $image_width_s = ' ';
+}
 
 $expand_width   = $image_width_xl == ' uk-width-1-1@xl' ? ' uk-width-1-1@xl' : ' uk-width-expand@xl';
 $expand_width   .=$image_width_l == ' uk-width-1-1@l' ? ' uk-width-1-1@l' : ' uk-width-expand@l';
@@ -172,16 +177,20 @@ if ($layout == 'thumbnail') {
     }
 }
 if($thumb_effect =='zoomin-roof' && $layout != 'thumbnail'){
-    $roof_class = 'ui-post-roof-effect';
+    $roof_class = ' ui-post-roof-effect ';
 }else{
     $roof_class = '';
 }
-
-$output .=  '<article data-tag="'.esc_attr(implode(' ', $tag_slugs)).'" data-cat="'.esc_attr(implode(' ', $cat_slugs)).'" data-date="'.esc_attr(get_the_date('Y-m-d', $item)).'" data-hits="'.esc_attr(get_post_meta($item->ID, 'post_views_count', true)).'">';
-$output .= '<div class="uk-article uk-card '.esc_attr($layout.$thumb_cl.$roof_top_class.$card_style.$tran_toggle.$card_size_cls.( $thumbnail_hover ? ' uk-transition-toggle uk-overflow-hidden' : '' ).(!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'left' || $image_position == 'right') ? ' uk-grid-collapse' : '')).'"'.(!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'left' || $image_position == 'right') ? ' data-uk-grid' : '').'>';
+$restaurant_cl = $restaurant_cl_wrap ='';
+if($resource == 'restaurant'){
+    $restaurant_cl = ' restaurant_source ';
+    $restaurant_cl_wrap = ' restaurant_source_wrap ';
+}
+$output .=  '<article class="'.$restaurant_cl_wrap.' article-item" data-tag="'.esc_attr(implode(' ', $tag_slugs)).'" data-cat="'.esc_attr(implode(' ', $cat_slugs)).'" data-date="'.esc_attr(get_the_date('Y-m-d', $item)).'" data-hits="'.esc_attr(get_post_meta($item->ID, 'post_views_count', true)).'">';
+$output .= '<div class="uk-article uk-card '.esc_attr($layout.$restaurant_cl.$thumb_cl.$roof_top_class.$card_style.$tran_toggle.$card_size_cls.( $thumbnail_hover ? ' uk-transition-toggle uk-overflow-hidden' : '' ).(!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'left' || $image_position == 'right') ? ' uk-grid-collapse' : '')).'"'.(!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'left' || $image_position == 'right') ? ' data-uk-grid' : '').'>';
 if (!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == 'top' || $image_position == 'left' || $image_position == 'right') ) :
     if ($image_position == 'left' || $image_position == 'right') {
-        $output .=  '<div class="uk-card-media-'.$image_position.' uk-cover-container'.($image_position == 'right' ? ' uk-flex-last@m' : '').$image_width_xl.$image_width_l.$image_width_m.$image_width_s.$image_width.'">';
+        $output .=  '<div class="uk-card-media-'.$image_position.$roof_class.' uk-cover-container'.($image_position == 'right' ? ' uk-flex-last@s' : '').$image_width_xl.$image_width_l.$image_width_m.$image_width_s.$image_width.'">';
     }
     $uk_cover   = ($image_position == 'left' || $image_position == 'right' || !empty($cover_image)? array('data-uk-cover' => '') : '');
     if($image_transition){
@@ -195,7 +204,7 @@ if (!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == '
     if($image_position == 'left' || $image_position == 'right'){
         $cover_image = '  tz-image-cover ';
     }
-    if($thumb_effect =='zoomin-roof'){
+    if($thumb_effect =='zoomin-roof' && $image_position !='left'  && $image_position !='right' ){
         $output .='<div class="'.$roof_class.' uk-cover-container">';
     }
     if($post_link){
@@ -214,7 +223,7 @@ if (!$hide_thumbnail && has_post_thumbnail( $item->ID ) && ($image_position == '
             $output .= '<a class="tz-img uk-position-absolute ui-post-thumb-box '.$flash_cl.'" href="'. get_permalink( $item->ID ) .'"><div class="uk-position-cover uk-overlay uk-overlay-primary'.esc_attr( $thumbnail_hover ? ' uk-transition-fade' : '' ).'"></div></a>';
         }
     }
-    if($thumb_effect =='zoomin-roof'){
+    if($thumb_effect =='zoomin-roof' && $image_position !='left'  && $image_position !='right' ){
         $output .='</div>';
     }
 
@@ -257,11 +266,21 @@ if(!empty($title_maxwidth) && !empty($title_maxwidth['size'])){
     $_title_class   .= ' uk-flex uk-flex-center';
 }
 if($post_link){
-    $output .= '<'.$heading_selector.' class="ui-title uk-margin-remove-top'.$title_heading_style.$title_margin.$_title_class
-        .'">' . $item->post_title . '</'.$heading_selector.'>';
+    if($resource == 'restaurant'){
+        $output .='<div class="uk-flex uk-flex-between"><'.$heading_selector.' class="ui-title uk-margin-remove-top'.$title_heading_style.$title_margin.$_title_class
+            .'">' . $item->post_title . '</'.$heading_selector.'><span class="restaurant_price uk-flex-last">'.get_field('price',$item->ID).' </span></div>';
+    }else{
+        $output .= '<'.$heading_selector.' class="ui-title uk-margin-remove-top'.$title_heading_style.$title_margin.$_title_class
+            .'">' . $item->post_title . '</'.$heading_selector.'>';
+    }
 }else{
-    $output .= '<'.$heading_selector.' class="ui-title uk-margin-remove-top'.$title_heading_style.$title_margin.$_title_class
-        .'"><a href="'. get_permalink( $item->ID ) .'">' . $item->post_title . '</a></'.$heading_selector.'>';
+    if($resource == 'restaurant'){
+        $output .='<div class="uk-flex uk-flex-between"><' . $heading_selector . ' class="ui-title uk-margin-remove-top' . $title_heading_style . $title_margin . $_title_class
+            . '"><a href="' . get_permalink($item->ID) . '">' . $item->post_title . '</a></' . $heading_selector . '><span class="restaurant_price uk-flex-last">'.get_field('price',$item->ID).' </span></div>';
+    }else {
+        $output .= '<' . $heading_selector . ' class="ui-title uk-margin-remove-top' . $title_heading_style . $title_margin . $_title_class
+            . '"><a href="' . get_permalink($item->ID) . '">' . $item->post_title . '</a></' . $heading_selector . '>';
+    }
 }
 
 
