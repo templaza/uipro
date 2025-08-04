@@ -947,9 +947,25 @@ if ( ! class_exists( 'UIPro_Config_UIGallery' ) ) {
 						'uk-border-circle' => esc_html__('Circle', 'uipro'),
 						'uk-border-rounded' => esc_html__('Rounded', 'uipro'),
 						'uk-border-pill' => esc_html__('Pill', 'uipro'),
+						'custom' => esc_html__('Custom', 'uipro'),
 					),
 					'default'       => '',
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'image_custom_radius',
+                    'label'         => esc_html__( 'Image Border radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-gallery-items .uk-article' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'image_border_radius', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+                ),
 				array(
 					'type'          => \Elementor\Group_Control_Image_Size::get_type(),
 					'name' => 'thumbnail', // // Usage: `{name}_size` and `{name}_custom_dimension`, in this case `thumbnail_size` and `thumbnail_custom_dimension`.

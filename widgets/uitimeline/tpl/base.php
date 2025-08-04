@@ -41,7 +41,7 @@ if (count($timeline)) {
         $content .=  '<li>';
         $content .=  '<div class="uk-card uk-card-default uk-grid-collapse uk-flex uk-flex-middle uk-child-width-1-2@m" data-uk-grid>';
         $content .=  '<div class="'.$image_position_cl.'">';
-        $content .=  '<div class="image-box '.$cover_image_container.'">';
+        $content .=  '<div class="timeline-img image-box '.$cover_image_container.'">';
         if($cover_image){
             $content .=  wp_get_attachment_image( $item['image']['id'], $image_size, false, array('class' => trim( $image_class ), 'data-uk-cover' => '') ). '<canvas width="600" height="400"></canvas>';
         }else{
