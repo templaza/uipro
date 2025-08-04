@@ -124,6 +124,9 @@ $module_id = uniqid('templaza_');
 if($main_layout){
     $args['product_loop'] = $main_layout;
 }
+if($main_layout =='list'){
+    $args['product_grid'] = ' uk-grid-collapse ';
+}
 if($ap_posts && $ap_posts -> have_posts()) {
 
 //responsive width

@@ -26,7 +26,6 @@
             for (var e = 0; e < arguments.length; e++) if (void 0 !== arguments[e]) return arguments[e]
         }
 
-        console.log("%c Hover effect by Robin Delaporte: https://github.com/robin-dela/hover-effect ", "color: #bada55; font-size: 0.8rem");
         var n = e.parent, i = e.displacementImage, a = e.image1, s = e.image2, f = t(e.imagesRatio, 1),
             d = t(e.intensity1, e.intensity, 1), l = t(e.intensity2, e.intensity, 1), u = t(e.angle, Math.PI / 4),
             c = t(e.angle1, u), v = t(e.angle2, 3 * -u), m = t(e.speedIn, e.speed, 1.6),

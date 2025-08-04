@@ -18,8 +18,8 @@ if ($ui_runtext) {
 ?>
     <div class="runtext-container">
         <div class="main-runtext">
-            <marquee direction="<?php echo esc_attr($direction_style);?>" scrollamount="<?php echo esc_attr($scrollamount);?>" behavior="alternate">
-                <div class="uk-flex uk-flex-middle">
+            <div class="tz-marquee" >
+                <div class="tz-marquee-content uk-flex uk-flex-middle">
                 <?php
                     foreach ($ui_runtext as $item){
                         $image  =   isset( $item['text_image'] ) && $item['text_image'] ? $item['text_image'] : array();
@@ -46,7 +46,7 @@ if ($ui_runtext) {
                     }
                 ?>
                 </div>
-            </marquee>
+            </div>
         </div>
     </div>
 <?php

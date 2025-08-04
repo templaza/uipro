@@ -130,6 +130,26 @@ if ( ! class_exists( 'UIPro_Config_UIForm' ) ) {
                 ),
                 array(
                     'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'forml_margin',
+                    'label'         => esc_html__( 'Form Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .wpforms-container' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'form_label_margin',
+                    'label'         => esc_html__( 'Form Label Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .wpforms-field-container .wpforms-field .wpforms-field-label' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
                     'name'          =>  'form_input_margin',
                     'label'         => esc_html__( 'Form item Margin', 'uipro' ),
                     'responsive'    =>  true,
@@ -146,6 +166,27 @@ if ( ! class_exists( 'UIPro_Config_UIForm' ) ) {
                     'size_units'    => [ 'px', 'em', '%' ],
                     'selectors'     => [
                         '{{WRAPPER}} .wpforms-field-container .wpforms-field' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}} !important;',
+                    ],
+                ),
+                array(
+                    'type'      => Controls_Manager::SLIDER,
+                    'name'      => 'form_textarea_height_custom',
+                    'label'     => esc_html__('Textarea Height', 'uipro'),
+                    'size_units'    => [ 'px' ],
+                    'responsive'    =>  true,
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 500,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 120,
+                    ],
+                    'selectors'     => [
+                        '.templaza-section {{WRAPPER}} .wpforms-container form textarea' => 'height: {{SIZE}}{{UNIT}} !important;',
                     ],
                 ),
                 array(
@@ -234,6 +275,15 @@ if ( ! class_exists( 'UIPro_Config_UIForm' ) ) {
                     'label'         => esc_html__('Label Color', 'uipro'),
                     'selectors' => [
                         '{{WRAPPER}} form .wpforms-field .wpforms-field-label' => 'color: {{VALUE}} !important;',
+                    ],
+                ),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'input_place_color',
+                    'label'         => esc_html__('Input Placeholder Color', 'uipro'),
+                    'description'   => esc_html__('Set the color placeholder of input.', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} form .wpforms-field ::placeholder ' => 'color: {{VALUE}} !important;',
                     ],
                 ),
                 array(

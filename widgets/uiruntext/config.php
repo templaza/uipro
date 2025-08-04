@@ -37,7 +37,8 @@ if ( ! class_exists( 'UIPro_Config_UIRunText' ) ) {
 		}
         public function get_styles() {
             return ['uiruntext' => array(
-                'src'   => 'style.css'
+                'src'   => 'style.css',
+                'ver' => time()
             )];
         }
 

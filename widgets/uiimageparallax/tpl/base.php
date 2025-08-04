@@ -10,7 +10,7 @@ if ($image && isset($image['url']) && $image['url']) {
 ?>
 <div class="<?php echo $general_styles['container_cls']; ?>" <?php echo $general_styles['animation']; ?>>
     <div class="uiimage-parallax-wrap">
-        <div id="tz-image-parallax" class="uiimage-parallax">
+        <div class="uiimage-parallax">
             <div class="uiimage-parallax-media">
                 <a class="uk-position-cover" href="<?php echo esc_url($image['url']);?>" data-elementor-open-lightbox="yes" data-elementor-lightbox-slideshow="uiimageparallax" data-elementor-lightbox-title="<?php echo esc_attr($image['alt']);?>" >
                     <img class="uiimage_image" src="<?php echo esc_url($image['url']);?>" alt="<?php echo esc_attr($image['alt']);?>">

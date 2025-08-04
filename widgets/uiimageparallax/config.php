@@ -118,6 +118,13 @@ if ( ! class_exists( 'UIPro_Config_UIImageParallax' ) ) {
                     'default'       => '1'
                 ),
                 array(
+                    'name'            => 'image_border',
+                    'type'          =>  \Elementor\Group_Control_Border::get_type(),
+                    'label' => esc_html__( 'Image Border', 'uipro' ),
+                    'selector' => '{{WRAPPER}} .uiimage-parallax-media',
+
+                ),
+                array(
                     'type'          => Controls_Manager::TEXTAREA,
                     'name'          => 'title',
                     'label'         => esc_html__( 'Title', 'uipro' ),

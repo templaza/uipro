@@ -47,7 +47,8 @@ if ( ! class_exists( 'UIPro_Config_UIImageTransition' ) ) {
             return array(
                 'uipro-imagetransition' => array(
                     'src'   =>  'hover-effect.umd.js',
-                    'deps'  =>  array('jquery')
+                    'deps'  =>  array('jquery'),
+                    'ver'   => time()
                 )
             );
         }

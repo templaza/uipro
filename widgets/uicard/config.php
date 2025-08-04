@@ -1114,7 +1114,7 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 					'name'          => 'card_title_color_hover',
 					'label'         => esc_html__('Card Hover Title Color', 'uipro'),
 					'selectors' => [
-						'{{WRAPPER}} .ui-card:hover .uk-card-title' => 'color: {{VALUE}}',
+						'{{WRAPPER}} .ui-card:hover .uk-card-title, {{WRAPPER}} .ui-card:hover .uk-card-title a' => 'color: {{VALUE}}',
 					],
 					'conditions' => [
 						'terms' => [
