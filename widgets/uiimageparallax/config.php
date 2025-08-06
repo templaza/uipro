@@ -257,9 +257,9 @@ if ( ! class_exists( 'UIPro_Config_UIImageParallax' ) ) {
                 ),
                 array(
                     'type'          =>  \Elementor\Group_Control_Border::get_type(),
-                    'name'          => 'button_border',
+                    'name'          => 'button_border_hover',
                     'label'         => esc_html__('Button Border Hover', 'uipro'),
-                    'selector' => '{{WRAPPER}} .uiimage-parallax-btn',
+                    'selector' => '{{WRAPPER}} .uiimage-parallax-btn:hover',
                     'condition'     => array(
                         'button_text!'    => ''
                     ),
