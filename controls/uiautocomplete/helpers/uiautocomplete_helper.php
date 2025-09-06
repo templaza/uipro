@@ -39,7 +39,7 @@ if(!class_exists('UIPro\Elementor\Control\Helper\UIAutoComplete_Helper')) {
                 foreach ( $posts as $post ) {
                     $data          = array();
                     $data['value'] = $post->post_name;
-                    $data['label'] = esc_html__( 'Id', 'uipro' ) . ': ' . $post->ID . ' - ' . esc_html__( 'Title', 'razzi' ) . ': ' . $post->post_title;
+                    $data['label'] = esc_html__( 'Id', 'uipro' ) . ': ' . $post->ID . ' - ' . esc_html__( 'Title', 'uipro' ) . ': ' . $post->post_title;
                     $result[]      = $data;
                 }
             } else {
@@ -83,13 +83,13 @@ if(!class_exists('UIPro\Elementor\Control\Helper\UIAutoComplete_Helper')) {
                 foreach ( $post_meta_infos as $value ) {
                     $data          = array();
                     $data['value'] = $value['slug'];
-                    $data['label'] = esc_html__( 'Id', 'razzi' ) . ': ' . $value['id'] . ' - ' . esc_html__( 'Name', 'razzi' ) . ': ' . $value['name'];
+                    $data['label'] = esc_html__( 'Id', 'uipro' ) . ': ' . $value['id'] . ' - ' . esc_html__( 'Name', 'uipro' ) . ': ' . $value['name'];
                     $result[]      = $data;
                 }
             } else {
                 $result[] = array(
                     'value' => 'nothing-found',
-                    'label' => esc_html__( 'Nothing Found', 'razzi' )
+                    'label' => esc_html__( 'Nothing Found', 'uipro' )
                 );
             }
 

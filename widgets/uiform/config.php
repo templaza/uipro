@@ -61,7 +61,7 @@ if ( ! class_exists( 'UIPro_Config_UIForm' ) ) {
                         $arr_wpform[$post->ID] = $post->post_title;
                     }
                 }
-                $arr_wpform['custom'] = esc_html__('Custom','baressco');
+                $arr_wpform['custom'] = esc_html__('Custom','uipro');
             }
 
 			// options

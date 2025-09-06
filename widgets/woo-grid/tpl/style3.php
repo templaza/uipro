@@ -80,9 +80,9 @@ if ( ! $results ) {
 			</a>',
                         is_customize_preview() ? '#' : esc_url( get_permalink() ),
                         esc_attr( $product->get_id() ),
-                        esc_attr__( 'Quick View', 'agruco' ),
+                        esc_attr__( 'Quick View', 'uipro' ),
                         '<i class="fas fa-eye"></i>',
-                        esc_html__( 'Quick View', 'agruco' )
+                        esc_html__( 'Quick View', 'uipro' )
                     );
                     ?>
                 </div>

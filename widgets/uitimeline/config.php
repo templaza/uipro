@@ -60,7 +60,7 @@ if ( ! class_exists( 'UIPro_Config_UITimeline' ) ) {
                 'title', [
                     'label' => __( 'Title', 'uipro' ),
                     'type' => \Elementor\Controls_Manager::TEXT,
-                    'default' => __( '' , 'uipro' ),
+                    'default' => '',
                     'label_block' => true,
                 ]
             );
@@ -69,7 +69,7 @@ if ( ! class_exists( 'UIPro_Config_UITimeline' ) ) {
                 [
                     'label' => __( 'Timeline Date', 'uipro' ),
                     'type' => \Elementor\Controls_Manager::TEXT,
-                    'default' => __( '' , 'uipro' ),
+                    'default' => '',
                     'label_block' => true,
                 ]
             );
@@ -77,7 +77,7 @@ if ( ! class_exists( 'UIPro_Config_UITimeline' ) ) {
                 'meta', [
                     'label' => __( 'Meta Text', 'uipro' ),
                     'type' => \Elementor\Controls_Manager::TEXT,
-                    'default' => __( '' , 'uipro' ),
+                    'default' => '',
                     'label_block' => true,
                 ]
             );

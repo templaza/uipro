@@ -202,7 +202,7 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Slideshow' ) ) {
                 'ap_description', [
                     'label' => esc_html__( 'Product Description', 'uipro' ),
                     'type' => \Elementor\Controls_Manager::WYSIWYG,
-                    'default' => esc_html__( '' , 'uipro' ),
+                    'default' => '',
                     'label_block' => true,
                 ]
             );
@@ -210,7 +210,7 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Slideshow' ) ) {
                 'ap_text_meta', [
                     'label' => esc_html__( 'Meta text', 'uipro' ),
                     'type' => \Elementor\Controls_Manager::TEXT,
-                    'default' => esc_html__( '' , 'uipro' ),
+                    'default' => '',
                     'label_block' => true,
                 ]
             );
@@ -218,7 +218,7 @@ if ( ! class_exists( 'UIPro_Config_Uiadvancedproduct_Slideshow' ) ) {
                 'ap_text_custom', [
                     'label' => esc_html__( 'Custom text', 'uipro' ),
                     'type' => \Elementor\Controls_Manager::WYSIWYG,
-                    'default' => esc_html__( '' , 'uipro' ),
+                    'default' => '',
                     'label_block' => true,
 
                 ]
