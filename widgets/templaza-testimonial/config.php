@@ -67,7 +67,7 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                 'quote_title', [
                     'label' => __( 'Title', 'uipro' ),
                     'type' => \Elementor\Controls_Manager::TEXT,
-                    'default' => __( '' , 'uipro' ),
+                    'default' => '',
                     'label_block' => true,
                 ]
             );
@@ -75,7 +75,7 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                 'quote_content', [
                     'label' => __( 'Content quote', 'uipro' ),
                     'type' => \Elementor\Controls_Manager::TEXTAREA,
-                    'default' => __( '' , 'uipro' ),
+                    'default' => '',
                     'label_block' => true,
                 ]
             );
@@ -83,7 +83,7 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                 'quote_author', [
                     'label' => __( 'Author', 'uipro' ),
                     'type' => \Elementor\Controls_Manager::TEXT,
-                    'default' => __( '' , 'uipro' ),
+                    'default' => '',
                     'label_block' => true,
                 ]
             );
@@ -91,7 +91,7 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                 'author_position', [
                     'label' => __( 'Author Position', 'uipro' ),
                     'type' => \Elementor\Controls_Manager::TEXT,
-                    'default' => __( '' , 'uipro' ),
+                    'default' => '',
                     'label_block' => true,
                 ]
             );

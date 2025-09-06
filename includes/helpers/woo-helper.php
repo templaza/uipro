@@ -707,10 +707,10 @@ class TemPlaza_Woo_El_Helper {
 
         if ( 0 < $count ) {
             /* translators: 1: rating 2: rating count */
-            $html .= sprintf( _n( 'Rated %1$s out of 5 based on %2$s customer rating', 'Rated %1$s out of 5 based on %2$s customer ratings', $count, 'agruco' ), '<strong class="rating">' . esc_html( $rating ) . '</strong>', '<span class="rating">' . esc_html( $count ) . '</span>' );
+            $html .= sprintf( _n( 'Rated %1$s out of 5 based on %2$s customer rating', 'Rated %1$s out of 5 based on %2$s customer ratings', $count, 'uipro' ), '<strong class="rating">' . esc_html( $rating ) . '</strong>', '<span class="rating">' . esc_html( $count ) . '</span>' );
         } else {
             /* translators: %s: rating */
-            $html .= sprintf( esc_html__( 'Rated %s out of 5', 'agruco' ), '<strong class="rating">' . esc_html( $rating ) . '</strong>' );
+            $html .= sprintf( esc_html__( 'Rated %s out of 5', 'uipro' ), '<strong class="rating">' . esc_html( $rating ) . '</strong>' );
         }
 
         $html .= '</span>';
@@ -842,7 +842,7 @@ class TemPlaza_Woo_El_Helper {
         }
 
         if ( $product->is_purchasable() ) {
-            $text = esc_html__( 'Add to cart', 'templaza-framework' );
+            $text = esc_html__( 'Add to cart', 'uipro' );
 
         }
 
@@ -885,7 +885,7 @@ class TemPlaza_Woo_El_Helper {
             '<a href="#" class="product-quick-shop-button templaza-btn" data-product_id="%s" >%s%s</a>',
             esc_attr( $product->get_id() ),
             '<i class="fas fa-shopping-cart"></i>',
-            esc_html__( 'Quick Shop', 'templaza-framework' )
+            esc_html__( 'Quick Shop', 'uipro' )
         );
     }
 }

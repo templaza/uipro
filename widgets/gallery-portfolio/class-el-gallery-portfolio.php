@@ -37,21 +37,5 @@ if ( ! class_exists( 'UIPro_El_Gallery_Portfolio' ) ) {
 
         }
 
-//		/**
-//		 * Register controls.
-//		 */
-//		protected function _register_controls() {
-//			$this->start_controls_section(
-//				'el-gallery-posts', [ 'label' => esc_html__( 'Thim: Gallery Posts', 'eduma' )]
-//			);
-//
-//			$controls = \Thim_Builder_El_Mapping::mapping( $this->options() );
-//
-//			foreach ( $controls as $key => $control ) {
-//				$this->add_control( $key, $control );
-//			}
-//
-//			$this->end_controls_section();
-//		}
 	}
 }

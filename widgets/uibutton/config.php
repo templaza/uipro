@@ -52,7 +52,7 @@ if ( ! class_exists( 'UIPro_Config_UIButton' ) ) {
 				'text', [
 					'label' => __( 'Text', 'uipro' ),
 					'type' => \Elementor\Controls_Manager::TEXT,
-					'default' => __( '' , 'uipro' ),
+					'default' => '',
 					'label_block' => true,
 				]
 			);
@@ -74,7 +74,7 @@ if ( ! class_exists( 'UIPro_Config_UIButton' ) ) {
 				'link_title', [
 					'label' => __( 'Link Title', 'uipro' ),
 					'type' => \Elementor\Controls_Manager::TEXT,
-					'default' => __( '' , 'uipro' ),
+					'default' => '',
 					'label_block' => true,
 				]
 			);

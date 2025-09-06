@@ -51,7 +51,7 @@ if ( ! class_exists( 'UIPro_Config_UIAccordion' ) ) {
 				'title', [
 					'label' => __( 'Title', 'uipro' ),
 					'type' => \Elementor\Controls_Manager::TEXT,
-					'default' => __( '' , 'uipro' ),
+					'default' => '',
 					'label_block' => true,
 				]
 			);
@@ -101,7 +101,7 @@ if ( ! class_exists( 'UIPro_Config_UIAccordion' ) ) {
 				'link_title', [
 					'label' => __( 'Link Title', 'uipro' ),
 					'type' => \Elementor\Controls_Manager::TEXT,
-					'default' => __( '' , 'uipro' ),
+					'default' => '',
 					'label_block' => true,
 				]
 			);
