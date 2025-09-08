@@ -271,7 +271,7 @@ if ( ! class_exists( 'UIPro_Config_UIMarker' ) ) {
 				'marker_title', [
 					'label' => __( 'Title', 'uipro' ),
 					'type' => \Elementor\Controls_Manager::TEXT,
-					'default' => __( '' , 'uipro' ),
+					'default' => '',
 					'label_block' => true,
 					'separator'     => 'before',
 				]
@@ -280,7 +280,7 @@ if ( ! class_exists( 'UIPro_Config_UIMarker' ) ) {
 				'marker_meta', [
 					'label' => __( 'Meta', 'uipro' ),
 					'type' => \Elementor\Controls_Manager::TEXT,
-					'default' => __( '' , 'uipro' ),
+					'default' => '',
 					'label_block' => true,
 				]
 			);
@@ -347,7 +347,7 @@ if ( ! class_exists( 'UIPro_Config_UIMarker' ) ) {
 				'button_title', [
 					'label' => __( 'Button Title', 'uipro' ),
 					'type' => Controls_Manager::TEXT,
-					'default' => __( '' , 'uipro' ),
+					'default' => '',
 					'label_block' => true,
 				]
 			);
@@ -977,7 +977,7 @@ if ( ! class_exists( 'UIPro_Config_UIMarker' ) ) {
 					'id'    => 'all_button_title',
 					'label' => __( 'Text', 'uipro' ),
 					'type' => \Elementor\Controls_Manager::TEXT,
-					'default' => __( '' , 'uipro' ),
+					'default' => '',
 					'label_block' => true,
 					'start_section' => 'button',
 					'section_name'      => esc_html__('Button Settings', 'uipro')

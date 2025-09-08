@@ -58,7 +58,7 @@ if ( ! class_exists( 'UIPro_Config_UIRunText' ) ) {
                 'text_title', [
                     'label' => __( 'Title', 'uipro' ),
                     'type' => \Elementor\Controls_Manager::TEXT,
-                    'default' => __( '' , 'uipro' ),
+                    'default' => '',
                     'label_block' => true,
                 ]
             );

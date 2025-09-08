@@ -87,7 +87,7 @@ if ( ! class_exists( 'UIPro_Config_UIAccordionSlider' ) ) {
 				'letter', [
 					'label' => __( 'Letter', 'uipro' ),
 					'type' => \Elementor\Controls_Manager::TEXT,
-					'default' => __( '' , 'uipro' ),
+					'default' => '',
 					'label_block' => true,
 				]
 			);
@@ -95,7 +95,7 @@ if ( ! class_exists( 'UIPro_Config_UIAccordionSlider' ) ) {
 				'title', [
 					'label' => __( 'Title', 'uipro' ),
 					'type' => \Elementor\Controls_Manager::TEXT,
-					'default' => __( '' , 'uipro' ),
+					'default' => '',
 					'label_block' => true,
 				]
 			);
@@ -103,7 +103,7 @@ if ( ! class_exists( 'UIPro_Config_UIAccordionSlider' ) ) {
 				'meta', [
 					'label' => __( 'Meta', 'uipro' ),
 					'type' => \Elementor\Controls_Manager::TEXT,
-					'default' => __( '' , 'uipro' ),
+					'default' => '',
 					'label_block' => true,
 				]
 			);
@@ -120,7 +120,7 @@ if ( ! class_exists( 'UIPro_Config_UIAccordionSlider' ) ) {
                 'button', [
                     'label' => __( 'Button Text', 'uipro' ),
                     'type' => \Elementor\Controls_Manager::TEXT,
-                    'default' => __( '' , 'uipro' ),
+                    'default' => '',
                     'label_block' => true,
                 ]
             );

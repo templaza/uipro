@@ -79,7 +79,7 @@ if ( $posts_display->have_posts() ) :
 	<div class="wrapper-filter-controls">
 		<ul class="filter-controls">
 			<li>
-				<a class="filter active" data-filter="*" href="javascript:;"><?php esc_html_e( 'All', 'eduma' ); ?></a>
+				<a class="filter active" data-filter="*" href="javascript:;"><?php esc_html_e( 'All', 'uipro' ); ?></a>
 			</li>
 			<?php
 

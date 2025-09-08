@@ -457,7 +457,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvanced_Products_Filter' ) ) {
                     ),
                     'start_section' => 'style',
                     'section_tab'   => Controls_Manager::TAB_STYLE,
-                    'section_name'  => esc_html__( self::$name, 'uipro' ),
+                    'section_name'  => esc_html__( 'TemPlaza: UI Advanced Products Filter', 'uipro' ),
                 ),
                 array(
                     'type'          => Group_Control_Typography::get_type(),

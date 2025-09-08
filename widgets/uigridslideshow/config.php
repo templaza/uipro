@@ -99,7 +99,7 @@ if ( ! class_exists( 'UIPro_Config_UIGridSlideshow' ) ) {
 				'title', [
 					'label' => esc_html__( 'Title', 'uipro' ),
 					'type' => \Elementor\Controls_Manager::TEXT,
-					'default' => __( '' , 'uipro' ),
+					'default' => '',
 					'label_block' => true,
 					'separator'     => 'before',
 				]
@@ -108,7 +108,7 @@ if ( ! class_exists( 'UIPro_Config_UIGridSlideshow' ) ) {
 				'meta', [
 					'label' => esc_html__( 'Meta', 'uipro' ),
 					'type' => \Elementor\Controls_Manager::TEXT,
-					'default' => __( '' , 'uipro' ),
+					'default' => '',
 					'label_block' => true,
 				]
 			);
