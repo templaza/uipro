@@ -39,17 +39,21 @@ $btn_next = esc_html__('Next','uipro');
 $btn_prev = esc_html__('Prev','uipro');
 $pre_icon_html = '<span class="'. ($nav_left ? $nav_left : ' btn_prev').' slick-arrow"><i class="fas fa-arrow-left uk-margin-small-right"></i> '. $btn_prev.'</span>';
 $next_icon_html = '<span class=" '. ($nav_right ? $nav_right : ' btn_next').' slick-arrow">'. $btn_next.' <i class="fas fa-arrow-right uk-margin-small-left"></i></span>';
-if (is_array($next_icon['value']) && isset($next_icon['value']['url']) && $next_icon['value']['url']) {
-    $next_icon_html='<span class=" '. ($nav_right ? $nav_right : ' btn_next').' slick-arrow"><img class="uk-preserve" src="'.esc_attr($next_icon['value']['url']).'" alt="" data-uk-svg /></span>';
-} elseif (is_string($next_icon['value']) && $next_icon['value']) {
-    $next_icon_html='<span class=" '. ($nav_right ? $nav_right : ' btn_next').' slick-arrow"><i class="'. esc_attr($next_icon['value']).'" aria-hidden="true"></i></span>';
-}
-if (is_array($prev_icon['value']) && isset($prev_icon['value']['url']) && $prev_icon['value']['url']) {
-    $pre_icon_html='<span class="'. ($nav_left ? $nav_left : ' btn_prev').' slick-arrow"><img class="uk-preserve" src="'.esc_attr($prev_icon['value']['url']).'" alt="" data-uk-svg /></span>';
-} elseif (is_string($prev_icon['value']) && $prev_icon['value']) {
-    $pre_icon_html='<span class="'. ($nav_left ? $nav_left : ' btn_prev').' slick-arrow"><i class="'. esc_attr($prev_icon['value']).'" aria-hidden="true"></i></span>';
+if(isset($next_icon['value'])){
+    if (is_array($next_icon['value']) && isset($next_icon['value']['url']) && $next_icon['value']['url']) {
+        $next_icon_html='<span class=" '. ($nav_right ? $nav_right : ' btn_next').' slick-arrow"><img class="uk-preserve" src="'.esc_attr($next_icon['value']['url']).'" alt="" data-uk-svg /></span>';
+    } elseif (is_string($next_icon['value']) && $next_icon['value']) {
+        $next_icon_html='<span class=" '. ($nav_right ? $nav_right : ' btn_next').' slick-arrow"><i class="'. esc_attr($next_icon['value']).'" aria-hidden="true"></i></span>';
+    }
 }
 
+if(isset($prev_icon['value'])) {
+    if (is_array($prev_icon['value']) && isset($prev_icon['value']['url']) && $prev_icon['value']['url']) {
+        $pre_icon_html = '<span class="' . ($nav_left ? $nav_left : ' btn_prev') . ' slick-arrow"><img class="uk-preserve" src="' . esc_attr($prev_icon['value']['url']) . '" alt="" data-uk-svg /></span>';
+    } elseif (is_string($prev_icon['value']) && $prev_icon['value']) {
+        $pre_icon_html = '<span class="' . ($nav_left ? $nav_left : ' btn_prev') . ' slick-arrow"><i class="' . esc_attr($prev_icon['value']) . '" aria-hidden="true"></i></span>';
+    }
+}
 $module_id = uniqid('templaza_testimonial_');
 if ( !empty( $instance['templaza-testimonial'] ) ) {
 	$general_styles     =   \UIPro_Elementor_Helper::get_general_styles($instance);
