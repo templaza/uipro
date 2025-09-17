@@ -52,7 +52,7 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
 				'ui-post-loadmore' => array(
 					'src'   =>  'script.js',
 					'deps'  =>  array('jquery'),
-                    'ver'   => time()
+                    'ver'   =>  '1.1.4',
 				)
 			);
 		}
