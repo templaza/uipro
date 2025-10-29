@@ -40,7 +40,7 @@ if ( ! class_exists( 'UIPro_Config_UIImageParallax' ) ) {
             return array(
                 'uiimageparallax' => array(
                     'src'   =>  'style.css',
-                    'ver'  =>  time()
+                    'ver'   =>  '1.1.4',
                 )
             );
         }
@@ -49,7 +49,7 @@ if ( ! class_exists( 'UIPro_Config_UIImageParallax' ) ) {
                 'uipro-imageparallax' => array(
                     'src'   =>  'imageparallax.js',
                     'deps'  =>  array('jquery'),
-                    'ver'  =>  time()
+                    'ver'   =>  '1.1.4',
                 )
             );
         }

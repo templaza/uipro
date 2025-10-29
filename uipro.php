@@ -4,7 +4,7 @@ Plugin Name: UIPro
 Plugin URI: https://github.com/templaza/uipro
 Description: This plugin help you manage products.
 Author: Templaza
-Version: 1.1.4
+Version: 1.1.5
 Text Domain: uipro
 Author URI: http://templaza.com
 Forum: https://www.templaza.com/Forums.html
@@ -63,8 +63,8 @@ class UIPro{
     public function ui_load_plugin_textdomain() {
         load_plugin_textdomain( 'uipro', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
         wp_enqueue_style( 'uipro-style', plugins_url( '/assets/css/style.css', __FILE__ ));
-        wp_enqueue_script( 'three-js', plugins_url( '/assets/vendor/three/three.min.js', __FILE__ ), array(), time(), true );
-        wp_enqueue_script( 'gsap-js', 'https://cdn.jsdelivr.net/npm/gsap@3.12.7/dist/gsap.min.js', array(), false, true );
+        wp_enqueue_script( 'three-js', plugins_url( '/assets/vendor/three/three.min.js', __FILE__ ), array(), '1.1.4', true );
+        wp_enqueue_script( 'gsap-js', plugins_url( '/assets/vendor/gsap/gsap.min.js', __FILE__ ), array(), '1.1.4', true );
     }
     function uipro_elementor($element, $args){
         $element->start_controls_section(

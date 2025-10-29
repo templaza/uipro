@@ -39,7 +39,7 @@ if ( ! class_exists( 'UIPro_Config_UIAccordionSlider' ) ) {
             return array(
                 'uiaccordionslider' => array(
                     'src'   =>  'style.css',
-                    'ver'   =>  time(),
+                    'ver'   =>  '1.1.4',
                 )
             );
         }
@@ -47,7 +47,7 @@ if ( ! class_exists( 'UIPro_Config_UIAccordionSlider' ) ) {
             return array(
                 'uiaccordionslider-script' => array(
                     'src'   =>  'uiaccordionslider-script.js',
-                    'ver'   =>  time(),
+                    'ver'   =>  '1.1.4',
                 )
             );
         }

@@ -38,7 +38,7 @@ if ( ! class_exists( 'UIPro_Config_UIGridSlideshow' ) ) {
         public function get_styles() {
             return ['el-uigridslideshow' => array(
                 'src'   => 'style.css',
-                'ver'   =>  time(),
+                'ver'   =>  '1.1.4',
             )];
         }
         public function get_scripts() {
@@ -46,7 +46,7 @@ if ( ! class_exists( 'UIPro_Config_UIGridSlideshow' ) ) {
                 'uigridslideshow-script' => array(
                     'src'   =>  'uigridslideshow-script.js',
                     'deps'  =>  array('jquery'),
-                    'ver'   =>  time(),
+                    'ver'   =>  '1.1.4',
                 )
             );
         }
