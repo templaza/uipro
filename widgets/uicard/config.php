@@ -531,6 +531,7 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 						'inside'   => __( 'Inside', 'uipro' ),
 						'bottom'   => __( 'Bottom', 'uipro' ),
 						'thumbnail'   => __( 'Thumbnail', 'uipro' ),
+						'bottom_all'   => __( 'After Description', 'uipro' ),
 					],
 					'conditions' => [
 						'terms' => [
@@ -575,7 +576,7 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 					'responsive'    =>  true,
 					'size_units'    => [ 'px', 'em', '%' ],
 					'selectors'     => [
-						'{{WRAPPER}} .ui-card .ui-media' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+						'{{WRAPPER}} .ui-card .ui-media' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
 					],
 					'conditions' => [
 						'terms' => [
@@ -1850,6 +1851,21 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                     ],
                     'selectors' => [
                         '{{WRAPPER}} .ui-button .uk-button' => 'border-radius: {{SIZE}}{{UNIT}} !important;',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'button_style', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'border_radius_custom',
+                    'label'         => esc_html__( 'Custom Border radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} div .ui-button .uk-button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                     ],
                     'conditions' => [
                         'terms' => [

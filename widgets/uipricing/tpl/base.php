@@ -140,8 +140,8 @@ if ($title) {
 
 			$output .= '<li class="ui-item">';
 			if ( $media ) {
-				$output .= '<div class="uk-grid-small uk-child-width-expand uk-flex-nowrap uk-flex-middle" data-uk-grid>';
-				$output .= '<div class="uk-width-auto pricing-icon uk-flex uk-flex-middle elementor-repeater-item-'. $item['_id'] .$align.'">';
+				$output .= '<div class="uk-grid-small elementor-repeater-item-'. $item['_id'] .' uk-child-width-expand uk-flex-nowrap uk-flex-middle" data-uk-grid>';
+				$output .= '<div class="uk-width-auto pricing-icon uk-flex uk-flex-middle ' .$align.'">';
 				$output .= $media;
 				$output .= '</div>';
 				$output .= '<div>';

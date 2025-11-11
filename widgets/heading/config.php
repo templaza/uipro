@@ -726,6 +726,29 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                     ),
                 ),
                 array(
+                    'type'          =>  \Elementor\Group_Control_Border::get_type(),
+                    'name'          => 'sub_heading_border',
+                    'label'         => esc_html__('Subheading Border', 'uipro'),
+                    'description'   => esc_html__('Set the Border of Subheading.', 'uipro'),
+                    'selector' => '{{WRAPPER}} .sub-heading-content',
+                    'condition'     => array(
+                        'sub_heading!'    => ''
+                    ),
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'sub_heading_border_radius',
+                    'label'         => esc_html__( 'Subheading border radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .sub-heading-content' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
+                    ],
+                    'condition'     => array(
+                        'sub_heading!'    => ''
+                    ),
+                ),
+                array(
                     'type'          => Controls_Manager::SELECT,
                     'name'          => 'sub_heading_style',
                     'default'       => '',

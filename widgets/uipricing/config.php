@@ -67,7 +67,8 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
                     'type'          => Controls_Manager::COLOR,
                     'label'         => esc_html__('Text Color', 'uipro'),
                     'selectors' => [
-                        '{{CURRENT_ITEM}} .el-content' => 'color: {{VALUE}}',
+                        '{{WRAPPER}} {{CURRENT_ITEM}} .el-content' => 'color: {{VALUE}}',
+                        '{{WRAPPER}} {{CURRENT_ITEM}} .el-link' => 'color: {{VALUE}}',
                     ],
                 ]
             );
@@ -129,7 +130,7 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 					'type'          => Controls_Manager::COLOR,
 					'label'         => esc_html__('Icon Color', 'uipro'),
                     'selectors' => [
-                        '{{WRAPPER}} {{CURRENT_ITEM}} ' => 'color: {{VALUE}}',
+                        '{{WRAPPER}} {{CURRENT_ITEM}} .pricing-icon' => 'color: {{VALUE}}',
                     ],
 				]
 			);
@@ -522,9 +523,35 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
                     ],
 				),
                 array(
+                    'label' => esc_html__( 'Title Border', 'uipro' ),
+                    'name'          => 'title_border',
+                    'type' => \Elementor\Group_Control_Border::get_type(),
+                    'selector' => '{{WRAPPER}} .uk-card-title',
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'title_border_radius',
+                    'label'         => esc_html__( 'Border radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-card-title' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'title_inner_padding',
+                    'label'         => esc_html__( 'Title Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-pricing .uk-card-title' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+                array(
                     'type'          => Controls_Manager::DIMENSIONS,
                     'name'          => 'title_padding',
-                    'label'         => esc_html__( 'Title Padding', 'uipro' ),
+                    'label'         => esc_html__( 'Header Padding', 'uipro' ),
                     'responsive'    =>  true,
                     'size_units'    => [ 'px', 'em', '%' ],
                     'selectors'     => [
@@ -676,6 +703,34 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 					),
 					'default'       => '',
 				),
+                array(
+                    'type'          =>  \Elementor\Group_Control_Border::get_type(),
+                    'name'          => 'meta_border',
+                    'label'         => esc_html__('Meta Border', 'uipro'),
+                    'description'   => esc_html__('Set the Border of Meta.', 'uipro'),
+                    'selector' => '{{WRAPPER}} .plan-period',
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'meta_padding',
+                    'label'         => esc_html__( 'Meta padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .plan-period' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'meta_border_radius',
+                    'label'         => esc_html__( 'Meta border radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .plan-period' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
+                    ],
+
+                ),
 
 				//Description
 				array(
@@ -696,6 +751,12 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 						'{{WRAPPER}} .ui-pricing .plan-description' => 'color: {{VALUE}}',
 					],
 				),
+                array(
+                    'label' => esc_html__( 'Description Border', 'uipro' ),
+                    'name'          => 'description_border',
+                    'type' => \Elementor\Group_Control_Border::get_type(),
+                    'selector' => '{{WRAPPER}} .plan-description',
+                ),
 				array(
 					'type'          =>  Controls_Manager::SELECT,
 					'name'          => 'description_margin',
@@ -708,10 +769,37 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 						'medium'    => esc_html__('Medium', 'uipro'),
 						'large'     => esc_html__('Large', 'uipro'),
 						'xlarge'    => esc_html__('X-Large', 'uipro'),
+						'custom'    => esc_html__('Custom', 'uipro'),
 						'remove'    => esc_html__('None', 'uipro'),
 					),
 					'default'       => '',
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'description_margin_custom',
+                    'label'         => esc_html__( 'Description custom margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .plan-description' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'description_margin', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'description_padding_custom',
+                    'label'         => esc_html__( 'Description padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .plan-description' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+
 
 				//Price Settings
 				array(
