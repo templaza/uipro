@@ -49,6 +49,7 @@ if ($layout_type == 'icon') {
 	$media          .=  $image ? '<img  class="uk-transition-opaque uk-width-1-1 uk-transition-'.$image_transition.'" src="'.$image.'" alt="'.$title.'" />' : '';
 }
 $image_appear   =   ( isset( $instance['image_appear'] ) && $instance['image_appear'] ) ? $instance['image_appear'] : '';
+$content_appear   =   ( isset( $instance['content_appear'] ) && $instance['content_appear'] ) ? $instance['content_appear'] : '';
 
 $media_class = '';
 if($image_transition !=''){
@@ -146,7 +147,7 @@ if($title_position =='left'){
         }
 	}
 
-	$output     .=  '<div class="uk-card-body '.$image_content. $general_styles['content_cls'] . '">';
+	$output     .=  '<div class="uk-card-body '.$content_appear.' '.$image_content. $general_styles['content_cls'] . '">';
     if ($media && $layout_type == 'image' && $image_appear == 'inside') {
         if ($url && ($url_appear=='button_media' || $url_appear == 'all')) {
             $output     .=  '<div class="uk-card-media-top ui-media'.$media_margin.' '.$media_class_wrap.'"><a class="tz-img '.$link_class.'" href="'.$url.'"'.$attribs.'>'.$media.$media_overlay.'</a></div>';

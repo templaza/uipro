@@ -558,6 +558,28 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 					],
 				),
                 array(
+                    'type'          => Controls_Manager::SELECT,
+                    'name'          => 'content_appear',
+                    'label' => __( 'Content Transition', 'uipro' ),
+                    'default' => '',
+                    'options' => [
+                        ''        => __( 'None', 'uipro' ),
+                        'uk-transition-fade'   => __( 'Fade', 'uipro' ),
+                        'uk-transition-scale-up'   => __( 'Scale Up', 'uipro' ),
+                        'uk-transition-scale-down'   => __( 'Scale Down', 'uipro' ),
+                        'uk-transition-slide-top-medium'   => __( 'Slide Top', 'uipro' ),
+                        'uk-transition-slide-bottom-medium'   => __( 'Slide Bottom', 'uipro' ),
+                        'uk-transition-slide-left-medium'   => __( 'Slide Left', 'uipro' ),
+                        'uk-transition-slide-right-medium'   => __( 'Slide Right', 'uipro' ),
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout_type', 'operator' => '===', 'value' => 'image'],
+                            ['name' => 'image_appear', 'operator' => '===', 'value' => 'thumbnail'],
+                        ],
+                    ],
+                ),
+                array(
                     'type'          =>  Controls_Manager::COLOR,
                     'name'          => 'image_overlay',
                     'label'         => esc_html__('Image Overlay Color', 'uipro'),
