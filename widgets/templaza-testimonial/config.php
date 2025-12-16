@@ -293,6 +293,36 @@ if ( ! class_exists( 'UIPro_Config_Templaza_Testimonial' ) ) {
                 ),
                 array(
                     'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'content_block_margin',
+                    'label'         => esc_html__( 'Content Block Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-testimonial-content' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'label' => esc_html__( 'Content block background', 'uipro' ),
+                    'name'  => 'content_block_bg_color',
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-testimonial-content' => 'background-color: {{VALUE}}',
+                    ],
+
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'content_block_radius',
+                    'label'         => esc_html__( 'Content block radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-testimonial-content' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
+                    ],
+
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
                     'name'          => 'avata_margin',
                     'label'         => esc_html__( 'Avatar Margin', 'uipro' ),
                     'responsive'    =>  true,

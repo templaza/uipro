@@ -241,6 +241,38 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                     /*vc*/
                     'admin_label'   => false,
 				),
+                array(
+                    'type'          => Controls_Manager::TEXTAREA,
+                    'name'          => 'custom_title_clone',
+                    'label'         => esc_html__( 'Custom Title Clone', 'uipro' ),
+
+                ),
+                array(
+                    'type'          => Controls_Manager::SLIDER,
+                    'name'          =>  'clone_width',
+                    'label'         => esc_html__( 'Clone title width', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 2000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 200,
+                        ],
+                    ],
+                    'default' => [
+                        'unit' => 'px',
+                        'size' => 500,
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .clone' => 'width: {{SIZE}}{{UNIT}}; ',
+                        '{{WRAPPER}} .heading-plain-text' => 'position:relative; z-index:1; ',
+                    ],
+                ),
 				array(
 					'type'          => Controls_Manager::SLIDER,
                     'name'          => 'clone_opacity',
@@ -264,6 +296,160 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                     /*vc*/
                     'admin_label'   => false,
 				),
+                array(
+                    'type'          => Controls_Manager::CHOOSE,
+                    'id'            => 'custom_title_clone_position_x',
+                    'label'         => esc_html__( 'Clone title Orientation', 'uipro' ),
+                    'options' => [
+                        'left' => [
+                            'title' => esc_html__( 'Left', 'uipro' ),
+                            'icon' => 'eicon-h-align-left',
+                        ],
+                        'right' => [
+                            'title' => esc_html__( 'Right', 'uipro' ),
+                            'icon' => 'eicon-h-align-right',
+                        ],
+                    ],
+                    'default'       => 'left',
+                ),
+                array(
+                    'name'          => 'custom_title_clone_offsetx',
+                    'label' => esc_html__( 'Offset', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px', '%' ],
+                    'responsive'    =>  true,
+                    'range' => [
+                        'px' => [
+                            'min' => -2000,
+                            'max' => 2000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => -200,
+                            'max' => 200,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'size' => 0,
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'custom_title_clone_position_x', 'operator' => '===', 'value' => 'left'],
+                        ],
+                    ],
+
+                    'selectors' => [
+                        '{{WRAPPER}} .clone' => 'left: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'name'          => 'custom_title_clone_offsetx_right',
+                    'label' => esc_html__( 'Offset', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'responsive'    =>  true,
+                    'size_units' => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => -2000,
+                            'max' => 2000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => -200,
+                            'max' => 200,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'size' => 0,
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'custom_title_clone_position_x', 'operator' => '===', 'value' => 'right'],
+                        ],
+                    ],
+
+                    'selectors' => [
+                        '{{WRAPPER}} .clone' => 'right: {{SIZE}}{{UNIT}}; left: auto;',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::CHOOSE,
+                    'id'            => 'custom_title_clone_position_y',
+                    'label'         => esc_html__( 'Clone title Orientation', 'uipro' ),
+                    'options' => [
+                        'top' => [
+                            'title' => esc_html__( 'Top', 'uipro' ),
+                            'icon' => 'eicon-v-align-top',
+                        ],
+                        'bottom' => [
+                            'title' => esc_html__( 'Bottom', 'uipro' ),
+                            'icon' => 'eicon-v-align-bottom',
+                        ],
+                    ],
+                    'default'       => 'bottom',
+                ),
+                array(
+                    'name'          => 'custom_title_clone_offsety',
+                    'label' => esc_html__( 'Offset', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'responsive'    =>  true,
+                    'size_units' => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => -2000,
+                            'max' => 2000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => -200,
+                            'max' => 200,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'size' => 0,
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'custom_title_clone_position_y', 'operator' => '===', 'value' => 'top'],
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .clone' => 'top: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'name'          => 'custom_title_clone_offsety_bottom',
+                    'label' => esc_html__( 'Offset', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'responsive'    =>  true,
+                    'size_units' => [ 'px', '%' ],
+                    'range' => [
+                        'px' => [
+                            'min' => -2000,
+                            'max' => 2000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => -200,
+                            'max' => 200,
+                            'step' => 1,
+                        ],
+                    ],
+                    'default' => [
+                        'size' => 0,
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'custom_title_clone_position_y', 'operator' => '===', 'value' => 'bottom'],
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .clone' => 'bottom: {{SIZE}}{{UNIT}}; top:auto;',
+                    ],
+                ),
 				//Show separator?
 				array(
 					'type'          => Controls_Manager::SWITCHER,
@@ -996,6 +1182,14 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                     'section_name'  => esc_html__( self::$name, 'uipro' ),
 
                 ),
+                array(
+                    'type'          => Group_Control_Typography::get_type(),
+                    'name'          => 'clone_heading_typography',
+                    'label'         => esc_html__('Clone Heading Typography', 'uipro'),
+                    'selector'      => '{{WRAPPER}} .clone',
+                    'section_name'  => esc_html__( self::$name, 'uipro' ),
+
+                ),
 
                 //Title color
                 array(
@@ -1007,9 +1201,19 @@ if ( ! class_exists( 'UIPro_Config_Heading' ) ) {
                     'section_name'  => esc_html__( self::$name, 'uipro' ),
                     'selectors'     => [
                         '{{WRAPPER}} .title' => 'color: {{VALUE}};',
-                        '{{WRAPPER}} .clone' => 'color: {{VALUE}};',
                     ],
                     'separator'     => 'before',
+                ),
+                array(
+                    'type'          => Controls_Manager::COLOR,
+                    'name'          => 'textclonecolor',
+                    'label'         => esc_html__( 'Heading Clone color', 'uipro' ),
+                    'default'       => '',
+                    'description'   => esc_html__( 'Select the title clone color.', 'uipro' ),
+                    'section_name'  => esc_html__( self::$name, 'uipro' ),
+                    'selectors'     => [
+                        '{{WRAPPER}} .clone' => 'color: {{VALUE}};',
+                    ],
                 ),
                 //Link color
                 array(

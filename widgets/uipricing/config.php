@@ -365,7 +365,7 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 					'label'         => esc_html__('Card Background', 'uipro'),
 					'description'   => esc_html__('Set the Background Color of Card.', 'uipro'),
 					'selectors' => [
-						'{{WRAPPER}} .ui-pricing' => 'background-color: {{VALUE}}',
+						'{{WRAPPER}} .ui-pricing .ui-pricing-body' => 'background-color: {{VALUE}}',
 					],
 					'conditions' => [
 						'terms' => [
@@ -373,6 +373,20 @@ if ( ! class_exists( 'UIPro_Config_UIPricing' ) ) {
 						],
 					],
 				),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'card_background_hover',
+                    'label'         => esc_html__('Card Hover Background', 'uipro'),
+                    'description'   => esc_html__('Set the Background Color Hover of Card.', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-pricing:hover .ui-pricing-body' => 'background-color: {{VALUE}}',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'card_style', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+                ),
 				array(
 					'type'          =>  Controls_Manager::COLOR,
 					'name'          => 'card_color',
