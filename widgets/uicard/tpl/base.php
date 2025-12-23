@@ -121,7 +121,10 @@ if ($btn_icon) {
 }
 $card_cl = '';
 if($title_position =='left'){
-	$card_cl = 'uk-flex uk-flex-top';
+	$card_cl .= ' uk-flex uk-flex-top ';
+}
+if($content_appear !=''){
+    $card_cl .= ' card-content-thumbnail';
 }
 
 	if ($url && ($url_appear=='button_title' || $url_appear == 'all')) {

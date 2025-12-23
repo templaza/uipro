@@ -1278,6 +1278,36 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 					],
 				),
                 array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'card_margin',
+                    'label'         => esc_html__( 'Card Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-card-body' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'card_size', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'card_border_radius',
+                    'label'         => esc_html__( 'Card Border radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .uk-card-body' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'card_size', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+                ),
+                array(
                     'id'          => 'list_align_items',
                     'label' => esc_html__( 'List align items', 'uipro' ),
                     'type' => Controls_Manager::CHOOSE,
