@@ -55,6 +55,7 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                     'options'       => array(
                         'base'    => esc_html__('Default', 'uipro'),
                         'list'    => esc_html__('List', 'uipro'),
+                        'list_style2'    => esc_html__('List Style2', 'uipro'),
                     ),
                     'default'   => 'base',
                 ),
@@ -531,6 +532,7 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 						'inside'   => __( 'Inside', 'uipro' ),
 						'bottom'   => __( 'Bottom', 'uipro' ),
 						'thumbnail'   => __( 'Thumbnail', 'uipro' ),
+						'bottom_all'   => __( 'After Description', 'uipro' ),
 					],
 					'conditions' => [
 						'terms' => [
@@ -556,6 +558,28 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 					],
 				),
                 array(
+                    'type'          => Controls_Manager::SELECT,
+                    'name'          => 'content_appear',
+                    'label' => __( 'Content Transition', 'uipro' ),
+                    'default' => '',
+                    'options' => [
+                        ''        => __( 'None', 'uipro' ),
+                        'uk-transition-fade'   => __( 'Fade', 'uipro' ),
+                        'uk-transition-scale-up'   => __( 'Scale Up', 'uipro' ),
+                        'uk-transition-scale-down'   => __( 'Scale Down', 'uipro' ),
+                        'uk-transition-slide-top-medium'   => __( 'Slide Top', 'uipro' ),
+                        'uk-transition-slide-bottom-medium'   => __( 'Slide Bottom', 'uipro' ),
+                        'uk-transition-slide-left-medium'   => __( 'Slide Left', 'uipro' ),
+                        'uk-transition-slide-right-medium'   => __( 'Slide Right', 'uipro' ),
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout_type', 'operator' => '===', 'value' => 'image'],
+                            ['name' => 'image_appear', 'operator' => '===', 'value' => 'thumbnail'],
+                        ],
+                    ],
+                ),
+                array(
                     'type'          =>  Controls_Manager::COLOR,
                     'name'          => 'image_overlay',
                     'label'         => esc_html__('Image Overlay Color', 'uipro'),
@@ -575,7 +599,7 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
 					'responsive'    =>  true,
 					'size_units'    => [ 'px', 'em', '%' ],
 					'selectors'     => [
-						'{{WRAPPER}} .ui-card .ui-media' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+						'{{WRAPPER}} .ui-card .ui-media' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
 					],
 					'conditions' => [
 						'terms' => [
@@ -1283,9 +1307,11 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                     'separator'     => 'before',
                     'start_section' => 'list',
                     'section_name'      => esc_html__('List Settings', 'uipro'),
-                    'condition'     => array(
-                        'layout'    => 'list'
-                    ),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout', 'operator' => 'in', 'value' => array('list','list_style2')],
+                        ],
+                    ],
                 ),
                 array(
                     'id'          => 'meta_desktop_width',
@@ -1306,9 +1332,11 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                     'separator'     => 'before',
                     'start_section' => 'list',
                     'section_name'      => esc_html__('List Settings', 'uipro'),
-                    'condition'     => array(
-                        'layout'    => 'list'
-                    ),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout', 'operator' => 'in', 'value' => array('list','list_style2')],
+                        ],
+                    ],
                 ),
                 array(
                     'id'          => 'meta_width_custom',
@@ -1386,9 +1414,11 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                     'separator'     => 'before',
                     'start_section' => 'list',
                     'section_name'      => esc_html__('List Settings', 'uipro'),
-                    'condition'     => array(
-                        'layout'    => 'list'
-                    ),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout', 'operator' => 'in', 'value' => array('list','list_style2')],
+                        ],
+                    ],
                 ),
                 array(
                     'id'          => 'image_width_custom',
@@ -1467,9 +1497,11 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                     'separator'     => 'before',
                     'start_section' => 'list',
                     'section_name'      => esc_html__('List Settings', 'uipro'),
-                    'condition'     => array(
-                        'layout'    => 'list'
-                    ),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout', 'operator' => 'in', 'value' => array('list','list_style2')],
+                        ],
+                    ],
                 ),
                 array(
                     'id'          => 'title_width_custom',
@@ -1548,9 +1580,11 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                     'separator'     => 'before',
                     'start_section' => 'list',
                     'section_name'      => esc_html__('List Settings', 'uipro'),
-                    'condition'     => array(
-                        'layout'    => 'list'
-                    ),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout', 'operator' => 'in', 'value' => array('list')],
+                        ],
+                    ],
                 ),
                 array(
                     'id'          => 'content_width_custom',
@@ -1629,9 +1663,11 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                     'separator'     => 'before',
                     'start_section' => 'list',
                     'section_name'      => esc_html__('List Settings', 'uipro'),
-                    'condition'     => array(
-                        'layout'    => 'list'
-                    ),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout', 'operator' => 'in', 'value' => array('list','list_style2')],
+                        ],
+                    ],
                 ),
                 array(
                     'id'          => 'button_width_custom',
@@ -1850,6 +1886,21 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                     ],
                     'selectors' => [
                         '{{WRAPPER}} .ui-button .uk-button' => 'border-radius: {{SIZE}}{{UNIT}} !important;',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'button_style', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'border_radius_custom',
+                    'label'         => esc_html__( 'Custom Border radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} div .ui-button .uk-button' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
                     ],
                     'conditions' => [
                         'terms' => [

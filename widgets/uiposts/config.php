@@ -1690,6 +1690,7 @@ if ( ! class_exists( 'UIPro_Config_UIPosts' ) ) {
                         '{{WRAPPER}} .ui-posts.style1 .ui-post-thumbnail' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
                         '{{WRAPPER}} .ui-posts.style1 .ui-post-thumb-box' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
                         '{{WRAPPER}} .ui-posts-intro-item .ui-post-thumbnail' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
+                        '{{WRAPPER}} .ui-posts-intro-item .ui-post-thumbnail img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
                         '{{WRAPPER}} .ui-posts-intro-item .ui-post-thumb-box' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
                     ],
                     'condition'     => array(

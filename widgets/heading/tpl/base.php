@@ -93,8 +93,7 @@ $general       .= $text_breakpoint . $text_alignment_fallback . $max_width_cfg;
 $templaza_animation = $sub_heading = $sub_heading_css = $html = $css = $color_clone
     = $clone_css = $line = $clone_title = $line_css = '';
 
-
-$clone_css  .= isset($instance['clone_opacity']) && $instance['clone_opacity']?'opacity: '.$instance['opacity']:'';
+$clone_css  .= isset($instance['clone_opacity']) && $instance['clone_opacity']?'opacity: '.$instance['clone_opacity']['size']:'';
 
 if ( $css ) {
 //    wp_add_inline_style('templaza-el-heading', '.sc_heading .title{'.$css.'}');
@@ -117,9 +116,15 @@ if ( $instance['line'] && $instance['line'] <> '' ) {
         $line = '<span' . (!$_is_elementor?$line_css:'') . ' class="line uk-flex uk-flex-inline"></span>';
     }
 }
-
-$clone_title = ! empty( $instance['clone_title'] ) ? 'clone_title' : '';
-
+    $clone_custom_title='';
+    $clone_title = ! empty( $instance['clone_title'] ) ? 'clone_title' : '';
+if($clone_title){
+    if($instance['custom_title_clone']){
+        $clone_custom_title= $instance['custom_title_clone'];
+    }else{
+        $clone_custom_title = $instance['title'];
+    }
+}
 $text_align = '';
 
 if ( $css ) {
@@ -195,7 +200,8 @@ if(!empty($instance['title'])) {
     if ($after_highlight_title) {
 	    $html .= '<span class="heading-plain-text">' . $after_highlight_title . '</span>';
     }
-    $html .= ($clone_title ? '<span class="clone" ' . (!$_is_elementor ? $color_clone : '') . '>' . $instance['title'] . '</span>' : '');
+
+    $html .= ($clone_title ? '<span class="clone" ' . (!$_is_elementor ? $color_clone : '') . '>' . $clone_custom_title . '</span>' : '');
 
     if(isset($instance['link']['url']) && !empty($instance['link']['url'])) {
         $html .= '</a>';

@@ -42,7 +42,7 @@ if ( !empty( $instance['templaza-testimonial'] ) ) {
                             <div class="uk-flex-middle tz-testimonial-inner" <?php if (isset( $image['url'] ) && $image['url'] ) : ?> data-uk-grid <?php endif; ?> >
                                 <?php if (isset( $image['url'] ) && $image['url'] ) : ?>
                                 <div class="ui-testimonial-avatar uk-width-auto@s">
-                                    <div class="uk-inline-clip<?php echo $avatar_border; ?>">
+                                    <div class="uk-inline-clip<?php echo $avatar_border; ?> ui-avatar-radius">
 	                                    <?php echo \UIPro_Elementor_Helper::get_attachment_image_html( $item, 'author_image' ); ?>
                                     </div>
                                 </div>

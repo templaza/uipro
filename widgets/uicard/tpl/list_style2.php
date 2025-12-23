@@ -21,9 +21,11 @@ $meta_position = isset($instance['meta_position']) && $instance['meta_position']
 $meta           = isset($instance['meta_title']) && $instance['meta_title'] ? $instance['meta_title'] : '';
 $image_content  = isset($instance['image_content']) && $instance['image_content'] ? $instance['image_content'] : '';
 $image_transition  = isset($instance['media_transition']) && $instance['media_transition'] ? $instance['media_transition'] : '';
-
-$media_overlay = '<div class="card-overlay uk-position-cover"></div>';
-
+$meta_desktop_width  = isset($instance['meta_desktop_width']) && $instance['meta_desktop_width'] ? $instance['meta_desktop_width'] : '';
+$image_desktop_width  = isset($instance['image_desktop_width']) && $instance['image_desktop_width'] ? $instance['image_desktop_width'] : '';
+$title_desktop_width  = isset($instance['title_desktop_width']) && $instance['title_desktop_width'] ? $instance['title_desktop_width'] : '';
+$content_desktop_width  = isset($instance['content_desktop_width']) && $instance['content_desktop_width'] ? $instance['content_desktop_width'] : '';
+$button_desktop_width  = isset($instance['button_desktop_width']) && $instance['button_desktop_width'] ? $instance['button_desktop_width'] : '';
 //Layout Type
 $layout_type    = isset($instance['layout_type']) ? $instance['layout_type'] : 'icon';
 $icon_arrow    = isset($instance['icon_arrow']) ? $instance['icon_arrow'] : '';
@@ -46,23 +48,11 @@ if ($layout_type == 'icon') {
 	}
 } else {
 	$image          =   ( isset( $instance['image'] ) && $instance['image']['url'] ) ? $instance['image']['url'] : '';
-	$media          .=  $image ? '<img  class="uk-transition-opaque uk-width-1-1 uk-transition-'.$image_transition.'" src="'.$image.'" alt="'.$title.'" />' : '';
+	$media          .=  $image ? '<img class="uk-transition-opaque uk-transition-'.$image_transition.'" src="'.$image.'" alt="'.$title.'" />' : '';
 }
-$image_appear   =   ( isset( $instance['image_appear'] ) && $instance['image_appear'] ) ? $instance['image_appear'] : '';
-$content_appear   =   ( isset( $instance['content_appear'] ) && $instance['content_appear'] ) ? $instance['content_appear'] : '';
-
 $media_class = '';
 if($image_transition !=''){
     $media_class = ' uk-transition-toggle';
-}
-$link_class = $media_class_wrap = '';
-if($image_transition =='zoomin-roof'){
-    $media_class_wrap = ' uk-cover-container zoomin-roof';
-    $link_class = 'uk-display-block';
-    if($image_appear != 'thumbnail'){
-        $image_transition = 'zoomin-roof-wrap';
-    }
-
 }
 $icon_on_media = '';
 $icon_media    = ( isset( $instance['icon_media'] ) && $instance['icon_media'] ) ? $instance['icon_media'] : array();
@@ -77,6 +67,7 @@ if(isset($icon_media['value'])){
 if($instance['button_size'] =='full'){
     $button_size .=' uk-width-1-1';
 }
+$image_appear   =   ( isset( $instance['image_appear'] ) && $instance['image_appear'] ) ? $instance['image_appear'] : '';
 
 //Card Style
 $card_style     = isset($instance['card_style']) && $instance['card_style'] ? ' uk-card-'. $instance['card_style'] : '';
@@ -119,83 +110,53 @@ if ($btn_icon) {
         $btn_icon_left      =   $btn_icon;
     }
 }
-$card_cl = '';
-if($title_position =='left'){
-	$card_cl = 'uk-flex uk-flex-top';
-}
 
+if ($title) {
 	if ($url && ($url_appear=='button_title' || $url_appear == 'all')) {
-		$title     =  '<'.$title_tag.' class="uk-card-title'.$title_style.'"><a href="'.$url.'"'.$attribs.'>'.$title.'</a></'.$title_tag.'>';
+		$title     =  '<div class="'.($title_desktop_width != 'custom' ? ' uk-width-1-1 '. $title_desktop_width.'@s' : '').'"><'.$title_tag.' class="uk-card-title'.$title_style. ' "><a href="'.$url.'"'.$attribs.'>'.$title.'</a></'.$title_tag.'>
+        <div class="ui-card-text">'.$text.' </div>
+        </div>';
 	} else {
-		$title     =  '<'.$title_tag.' class="uk-card-title'.$title_style.'">'.$title.'</'.$title_tag.'>';
+		$title     =  '<div class="'.($title_desktop_width != 'custom' ? ' uk-width-1-1 '. $title_desktop_width.'@s' : '').'"><'.$title_tag.' class="uk-card-title'.$title_style. ($title_desktop_width != 'custom' ? ' uk-width-1-1 '. $title_desktop_width.'@s' : '').' ">'.$title.'</'.$title_tag.'>
+        <div class="ui-card-text">'.$text.' </div>
+        </div>';
 	}
-	$output     =   '<div class="ui-card '.$media_class.' '.$card_cl.' '.$image_transition.' uk-card'. $card_style .' '.$icon_arrow.' '. $card_size . $general_styles['container_cls'] .'"' . $general_styles['animation'] . '>';
+	$output     =   '<div class="ui-card '.$media_class.' uk-card'. $card_style .' '.$icon_arrow.' '. $card_size . $general_styles['container_cls'] .'"' . $general_styles['animation'] . '>';
 	if ($media && $layout_type == 'image' && ($image_appear == 'top'|| $image_appear == 'thumbnail')) {
         if ($url && ($url_appear=='button_media' || $url_appear == 'all')) {
-            $output     .=  $media ? '<div class="uk-card-media-top ui-media'.$media_margin.' '.$media_class_wrap.'"><a class="tz-img '.$link_class.'" href="'.$url.'"'.$attribs.'>'.$media.$media_overlay.'</a></div>' : '';
+            $output     .=  $media ? '<div class="uk-card-media-top ui-media'.$media_margin.'"><a href="'.$url.'"'.$attribs.'>'.$media.'</a></div>' : '';
         } else {
-            $output     .=  $media ? '<div class="uk-card-media-top ui-media'.$media_margin.' '.$media_class_wrap.'">'.$media.$media_overlay.'</div>' : '';
+            $output     .=  $media ? '<div class="uk-card-media-top ui-media'.$media_margin.'">'.$media.'</div>' : '';
         }
 	}
-	if ($title_position == 'left') {
-        if ($layout_type == 'icon') {
-            if ($url && ($url_appear=='button_media' || $url_appear == 'all')) {
-                $output     .=  $media ? '<div class="uk-card-media-left uk-width-auto"><div class="ui-media'.$media_margin.' '.$media_class_wrap.'"><a class="tz-img '.$link_class.'" href="'.$url.'"'.$attribs.'>'.$media.'</a></div></div>' : '';
-            } else {
-                $output     .=  $media ? '<div class="uk-card-media-left uk-width-auto"><div class="ui-media'.$media_margin.' '.$media_class_wrap.'">'.$media.'</div></div>' : '';
-            }
-        }
-	}
+	$output     .=  '<div class="uk-card-body '.$image_content. $general_styles['content_cls'] . '">';
+    $output .= '<div class="uk-grid uk-card-list as-image-hover-menu" data-uk-grid >';
 
-	$output     .=  '<div class="uk-card-body '.$content_appear.' '.$image_content. $general_styles['content_cls'] . '">';
-    if ($media && $layout_type == 'image' && $image_appear == 'inside') {
-        if ($url && ($url_appear=='button_media' || $url_appear == 'all')) {
-            $output     .=  '<div class="uk-card-media-top ui-media'.$media_margin.' '.$media_class_wrap.'"><a class="tz-img '.$link_class.'" href="'.$url.'"'.$attribs.'>'.$media.$media_overlay.'</a></div>';
-        } else {
-            $output     .=  '<div class="uk-card-media-top ui-media'.$media_margin.' '.$media_class_wrap.'">'.$media.$media_overlay.'</div>';
-        }
-    }
-	if ($title_position == 'before' || $title_position == 'left') {
-        if($meta_position == 'before'){
-            $output     .=  '<div class="uk-card-meta">'.$meta.'</div>';
-        }
-        $output         .=  $title;
-        if($meta_position == 'after'){
-            $output     .=  '<div class="uk-card-meta">'.$meta.'</div>';
-        }
-	}
-	if ($layout_type == 'icon' && $title_position != 'left') {
-		if ($url && ($url_appear=='button_media' || $url_appear == 'all')) {
-			$output     .=  $media ? '<div class="ui-media'.$media_margin.' '.$media_class_wrap.'"><a class="tz-img '.$link_class.'" href="'.$url.'"'.$attribs.'>'.$media.'</a></div>' : '';
-		} else {
-			$output     .=  $media ? '<div class="ui-media'.$media_margin.' '.$media_class_wrap.'">'.$media.'</div>' : '';
-		}
-	}
-	if ($title_position == 'after') {
-        if($meta_position == 'before'){
-            $output     .=  '<div class="uk-card-meta">'.$meta.'</div>';
-        }
-		$output         .=  $title;
-		if($meta_position == 'after'){
-            $output     .=  '<div class="uk-card-meta">'.$meta.'</div>';
-        }
-	}
-    if ($media && $layout_type == 'image' && $image_appear == 'bottom') {
-        $output .=  '<div class="uk-card-media-top uk-position-relative ui-media'.$media_margin.'">'.$media.$icon_on_media.$media_overlay.'</div>';
+    if($meta){
+        $output     .=  '<div class="uk-card-meta '. ($meta_desktop_width != 'custom' ? ' uk-width-1-2 '. $meta_desktop_width.'@s' : '').'">'.$meta.'</div>';
     }
 
-    $output     .=  '<div class="ui-card-text">'.$text.'</div>';
+    $output         .=  $title;
 
-    if ($media && $layout_type == 'image' && $image_appear == 'bottom_all') {
-        $output .=  '<div class="uk-card-media-top uk-position-relative ui-media'.$media_margin.'">'.$media.$icon_on_media.$media_overlay.'</div>';
-    }
     if($button_position == '') {
-        $output .= $button_text || $btn_icon ? '<div class="ui-button' . $button_margin . '"><a class="uk-button' . $button_style . $button_shape . $button_size . '" href="' . $url . '"' . $attribs . '>' . $btn_icon_left . $button_text . $btn_icon_right . '</a></div>' : '';
+        $output .= $button_text || $btn_icon ? '<div class="ui-button' . $button_margin . ($button_desktop_width != 'custom' ? ' '. $button_desktop_width.'@s' : '').'"><a class="uk-button' . $button_style . $button_shape . $button_size . '" href="' . $url . '"' . $attribs . '>' . $btn_icon_left . $button_text . $btn_icon_right . '</a></div>' : '';
+    }
+
+    if ($layout_type == 'icon' || ($layout_type == 'image' && $image_appear == 'inside')) {
+        if ($url && ($url_appear=='button_media' || $url_appear == 'all')) {
+            $output     .=  $media ? '<div class="ui-media-wrap '.($image_desktop_width != 'custom' ? ' uk-width-1-2 '. $image_desktop_width.'@s' : '').'"><div class="ui-media uk-overflow-hidden"><a href="'.$url.'"'.$attribs.'>'.$media.'</a></div></div>' : '';
+        } else {
+            $output     .=  $media ? '<div class="ui-media-wrap '.($image_desktop_width != 'custom' ? ' uk-width-1-2 '. $image_desktop_width.'@s' : '').'"><div class="ui-media uk-overflow-hidden">'.$media.'</div></div>' : '';
+        }
     }
     $output     .=  '</div>';
-
+	if ($media && $layout_type == 'image' && $image_appear == 'bottom') {
+		$output .=  '<div class="uk-card-media-top uk-position-relative ui-media'.$media_margin.'">'.$media.$icon_on_media.'</div>';
+	}
     if($button_position == 'after_media'){
-        $output     .=  $button_text || $btn_icon ? '<div class="ui-button'.$button_margin.'"><a class="uk-button'.$button_style.$button_shape.$button_size.'" href="'.$url.'"'.$attribs.'>'.$btn_icon_left . $button_text . $btn_icon_right.'</a></div>' : '';
+        $output     .=  $button_text || $btn_icon ? '<div class="ui-button'.$button_margin.' '.($button_desktop_width != 'custom' ? ' '. $button_desktop_width.'@s' : '').'"><a class="uk-button'.$button_style.$button_shape.$button_size.'" href="'.$url.'"'.$attribs.'>'.$btn_icon_left . $button_text . $btn_icon_right.'</a></div>' : '';
     }
 	$output     .=  '</div>';
+	$output     .=  '</div>';
 	echo ent2ncr($output);
+}
