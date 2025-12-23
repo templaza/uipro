@@ -172,6 +172,20 @@ if($ap_posts && $ap_posts -> have_posts()) {
     $args['ap_class'] = 'templazaFadeInUp';
 
     $general_styles = \UIPro_Elementor_Helper::get_general_styles($instance);
+
+    $ajax_setting = array();
+    if(isset($instance['ordering'])){
+        $ajax_setting['ordering']=$instance['ordering'];
+    }
+    if(isset($instance['limit'])){
+        $ajax_setting['limit']=$instance['limit'];
+    }
+    if(isset($instance['show_author'])){
+        $ajax_setting['show_author']=$instance['show_author'];
+    }
+    if(isset($instance['main_layout'])){
+        $ajax_setting['main_layout']=$instance['main_layout'];
+    }
     $output = '';
     ?>
     <div data-scroll class="ui-advanced-products <?php echo esc_attr($general_styles['container_cls']) .' '.$general_styles['animation'].' ui-'.$slider_visible;?>">
@@ -302,9 +316,10 @@ if($ap_posts && $ap_posts -> have_posts()) {
         if ($pagination_type == 'ajax'|| $use_filter =='1') {
             $output     .=  '<input type="hidden" class="ui-post-paging" value="'.base64_encode(json_encode($query_args)).'" />';
             $output     .=  '<input type="hidden" class="ui-current-page" value="'.(get_query_var( 'paged' ) ? get_query_var('paged') : 1).'" />';
-            $output     .=  '<input type="hidden" class="ui-post-settings" value="'.base64_encode(json_encode($instance)).'" />';
+            $output     .=  '<input type="hidden" class="ui-post-settings" value="'.base64_encode(json_encode($ajax_setting)).'" />';
         }
     echo ent2ncr($output);
+
     ?>
 </div>
 <?php
