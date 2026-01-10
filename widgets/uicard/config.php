@@ -263,6 +263,19 @@ if ( ! class_exists( 'UIPro_Config_UICard' ) ) {
                         'text!'    => ''
                     ),
                 ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'content_margin',
+                    'label'         => esc_html__( 'Content margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px'],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-card-text' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'condition'     => array(
+                        'meta_title!'    => ''
+                    ),
+                ),
 
 				array(
 					'type'          =>  Controls_Manager::SELECT,

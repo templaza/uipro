@@ -287,10 +287,10 @@ if ( ! class_exists( 'UIPro_Config_EventsCalendar' ) ) {
 
 
 
-                //Evens Calendar Settings
+                //Events Calendar Settings
                 array(
                     'type'          => Controls_Manager::SELECT,
-                    'name'          => 'card_style',
+                    'name'          => 'event_style',
                     'label'         => esc_html__( 'Card Style', 'uipro' ),
                     'default'       => '',
                     'options'       => [
@@ -350,7 +350,6 @@ if ( ! class_exists( 'UIPro_Config_EventsCalendar' ) ) {
                         'card_style' => 'custom',
                     ],
                 ),
-
                 array(
                     'type'          => Controls_Manager::DIMENSIONS,
                     'name'          => 'card_padding',
@@ -410,6 +409,54 @@ if ( ! class_exists( 'UIPro_Config_EventsCalendar' ) ) {
 
 
 
+                //Content style
+                array(
+                    'type'          => Controls_Manager::SWITCHER,
+                    'id'            => 'show_introtext',
+                    'label'         => esc_html__('Show Introtext', 'uipro'),
+                    'description'   => esc_html__( 'Whether to show introtext.', 'uipro' ),
+                    'label_on' => esc_html__( 'Yes', 'uipro' ),
+                    'label_off' => esc_html__( 'No', 'uipro' ),
+                    'return_value' => '1',
+                    'default' => '1',
+                    'start_section' => 'content_settings',
+                    'section_name'  => esc_html__('Content Settings', 'uipro')
+                ),
+                array(
+                    'type'      => Controls_Manager::NUMBER,
+                    'name'      => 'introtext_number',
+                    'label'     => esc_html__( 'Limit Words', 'uipro' ),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'show_introtext', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'name'          => 'content_font_family',
+                    'type'          => Group_Control_Typography::get_type(),
+                    'label'         => esc_html__('Content Font', 'uipro'),
+                    'description'   => esc_html__('Select a font family, font size for the addon content.', 'uipro'),
+                    'selector'      => '{{WRAPPER}} .templaza-list-events .ui-post-introtext',
+                ),
+                array(
+                    'id'            => 'content_color',
+                    'type'          =>  Controls_Manager::COLOR,
+                    'label'         => esc_html__('Custom Color', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .templaza-list-events' => 'color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::SWITCHER,
+                    'id'            => 'content_dropcap',
+                    'label'         => esc_html__('Drop Cap', 'uipro'),
+                    'description'   => esc_html__('Display the first letter of the paragraph as a large initial.', 'uipro'),
+                    'label_on'      => esc_html__( 'Yes', 'uipro' ),
+                    'label_off'     => esc_html__( 'No', 'uipro' ),
+                    'return_value'  => '1',
+                    'default'       => '0',
+                ),
 
                 //List Setting
                 array(

@@ -10,6 +10,13 @@ $button_shape   = isset($instance['button_shape']) && $instance['button_shape'] 
 $button_size    = isset($instance['button_size']) && $instance['button_size'] ? ' uk-button-' . $instance['button_size'] : '';
 $card_style     = isset($instance['card_style']) && $instance['card_style'] ? ' uk-card-' . $instance['card_style'] : '';
 $card_size      = isset($instance['card_size']) && $instance['card_size'] ? ' uk-card-' . $instance['card_size'] : '';
+//Intro
+$pre_val = '';
+
+$show_intro 	= (isset($instance[$pre_val.'show_introtext']) && $instance[$pre_val.'show_introtext']) ? intval($instance[$pre_val.'show_introtext']) : 0;
+$introtext_number   = (isset($instance[$pre_val.'introtext_number']) && $instance[$pre_val.'introtext_number']) ? intval($instance[$pre_val.'introtext_number']) : 0;
+$dropcap        = (isset($instance[$pre_val.'content_dropcap']) && $instance[$pre_val.'content_dropcap']) ? ' uk-dropcap' : '';
+
 $general_styles = \UIPro_Elementor_Helper::get_general_styles($instance);
 
 $args_query = [
@@ -71,11 +78,21 @@ if ($events) {
         $output .= '<a href="' . esc_url($url) . '" class="uk-text-bold uk-link-reset">' . esc_html($title) . '</a>';
         $output .= '</' . esc_attr($heading_tag) . '>';
 
-        $output .= '<div class="event-date">' . esc_html($start_date) . ' – ' . esc_html($end_date) . '</div>';
+        $output .= '<div class="event-date uk-flex uk-flex-middle">' . esc_html($start_date) . ' – ' . esc_html($end_date) . '</div>';
+
+        if ($show_intro && !empty($event->post_excerpt)) {
+            $output .= '<div class="ui-post-introtext' . esc_attr($dropcap) . '">'
+                . wp_kses(
+                    UIPro_UIPosts_Helper::get_post_except($event, $introtext_number),
+                    wp_kses_allowed_html('post')
+                )
+                . '</div>';
+        }
 
         if ($price) {
             $output .= '<div class="uk-price"><span class="uk-margin-small-right">Price:</span><span>' . esc_html($price) . '</span></div>';
         }
+
 
         $output .= '</div>';
 
