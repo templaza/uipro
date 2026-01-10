@@ -28,7 +28,7 @@ if ( ! class_exists( 'UIPro_El_UIGallery' ) ) {
 		 */
 		protected $config_class = 'UIPro_Config_UIGallery';
 
-        function __construct( array $data = [], array $args = null ) {
+        function __construct( array $data = [], ?array $args = null ) {
             parent::__construct($data, $args);
             add_action('wp_ajax_templaza_ui_gallery_loadmore', array($this,'templaza_ui_gallery_loadmore_ajax_handler') ); // wp_ajax_{action}
             add_action('wp_ajax_nopriv_templaza_ui_gallery_loadmore', array($this,'templaza_ui_gallery_loadmore_ajax_handler')); // wp_ajax_nopriv_{action}

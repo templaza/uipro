@@ -61,7 +61,7 @@ if ( ! class_exists( 'UIPro_El_Widget' ) ) {
          *
          * @throws Exception
          */
-        public function __construct( array $data = [], array $args = null ) {
+        public function __construct( array $data = [], ?array $args = null ) {
 
             if ( ! $this->config_class ) {
                 return;

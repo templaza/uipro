@@ -30,7 +30,7 @@ if ( ! class_exists( 'UIPro_El_UIAdvancedProducts' ) ) {
 		 */
 		protected $config_class = 'UIPro_Config_UIAdvancedProducts';
 
-        function __construct( array $data = [], array $args = null ) {
+        function __construct( array $data = [], ?array $args = null ) {
             parent::__construct($data, $args);
 
 //            add_filter('advanced-product/archive/uk-options', array($this, 'advanced_product_uk_options'));
