@@ -54,6 +54,8 @@ if ( ! class_exists( 'UIPro_Config_UIShape' ) ) {
                     'options' => [
                         '' => esc_html__( 'None','uipro' ),
                         'truck' => esc_html__( 'Truck','uipro' ),
+                        'wave' => esc_html__( 'Wave Style1','uipro' ),
+                        'wave2' => esc_html__( 'Wave Style2','uipro' ),
                     ],
                 ),
                 array(
@@ -67,6 +69,10 @@ if ( ! class_exists( 'UIPro_Config_UIShape' ) ) {
                             'min' => 1,
                             'max' => 2000
                         ],
+                        '%' => [
+                            'min' => 1,
+                            'max' => 200
+                        ],
                     ],
                     'desktop_default' => [
                         'size' => 50,
@@ -74,6 +80,7 @@ if ( ! class_exists( 'UIPro_Config_UIShape' ) ) {
                     ],
                     'selectors' => [
                         '{{WRAPPER}} .tz-shape' => 'width: {{SIZE}}{{UNIT}};',
+                        '{{WRAPPER}} .wave1' => 'width: {{SIZE}}{{UNIT}}; max-width:none',
                     ],
 
                 ),
@@ -91,6 +98,11 @@ if ( ! class_exists( 'UIPro_Config_UIShape' ) ) {
                     ],
                     'selectors' => [
                         '{{WRAPPER}} .tz-shape' => 'height: {{SIZE}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'uishape_type', 'operator' => '===', 'truck' => ''],
+                        ],
                     ],
 
                 ),
@@ -135,8 +147,11 @@ if ( ! class_exists( 'UIPro_Config_UIShape' ) ) {
                     'selectors'     => [
                         '{{WRAPPER}} .shape-wrap'   => 'justify-content: {{VALUE}}; align-items: {{VALUE}};',
                     ],
-                    /*vc*/
-                    'admin_label'   => false,
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'uishape_type', 'operator' => '===', 'truck' => ''],
+                        ],
+                    ],
                 ),
                 array(
                     'name'  => 'shape_bg_color',
@@ -145,6 +160,7 @@ if ( ! class_exists( 'UIPro_Config_UIShape' ) ) {
                     'selectors' => [
                             '{{WRAPPER}} .tz-shape' => 'background-color: {{VALUE}};',
                         '{{WRAPPER}} .truck:before' => 'background-color: {{VALUE}};',
+                        '{{WRAPPER}} .wave_fill' => 'fill: {{VALUE}};',
                     ],
                     'start_section' => 'icon_section_style',
                     'section_tab'   => Controls_Manager::TAB_STYLE,
@@ -155,6 +171,11 @@ if ( ! class_exists( 'UIPro_Config_UIShape' ) ) {
                     'type' => \Elementor\Group_Control_Border::get_type(),
                     'label' => __( 'Border', 'uipro' ),
                     'selector' => '{{WRAPPER}} .tz-shape',
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'uishape_type', 'operator' => '===', 'value' => 'truck'],
+                        ],
+                    ],
                 ),
 
 			);
