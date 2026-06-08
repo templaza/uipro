@@ -42,3 +42,8 @@ svg.circletext {
 .img-size-2{
   height:100vh;
 }
+.image-custom-size{
+  img{
+    object-fit: cover;
+  }
+}

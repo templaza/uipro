@@ -27,11 +27,23 @@ if ($email_tag == 'lead' || $email_tag == 'meta') {
 	$email_style  .=  ' uk-text-'.$email_tag;
 	$email_tag    =   'p';
 }
-
+$mask_style='';
+$mask          =   ( isset( $instance['image_mask'] ) && $instance['image_mask']['url'] ) ? $instance['image_mask']['url'] : '';
+if($mask){
+    $mask_style ='-webkit-mask-image:url('.$mask.'); -webkit-mask-size:contain; -webkit-mask-position: center center; -webkit-mask-repeat: no-repeat;';
+}
+$image_height          = isset($instance['image_height']) ? $instance['image_height'] : '';
+$image_width          = isset($instance['image_width']) ? $instance['image_width'] : '';
+$img_cl = '';
+if(!empty($image_width) && !empty($image_width)){
+    $img_cl = ' image-custom-size ';
+}
 $media          = '';
 $media_margin   = isset($instance['media_margin']) && $instance['media_margin'] ? ($instance['media_margin'] == 'default' ? ' uk-margin' : ' uk-margin-'. $instance['media_margin']) : '';
 $image          =   ( isset( $instance['image'] ) && $instance['image']['url'] ) ? $instance['image']['url'] : '';
+$media          .='<div class="ui-media-wrap '.$img_cl.'" style="'.$mask_style.'">';
 $media          .=  $image ? \UIPro_Elementor_Helper::get_attachment_image_html( $instance ) : '';
+$media          .='</div>';
 $image_appear   =   ( isset( $instance['image_appear'] ) && $instance['image_appear'] ) ? $instance['image_appear'] : '';
 
 //Card Style
@@ -59,7 +71,7 @@ if (count($social_items)) {
 		$link           =   ( isset( $item['link'] ) && $item['link'] ) ? $item['link'] : array();
 		$attribs        =   \UIPro_Elementor_Helper::get_link_attribs($link);
 		if ($social_icon) {
-			$social_content     .=  '<li class="uk-padding-remove"><a href="'.$link['url'].'" class="uk-icon-link"'.$attribs.'><span class="uk-icon" data-uk-icon="icon: ' . $item['social_icon'] . '"></span></a></li>';
+			$social_content     .=  '<li class="elementor-repeater-item-'. $item['_id'] .' uk-padding-remove"><a href="'.$link['url'].'" class="uk-icon-link"'.$attribs.'><span class="uk-icon" data-uk-icon="icon: ' . $item['social_icon'] . '"></span></a></li>';
 		}
 	}
 	$social_content .=  '</ul>';
@@ -80,9 +92,9 @@ if ($name) {
 	if($email !=''){
 	    $email     =  '<'.$email_tag.' class="ui-email '.$email_style.'">'.$email.'</'.$email_tag.'>';
     }
-	$output     =   '<div class="ui-card uk-card'. $card_style . $card_size . $general_styles['container_cls'] .'"' . $general_styles['animation'] . '>';
+	$output     =   '<div class="ui-card ui-person uk-card'. $card_style . $card_size . $general_styles['container_cls'] .'"' . $general_styles['animation'] . '>';
 	if ($media && $image_appear == 'top') {
-		$output .=  '<div class="uk-card-media-top ui-media'.$media_margin.'"><div class="uk-inline-clip uk-transition-toggle" tabindex="0">';
+		$output .=  '<div class="uk-card-media-top uk-flex ui-media'.$media_margin.'"><div class="uk-inline-clip uk-transition-toggle" tabindex="0">';
 		if($overlay_positions !='uk-position-after-des'){
             $output .=  $media.$social_content;
         }else{
@@ -95,7 +107,7 @@ if ($name) {
 		$output         .=  $name.$designation.$email;
 	}
 	if ($image_appear == 'inside') {
-		$output     .=  $media ? '<div class="ui-media'.$media_margin.'"><div class="uk-inline-clip uk-transition-toggle" tabindex="0">'.$media.$social_content.'</div></div>' : '';
+		$output     .=  $media ? '<div class="uk-flex ui-media'.$media_margin.'"><div class="uk-inline-clip uk-transition-toggle" tabindex="0">'.$media.$social_content.'</div></div>' : '';
 	}
 	if ($name_position == 'after') {
 		$output         .=  $name.$designation.$email;
@@ -106,7 +118,7 @@ if ($name) {
     }
 	$output     .=  '</div>';
 	if ($media && $image_appear == 'bottom') {
-		$output .=  '<div class="uk-card-media-top ui-media'.$media_margin.'"><div class="uk-inline-clip uk-transition-toggle" tabindex="0">';
+		$output .=  '<div class="uk-card-media-top uk-flex  ui-media'.$media_margin.'"><div class="uk-inline-clip uk-transition-toggle" tabindex="0">';
         if($overlay_positions !='uk-position-after-des'){
             $output .=  $media.$social_content;
         }else{

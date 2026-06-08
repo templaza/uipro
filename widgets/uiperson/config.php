@@ -105,6 +105,48 @@ if ( ! class_exists( 'UIPro_Config_UIPerson' ) ) {
 					],
 				]
 			);
+            $repeater->add_control(
+                'color',
+                [
+                    'label' => __( 'Color', 'uipro' ),
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-person {{CURRENT_ITEM}} .uk-icon-link' => 'color: {{VALUE}}',
+                    ],
+
+                ]
+            );
+            $repeater->add_control(
+                'bgcolor',
+                [
+                    'label' => __( 'Background Color', 'uipro' ),
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-person {{CURRENT_ITEM}} .uk-icon' => 'background-color: {{VALUE}}',
+                    ],
+                ]
+            );
+            $repeater->add_control(
+                'color_hover',
+                [
+                    'label' => __( 'Hover Color', 'uipro' ),
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-person {{CURRENT_ITEM}} .uk-icon-link:hover' => 'color: {{VALUE}}',
+                    ],
+
+                ]
+            );
+            $repeater->add_control(
+                'bgcolor_hover',
+                [
+                    'label' => __( 'Hover Background Color', 'uipro' ),
+                    'type' => \Elementor\Controls_Manager::COLOR,
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-person {{CURRENT_ITEM}} .uk-icon:hover' => 'background-color: {{VALUE}}',
+                    ],
+                ]
+            );
 			// options
 			$options = array(
 				array(
@@ -176,6 +218,29 @@ if ( ! class_exists( 'UIPro_Config_UIPerson' ) ) {
 						'text!'    => ''
 					),
 				),
+                array(
+                    'type'          =>  Controls_Manager::COLOR,
+                    'name'          => 'text_color',
+                    'label'         => esc_html__('Content Color', 'uipro'),
+                    'description'   => esc_html__('Set the Color of Content.', 'uipro'),
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-card-text' => 'color: {{VALUE}}',
+                    ],
+                    'condition'     => array(
+                        'text!'    => ''
+                    ),
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'content_margin_custom',
+                    'label'         => esc_html__( 'Content Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-card-text' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+
+                ),
 				array(
 					'type'      => Controls_Manager::REPEATER,
 					'id'      => 'social_items',
@@ -286,6 +351,114 @@ if ( ! class_exists( 'UIPro_Config_UIPerson' ) ) {
 					'start_section' => 'image_settings',
 					'section_name'      => esc_html__('Image Settings', 'uipro')
 				),
+                array(
+                    'name'          => 'image_width',
+                    'label' => __( 'Image Width', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px','%' ],
+                    'responsive'    =>  true,
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 2000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 200,
+                            'step' => 1,
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-media-wrap img' => 'width: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'name'          => 'image_height',
+                    'label' => __( 'Image Height', 'uipro' ),
+                    'type' => Controls_Manager::SLIDER,
+                    'size_units' => [ 'px','%' ],
+                    'responsive'    =>  true,
+                    'range' => [
+                        'px' => [
+                            'min' => 0,
+                            'max' => 2000,
+                            'step' => 1,
+                        ],
+                        '%' => [
+                            'min' => 0,
+                            'max' => 100,
+                            'step' => 1,
+                        ],
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-media-wrap img' => 'height: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'type'          =>  \Elementor\Group_Control_Border::get_type(),
+                    'name'          => 'image_border',
+                    'label'         => esc_html__('Image Border', 'uipro'),
+                    'description' => esc_html__( 'Image Border.', 'uipro' ),
+                    'selector' => '{{WRAPPER}} .ui-media-wrap img',
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'image_radius',
+                    'label'         => esc_html__( 'Image border radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-media-wrap img' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
+                    ],
+                ),
+                array(
+                    'type'          => \Elementor\Group_Control_Background::get_type(),
+                    'name'          => 'image_background_overlay',
+                    'label'         => __( 'Image Background', 'uipro' ),
+                    'default'       => '',
+                    'types'         => [ 'classic', 'gradient' ],
+                    'selector'      => '{{WRAPPER}} .ui-media',
+                ),
+                array(
+                    'type'         => Controls_Manager::CHOOSE,
+                    'label'         => esc_html__( 'image alignment', 'uipro' ),
+                    'name'          => 'image_align',
+                    'responsive'    => true, /* this will be add in responsive layout */
+                    'options'       => [
+                        'left'      => [
+                            'title' => esc_html__( 'Left', 'uipro' ),
+                            'icon'  => 'eicon-text-align-left',
+                        ],
+                        'center'    => [
+                            'title' => esc_html__( 'Center', 'uipro' ),
+                            'icon'  => 'eicon-text-align-center',
+                        ],
+                        'right'     => [
+                            'title' => esc_html__( 'Right', 'uipro' ),
+                            'icon'  => 'eicon-text-align-right',
+                        ],
+                        'justify'   => [
+                            'title' => esc_html__( 'Justified', 'uipro' ),
+                            'icon'  => 'eicon-text-align-justify',
+                        ],
+                    ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-media'   => 'justify-content: {{VALUE}}; align-items: {{VALUE}};',
+                    ],
+                    /*vc*/
+                    'admin_label'   => false,
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'image_padding',
+                    'label'         => esc_html__( 'Image Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-media' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
 				array(
 					'type'          =>  Controls_Manager::SELECT,
 					'name'          => 'media_margin',
@@ -299,9 +472,25 @@ if ( ! class_exists( 'UIPro_Config_UIPerson' ) ) {
 						'large'     => esc_html__('Large', 'uipro'),
 						'xlarge'    => esc_html__('X-Large', 'uipro'),
 						'remove'    => esc_html__('None', 'uipro'),
+						'custom'    => esc_html__('Custom', 'uipro'),
 					),
 					'default'       => '',
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'media_margin_custom',
+                    'label'         => esc_html__( 'image custom margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-media' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'type'          =>  Controls_Manager::MEDIA,
+                    'id'          => 'image_mask',
+                    'label'         => esc_html__('Image Mask:', 'uipro'),
+                ),
 
 				//Name settings
 				array(
@@ -387,10 +576,25 @@ if ( ! class_exists( 'UIPro_Config_UIPerson' ) ) {
 						'large'     => esc_html__('Large', 'uipro'),
 						'xlarge'    => esc_html__('X-Large', 'uipro'),
 						'remove'    => esc_html__('None', 'uipro'),
+						'custom'    => esc_html__('Custom', 'uipro'),
 					),
 					'default'       => '',
 				),
-
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'name_heading_margin_custom',
+                    'label'         => esc_html__( 'Custom Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-name' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'name_heading_margin', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+                ),
 				//Designation settings
 				array(
 					'type'          => Controls_Manager::SELECT,
@@ -445,9 +649,25 @@ if ( ! class_exists( 'UIPro_Config_UIPerson' ) ) {
 						'large'     => esc_html__('Large', 'uipro'),
 						'xlarge'    => esc_html__('X-Large', 'uipro'),
 						'remove'    => esc_html__('None', 'uipro'),
+						'custom'    => esc_html__('Custom', 'uipro'),
 					),
 					'default'       => '',
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'designation_margin_custom',
+                    'label'         => esc_html__( 'Custom Margin', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-designation' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'designation_margin', 'operator' => '===', 'value' => 'custom'],
+                        ],
+                    ],
+                ),
 
 				//Email settings
 				array(
@@ -588,6 +808,16 @@ if ( ! class_exists( 'UIPro_Config_UIPerson' ) ) {
                     'description'   => esc_html__('Set the color of social item.', 'uipro'),
                     'selectors' => [
                         '{{WRAPPER}} .uk-icon-link' => 'color: {{VALUE}}',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          =>  'social_item_radius',
+                    'label'         => esc_html__( 'Border radius', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .tz-social-list li a' => 'border-radius: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}}; overflow:hidden;',
                     ],
                 ),
                 array(

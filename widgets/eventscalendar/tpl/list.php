@@ -74,7 +74,7 @@ if ($events) {
             : 'h4';
 
         $output .= '<div class="ui-card-text">';
-        $output .= '<' . esc_attr($heading_tag) . ' class="uk-margin-remove uk-card-title">';
+        $output .= '<' . esc_attr($heading_tag) . ' class=" uk-card-title">';
         $output .= '<a href="' . esc_url($url) . '" class="uk-text-bold uk-link-reset">' . esc_html($title) . '</a>';
         $output .= '</' . esc_attr($heading_tag) . '>';
 

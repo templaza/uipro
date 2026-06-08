@@ -290,7 +290,7 @@ if ( ! class_exists( 'UIPro_Config_EventsCalendar' ) ) {
                 //Events Calendar Settings
                 array(
                     'type'          => Controls_Manager::SELECT,
-                    'name'          => 'event_style',
+                    'name'          => 'card_style',
                     'label'         => esc_html__( 'Card Style', 'uipro' ),
                     'default'       => '',
                     'options'       => [
@@ -348,6 +348,19 @@ if ( ! class_exists( 'UIPro_Config_EventsCalendar' ) ) {
                     ],
                     'condition'  => [
                         'card_style' => 'custom',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'card_margin',
+                    'label'         => esc_html__( 'Card Margin', 'uipro' ),
+                    'responsive'    => true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .templaza-list-events .uk-card' => 'margin: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'condition' => [
+                        'card_size' => 'custom',
                     ],
                 ),
                 array(

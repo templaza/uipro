@@ -2259,7 +2259,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'type'          =>  Controls_Manager::COLOR,
 					'label'         => esc_html__('Background Color', 'uipro'),
 					'selectors' => [
-						'{{WRAPPER}} .ui-post-button' => 'background-color: {{VALUE}}',
+						'{{WRAPPER}} .ui-post-button, {{WRAPPER}} .templaza-btn' => 'background-color: {{VALUE}}',
 					],
 					'separator'     => 'before',
 					'default' => '#1e87f0',
@@ -2272,7 +2272,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'type'          =>  Controls_Manager::COLOR,
 					'label'         => esc_html__('Button Color', 'uipro'),
 					'selectors' => [
-						'{{WRAPPER}} .ui-post-button' => 'color: {{VALUE}}',
+						'{{WRAPPER}} .ui-post-button, {{WRAPPER}} .templaza-btn' => 'color: {{VALUE}}',
 					],
 					'condition' => array(
 						'button_style'    => 'custom'
@@ -2282,7 +2282,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'name'            => 'button_border',
 					'type'          =>  \Elementor\Group_Control_Border::get_type(),
 					'label' => esc_html__( 'Button Border', 'uipro' ),
-					'selector' => '{{WRAPPER}} .ui-post-button, {{WRAPPER}} .ap-item.ap-item-style5.ap-item-list .ap-info .ap-info-bottom .ap-readmore-box',
+					'selector' => '{{WRAPPER}} .ui-post-button,{{WRAPPER}} .templaza-btn, {{WRAPPER}} .ap-item.ap-item-style5.ap-item-list .ap-info .ap-info-bottom .ap-readmore-box',
 					'conditions' => [
 						'terms' => [
                             ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],
@@ -2295,7 +2295,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'type'          =>  Controls_Manager::COLOR,
 					'label'         => esc_html__('Hover Background Color', 'uipro'),
 					'selectors' => [
-						'{{WRAPPER}} .ui-post-button:hover' => 'background-color: {{VALUE}}',
+						'{{WRAPPER}} .ui-post-button:hover, {{WRAPPER}} .templaza-btn:hover' => 'background-color: {{VALUE}}',
 						'{{WRAPPER}} .ap-item.ap-item-style5.ap-item-list .ap-info .ap-info-bottom .ap-readmore-box:hover' => 'background-color: {{VALUE}}',
 					],
 					'default' => '#0f7ae5',
@@ -2310,6 +2310,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'label'         => esc_html__('Hover Button Color', 'uipro'),
 					'selectors' => [
 						'{{WRAPPER}} .ui-post-button:hover' => 'color: {{VALUE}}',
+						'{{WRAPPER}} .templaza-btn:hover' => 'color: {{VALUE}}',
 						'{{WRAPPER}} .ap-item.ap-item-style5.ap-item-list .ap-info .ap-info-bottom .ap-readmore-box:hover' => 'color: {{VALUE}}',
 					],
 					'condition' => array(
@@ -2320,7 +2321,7 @@ if ( ! class_exists( 'UIPro_Config_UIAdvancedProducts' ) ) {
 					'name'            => 'button_border_hover',
 					'type'          =>  \Elementor\Group_Control_Border::get_type(),
 					'label' => esc_html__( 'Button Border', 'uipro' ),
-					'selector' => '{{WRAPPER}} .ui-post-button:hover, {{WRAPPER}} .ap-item.ap-item-style5.ap-item-list .ap-info .ap-info-bottom .ap-readmore-box:hover',
+					'selector' => '{{WRAPPER}} .ui-post-button:hover,{{WRAPPER}} .templaza-btn:hover, {{WRAPPER}} .ap-item.ap-item-style5.ap-item-list .ap-info .ap-info-bottom .ap-readmore-box:hover',
 					'conditions' => [
 						'terms' => [
                             ['name' => 'main_layout', 'operator' => '!=', 'value' => 'archive'],

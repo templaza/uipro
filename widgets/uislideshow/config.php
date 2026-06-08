@@ -385,6 +385,7 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
                     'options'       => array(
                         'base'    => esc_html__('Default', 'uipro'),
                         'style1'    => esc_html__('Style 1', 'uipro'),
+                        'style2'    => esc_html__('Style 2 Left-Right', 'uipro'),
                     ),
                     'default'   => 'base',
                 ),
@@ -1391,6 +1392,7 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 						'small' => esc_html__( 'Small', 'uipro' ),
 						'large' => esc_html__( 'Large', 'uipro' ),
 						'xlarge' => esc_html__( 'X-Large', 'uipro' ),
+						'custom' => esc_html__( 'Custom', 'uipro' ),
 					),
 					'default' => '',
 					'conditions' => [
@@ -1399,6 +1401,19 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 						],
 					],
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'overlay_container_custom_padding',
+                    'label'         => esc_html__( 'Custom Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-buttons .uk-button' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'condition'     => array(
+                        'link_button_size'    => 'custom'
+                    ),
+                ),
 				array(
 					'id' => 'overlay_margin',
 					'type' => Controls_Manager::SELECT,
@@ -1480,6 +1495,7 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 						'' => esc_html__( 'Default', 'uipro' ),
 						'small' => esc_html__( 'Small', 'uipro' ),
 						'large' => esc_html__( 'Large', 'uipro' ),
+						'custom' => esc_html__( 'Custom', 'uipro' ),
 					),
 					'default' => '',
 					'conditions' => [
@@ -1488,6 +1504,19 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 						],
 					],
 				),
+                array(
+                    'type'          => Controls_Manager::DIMENSIONS,
+                    'name'          => 'overlay_padding_custom',
+                    'label'         => esc_html__( 'Padding', 'uipro' ),
+                    'responsive'    =>  true,
+                    'size_units'    => [ 'px', 'em', '%' ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .overlay_custom' => 'padding: {{TOP}}{{UNIT}} {{RIGHT}}{{UNIT}} {{BOTTOM}}{{UNIT}} {{LEFT}}{{UNIT}};',
+                    ],
+                    'condition'     => array(
+                        'overlay_padding'    => 'custom'
+                    ),
+                ),
 				array(
 					'id' => 'overlay_width',
 					'type' => Controls_Manager::SELECT,
@@ -1733,6 +1762,130 @@ if ( ! class_exists( 'UIPro_Config_UISlideshow' ) ) {
 						],
 					],
 				),
+                array(
+                    'type'          => \Elementor\Group_Control_Border::get_type(),
+                    'name'          => 'image_border',
+                    'label'         => esc_html__( 'Border', 'uipro' ),
+                    'selector'      => '{{WRAPPER}} .ui-image-style2 img',
+                    'start_section' => 'image_style2_options',
+                    'section_name'      => esc_html__('Image Settings', 'uipro')
+                ),
+                array(
+                    'name'          => 'image_border_radius',
+                    'label'         => esc_html__( 'Custom Border Radius', 'uipro' ),
+                    'type'          => Controls_Manager::SLIDER,
+                    'devices'       => [ 'desktop', 'tablet', 'mobile' ],
+                    'responsive'    => true,
+                    'range' => [
+                        'px' => [
+                            'min' => 1,
+                            'max' => 500
+                        ],
+                    ],
+                    'desktop_default' => [
+                        'size' => 15,
+                        'unit' => 'px',
+                    ],
+                    'tablet_default' => [
+                        'size' => 10,
+                        'unit' => 'px',
+                    ],
+                    'mobile_default' => [
+                        'size' => 5,
+                        'unit' => 'px',
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-image-style2 img' => 'border-radius: {{SIZE}}{{UNIT}};',
+                    ],
+                ),
+                array(
+                    'type'          => Controls_Manager::SWITCHER,
+                    'id'            => 'image_custom_height',
+                    'label'         => esc_html__('Image Custom Height', 'uipro'),
+                    'label_on'      => esc_html__( 'Yes', 'uipro' ),
+                    'label_off'     => esc_html__( 'No', 'uipro' ),
+                    'return_value'  => '1',
+                    'default'       => '0',
+
+                ),
+                array(
+                    'name'            => 'image_height',
+                    'label'         => esc_html__( 'Image Height', 'uipro' ),
+                    'type'          => Controls_Manager::SLIDER,
+                    'responsive'    => true,
+                    'range' => [
+                        'px' => [
+                            'min' => 1,
+                            'max' => 1000
+                        ],
+                    ],
+                    'desktop_default' => [
+                        'size' => 680,
+                        'unit' => 'px',
+                    ],
+                    'tablet_default' => [
+                        'size' => 500,
+                        'unit' => 'px',
+                    ],
+                    'mobile_default' => [
+                        'size' => 220,
+                        'unit' => 'px',
+                    ],
+                    'selectors' => [
+                        '{{WRAPPER}} .ui-image-style2 img' => 'height: {{SIZE}}{{UNIT}}; object-fit:cover;',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'image_custom_height', 'operator' => '===', 'value' => '1'],
+                        ],
+                    ],
+                ),
+                array(
+                    'id'          => 'image_position',
+                    'label' => esc_html__( 'Image Position', 'uipro' ),
+                    'type' => Controls_Manager::SELECT,
+                    'options'       => array(
+                        'left'    => esc_html__('Left', 'uipro'),
+                        'right'    => esc_html__('Right', 'uipro'),
+                    ),
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout', 'operator' => '===', 'value' => 'style2'],
+                        ],
+                    ],
+                ),
+                array(
+                    'type'         => Controls_Manager::CHOOSE,
+                    'label'         => esc_html__( 'image alignment', 'uipro' ),
+                    'name'          => 'image_align',
+                    'responsive'    => true, /* this will be add in responsive layout */
+                    'options'       => [
+                        'left'      => [
+                            'title' => esc_html__( 'Left', 'uipro' ),
+                            'icon'  => 'eicon-text-align-left',
+                        ],
+                        'center'    => [
+                            'title' => esc_html__( 'Center', 'uipro' ),
+                            'icon'  => 'eicon-text-align-center',
+                        ],
+                        'right'     => [
+                            'title' => esc_html__( 'Right', 'uipro' ),
+                            'icon'  => 'eicon-text-align-right',
+                        ],
+                        'justify'   => [
+                            'title' => esc_html__( 'Justified', 'uipro' ),
+                            'icon'  => 'eicon-text-align-justify',
+                        ],
+                    ],
+                    'selectors'     => [
+                        '{{WRAPPER}} .ui-image-style2'   => 'justify-content: {{VALUE}}; align-items: {{VALUE}};',
+                    ],
+                    'conditions' => [
+                        'terms' => [
+                            ['name' => 'layout', 'operator' => '===', 'value' => 'style2'],
+                        ],
+                    ],
+                ),
 				array(
 					'id' => 'heading_style',
 					'type' => Controls_Manager::SELECT,

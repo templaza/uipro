@@ -47,4 +47,8 @@ svg.circletext {
   height: 100vh;
 }
 
+.image-custom-size img {
+  object-fit: cover;
+}
+
 /*# sourceMappingURL=style.css.map */
